@@ -19,42 +19,23 @@ import ProfileRounded from '@/components/profileRounded'
 import { CircularProgress } from '@mui/material'
 import ButtonActive from '@/components/buttonActive'
 import TooltipStyled from '@/components/tooltipStyled'
+import CardPatients from '@/components/cardPatients'
 
 const ConsultPageId = ({ params }: { params: { id: string } }) => {
-  const { onShowFeedBack } = useContext(DefaultContext)
-  const [openSelectPatient, setOpenSelectPatient] = useState<boolean>(false)
-  const [patientSelected, setpatientSelected] = useState<Patient | null>(null)
-  const [patientId, setPatientId] = useState<number | null>(null)
+  const mock = [
+    {
+      name: 'Diana',
+      year: '32',
+      totalConsults: 3,
+      last_consult: '15/11/2024',
+      peso: '68kg',
+      IMC: 'ff',
+    },
+
+
+  ]
   const [loading, setloading] = useState<boolean>(false)
 
-  useEffect(() => {
-    if (isNaN(Number(params.id))) {
-      setOpenSelectPatient(true)
-    } else {
-      setPatientId(Number(params.id))
-    }
-  }, [params.id])
-
-  useEffect(() => {
-    setloading(true)
-    if (!isNaN(Number(patientId)) && patientId !== null) {
-      api
-        .get(`/patient/${patientId}`)
-        .then((response) => {
-          console.log(response)
-          setpatientSelected(response?.data?.data ?? null)
-          if (!response?.data?.data) {
-            setOpenSelectPatient(true)
-          }
-        })
-        .catch(() =>
-          onShowFeedBack(
-            PreFeedBack.error('Falhou ao buscar dados do paciente.'),
-          ),
-        )
-        .finally(() => setloading(false))
-    }
-  }, [patientId])
 
   return (
     <div className="w-full relative">
@@ -64,7 +45,7 @@ const ConsultPageId = ({ params }: { params: { id: string } }) => {
         icon={AddIcon}
       />
 
-      {loading && !patientSelected ? (
+      {loading ? (
         <>
           <div className="flex h-3/4 justify-center w-full items-center">
             <CircularProgress
@@ -74,29 +55,7 @@ const ConsultPageId = ({ params }: { params: { id: string } }) => {
         </>
       ) : (
         <div className="flex items-center justify-center mt-4">
-          <TooltipStyled
-            title='Trocar paciente'
-          >
-            <button className="bg-white flex items-center p-5 rounded-xl shadow w-[400px]"
-              onClick={() => setOpenSelectPatient(true)}
-            >
-              <ProfileRounded height={100} width={100} styles={'w-20 h-20'} />
-
-              <div className='flex items-center justify-between w-[80%]'>
-                <div className="mx-4 flex flex-col">
-                  <p className="text-black text-start font-semibold">
-                    {patientSelected?.name ?? ''}
-                  </p>
-                  <p className="text-black  text-start font-extralight">
-                    {'Paciente'}
-                  </p>
-                </div>
-
-                <ButtonActive active={patientSelected?.status === 'ACTIVE'} />
-
-              </div>
-            </button>
-          </TooltipStyled>
+            <CardPatients data={mock}/>
         </div>
       )}
 

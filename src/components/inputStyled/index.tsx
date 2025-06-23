@@ -11,6 +11,7 @@ interface IInputStyled {
   placeholder?: string,
   value?: any
   onChange?: (value: any) => void,
+  stylesContainer?: string,
   styles?: string,
   stylesInput?: string,
   edit?: boolean,
@@ -18,9 +19,9 @@ interface IInputStyled {
   onBlur?: any
   isTouched?: boolean
 }
-const InputStyled = ({maxLength,disabled, label, type, icon, placeholder, value, onChange, id, styles, stylesInput,edit,error ,onBlur, isTouched}: IInputStyled) => {
+const InputStyled = ({maxLength,disabled, label, type, icon, placeholder, value, onChange, id, styles, stylesInput,edit,error ,onBlur, isTouched, stylesContainer}: IInputStyled) => {
   return (
-    <div className='flex flex-col '>
+    <div className={`${stylesContainer ? stylesContainer : ''} flex flex-col`}>
       {label && <label className='mb-1 text-darkGray text-sm'>{label}</label>}
       <div className={`${styles ? styles : ''} bg-none border border-solid outline-none border-gray rounded-xl p-2 flex items-center justify-between ${disabled ? 'bg-gray' : ''}`}>
         <div className='flex items-center gap-4 w-full'>

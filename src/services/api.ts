@@ -2,7 +2,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 
 const api = axios.create({
-  baseURL: 'https://gestor-colmeia.squareweb.app/api/',
+  baseURL: 'https://back-nutri.squareweb.app/api',
   //baseURL: 'http://localhost:80/api'
 })
 
