@@ -1,0 +1,90 @@
+.fc .fc-button {
+  border: none;
+  color: white;
+  background-color: '#323031';
+  border-radius: 12px;
+  box-shadow: none !important;
+  /* background-color: #1C6E8C; 
+  padding: 4px 10px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+  margin-right: 6px; */
+}
+.fc .fc-button:hover {
+  //background-color: #2563eb;
+  cursor: pointer;
+}
+
+.fc .fc-today-button {
+  background-color: #323031 !important;
+  opacity: 1 !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+.fc .fc-today-button:hover {
+  background-color: #219F02 !important;
+}
+
+.fc .fc-myPrev-button,
+.fc .fc-myNext-button {
+  background-color: #323031 !important;
+  color: white;
+  border-radius: 12px;
+  font-weight: 700;
+}
+.fc .fc-myPrev-button:hover,
+.fc .fc-myNext-button:hover {
+  background-color:  #B8B8B8 !important;
+}
+
+.fc-toolbar-title {
+  text-transform: uppercase !important;
+  font-weight: 700
+}
+
+
+.fc-dayGridMonth-button {
+  background-color: #323031 !important;
+  
+}
+
+.fc-timeGridWeek-button {
+  background-color: #323031 !important;
+  
+}
+
+.fc-timeGridDay-button {
+  background-color: #323031 !important ;
+  
+}
+.fc-button-active {
+  background-color: #22B349 !important
+  
+}
+
+
+.fc .fc-daygrid-day.fc-day-today {
+  background-color: #F6F6F6 !important
+}
+
+.fc .fc-col-header-cell  {
+  background-color: #323031;
+  text-transform: uppercase !important;
+  color: #FFFFFF
+
+}
+
+.fc .fc-h-event {
+  background-color: transparent;
+  border: none
+}
+
+.fc .fc-v-event {
+  background-color: transparent;
+  border: none
+}
+.fc .fc-timegrid-col.fc-day-today {
+  background-color: #F6F6F6 !important
+
+}

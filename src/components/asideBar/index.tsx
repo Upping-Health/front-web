@@ -1,0 +1,53 @@
+'use client'
+import { usePathname, useRouter } from 'next/navigation'
+import { useCallback, useState } from 'react'
+import AsideFooter from './asideFooter'
+import AsideHeader from './asideHeader'
+import AsideNav from './asideNav'
+
+const AsideBar = () => {
+  const router = useRouter()
+  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [openTabs, setOpenTabs] = useState<string[]>([])
+  const pathname = usePathname()
+
+  const selectMenu = useCallback(
+    (tab: any) => {
+      router.push(tab.path)
+    },
+    [router],
+  )
+
+  const toggleTab = (tabValue: string) => {
+    setOpenTabs((prev) =>
+      prev.includes(tabValue)
+        ? prev.filter((v) => v !== tabValue)
+        : [...prev, tabValue],
+    )
+  }
+
+  return (
+    <aside
+      className={`flex relative flex-col justify-between h-screen bg-white p-5 shadow-lg transition-all duration-300 ${
+        isCollapsed ? 'w-20' : 'w-56'
+      }`}
+    >
+      <div>
+        <AsideHeader 
+          isCollapsed={isCollapsed}
+          setIsCollapsed={setIsCollapsed}
+        />
+    
+        <AsideNav 
+          isCollapsed={isCollapsed}
+          openTabs={openTabs}
+          setOpenTabs={setOpenTabs}
+        />
+      </div>
+
+      <AsideFooter isCollapsed={isCollapsed} />
+    </aside>
+  )
+}
+
+export default AsideBar
