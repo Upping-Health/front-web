@@ -9,7 +9,6 @@ export const TABS_DASH = {
   AGENDA: 'agenda',
   PACIENTES: 'pacientes',
   CONFIG: 'Configurações'
-
 }
 
 export const dashboardTabs = [
