@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function NotFound() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-light">
-      <div className="w-full max-w-md text-center bg-white p-10 rounded-xl">
+      <div className="w-full max-w-md text-center bg-white p-10 rounded-xl shadow">
         <div className="mb-6 flex justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -1,13 +1,12 @@
+import AddIcon from '@mui/icons-material/Add'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import DashboardIcon from '@mui/icons-material/Dashboard'
-import GroupsIcon from '@mui/icons-material/Groups'
-import LocalHospitalIcon from '@mui/icons-material/LocalHospital'
-import AddIcon from '@mui/icons-material/Add'
-import HistoryIcon from '@mui/icons-material/History'
-import LocalDiningIcon from '@mui/icons-material/LocalDining'
-import RestaurantIcon from '@mui/icons-material/Restaurant'
-import MenuBookIcon from '@mui/icons-material/MenuBook'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
+import GroupsIcon from '@mui/icons-material/Groups'
+import HistoryIcon from '@mui/icons-material/History'
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital'
+import MenuBookIcon from '@mui/icons-material/MenuBook'
+import RestaurantIcon from '@mui/icons-material/Restaurant'
 export const TABS_DASH = {
   DASH: 'dash',
   AGENDA: 'agenda',
@@ -60,14 +59,14 @@ export const dashboardTabs = [
     path: '/dashboard/foodplan',
     children: [
       {
+        name: 'Alimentos',
+        icon: <RestaurantIcon />,
+        path: '/dashboard/foodplan/food',
+      },
+      {
         name: 'Cardápio',
         icon: <MenuBookIcon />,
         path: '/dashboard/foodplan/menu',
-      },
-      {
-        name: 'Alimentos',
-        icon: <RestaurantIcon />,
-        path: '/dashboard/foodplan/history',
       },
     ],
   },

@@ -1,5 +1,5 @@
 'use client'
-import { dashboardTabs } from '@/constants/dashboardTabs'
+import { dashboardTabs } from '@/routes'
 import { colors } from '@/utils/colors/colors'
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import { usePathname, useRouter } from 'next/navigation'

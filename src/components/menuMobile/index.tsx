@@ -14,7 +14,7 @@ import Cookies from 'js-cookie'
 import Image from 'next/image'
 import logoimg from '../../assets/logo.png'
 import AutoGraph from '@mui/icons-material/AutoGraph'
-import { dashboardTabs } from '@/constants/dashboardTabs'
+import { dashboardTabs } from '@/routes'
 import { colors } from '@/utils/colors/colors'
 
 const tabs = [

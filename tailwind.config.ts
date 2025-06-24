@@ -33,7 +33,6 @@ const config: Config = {
         paidFont: '#388e3c',
   
       },
-      
       borderRadius: {
         full: '100%',
         '20': '20px',
@@ -48,6 +47,7 @@ const config: Config = {
     },
 
   },
+  darkMode: 'class',
   plugins: [],
 }
 export default config

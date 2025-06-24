@@ -1,19 +1,17 @@
 'use client'
-import { DefaultContext } from '@/contexts/defaultContext'
-import { useTab } from '@/contexts/tabContext'
-import { TABS_DASH_PTBR } from '@/utils/types/tabs'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import StoreOutlinedIcon from '@mui/icons-material/StoreOutlined'
-import { useCallback, useContext, useEffect, useMemo } from 'react'
-import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
-import Cookies from 'js-cookie'
-import { ROLE } from '@/utils/types/roles'
 import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie'
+import { useState, useEffect } from 'react'
+import LightModeIcon from '@mui/icons-material/LightMode'
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
+import { colors } from '@/utils/colors/colors'
+import { useDarkMode } from '@/hooks/theme/useDarkTheme'
 
 const HeaderDash = () => {
-  const { user } = useContext(DefaultContext)
-  const { tabDashSelected } = useTab()
+  const {themeDark, toggleTheme} = useDarkMode();
   const router = useRouter()
+
+
 
   const handleLogout = () => {
     Cookies.remove('token')
@@ -21,7 +19,15 @@ const HeaderDash = () => {
   }
 
   return (
-    <div className="flex border-b border-b-gray justify-between items-center px-4 py-5 relative bg-white shadow-lg"></div>
+    <div className="flex border-b border-b-gray justify-end items-center px-4 py-5 relative h-[40px] bg-white dark:bg-black shadow-lg">
+      <button onClick={toggleTheme}>
+        {themeDark ? (
+          <LightModeIcon style={{ color: colors.white }} />
+        ) : (
+          <DarkModeOutlinedIcon />
+        )}
+      </button>
+    </div>
   )
 }
 
