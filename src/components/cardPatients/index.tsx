@@ -12,9 +12,15 @@ import { colors } from '@/utils/colors/colors'
 import PaginationDash from '../PaginationDash'
 import SearchIcon from '@mui/icons-material/Search'
 import InputStyled from '../inputStyled'
-
+import SelectStyled from '../select'
+import Wc from '@mui/icons-material/Wc'
+import ButtonActive from '../buttonActive'
+import ButtonStyled from '../button'
+import AssignmentInd from '@mui/icons-material/AssignmentInd'
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import ButtonExport from '../buttonExport'
+import FilterTable from '../filterTable'
 interface TableProps {
-
   data: any[]
   pagination?: boolean
   itemsPerPage?: number
@@ -26,7 +32,6 @@ const CardPatients: React.FC<TableProps> = ({
   pagination = true,
   itemsPerPage = 10,
   search = true,
-
 }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
@@ -39,32 +44,98 @@ const CardPatients: React.FC<TableProps> = ({
     return data.slice(startIndex, endIndex)
   }, [currentPage, data])
 
+
+
   return (
     <div className="relative flex flex-col gap-4 mt-10 s:h-[70%] d:h-[90%] justify-between py-3 w-full">
       <div>
         {search && (
-          <div className="flex mb-4 w-full">
+          <div className="flex mb-4 w-full h-[46px] gap-4">
             <InputStyled
               id="search"
               type="search"
-              styles="border-gray bg-white"
-              stylesContainer='w-full'
+              styles="border-gray bg-white py-3"
+              stylesContainer="w-full"
               stylesInput="font-light  w-full text-sm"
-              icon={<SearchIcon style={{ color: colors.black, fontSize: 16 }} />}
+              icon={
+                <SearchIcon style={{ color: colors.black, fontSize: 20 }} />
+              }
               onChange={(e) => {
                 setSearchTerm(e.target.value)
                 setCurrentPage(1)
               }}
               placeholder="Buscar pacientes por nome, telefone ou email..."
             />
+
+
+            <FilterTable options={[]} onSelect={() => {}} selected='' />
+            <ButtonExport 
+              onClick={() => {}}
+            
+            />
+
+            {/* <SelectStyled
+                icon={<Wc style={{ color: colors.primary }} />}
+                value={''}
+                onChange={() => {}}
+                id="gender"
+  
+              /> */}
           </div>
         )}
 
-    
-        <div className="">
-    
+        <div className="flex flex-row gap-4 justify-between flex-wrap">
+          {dataToDisplay.map((data, index) => {
+            const initials = data?.name
+              ?.split(' ')
+              .map((word: string) => word[0])
+              .join('')
+              .toUpperCase()
+
+            return (
+              <div
+                key={index}
+                className="bg-white p-3 rounded-xl shadow w-full"
+              >
+                <div className='flex items-center justify-between'>
+                  <div className='flex gap-3 items-center'>
+                    <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center text-sm font-medium text-white">
+                      {initials}
+                    </div>
+
+                    <div>
+                      <p className="font-medium text-black">
+                        {data?.name}
+                      </p>
+                      <p className="font-light text-sm text-black">
+                        {data?.years ?? 0} anos
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className='flex gap-2'>
+                    <ButtonActive 
+                    
+                      active={data?.status === 'ACTIVE'}
+                    />
+
+                    <ButtonStyled
+                      onClick={() => {}}
+                      title={'Iniciar consulta'}
+                      type="button"
+                      
+                      styles="bg-terciary h-[35px] px-3 rounded-6"
+            
+                    />
+
+                  </div>
+
+                </div>
+              </div>
+            )
+          })}
         </div>
-      </div>  
+      </div>
 
       {pagination && (
         <div className="flex justify-end mt-2 pr-4">

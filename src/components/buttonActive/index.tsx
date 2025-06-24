@@ -27,7 +27,7 @@ const ButtonActive = ({ onClick, type, active, disabled }: IButtonStyled) => {
         hover:font-bold
         transition
         duration-300
-
+        text-[12.8px]
         ${active ? 'bg-paid' : 'bg-unpaid'}
       `}
     >

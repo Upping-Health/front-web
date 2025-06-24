@@ -24,7 +24,7 @@ const InputStyled = ({maxLength,disabled, label, type, icon, placeholder, value,
     <div className={`${stylesContainer ? stylesContainer : ''} flex flex-col`}>
       {label && <label className='mb-1 text-darkGray text-sm'>{label}</label>}
       <div className={`${styles ? styles : ''} bg-none border border-solid outline-none border-gray rounded-xl p-2 flex items-center justify-between ${disabled ? 'bg-gray' : ''}`}>
-        <div className='flex items-center gap-4 w-full'>
+        <div className='flex items-center gap-3 w-full'>
           {icon}
           <input 
             maxLength={maxLength}

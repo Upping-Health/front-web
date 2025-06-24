@@ -12,6 +12,9 @@ import { colors } from '@/utils/colors/colors'
 import PaginationDash from '../PaginationDash'
 import SearchIcon from '@mui/icons-material/Search'
 import InputStyled from '../inputStyled'
+import FileDownloadOutlined from '@mui/icons-material/FileDownloadOutlined'
+import ButtonExport from '../buttonExport'
+import FilterTable from '../filterTable'
 
 interface TableProps {
   columns: Array<{
@@ -60,23 +63,41 @@ const TableDash: React.FC<TableProps> = ({
     return filteredData.slice(startIndex, endIndex)
   }, [currentPage, filteredData])
 
+
+
   return (
     <div className="relative flex flex-col gap-4 mt-10 s:h-[70%] d:h-[90%] justify-between py-3 w-full">
       <div>
-        {search && (
-          <div className="flex  mb-4">
+      {search && (
+          <div className="flex mb-4 w-full h-[46px] gap-4">
             <InputStyled
               id="search"
               type="search"
-              styles="border-gray bg-white"
-              stylesInput="font-light text-sm"
-              icon={<SearchIcon style={{ color: colors.black, fontSize: 16 }} />}
+              styles="border-gray bg-white py-3"
+              stylesContainer="w-full"
+              stylesInput="font-light  w-full text-sm"
+              icon={
+                <SearchIcon style={{ color: colors.black, fontSize: 20 }} />
+              }
               onChange={(e) => {
                 setSearchTerm(e.target.value)
                 setCurrentPage(1)
               }}
-              placeholder="Buscar..."
+              placeholder="Buscar pacientes por nome, telefone ou email..."
             />
+
+            <FilterTable options={[]} onSelect={() => {}} selected='' />
+            <ButtonExport 
+              onClick={() => {}}
+            
+            />
+            {/* <SelectStyled
+                icon={<Wc style={{ color: colors.primary }} />}
+                value={''}
+                onChange={() => {}}
+                id="gender"
+  
+              /> */}
           </div>
         )}
 

@@ -30,6 +30,37 @@ const ConsultPageId = ({ params }: { params: { id: string } }) => {
       last_consult: '15/11/2024',
       peso: '68kg',
       IMC: 'ff',
+      status: 'ACTIVE',
+    },
+    {
+      name: 'Diana',
+      year: '32',
+      totalConsults: 3,
+      last_consult: '15/11/2024',
+      peso: '68kg',
+      IMC: 'ff',
+      status: 'ACTIVE',
+
+    },
+    {
+      name: 'Diana',
+      year: '32',
+      totalConsults: 3,
+      last_consult: '15/11/2024',
+      peso: '68kg',
+      IMC: 'ff',
+      status: 'ACTIVE',
+
+    },
+    {
+      name: 'Diana',
+      year: '32',
+      totalConsults: 3,
+      last_consult: '15/11/2024',
+      peso: '68kg',
+      IMC: 'ff',
+      status: 'INACTIVE',
+
     },
 
 
@@ -55,7 +86,7 @@ const ConsultPageId = ({ params }: { params: { id: string } }) => {
         </>
       ) : (
         <div className="flex items-center justify-center mt-4">
-            <CardPatients data={mock}/>
+            <CardPatients data={mock} />
         </div>
       )}
 

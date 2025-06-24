@@ -38,6 +38,7 @@ const config: Config = {
         full: '100%',
         '20': '20px',
         xl: '8px',
+        '6': '6px',
       },
     },
     screens: {
