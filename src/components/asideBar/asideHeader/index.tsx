@@ -19,16 +19,15 @@ const AsideHeader = ({isCollapsed,setIsCollapsed}:IAsideHeaderParams) => {
 
 
   return (
-   
       <div>
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="absolute right-0 top-4 bg-primary rounded-l-xl flex justify-center items-center"
+          className="absolute right-0 top-4 bg-primary text-white rounded-l-xl flex justify-center items-center"
         >
           {isCollapsed ? (
-            <ChevronRightIcon style={{ color: '#FFFFFF' }} />
+            <ChevronRightIcon  />
           ) : (
-            <ChevronLeftIcon style={{ color: '#FFFFFF' }} />
+            <ChevronLeftIcon  />
           )}
         </button>
 

@@ -12,6 +12,7 @@ export function useDarkMode() {
   }, [])
 
   useEffect(() => {
+    console.log(themeDark);
     updateHtmlClass(themeDark)
     localStorage.setItem('theme', themeDark ? 'dark' : 'light')
   }, [themeDark])

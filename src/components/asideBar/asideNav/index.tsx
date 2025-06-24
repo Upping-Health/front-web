@@ -3,8 +3,9 @@ import { dashboardTabs } from '@/routes'
 import { colors } from '@/utils/colors/colors'
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import { usePathname, useRouter } from 'next/navigation'
-import React, { useCallback } from 'react'
-import AddIcon from '@mui/icons-material/Add';
+import React, { useCallback, useEffect } from 'react'
+import AddIcon from '@mui/icons-material/Add'
+import { useDarkMode } from '@/hooks/theme/useDarkTheme'
 
 interface IAsideNavParams {
   isCollapsed: boolean
@@ -13,11 +14,12 @@ interface IAsideNavParams {
 }
 
 interface IAsideNavItemProps {
-  tab: typeof dashboardTabs[0]
+  tab: (typeof dashboardTabs)[0]
   isCollapsed: boolean
   isExpanded: boolean
   toggleTab: (value: string) => void
   isCurrentPath: boolean
+  themeDark: boolean
 }
 
 interface IAsideNavSubItemProps {
@@ -31,13 +33,18 @@ interface IAsideNavSubItemProps {
   onClick: () => void
 }
 
-const AsideNavSubItem = ({ subtab, isCollapsed, isSubActive, onClick }: IAsideNavSubItemProps) => {
+const AsideNavSubItem = ({
+  subtab,
+  isCollapsed,
+  isSubActive,
+  onClick,
+}: IAsideNavSubItemProps) => {
   return (
     <button
       onClick={onClick}
       className={`flex items-center justify-between px-4 py-2 rounded-xl transition-all duration-300 w-full ${
         isCollapsed ? 'justify-center' : ''
-      } ${isSubActive ? 'bg-primary text-white' : 'text-primary hover:bg-[#CCF5D7]'}`}
+      } ${isSubActive ? 'bg-primary text-white' : 'text-primary dark:text-white hover:bg-primary'}`}
     >
       <div
         className={`flex items-center gap-3 ${
@@ -46,12 +53,14 @@ const AsideNavSubItem = ({ subtab, isCollapsed, isSubActive, onClick }: IAsideNa
       >
         {subtab.icon &&
           React.cloneElement(subtab.icon, {
-            style: {
-              fontSize: 20,
-              color: isSubActive ? colors.white : colors.primary,
-            },
+            className: `
+            ${isSubActive ? 'text-white' : 'text-primary dark:text-white'}
+            text-[24px]
+          `,
           })}
-        {!isCollapsed && <span className="text-sm font-medium">{subtab.name}</span>}
+        {!isCollapsed && (
+          <span className="text-sm font-medium">{subtab.name}</span>
+        )}
       </div>
     </button>
   )
@@ -71,6 +80,7 @@ const AsideNavItem = ({
     router.push(tab.path)
   }, [router, tab.path])
 
+
   return (
     <div key={tab.value}>
       <button
@@ -83,7 +93,7 @@ const AsideNavItem = ({
         }}
         className={`flex items-center justify-between px-2 py-2 rounded-xl transition-all duration-300 w-full ${
           isCollapsed ? 'justify-center' : ''
-        } ${isCurrentPath ? 'bg-primary text-white' : 'text-primary hover:bg-[#CCF5D7]'}`}
+        } ${isCurrentPath ? 'bg-primary text-white' : 'text-primary dark:text-white hover:bg-primary'}`}
       >
         <div
           className={`flex items-center gap-3 ${
@@ -91,28 +101,32 @@ const AsideNavItem = ({
           }`}
         >
           {React.cloneElement(tab.icon, {
-            style: {
-              fontSize: 24,
-              color: isCurrentPath ? colors.white : colors.primary,
-            },
+            className: `
+              ${isCurrentPath ? 'text-white' : 'text-primary dark:text-white'}
+              text-[24px]
+            `,
           })}
-          {!isCollapsed && <span className="text-sm font-medium">{tab.name}</span>}
+          {!isCollapsed && (
+            <span className="text-sm font-medium">{tab.name}</span>
+          )}
         </div>
 
         {!isCollapsed && tab.children && (
           <KeyboardArrowDown
-            style={{
-              fontSize: 16,
-              color: isCurrentPath ? colors.white : colors.primary,
-              transition: 'transform 0.3s',
-              transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-            }}
+            className={`
+            ${isCurrentPath ? 'text-white' : 'text-primary dark:text-white'}
+            text-[16px]
+            transition-transform duration-300
+            ${isExpanded ? 'rotate-180' : 'rotate-0'}
+          `}
           />
         )}
       </button>
 
-      {tab.children &&  isExpanded && (
-        <div className={`${isCollapsed ? '' : 'ml-4'} flex flex-col gap-1 mt-2`}>
+      {tab.children && isExpanded && (
+        <div
+          className={`${isCollapsed ? '' : 'ml-4'} flex flex-col gap-1 mt-2`}
+        >
           {tab.children.map((subtab) => {
             const isSubActive = pathname === subtab.path
             return (
@@ -133,10 +147,13 @@ const AsideNavItem = ({
 
 const AsideNav = ({ isCollapsed, openTabs, setOpenTabs }: IAsideNavParams) => {
   const pathname = usePathname()
+  const { themeDark } = useDarkMode()
 
   const toggleTab = (tabValue: string) => {
     setOpenTabs((prev) =>
-      prev.includes(tabValue) ? prev.filter((v) => v !== tabValue) : [...prev, tabValue],
+      prev.includes(tabValue)
+        ? prev.filter((v) => v !== tabValue)
+        : [...prev, tabValue],
     )
   }
 
@@ -144,7 +161,8 @@ const AsideNav = ({ isCollapsed, openTabs, setOpenTabs }: IAsideNavParams) => {
     <nav className="flex flex-col gap-2">
       {dashboardTabs.map((tab) => {
         const isCurrentPath =
-          pathname === tab.path || !!tab.children?.some((child) => pathname === child.path)
+          pathname === tab.path ||
+          !!tab.children?.some((child) => pathname === child.path)
         const isExpanded = openTabs.includes(tab.value)
 
         return (
@@ -155,6 +173,7 @@ const AsideNav = ({ isCollapsed, openTabs, setOpenTabs }: IAsideNavParams) => {
             isExpanded={isExpanded}
             toggleTab={toggleTab}
             isCurrentPath={isCurrentPath}
+            themeDark={themeDark}
           />
         )
       })}

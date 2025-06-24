@@ -26,27 +26,27 @@ const DashboardContent = () => {
             <Skeleton
               variant="rectangular"
               height={100}
-              className="rounded-xl bg-light"
+              className="rounded-xl bg-light dark:bg-gray-700"
             />
             <Skeleton
               variant="rectangular"
               height={100}
-              className="rounded-xl bg-light"
+              className="rounded-xl bg-light dark:bg-gray-700"
             />
 
             <Skeleton
               variant="rectangular"
               height={100}
-              className="rounded-xl bg-light"
+              className="rounded-xl bg-light dark:bg-gray-700"
             />
           </>
         ) : (
         <div className="flex flex-wrap gap-4 w-full">
               <div className="flex-1 min-w-[250px]">
-                <CardDash className="bg-[#1C6E8C]" icon={<Groups />} title="Pacientes" value={data.totalPatients} />
+                <CardDash className="bg-primary" icon={<Groups />} title="Pacientes" value={data.totalPatients} />
               </div>
               <div className="flex-1 min-w-[250px]">
-                <CardDash className="bg-green" icon={<GroupAddIcon />} title="Pacientes Ativos" value={data.totalPatientsActive} />
+                <CardDash className="bg-newGreen" icon={<GroupAddIcon />} title="Pacientes Ativos" value={data.totalPatientsActive} />
               </div>
               <div className="flex-1 min-w-[250px]">
                 <CardDash className="bg-red" icon={<GroupOffIcon />} title="Pacientes Inativos" value={data.totalPatientsInactive} />

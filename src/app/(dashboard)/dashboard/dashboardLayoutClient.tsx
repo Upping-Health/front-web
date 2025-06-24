@@ -16,7 +16,7 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
         <div className="flex flex-col h-full w-full">
           <HeaderDash />
 
-          <div className="flex-grow bg-gray-100 p-4 pb-10 md:pb-0 overflow-auto scroll-custom">
+          <div className="flex-grow bg-gray-100 dark:bg-gray-900 p-4 pb-10 md:pb-0 overflow-auto scroll-custom">
             <div className="flex h-full justify-center w-full">{children}</div>
           </div>
 

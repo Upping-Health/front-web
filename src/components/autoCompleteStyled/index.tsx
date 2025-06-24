@@ -38,7 +38,7 @@ const AutocompleteStyled = ({
   return (
     <div className={` w-[90%] ${stylesGlobal ?? ''} flex flex-col`}>
       {label && <label className='mb-1 text-darkGray text-sm'>{label}</label>}
-      <div className={`${styles ?? ''} border border-gray rounded-xl p-2 flex items-center justify-between ${disabled ? 'bg-gray' : ''}`}>
+      <div className={`${styles ?? ''} border border-gray rounded-xl p-2 flex items-center justify-between ${disabled ? 'bg-customGray' : ''}`}>
         <div className='flex items-center gap-4 w-full'>
           {icon}
           <Autocomplete

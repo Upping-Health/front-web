@@ -33,7 +33,7 @@ const TextAreaStyled = ({
     <div className="flex flex-col">
       {label && <label className="mb-1 text-darkGray text-sm">{label}</label>}
       <div
-        className={`${styles ? styles : ''} border border-gray rounded-xl p-2 ${disabled ? 'bg-gray' : ''}`}
+        className={`${styles ? styles : ''} border border-gray rounded-xl p-2 ${disabled ? 'bg-customGray' : ''}`}
       >
         <textarea
           maxLength={maxLength}
@@ -45,7 +45,7 @@ const TextAreaStyled = ({
           onBlur={onBlur}
           className={`
             w-full resize-none outline-none text-black font-light
-            ${disabled ? 'bg-gray' : 'bg-white'}
+            ${disabled ? 'bg-customGray' : 'bg-white'}
             ${stylesTextArea ? stylesTextArea : ''}
           `}
           rows={2}

@@ -9,7 +9,7 @@ const CardDash = ({ icon, title, value, className }: any) => {
   useEffect(() => {
     let currentValue = 0
     const targetValue = value
-    const increment = targetValue / 100
+    const increment = targetValue / 50
     const interval = setInterval(() => {
       currentValue += increment
       if (currentValue >= targetValue) {
@@ -23,7 +23,7 @@ const CardDash = ({ icon, title, value, className }: any) => {
   }, [value])
 
   return (
-    <div className={`flex items-center p-4 rounded-xl shadow-md bg-white hover:scale-105 transition-transform duration-300`}>
+    <div className={`flex items-center p-4 rounded-xl shadow-md bg-white  dark:bg-gray-700 hover:scale-105 transition-transform duration-300`}>
       <div className={`p-2 rounded-xl flex items-center justify-center ${className}`}>
         {React.cloneElement(icon, {
           style: {
@@ -32,7 +32,7 @@ const CardDash = ({ icon, title, value, className }: any) => {
           },
         })}
       </div>
-      <div className="ml-2 text-black">
+      <div className="ml-2 text-black dark:text-white">
         <motion.p
           className="text-4xl font-bold"
           animate={{ opacity: 1, scale: 1 }}

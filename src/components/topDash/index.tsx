@@ -27,8 +27,8 @@ const TopDash = ({
         </div>
 
         <div>
-          <p className="text-black text-1xl font-bold uppercase">{title}</p>
-          <p className="text-black text-sm font-light max-w-[400px]">
+          <p className="text-black dark:text-white text-1xl font-bold uppercase">{title}</p>
+          <p className="text-black dark:text-white text-sm font-light max-w-[400px]">
             {description}
           </p>
         </div>

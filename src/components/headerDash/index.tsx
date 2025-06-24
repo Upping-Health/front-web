@@ -19,7 +19,7 @@ const HeaderDash = () => {
   }
 
   return (
-    <div className="flex border-b border-b-gray justify-end items-center px-4 py-5 relative h-[40px] bg-white dark:bg-black shadow-lg">
+    <div className="flex border-b border-b-gray justify-end items-center px-4 py-5 relative h-[40px] bg-white dark:bg-gray-800  dark:border-gray-700 dark:border-b  shadow-lg">
       <button onClick={toggleTheme}>
         {themeDark ? (
           <LightModeIcon style={{ color: colors.white }} />

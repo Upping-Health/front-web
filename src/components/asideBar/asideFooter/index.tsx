@@ -19,7 +19,7 @@ const AsideFooter = ({isCollapsed}: {isCollapsed: boolean}) => {
       <div>
         <div className="flex items-center gap-3 mb-4">
           <div
-            className={`bg-black ${
+            className={`bg-black dark:bg-gray-600 ${
               isCollapsed ? 'w-10 h-10' : 'w-12 h-12'
             } rounded-full flex items-center justify-center`}
           >
@@ -27,10 +27,10 @@ const AsideFooter = ({isCollapsed}: {isCollapsed: boolean}) => {
           </div>
           {!isCollapsed && (
             <div>
-              <p className="text-black text-sm font-semibold">
+              <p className="text-black dark:text-white text-sm font-semibold">
                 {user?.name?.substring(0, 17)}
               </p>
-              <p className="text-black text-sm font-light">
+              <p className="text-black dark:text-white text-sm font-light">
                 {ROLE_PTBR[user?.role || 'admin']}
               </p>
             </div>
@@ -38,7 +38,7 @@ const AsideFooter = ({isCollapsed}: {isCollapsed: boolean}) => {
         </div>
         <button
           onClick={handleLogout}
-          className={`w-full py-2 rounded-xl shadow-lg transition flex justify-center items-center gap-2  bg-black ${
+          className={`w-full py-2 rounded-xl shadow-lg transition flex justify-center items-center gap-2  bg-black dark:bg-gray-700 ${
             isCollapsed ? 'text-center px-0' : ''
           }`}
         >

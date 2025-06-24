@@ -3,6 +3,7 @@ import type { Config } from 'tailwindcss'
 
 
 
+
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -22,10 +23,10 @@ const config: Config = {
         white: '#FFFFFF',
         black: '#323031',
         newGray: '#D9D9D9',
-        gray: '#e5e7eb',
+        customGray: '#e5e7eb',
         darkGray: '#B8B8B8',
         light: '#F5F5F5',
-        green: '#219F02',
+        newGreen: '#219F02',
         terciary: '#1C6E8C',
         unpaid: '#ffcdd2',
         unpaidFont:' #c62828',

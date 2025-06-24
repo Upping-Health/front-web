@@ -37,7 +37,7 @@ const DatePickerStyled = ({
       {label && <label className="mb-1 text-darkGray text-sm">{label}</label>}
       <div
         className={`${styles ? styles : ''} bg-none border border-gray border-solid outline-none rounded-xl p-2 flex items-center justify-between ${
-          disabled ? 'bg-gray' : ''
+          disabled ? 'bg-customGray' : ''
         }`}
       >
         <div className="flex items-center gap-4 w-full">
@@ -51,7 +51,7 @@ const DatePickerStyled = ({
             min={min}
             max={max}
             disabled={disabled}
-            className={`${disabled ? 'bg-gray' : 'bg-white'} ${
+            className={`${disabled ? 'bg-customGray' : 'bg-white'} ${
               stylesInput ? stylesInput : ''
             } outline-none text-black font-semibold w-full`}
             placeholder={placeholder}

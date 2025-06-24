@@ -23,7 +23,7 @@ const InputStyled = ({maxLength,disabled, label, type, icon, placeholder, value,
   return (
     <div className={`${stylesContainer ? stylesContainer : ''} flex flex-col`}>
       {label && <label className='mb-1 text-darkGray text-sm'>{label}</label>}
-      <div className={`${styles ? styles : ''} bg-none border border-solid outline-none border-gray rounded-xl p-2 flex items-center justify-between ${disabled ? 'bg-gray' : ''}`}>
+      <div className={`${styles ? styles : ''} bg-none border border-solid outline-none border-gray rounded-xl p-2 flex items-center justify-between ${disabled ? 'bg-customGray' : ''}`}>
         <div className='flex items-center gap-3 w-full'>
           {icon}
           <input 
@@ -33,7 +33,7 @@ const InputStyled = ({maxLength,disabled, label, type, icon, placeholder, value,
             value={value} 
             onChange={onChange} 
             type={type} 
-            className={`${disabled ? 'bg-gray' : 'bg-white'} ${stylesInput ? stylesInput : ''} outline-none text-black w-[70%]`}
+            className={`${disabled ? 'bg-customGray' : 'bg-white'} ${stylesInput ? stylesInput : ''} outline-none text-black w-[70%]`}
             placeholder={placeholder} 
             onBlur={onBlur}
             
