@@ -21,6 +21,7 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined'
 import ButtonExport from '../buttonExport'
 import FilterTable from '../filterTable'
 import ProfileRounded from '../profileRounded'
+import masks from '@/utils/masks/masks'
 interface TableProps {
   data: any[]
   pagination?: boolean
@@ -94,7 +95,6 @@ const CardPatients: React.FC<TableProps> = ({
 
         <div className="flex flex-row gap-4 justify-between flex-wrap">
           {dataToDisplay.map((data, index) => {
-            
             return (
               <div
                 key={index}
@@ -102,25 +102,40 @@ const CardPatients: React.FC<TableProps> = ({
               >
                 <div className="flex items-center justify-between">
                   <div className="flex gap-3 items-center">
-                    <ProfileRounded user={data}/>
+                    <ProfileRounded user={data} />
 
                     <div>
                       <p className="font-medium text-black">{data?.name}</p>
-                      <p className="font-light text-sm text-black">
-                        {data?.years ?? 0} anos
-                      </p>
+
+                      <div className="flex gap-6 font-light text-sm text-black">
+                        <p>{data?.years ?? 0} anos</p>
+
+                        <p>{masks.cpfMask(data?.cpf)}</p>
+
+                        <p>{masks.phoneMask(data?.cpf)}</p>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="flex gap-2">
-                    <ButtonActive active={data?.status === 'ACTIVE'} />
+                  <div className="flex gap-2 items-center">
+                    <span className="bg-blue-50 border-blue-200 border h-[35px] px-4 flex items-center justify-center rounded-md text-blue-700 text-sm font-medium">
+                      10 consultas
+                    </span>
+                    {/* <ButtonActive active={data?.status === 'ACTIVE'} /> */}
 
+                    <ButtonStyled
+                      onClick={() => {}}
+                      title={'Histórico'}
+                      type="button"
+                      styles="bg-terciary h-[35px] px-3 rounded-md"
+                    />
                     <ButtonStyled
                       onClick={() => {}}
                       title={'Iniciar consulta'}
                       type="button"
-                      styles="bg-terciary h-[35px] px-3 rounded-6"
+                      styles="bg-primary h-[35px] px-3 rounded-md"
                     />
+
                   </div>
                 </div>
               </div>

@@ -9,22 +9,8 @@ const AsideBar = () => {
   const router = useRouter()
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [openTabs, setOpenTabs] = useState<string[]>([])
-  const pathname = usePathname()
 
-  const selectMenu = useCallback(
-    (tab: any) => {
-      router.push(tab.path)
-    },
-    [router],
-  )
 
-  const toggleTab = (tabValue: string) => {
-    setOpenTabs((prev) =>
-      prev.includes(tabValue)
-        ? prev.filter((v) => v !== tabValue)
-        : [...prev, tabValue],
-    )
-  }
 
   return (
     <aside

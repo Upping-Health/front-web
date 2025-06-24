@@ -51,7 +51,7 @@ const AsideNavSubItem = ({ subtab, isCollapsed, isSubActive, onClick }: IAsideNa
               color: isSubActive ? colors.white : colors.primary,
             },
           })}
-        {!isCollapsed && <span className="text-base font-medium">{subtab.name}</span>}
+        {!isCollapsed && <span className="text-sm font-medium">{subtab.name}</span>}
       </div>
     </button>
   )
@@ -81,7 +81,7 @@ const AsideNavItem = ({
             selectMenu()
           }
         }}
-        className={`flex items-center justify-between px-4 py-2 rounded-xl transition-all duration-300 w-full ${
+        className={`flex items-center justify-between px-2 py-2 rounded-xl transition-all duration-300 w-full ${
           isCollapsed ? 'justify-center' : ''
         } ${isCurrentPath ? 'bg-primary text-white' : 'text-primary hover:bg-[#CCF5D7]'}`}
       >
@@ -96,13 +96,13 @@ const AsideNavItem = ({
               color: isCurrentPath ? colors.white : colors.primary,
             },
           })}
-          {!isCollapsed && <span className="text-base font-medium">{tab.name}</span>}
+          {!isCollapsed && <span className="text-sm font-medium">{tab.name}</span>}
         </div>
 
         {!isCollapsed && tab.children && (
           <KeyboardArrowDown
             style={{
-              fontSize: 20,
+              fontSize: 16,
               color: isCurrentPath ? colors.white : colors.primary,
               transition: 'transform 0.3s',
               transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
