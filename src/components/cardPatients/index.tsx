@@ -17,9 +17,10 @@ import Wc from '@mui/icons-material/Wc'
 import ButtonActive from '../buttonActive'
 import ButtonStyled from '../button'
 import AssignmentInd from '@mui/icons-material/AssignmentInd'
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined'
 import ButtonExport from '../buttonExport'
 import FilterTable from '../filterTable'
+import ProfileRounded from '../profileRounded'
 interface TableProps {
   data: any[]
   pagination?: boolean
@@ -44,8 +45,6 @@ const CardPatients: React.FC<TableProps> = ({
     return data.slice(startIndex, endIndex)
   }, [currentPage, data])
 
-
-
   return (
     <div className="relative flex flex-col gap-4 mt-10 s:h-[70%] d:h-[90%] justify-between py-3 w-full">
       <div>
@@ -67,12 +66,21 @@ const CardPatients: React.FC<TableProps> = ({
               placeholder="Buscar pacientes por nome, telefone ou email..."
             />
 
-
-            <FilterTable options={[]} onSelect={() => {}} selected='' />
-            <ButtonExport 
-              onClick={() => {}}
-            
+            <FilterTable
+              options={[
+                {
+                  label: 'Ativo',
+                  value: 'active',
+                },
+                {
+                  label: 'Inativo',
+                  value: 'inactive',
+                },
+              ]}
+              onSelect={() => {}}
+              selected="inactive"
             />
+            <ButtonExport onClick={() => {}} />
 
             {/* <SelectStyled
                 icon={<Wc style={{ color: colors.primary }} />}
@@ -86,50 +94,34 @@ const CardPatients: React.FC<TableProps> = ({
 
         <div className="flex flex-row gap-4 justify-between flex-wrap">
           {dataToDisplay.map((data, index) => {
-            const initials = data?.name
-              ?.split(' ')
-              .map((word: string) => word[0])
-              .join('')
-              .toUpperCase()
-
+            
             return (
               <div
                 key={index}
                 className="bg-white p-3 rounded-xl shadow w-full"
               >
-                <div className='flex items-center justify-between'>
-                  <div className='flex gap-3 items-center'>
-                    <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center text-sm font-medium text-white">
-                      {initials}
-                    </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex gap-3 items-center">
+                    <ProfileRounded user={data}/>
 
                     <div>
-                      <p className="font-medium text-black">
-                        {data?.name}
-                      </p>
+                      <p className="font-medium text-black">{data?.name}</p>
                       <p className="font-light text-sm text-black">
                         {data?.years ?? 0} anos
                       </p>
                     </div>
                   </div>
 
-                  <div className='flex gap-2'>
-                    <ButtonActive 
-                    
-                      active={data?.status === 'ACTIVE'}
-                    />
+                  <div className="flex gap-2">
+                    <ButtonActive active={data?.status === 'ACTIVE'} />
 
                     <ButtonStyled
                       onClick={() => {}}
                       title={'Iniciar consulta'}
                       type="button"
-                      
                       styles="bg-terciary h-[35px] px-3 rounded-6"
-            
                     />
-
                   </div>
-
                 </div>
               </div>
             )

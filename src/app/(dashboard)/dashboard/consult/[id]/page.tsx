@@ -22,51 +22,7 @@ import TooltipStyled from '@/components/tooltipStyled'
 import CardPatients from '@/components/cardPatients'
 
 const ConsultPageId = ({ params }: { params: { id: string } }) => {
-  const mock = [
-    {
-      name: 'Diana',
-      year: '32',
-      totalConsults: 3,
-      last_consult: '15/11/2024',
-      peso: '68kg',
-      IMC: 'ff',
-      status: 'ACTIVE',
-    },
-    {
-      name: 'Diana',
-      year: '32',
-      totalConsults: 3,
-      last_consult: '15/11/2024',
-      peso: '68kg',
-      IMC: 'ff',
-      status: 'ACTIVE',
-
-    },
-    {
-      name: 'Diana',
-      year: '32',
-      totalConsults: 3,
-      last_consult: '15/11/2024',
-      peso: '68kg',
-      IMC: 'ff',
-      status: 'ACTIVE',
-
-    },
-    {
-      name: 'Diana',
-      year: '32',
-      totalConsults: 3,
-      last_consult: '15/11/2024',
-      peso: '68kg',
-      IMC: 'ff',
-      status: 'INACTIVE',
-
-    },
-
-
-  ]
-  const [loading, setloading] = useState<boolean>(false)
-
+  const { data, loading } = useLoadPatients(false)
 
   return (
     <div className="w-full relative">
@@ -85,9 +41,10 @@ const ConsultPageId = ({ params }: { params: { id: string } }) => {
           </div>
         </>
       ) : (
-        <div className="flex items-center justify-center mt-4">
-            <CardPatients data={mock} />
-        </div>
+        <CardPatients
+          data={[...data, ...data, ...data, ...data, ...data]}
+          itemsPerPage={6}
+        />
       )}
 
       {/* <ModalSelectPatient

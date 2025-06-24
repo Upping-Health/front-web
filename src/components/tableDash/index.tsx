@@ -86,7 +86,13 @@ const TableDash: React.FC<TableProps> = ({
               placeholder="Buscar pacientes por nome, telefone ou email..."
             />
 
-            <FilterTable options={[]} onSelect={() => {}} selected='' />
+            <FilterTable options={[{
+              label: 'Ativo',
+              value: 'active',
+            },{
+              label: 'Inativo',
+              value: 'inactive'
+            }]} onSelect={() => {}} selected='inactive' />
             <ButtonExport 
               onClick={() => {}}
             

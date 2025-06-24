@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer components {
+
   .center {
     @apply mx-auto h-screen flex overflow-hidden justify-center w-full;
   }
