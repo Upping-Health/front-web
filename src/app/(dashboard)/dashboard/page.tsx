@@ -43,7 +43,7 @@ const DashboardContent = () => {
         ) : (
         <div className="flex flex-wrap gap-4 w-full">
               <div className="flex-1 min-w-[250px]">
-                <CardDash className="bg-primary" icon={<Groups />} title="Pacientes" value={data.totalPatients} />
+                <CardDash className="bg-terciary" icon={<Groups />} title="Pacientes" value={data.totalPatients} />
               </div>
               <div className="flex-1 min-w-[250px]">
                 <CardDash className="bg-newGreen" icon={<GroupAddIcon />} title="Pacientes Ativos" value={data.totalPatientsActive} />
