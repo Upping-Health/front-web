@@ -32,7 +32,7 @@ const config: Config = {
         unpaidFont:' #c62828',
         paid: '#c8e6c9',
         paidFont: '#388e3c',
-  
+        newYellow: '#F0F005',
       },
       borderRadius: {
         full: '100%',
