@@ -49,7 +49,7 @@ const DashboardContent = () => {
                 <CardDash className="bg-newGreen" icon={<GroupAddIcon />} title="Pacientes Ativos" value={data.totalPatientsActive} />
               </div>
               <div className="flex-1 min-w-[250px]">
-                <CardDash className="bg-red" icon={<GroupOffIcon />} title="Pacientes Inativos" value={data.totalPatientsInactive} />
+                <CardDash className="bg-newRed" icon={<GroupOffIcon />} title="Pacientes Inativos" value={data.totalPatientsInactive} />
               </div>
               {/* <div className="flex-1 min-w-[250px]">
                 <CardDash icon={<Group />} title="Novos Pacientes" value={1} />

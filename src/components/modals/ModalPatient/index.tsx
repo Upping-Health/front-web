@@ -391,7 +391,7 @@ const ModalPatient = ({
                       type="button"
                       onClick={setIsClose}
                       styles="w-full"
-                      bgColor="bg-red"
+                      bgColor="bg-newRed"
                       title="Cancelar"
                     />
 
@@ -540,7 +540,7 @@ const ModalPatient = ({
                       type="button"
                       onClick={() => setViewTwo(false)}
                       styles="w-full"
-                      bgColor="bg-red"
+                      bgColor="bg-newRed"
                       title="Voltar"
                     />
 

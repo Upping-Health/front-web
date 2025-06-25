@@ -30,8 +30,8 @@ const TextAreaStyled = ({
   isTouched,
 }: ITextAreaStyled) => {
   return (
-    <div className="flex flex-col">
-      {label && <label className="mb-1 text-darkGray text-sm">{label}</label>}
+    <div className="flex flex-col w-full">
+      {label && <label className="mb-1 text-darkGray">{label}</label>}
       <div
         className={`${styles ? styles : ''} border border-gray rounded-xl p-2 ${disabled ? 'bg-customGray' : ''}`}
       >

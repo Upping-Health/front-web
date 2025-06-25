@@ -19,7 +19,7 @@ const config: Config = {
       },
       colors: {
         primary: '#22B349',
-        red: '#FF3A20',
+        newRed: '#FF3A20',
         white: '#FFFFFF',
         black: '#323031',
         newGray: '#D9D9D9',

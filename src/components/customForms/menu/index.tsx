@@ -8,23 +8,15 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox'
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked'
-
-interface ICustomFormMenu {}
-
-const iconMap: Record<string, React.ElementType> = {
-  text: TextFieldsIcon,
-  textarea: NotesIcon,
-  number: NumbersIcon,
-  select: ListIcon,
-  checkbox: CheckBoxIcon,
-  date: CalendarTodayIcon,
-  file: AttachFileIcon,
-  radio: RadioButtonCheckedIcon,
+import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle'
+interface ICustomFormMenu {
+  onPushQuestions: (e: any) => void
 }
 
-const ButtonFormMenu = ({ label, icon: Icon }: any) => {
+const ButtonFormMenu = ({ label, icon: Icon, onClick }: any) => {
   return (
     <button
+      onClick={onClick}
       className="py-2 px-3 rounded-xl border flex items-center gap-2 bg-white flex-shrink-0 transition-all duration-200 ease-in-out hover:bg-gray-100 active:scale-95 shadow-sm hover:shadow-md"
     >
       {Icon && <Icon className="text-base text-gray-700" />}
@@ -33,26 +25,71 @@ const ButtonFormMenu = ({ label, icon: Icon }: any) => {
   )
 }
 
-
-const CustomFormMenu = ({}: ICustomFormMenu) => {
+const CustomFormMenu = ({ onPushQuestions }: ICustomFormMenu) => {
   const options = [
-    { label: 'Texto curto', value: 'text', icon: TextFieldsIcon },
-    { label: 'Texto longo', value: 'textarea', icon: NotesIcon },
-    { label: 'Número', value: 'number', icon: NumbersIcon },
-    { label: 'Lista Suspensa', value: 'select', icon: CheckBoxIcon },
-    { label: 'Múltiplica seleção', value: 'checkbox', icon: CheckBoxIcon },
-    { label: 'Data', value: 'date', icon: CalendarTodayIcon },
-    { label: 'Arquivo', value: 'file', icon: AttachFileIcon },
-    { label: 'Caixa de Seleção', value: 'radio', icon: RadioButtonCheckedIcon },
+    {
+      label: 'Texto',
+      type: 'text',
+      icon: TextFieldsIcon,
+      description:
+        'Ideal para nomes, títulos ou pequenas informações.',
+    },
+    {
+      label: 'Parágrafo',
+      type: 'textarea',
+      icon: NotesIcon,
+      description:
+        'Adequado para descrições ou respostas mais detalhadas.',
+    },
+    {
+      label: 'Múltipla Escolha',
+      type: 'checkbox',
+      icon: RadioButtonCheckedIcon,
+      description:
+        'Permite selecionar uma ou opção entre as disponíveis.',
+    },
+    {
+      label: 'Caixa de Seleção',
+      type: 'radio',
+      icon: CheckBoxIcon,
+      description:
+        'Permite selecionar apenas uma ou mais opções entre várias disponíveis.',
+    },
+    {
+      label: 'Lista Suspensa',
+      type: 'select',
+      icon: ArrowDropDownCircleIcon,
+      description:
+        'Menu em formato de lista que permite escolher uma única opção.',
+    },
+    {
+      label: 'Número',
+      type: 'number',
+      icon: NumbersIcon,
+      description: 'Campo para inserir apenas valores numéricos.',
+    },
+    {
+      label: 'Data',
+      type: 'date',
+      icon: CalendarTodayIcon,
+      description: 'Campo para selecionar uma data específica no calendário.',
+    },
+    {
+      label: 'Arquivo',
+      type: 'file',
+      icon: AttachFileIcon,
+      description: 'Permite o envio (upload) de um arquivo pelo usuário.',
+    },
   ]
 
   return (
-    <nav className="flex flex-row flex-wrap gap-1 max-w-full">
+    <nav className="grid grid-cols-4 grid-rows-2 gap-2 max-w-full">
       {options.map((opt) => (
         <ButtonFormMenu
-          key={opt.value}
+          key={opt.type}
           label={opt.label}
-          icon={opt.icon|| FormatAlignJustifyIcon}
+          icon={opt.icon || FormatAlignJustifyIcon}
+          onClick={() => onPushQuestions(opt)}
         />
       ))}
     </nav>
