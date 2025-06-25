@@ -1,18 +1,34 @@
 'use client'
+
 import { dashboardTabs } from '@/routes'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useCallback } from 'react'
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import { useDarkMode } from '@/hooks/theme/useDarkTheme'
 
+// Tipos atualizados conforme novo formato
 interface IAsideNavParams {
   isCollapsed: boolean
   openTabs: string[]
   setOpenTabs: React.Dispatch<React.SetStateAction<string[]>>
 }
 
+interface SubTab {
+  icon: JSX.Element
+  name: string
+  path: string
+}
+
+interface Tab {
+  name: string
+  icon: JSX.Element
+  value: string
+  path: string
+  children?: Record<string, SubTab>
+}
+
 interface IAsideNavItemProps {
-  tab: (typeof dashboardTabs)[0]
+  tab: Tab
   isCollapsed: boolean
   isExpanded: boolean
   toggleTab: (value: string) => void
@@ -21,11 +37,7 @@ interface IAsideNavItemProps {
 }
 
 interface IAsideNavSubItemProps {
-  subtab: {
-    icon?: any
-    name: string
-    path: string
-  }
+  subtab: SubTab
   isCollapsed: boolean
   isSubActive: boolean
   onClick: () => void
@@ -49,14 +61,13 @@ const AsideNavSubItem = ({
           isCollapsed ? 'justify-center w-full' : ''
         }`}
       >
-        {subtab.icon &&
-          React.cloneElement(subtab.icon, {
-            className: `
-              text-[24px]
-              ${isSubActive ? 'text-white' : 'text-primary dark:text-white'}
-              group-hover:text-white
-            `,
-          })}
+        {React.cloneElement(subtab.icon, {
+          className: `
+            text-[24px]
+            ${isSubActive ? 'text-white' : 'text-primary dark:text-white'}
+            group-hover:text-white
+          `,
+        })}
         {!isCollapsed && (
           <span className="text-sm font-medium">{subtab.name}</span>
         )}
@@ -127,7 +138,7 @@ const AsideNavItem = ({
         <div
           className={`${isCollapsed ? '' : 'ml-4'} flex flex-col gap-1 mt-2`}
         >
-          {tab.children.map((subtab) => {
+          {Object.values(tab.children).map((subtab) => {
             const isSubActive = pathname === subtab.path
             return (
               <AsideNavSubItem
@@ -159,10 +170,11 @@ const AsideNav = ({ isCollapsed, openTabs, setOpenTabs }: IAsideNavParams) => {
 
   return (
     <nav className="flex flex-col gap-2">
-      {dashboardTabs.map((tab) => {
-        const isCurrentPath =
-          pathname === tab.path ||
-          !!tab.children?.some((child) => pathname === child.path)
+      {Object.values(dashboardTabs).map((tab) => {
+        const getFirstPathSegment = (path: string) => path.split('/')[1] || ''
+        const currentSegment = getFirstPathSegment(pathname)
+        const tabSegment = getFirstPathSegment(tab.path)
+        const isCurrentPath = currentSegment === tabSegment
         const isExpanded = openTabs.includes(tab.value)
 
         return (

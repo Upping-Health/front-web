@@ -23,17 +23,17 @@ const CardProfile = ({ user }: ICardProfile) => {
         />
       </div>
       <div>
-        <p className="text-black  font-semibold">{user?.name ?? ''}</p>
+        <p className="text-black dark:text-white  font-semibold">{user?.name ?? ''}</p>
         <div className="flex items-center">
 
-          <p className='font-extralight  mr-2'>{user?.years ?? 0} anos</p>
+          <p className='font-extralight dark:text-white  mr-2'>{user?.years ?? 0} anos</p>
           {user?.gender === 'FEMALE' ? 
           
-          <FemaleIcon style={{color: '#CC4BC2'}}/> : user?.gender === 'MALE' ? 
+          <FemaleIcon className='dark:text-white'/> : user?.gender === 'MALE' ? 
           
-          <MaleIcon style={{color: '#2E2EFF'}}/>
+          <MaleIcon  className='dark:text-white'/>
 
-          : <TransgenderIcon style={{color: colors.black, fontSize: 20}}/>
+          : <TransgenderIcon  className='dark:text-white'/>
           }
         </div>
       </div>

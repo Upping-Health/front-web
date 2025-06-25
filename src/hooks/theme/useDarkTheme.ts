@@ -1,31 +1,9 @@
-import { useEffect, useState } from 'react'
+import { DefaultContext } from '@/contexts/defaultContext'
+import { useContext, useEffect, useState } from 'react'
 
 export function useDarkMode() {
-  const [themeDark, setThemeDark] = useState<boolean>(false)
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme')
-    const shouldUseDark = storedTheme === 'dark' || (!storedTheme)
-    setThemeDark(shouldUseDark)
-    updateHtmlClass(shouldUseDark)
-  }, [])
-
-  useEffect(() => {
-    console.log(themeDark);
-    updateHtmlClass(themeDark)
-    localStorage.setItem('theme', themeDark ? 'dark' : 'light')
-  }, [themeDark])
-
-  const toggleTheme = () => setThemeDark((prev) => !prev)
-
-  const updateHtmlClass = (enableDark: boolean) => {
-    const root = document.documentElement
-    if (enableDark) {
-      root.classList.add('dark')
-    } else {
-      root.classList.remove('dark')
-    }
-  }
+  const {themeDark, toggleTheme} = useContext(DefaultContext)
+ 
 
   return { themeDark, toggleTheme }
 }

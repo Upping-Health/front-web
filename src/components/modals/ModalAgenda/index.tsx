@@ -168,8 +168,8 @@ const ModalAgenda = ({
         onClose={setIsClose}
         className="flex justify-center items-center"
       >
-        <div className="bg-white rounded-20 px-5 py-4 w-[85%] max-w-[500px]">
-          <p className="font-semibold text-xl text-center uppercase pb-5">
+        <div className="bg-white rounded-20 px-5 py-4 w-[85%] max-w-[500px] dark:bg-slate-500">
+          <p className="font-semibold text-xl text-center uppercase pb-5 dark:text-white">
             {scheduleSelected ? 'Atualizar Agenda' : 'Cadastro de Agenda'}
           </p>
 
@@ -194,7 +194,7 @@ const ModalAgenda = ({
                       <AutocompleteStyled
                         id="patient"
                         label="Paciente"
-                        icon={<Person style={{ color: colors.black }} />}
+                        icon={<Person className='dark:text-white text-black' />}
                         placeholder="Selecione o paciente"
                         value={patientSearch}
                         options={data}
@@ -202,6 +202,7 @@ const ModalAgenda = ({
                         onChange={(event: any, newValue: any) => {
                           formik.setFieldValue('patient', newValue?.id || '')
                         }}
+                        stylesLabel='dark:text-white'
                         
                       />
                   <Tooltip
@@ -300,6 +301,7 @@ const ModalAgenda = ({
                       onBlur={formik.handleBlur}
                       error={formik.errors.startDate}
                       isTouched={formik.touched.startDate}
+                      stylesInput='dark:bg-slate-500 dark:text-white'
                     />
 
 
@@ -310,6 +312,7 @@ const ModalAgenda = ({
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       error={formik.errors.endDate}
+                      stylesInput='dark:bg-slate-500 dark:text-white'
                       isTouched={formik.touched.endDate}
                     />
               
@@ -321,6 +324,7 @@ const ModalAgenda = ({
                       label="Digite uma observação"
                       placeholder="Digite uma observação (Opcional)"
                       maxLength={250}
+                      stylesTextArea='dark:bg-slate-500 dark:text-white'
                     />
 
                     

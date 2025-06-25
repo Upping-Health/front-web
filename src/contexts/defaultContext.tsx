@@ -10,7 +10,7 @@ import { createContext, useCallback, useEffect, useState } from 'react';
 export const DefaultContext = createContext<DefaultContextInterface>({} as any)
 
 export default function DefaultProvider({ children }: any) {
-
+  const [themeDark, setThemeDark] = useState<boolean>(false)
   const [user, setuser] = useState<User | null>(null);
   const [showModal, setshowModal] = useState<any>({
     open: false,
@@ -19,6 +19,29 @@ export default function DefaultProvider({ children }: any) {
     status: '',
   })
   
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme')
+    const shouldUseDark = storedTheme === 'dark' || (!storedTheme)
+    setThemeDark(shouldUseDark)
+    updateHtmlClass(shouldUseDark)
+  }, [])
+
+  useEffect(() => {
+    console.log(themeDark);
+    updateHtmlClass(themeDark)
+    localStorage.setItem('theme', themeDark ? 'dark' : 'light')
+  }, [themeDark])
+
+  const toggleTheme = () => setThemeDark((prev) => !prev)
+
+  const updateHtmlClass = (enableDark: boolean) => {
+    const root = document.documentElement
+    if (enableDark) {
+      root.classList.add('dark')
+    } else {
+      root.classList.remove('dark')
+    }
+  }
 
   useEffect(() => {
     const token = Cookies.get('token');
@@ -44,7 +67,9 @@ export default function DefaultProvider({ children }: any) {
     <DefaultContext.Provider value={{
       user,
       setuser,
-      onShowFeedBack
+      onShowFeedBack,
+      themeDark,
+      toggleTheme,
     }}>
       {children}
 

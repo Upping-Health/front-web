@@ -41,8 +41,7 @@ const ModalPatient = ({
   const { onShowFeedBack, user } = useContext(DefaultContext)
   const [viewTwo, setViewTwo] = useState(false)
   const [loading, setloading] = useState(false)
-  const [loadingData, setLoadingData] = useState(false);
-
+  const [loadingData, setLoadingData] = useState(false)
 
   const onSuccess = () => {
     onShowFeedBack(PreFeedBack.success('Paciente cadastrado com sucesso!'))
@@ -73,8 +72,6 @@ const ModalPatient = ({
     { value: 'FEMALE', text: 'Feminino' },
     { value: 'OTHER', text: 'Outros' },
   ]
-
-  
 
   useEffect(() => {
     setViewTwo(false)
@@ -142,25 +139,26 @@ const ModalPatient = ({
     validate: validatPatient,
     onSubmit: async (values) => {
       setloading(true)
-      const data: Omit<Patient, 'id' | 'created_at' | 'updated_at' | 'status'> = {
-        cpf: masks.unmask(values.cpf),
-        phone: masks.unmask(values.phone),
-        name: values.name,
-        //status: values.status ? 'ACTIVE' : 'INACTIVE',
-        email: values.email,
-        gender: values.gender as "MALE" | "FEMALE" | "OTHER",
-        //objective: values?.objective ?? '',
-        birthDate: formatDate(values.birthDate),
-        address: {
-          city: values.city,
-          complement: values?.complement ?? null,
-          neighborhood: values.neighborhood,
-          number: values.number,
-          state: values.state,
-          street: values.street,
-          zipCode: values.zipCode.replace(/\D/g, ''),
-        },
-      }
+      const data: Omit<Patient, 'id' | 'created_at' | 'updated_at' | 'status'> =
+        {
+          cpf: masks.unmask(values.cpf),
+          phone: masks.unmask(values.phone),
+          name: values.name,
+          //status: values.status ? 'ACTIVE' : 'INACTIVE',
+          email: values.email,
+          gender: values.gender as 'MALE' | 'FEMALE' | 'OTHER',
+          //objective: values?.objective ?? '',
+          birthDate: formatDate(values.birthDate),
+          address: {
+            city: values.city,
+            complement: values?.complement ?? null,
+            neighborhood: values.neighborhood,
+            number: values.number,
+            state: values.state,
+            street: values.street,
+            zipCode: values.zipCode.replace(/\D/g, ''),
+          },
+        }
 
       try {
         if (patientSelected) {
@@ -169,7 +167,7 @@ const ModalPatient = ({
           await api.put(`/patient/update/${patientSelected.id}`, dataWithoutCpf)
           onSuccessUpdate()
         } else {
-          await api.post(`/patient/create/${user?.id}`, data);
+          await api.post(`/patient/create/${user?.id}`, data)
           onSuccess()
         }
 
@@ -186,56 +184,82 @@ const ModalPatient = ({
     },
   })
 
-  const autoCompleteAdress = useCallback(async (cep: string) => {
-    const cleanedCep = masks.unmask(cep);
-    if(cleanedCep.length === 8){
-      setLoadingData(true);
-      await apiViaCep.get(`${cleanedCep}/json/`)
-      .then((response) => {
-        console.log(response);
-        formik.setFieldValue('street', response?.data?.logradouro ?  response?.data?.logradouro : formik.values.street);
-        formik.setFieldValue('city', response?.data?.localidade ? response?.data?.localidade :  formik.values.city);
-        formik.setFieldValue('state', response?.data?.uf ? response?.data?.uf : formik.values.state);
-        formik.setFieldValue('neighborhood', response?.data?.neighborhood ? response?.data?.neighborhood : formik.values.neighborhood);
-      })
-      .catch((error) => console.log('[ERROR/API] VIACEP', error))
-      .finally(() => setLoadingData(false))
-    }
-  },[formik.values])
+  const autoCompleteAdress = useCallback(
+    async (cep: string) => {
+      const cleanedCep = masks.unmask(cep)
+      if (cleanedCep.length === 8) {
+        setLoadingData(true)
+        await apiViaCep
+          .get(`${cleanedCep}/json/`)
+          .then((response) => {
+            console.log(response)
+            formik.setFieldValue(
+              'street',
+              response?.data?.logradouro
+                ? response?.data?.logradouro
+                : formik.values.street,
+            )
+            formik.setFieldValue(
+              'city',
+              response?.data?.localidade
+                ? response?.data?.localidade
+                : formik.values.city,
+            )
+            formik.setFieldValue(
+              'state',
+              response?.data?.uf ? response?.data?.uf : formik.values.state,
+            )
+            formik.setFieldValue(
+              'neighborhood',
+              response?.data?.neighborhood
+                ? response?.data?.neighborhood
+                : formik.values.neighborhood,
+            )
+          })
+          .catch((error) => console.log('[ERROR/API] VIACEP', error))
+          .finally(() => setLoadingData(false))
+      }
+    },
+    [formik.values],
+  )
 
   const autoCompletePatientData = useCallback(async (cpf: string) => {
-    const cleanedCpf = masks.unmask(cpf);
-    if(cleanedCpf.length === 11){
-      setLoadingData(true);
-      await api.get(`/patientByCpf/${cleanedCpf}`)
+    const cleanedCpf = masks.unmask(cpf)
+    if (cleanedCpf.length === 11) {
+      setLoadingData(true)
+      await api
+        .get(`/patientByCpf/${cleanedCpf}`)
         .then((response) => {
-          console.log(response);
-          if(response?.data?.data){
+          console.log(response)
+          if (response?.data?.data) {
             const { data } = response?.data
-            formik.setFieldValue('name', data?.name ?? '');
-            formik.setFieldValue('email', data?.email ?? '');
+            formik.setFieldValue('name', data?.name ?? '')
+            formik.setFieldValue('email', data?.email ?? '')
             formik.setFieldValue('phone', data?.phone ?? '')
-            formik.setFieldValue('gender', data?.gender ?? '');
-            formik.setFieldValue('birthDate', data?.birthDate ?? '' )
-            formik.setFieldValue('street', data?.address?.street ?? '');
-            formik.setFieldValue('zipCode', data?.address?.zipCode ?? '');
-            formik.setFieldValue('city',  data?.address?.city ?? '');
-            formik.setFieldValue('state',  data?.address?.state ?? '');
-            formik.setFieldValue('neighborhood',  data?.address?.neighborhood ?? '');
+            formik.setFieldValue('gender', data?.gender ?? '')
+            formik.setFieldValue('birthDate', data?.birthDate ?? '')
+            formik.setFieldValue('street', data?.address?.street ?? '')
+            formik.setFieldValue('zipCode', data?.address?.zipCode ?? '')
+            formik.setFieldValue('city', data?.address?.city ?? '')
+            formik.setFieldValue('state', data?.address?.state ?? '')
+            formik.setFieldValue(
+              'neighborhood',
+              data?.address?.neighborhood ?? '',
+            )
           }
         })
         .catch((error) => console.log('[ERROR/API] patientByCpf', error))
         .finally(() => setLoadingData(false))
     }
-  },[])
+  }, [])
 
   useEffect(() => {
-    autoCompleteAdress(formik.values.zipCode);
-  },[formik.values.zipCode])
+    autoCompleteAdress(formik.values.zipCode)
+  }, [formik.values.zipCode])
 
   useEffect(() => {
     autoCompletePatientData(formik.values.cpf)
-  },[formik.values.cpf])
+  }, [formik.values.cpf])
   const steps = ['Dados Pessoais', 'Endereço']
 
   return (
@@ -244,20 +268,19 @@ const ModalPatient = ({
       onClose={setIsClose}
       className="flex justify-center items-center"
     >
-      <div className="bg-white rounded-20 px-5 py-4 w-[85%] max-w-[500px]">
-        <p className="font-semibold text-xl text-center uppercase pb-5">
+      <div className="bg-white dark:bg-slate-500 rounded-20 px-5 py-4 w-[85%] max-w-[500px]">
+        <p className="font-semibold text-xl text-center uppercase pb-5 dark:text-white">
           {patientSelected ? 'Atualizar Paciente' : 'Cadastro de Paciente'}
         </p>
 
         <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
-          {loadingData ? 
-            <div className='flex items-center flex-col justify-center py-6 gap-4'>
+          {loadingData ? (
+            <div className="flex items-center flex-col justify-center py-6 gap-4">
               <CircularProgress style={{ fontSize: 36, color: colors.black }} />
               <p className="text-black font-semibold">Buscando dados...</p>
             </div>
-          
-          :
-          <>
+          ) : (
+            <>
               <CustomizedSteppers
                 steps={steps}
                 activeTab={viewTwo ? 1 : 0}
@@ -273,10 +296,14 @@ const ModalPatient = ({
                     label="CPF"
                     type="tel"
                     placeholder="000.000.000-00"
-                    icon={<ArticleOutlined style={{ color: colors.black }} />}
+                    icon={
+                      <ArticleOutlined className="text-black dark:text-white" />
+                    }
                     error={formik.errors.cpf}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.cpf}
+                    stylesInput="dark:bg-slate-500"
+                    stylesLabel="dark:text-white"
                   />
                   <InputStyled
                     id="name"
@@ -285,10 +312,14 @@ const ModalPatient = ({
                     label="Nome"
                     type="text"
                     placeholder="Exemplo"
-                    icon={<PersonOutlineOutlined style={{ color: colors.black }} />}
+                    icon={
+                      <PersonOutlineOutlined className="text-black dark:text-white" />
+                    }
                     error={formik.errors.name}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.name}
+                    stylesInput="dark:bg-slate-500"
+                    stylesLabel="dark:text-white"
                   />
 
                   <InputStyled
@@ -298,10 +329,14 @@ const ModalPatient = ({
                     label="E-mail"
                     type="text"
                     placeholder="exemplo@gmail.com"
-                    icon={<EmailOutlinedIcon style={{ color: colors.black }} />}
+                    icon={
+                      <EmailOutlinedIcon className="text-black dark:text-white" />
+                    }
                     error={formik.errors.email}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.email}
+                    stylesInput="dark:bg-slate-500"
+                    stylesLabel="dark:text-white"
                   />
 
                   <InputStyled
@@ -311,11 +346,15 @@ const ModalPatient = ({
                     label="Telefone"
                     type="text"
                     placeholder="(00) 00000-0000"
-                    icon={<LocalPhoneOutlined style={{ color: colors.black }} />}
+                    icon={
+                      <LocalPhoneOutlined className="text-black dark:text-white" />
+                    }
                     maxLength={15}
                     error={formik.errors.phone}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.phone}
+                    stylesInput="dark:bg-slate-500"
+                    stylesLabel="dark:text-white"
                   />
 
                   <InputStyled
@@ -325,20 +364,26 @@ const ModalPatient = ({
                     label="Data de Nascimento"
                     type="text"
                     placeholder="DD/MM/YYYY"
-                    icon={<CalendarMonthOutlined style={{ color: colors.black }} />}
+                    icon={
+                      <CalendarMonthOutlined className="text-black dark:text-white" />
+                    }
                     maxLength={10}
                     error={formik.errors.birthDate}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.birthDate}
+                    stylesInput="dark:bg-slate-500"
+                    stylesLabel="dark:text-white"
                   />
 
                   <SelectStyled
                     label="Sexo"
-                    icon={<Wc style={{ color: colors.black }} />}
+                    icon={<Wc className="text-black dark:text-white" />}
                     value={formik.values.gender}
                     onChange={formik.handleChange}
                     id="gender"
                     options={optionsSex}
+                    styles="dark:text-white"
+                    stylesLabel="dark:text-white"
                   />
 
                   <div className="flex gap-5 pt-5">
@@ -387,7 +432,11 @@ const ModalPatient = ({
                     error={formik.errors.zipCode}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.zipCode}
-                    icon={<AddLocationIcon style={{ color: colors.black }} />}
+                    icon={
+                      <AddLocationIcon className="text-black dark:text-white" />
+                    }
+                    stylesInput="dark:bg-slate-500"
+                    stylesLabel="dark:text-white"
                   />
 
                   <InputStyled
@@ -400,7 +449,11 @@ const ModalPatient = ({
                     error={formik.errors.street}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.street}
-                    icon={<AddLocationIcon style={{ color: colors.black }} />}
+                    icon={
+                      <AddLocationIcon className="text-black dark:text-white" />
+                    }
+                    stylesInput="dark:bg-slate-500"
+                    stylesLabel="dark:text-white"
                   />
                   <InputStyled
                     id="number"
@@ -412,7 +465,11 @@ const ModalPatient = ({
                     error={formik.errors.number}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.number}
-                    icon={<AddLocationIcon style={{ color: colors.black }} />}
+                    icon={
+                      <AddLocationIcon className="text-black dark:text-white" />
+                    }
+                    stylesInput="dark:bg-slate-500"
+                    stylesLabel="dark:text-white"
                   />
                   <InputStyled
                     id="complement"
@@ -424,7 +481,11 @@ const ModalPatient = ({
                     error={formik.errors.complement}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.complement}
-                    icon={<AddLocationIcon style={{ color: colors.black }} />}
+                    icon={
+                      <AddLocationIcon className="text-black dark:text-white" />
+                    }
+                    stylesInput="dark:bg-slate-500"
+                    stylesLabel="dark:text-white"
                   />
                   <InputStyled
                     id="neighborhood"
@@ -436,7 +497,11 @@ const ModalPatient = ({
                     error={formik.errors.neighborhood}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.neighborhood}
-                    icon={<AddLocationIcon style={{ color: colors.black }} />}
+                    icon={
+                      <AddLocationIcon className="text-black dark:text-white" />
+                    }
+                    stylesInput="dark:bg-slate-500"
+                    stylesLabel="dark:text-white"
                   />
                   <InputStyled
                     id="city"
@@ -448,20 +513,27 @@ const ModalPatient = ({
                     error={formik.errors.city}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.city}
-                    icon={<AddLocationIcon style={{ color: colors.black }} />}
+                    icon={
+                      <AddLocationIcon className="text-black dark:text-white" />
+                    }
+                    stylesInput="dark:bg-slate-500"
+                    stylesLabel="dark:text-white"
                   />
                   <SelectStyled
-                      id="state"
-                      label="Estado"
-                      placeholder="Selecione o estado"
-                      value={formik.values.state}
-                      onChange={(e) => formik.setFieldValue('state', e.target.value)}
-                      icon={<AddLocationIcon style={{ color: colors.black }} />}
-                      options={states}
+                    id="state"
+                    label="Estado"
+                    placeholder="Selecione o estado"
+                    value={formik.values.state}
+                    onChange={(e) =>
+                      formik.setFieldValue('state', e.target.value)
+                    }
+                    icon={
+                      <AddLocationIcon className="text-black dark:text-white" />
+                    }
+                    options={states}
+                    styles="dark:text-white"
+                    stylesLabel="dark:text-white"
                   />
-                    
-              
-
 
                   <div className="flex gap-5 pt-5">
                     <ButtonStyled
@@ -496,8 +568,7 @@ const ModalPatient = ({
                 </div>
               )}
             </>
-        }
-
+          )}
         </form>
       </div>
     </Modal>

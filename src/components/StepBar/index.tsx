@@ -110,7 +110,7 @@ export default function CustomizedSteppers({
                 <ColorlibStepIcon {...props} icons={icons} />
               )}
             >
-              <p className="font-bold text-base">{label}</p>
+              <p className="font-bold text-base dark:text-white">{label}</p>
             </StepLabel>
           </Step>
         ))}
