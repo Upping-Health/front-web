@@ -73,11 +73,13 @@ const TableDash: React.FC<TableProps> = ({
             <InputStyled
               id="search"
               type="search"
-              styles="border-gray bg-white py-3"
+              styles="border-gray bg-white py-3 dark:border-gray-600 dark:bg-gray-700"
               stylesContainer="w-full"
-              stylesInput="font-light  w-full text-sm"
+              stylesInput="font-light  w-full text-sm dark:bg-gray-700"
               icon={
-                <SearchIcon style={{ color: colors.black, fontSize: 20 }} />
+                <SearchIcon 
+                  className='text-xl dark:text-white text-black'
+                />
               }
               onChange={(e) => {
                 setSearchTerm(e.target.value)
@@ -116,38 +118,23 @@ const TableDash: React.FC<TableProps> = ({
               boxShadow:
                 '0 1px 3px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.06)',
               borderRadius: 3,
+              
             }}
           >
             <MuiTable
               sx={{
                 tableLayout: 'auto',
-    
-  
               }}
             >
             <TableHead
-                sx={{
-                  ///boxShadow: "0 5px 10px #e1e5ee",
-                  background: colors.white,
-                  
-                }}
+
+                className='bg-white dark:bg-slate-700 dark:border-gray-600'
               >
 
-                <TableRow >
+                <TableRow 
+                
+                >
 
-                  {selectable && (
-                    <TableCell align='center'>
-                     <button
-                      onClick={() => {}}
-                      className={`w-5 h-5 border border-primary bg-white text-gray-700 
-                        transition-colors duration-200`}
-                    >
-                      
-                    </button>
-
-
-                    </TableCell>
-                  )}
                   {columns.map((col, index) => (
                     <TableCell
                     key={index}
@@ -159,6 +146,7 @@ const TableDash: React.FC<TableProps> = ({
                       fontWeight: 900,
                       color: colors.black
                     }}
+                    className='dark:text-white'
                   >
                       {col.header.toUpperCase()}
                     </TableCell>
@@ -181,17 +169,9 @@ const TableDash: React.FC<TableProps> = ({
                         backgroundColor: '#f6f6f6',
                       },
                     }}
+                    className='dark:bg-slate-600 hover:dark:bg-slate-700'
                   >
 
-                    {selectable && (
-                        <TableCell align='center'>
-                          <input
-                            type="checkbox"
-                            checked={false}
-                            onChange={() => {}}
-                          />
-                        </TableCell>
-                      )}
                     {columns.map((col, index) => {
                       const value = row[col.field]
                       return (
@@ -206,6 +186,7 @@ const TableDash: React.FC<TableProps> = ({
                             padding: "0.5rem 2rem",
 
                           }}
+                          className='dark:text-white'
                         >
                           {col.render ? col.render(value, row) : value}
                         </TableCell>

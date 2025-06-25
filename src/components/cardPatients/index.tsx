@@ -54,11 +54,11 @@ const CardPatients: React.FC<TableProps> = ({
             <InputStyled
               id="search"
               type="search"
-              styles="border-gray bg-white py-3"
+              styles="border-gray bg-white py-3 dark:border-gray-600 dark:bg-gray-700"
               stylesContainer="w-full"
-              stylesInput="font-light  w-full text-sm"
+              stylesInput="font-light  w-full text-sm dark:bg-gray-700"
               icon={
-                <SearchIcon style={{ color: colors.black, fontSize: 20 }} />
+                <SearchIcon className="text-xl dark:text-white text-black" />
               }
               onChange={(e) => {
                 setSearchTerm(e.target.value)
@@ -98,16 +98,16 @@ const CardPatients: React.FC<TableProps> = ({
             return (
               <div
                 key={index}
-                className="bg-white p-3 rounded-xl shadow w-full"
+                className="bg-white p-3 rounded-xl shadow w-full dark:bg-slate-600 dark:border-gray-70"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex gap-3 items-center">
                     <ProfileRounded user={data} />
 
                     <div>
-                      <p className="font-medium text-black">{data?.name}</p>
+                      <p className="font-medium text-black dark:text-white">{data?.name}</p>
 
-                      <div className="flex gap-6 font-light text-sm text-black">
+                      <div className="flex gap-6 font-light text-sm text-black dark:text-white">
                         <p>{data?.years ?? 0} anos</p>
 
                         <p>{masks.cpfMask(data?.cpf)}</p>
@@ -135,7 +135,6 @@ const CardPatients: React.FC<TableProps> = ({
                       type="button"
                       styles="bg-primary h-[35px] px-3 rounded-md"
                     />
-
                   </div>
                 </div>
               </div>

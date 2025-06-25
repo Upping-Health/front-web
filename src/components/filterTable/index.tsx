@@ -1,6 +1,6 @@
-import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-import { Menu, MenuItem } from '@mui/material';
-import React, { useState } from 'react';
+import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
+import { Menu, MenuItem } from '@mui/material'
+import React, { useState } from 'react'
 interface FilterOption {
   label: string
   value: string
@@ -30,12 +30,14 @@ const FilterTable: React.FC<FilterTableProps> = ({
 
   return (
     <>
-      <button className={`flex justify-center items-center border-gray bg-white border rounded-xl px-4 gap-2`} onClick={handleClick}>
+      <button
+        className={`flex justify-center items-center border-gray  dark:border-gray-600 dark:bg-gray-700 dark:text-white bg-white border rounded-xl px-4 gap-2`}
+        onClick={handleClick}
+      >
+        <FilterAltOutlinedIcon />
 
-        <FilterAltOutlinedIcon/>
-
-        <p className='text-black font-medium'>Status</p>
-        </button>
+        <p className="text-black dark:text-white font-medium">Status</p>
+      </button>
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -43,6 +45,9 @@ const FilterTable: React.FC<FilterTableProps> = ({
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
+        }}
+        PaperProps={{
+          className: 'bg-white dark:bg-gray-700 shadow-lg rounded-xl p-2 dark:text-white', 
         }}
       >
         {options.map((option) => (

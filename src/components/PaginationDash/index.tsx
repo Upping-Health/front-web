@@ -46,7 +46,13 @@ const PaginationDash: React.FC<PaginationDashProps> = ({ count, currentPage, set
               backgroundColor: 'lightgray',
             },
           },
+
+
+          '.dark & .MuiPaginationItem-root': {
+            backgroundColor: 'oklch(27.8% 0.033 256.848)'
+          }
         }}   
+      
       />
     </div>
   );

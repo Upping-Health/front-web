@@ -1,10 +1,8 @@
 'use client'
 import { dashboardTabs } from '@/routes'
-import { colors } from '@/utils/colors/colors'
-import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import { usePathname, useRouter } from 'next/navigation'
-import React, { useCallback, useEffect } from 'react'
-import AddIcon from '@mui/icons-material/Add'
+import React, { useCallback } from 'react'
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import { useDarkMode } from '@/hooks/theme/useDarkTheme'
 
 interface IAsideNavParams {
@@ -42,9 +40,9 @@ const AsideNavSubItem = ({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center justify-between px-4 py-2 rounded-xl transition-all duration-300 w-full ${
+      className={`group flex items-center justify-between px-4 py-2 rounded-xl transition-all duration-300 w-full ${
         isCollapsed ? 'justify-center' : ''
-      } ${isSubActive ? 'bg-primary text-white' : 'text-primary dark:text-white hover:bg-primary'}`}
+      } ${isSubActive ? 'bg-primary text-white' : 'text-primary hover:text-white dark:text-white hover:bg-primary'}`}
     >
       <div
         className={`flex items-center gap-3 ${
@@ -54,9 +52,10 @@ const AsideNavSubItem = ({
         {subtab.icon &&
           React.cloneElement(subtab.icon, {
             className: `
-            ${isSubActive ? 'text-white' : 'text-primary dark:text-white'}
-            text-[24px]
-          `,
+              text-[24px]
+              ${isSubActive ? 'text-white' : 'text-primary dark:text-white'}
+              group-hover:text-white
+            `,
           })}
         {!isCollapsed && (
           <span className="text-sm font-medium">{subtab.name}</span>
@@ -80,7 +79,6 @@ const AsideNavItem = ({
     router.push(tab.path)
   }, [router, tab.path])
 
-
   return (
     <div key={tab.value}>
       <button
@@ -91,7 +89,7 @@ const AsideNavItem = ({
             selectMenu()
           }
         }}
-        className={`flex items-center justify-between px-2 py-2 rounded-xl transition-all duration-300 w-full ${
+        className={`group flex items-center justify-between px-2 py-2 rounded-xl transition-all duration-300 hover:text-white w-full ${
           isCollapsed ? 'justify-center' : ''
         } ${isCurrentPath ? 'bg-primary text-white' : 'text-primary dark:text-white hover:bg-primary'}`}
       >
@@ -102,8 +100,9 @@ const AsideNavItem = ({
         >
           {React.cloneElement(tab.icon, {
             className: `
-              ${isCurrentPath ? 'text-white' : 'text-primary dark:text-white'}
               text-[24px]
+              ${isCurrentPath ? 'text-white' : 'text-primary dark:text-white'}
+              group-hover:text-white
             `,
           })}
           {!isCollapsed && (
@@ -114,11 +113,12 @@ const AsideNavItem = ({
         {!isCollapsed && tab.children && (
           <KeyboardArrowDown
             className={`
-            ${isCurrentPath ? 'text-white' : 'text-primary dark:text-white'}
-            text-[16px]
-            transition-transform duration-300
-            ${isExpanded ? 'rotate-180' : 'rotate-0'}
-          `}
+              text-[16px]
+              transition-transform duration-300
+              ${isCurrentPath ? 'text-white' : 'text-primary dark:text-white'}
+              ${isExpanded ? 'rotate-180' : 'rotate-0'}
+              group-hover:text-white
+            `}
           />
         )}
       </button>
