@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react'
 
 export function useDarkMode() {
   const [themeDark, setThemeDark] = useState<boolean>(false)
+
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme')
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-
-    const shouldUseDark = storedTheme === 'dark' || (!storedTheme && prefersDark)
+    const shouldUseDark = storedTheme === 'dark' || (!storedTheme)
     setThemeDark(shouldUseDark)
     updateHtmlClass(shouldUseDark)
   }, [])
