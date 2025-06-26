@@ -6,5 +6,5 @@ export default interface DefaultContextInterface {
   setuser: (e: User | null) => void
   onShowFeedBack: (data: FeedBackStatusInterface) => void
   themeDark: boolean
-  toggleTheme: Function
-}
+  toggleTheme: () => void
+ }
