@@ -3,6 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import { ElementType } from 'react'
+import { QuestionAnswerOutlined } from '@mui/icons-material'
 
 interface Props {
   icon: ElementType
@@ -16,11 +17,11 @@ const QuestionHeader = ({ icon: Icon, typeLabel, descriptionLabel, onRemove, onD
   <div className="flex items-center justify-between">
     <div className="flex gap-2 items-center">
       <div className="bg-newGreen h-14 w-14 rounded-xl flex justify-center items-center">
-        <Icon className="text-white" />
+        <QuestionAnswerOutlined className="text-white" />
       </div>
       <div>
-        <p className="font-bold text-black">{typeLabel}</p>
-        <p className="font-extralight text-black max-w-[400px]">
+        <p className="font-bold text-black dark:text-white">{typeLabel}</p>
+        <p className="font-extralight text-black dark:text-white max-w-[400px]">
           {descriptionLabel}
         </p>
       </div>

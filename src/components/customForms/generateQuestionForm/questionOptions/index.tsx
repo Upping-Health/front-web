@@ -10,7 +10,7 @@ interface Props {
 
 const QuestionOptions = ({ options, onEditOption, onRemoveOption, onAddOption }: Props) => (
   <div className="flex flex-col w-full gap-2 mt-3">
-    <label className="text-darkGray">Opções</label>
+    <label className="text-darkGray dark:text-white">Opções</label>
     {options.map((option, i) => (
       <div key={i} className="flex items-center gap-2">
         <QuestionInput

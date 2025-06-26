@@ -27,7 +27,7 @@ const GenerateQuestionForm = ({
   onDuplicateQuestion,
   onEditLabel,
 }: Props) => (
-  <div className="rounded-xl bg-white p-4 shadow mb-3">
+  <div className="rounded-xl bg-white p-4 shadow mb-3 dark:bg-slate-700 dark:border-slate-600">
     <QuestionHeader
       icon={question.icon}
       typeLabel={question.typeLabel}

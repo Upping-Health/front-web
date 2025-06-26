@@ -1,68 +1,45 @@
 import React from 'react'
 import SaveIcon from '@mui/icons-material/Save'
 import VisibilityIcon from '@mui/icons-material/Visibility'
+import ClearIcon from '@mui/icons-material/Clear'
+import InputHeader from './inputHeader'
+import ButtonHeader from './buttonHeader'
+import SelectHeader from './selectHeader'
 interface ICustomFormMenu {
+  title: string
+  setTitle: React.Dispatch<React.SetStateAction<string>>
+  description: string
+  setDescription: React.Dispatch<React.SetStateAction<string>>
+  typeForm: string
+  setTypeForm: React.Dispatch<React.SetStateAction<string>>
+  onVisibleForms: () => void
+  onSaveForms: () => void
+  onClearForm: () => void
 }
 
-
-
-
-interface IButtonStyled {
-  styles: string
-  stylesIcon?: any
-  textColor?: string
-  bgColor?: string
-  title: any
-  icon?: any
-  onClick?: () => void
-  type: 'submit' | 'button' | undefined
-  disabled?: boolean
-}
-
-const InputHeader = ({ label, placeholder, onChange, id, value }: any) => {
-  return (
-    <input
-      id={id}
-      value={value}
-      onChange={onChange}
-      type={'text'}
-      className={`text-black dark:text-white text-center  bg-white border border-solid outline-none border-gray  rounded-xl p-2 flex items-center justify-between w-[50%] dark:bg-slate-700 dark:border-slate-600`}
-      placeholder={placeholder}
-    />
-  )
-}
-
-const ButtonHeader = ({
-  styles,
-  bgColor,
-  textColor,
+const HeaderFormMenu = ({
   title,
-  onClick,
-  type,
-  icon,
-  disabled,
-}: IButtonStyled) => {
-  return (
-    <button
-      disabled={disabled}
-      type={type}
-      className={`${disabled ? 'bg-darkGray' : ''} ${bgColor ? bgColor : ''} ${textColor ? textColor : 'text-white'} py-3 bg-black  rounded-xl font-semibold flex justify-center items-center gap-2 ${styles ? styles : ''} `}
-      onClick={onClick}
-    >
-      {icon && React.cloneElement(icon)}
-
-      {title}
-    </button>
-  )
-}
-
-const HeaderFormMenu = ({}: ICustomFormMenu) => {
+  setTitle,
+  description,
+  setDescription,
+  onVisibleForms,
+  onSaveForms,
+  onClearForm,
+  typeForm,
+  setTypeForm,
+}: ICustomFormMenu) => {
+  const optionsSex = [{ value: 'ANAMNESE', label: 'Anamnese' }]
   return (
     <div className="flex flex-col gap-2">
       <div className="flex justify-between ">
-        <InputHeader placeholder="Título do formulário" />
+        <InputHeader
+          id="title"
+          value={title}
+          onChange={setTitle}
+          placeholder="Título do formulário"
+        />
         <ButtonHeader
-          onClick={() => {}}
+          onClick={onSaveForms}
           title="Salvar"
           type="button"
           styles="w-[200px] bg-primary"
@@ -71,13 +48,35 @@ const HeaderFormMenu = ({}: ICustomFormMenu) => {
       </div>
 
       <div className="flex justify-between ">
-        <InputHeader placeholder="Descrição do formulário" />
+        <InputHeader
+          id="description"
+          value={description}
+          onChange={setDescription}
+          placeholder="Descrição do formulário"
+        />
         <ButtonHeader
-          onClick={() => {}}
+          onClick={onVisibleForms}
           title="Visualizar"
           type="button"
           styles="w-[200px] dark:bg-white dark:text-black"
           icon={<VisibilityIcon />}
+        />
+      </div>
+
+      <div className="flex justify-between ">
+        <SelectHeader
+          id={'id'}
+          value={typeForm}
+          onChange={(e) => setTypeForm(e.target.value)}
+          options={optionsSex}
+          placeholder="Tipo do formulário"
+        />
+        <ButtonHeader
+          onClick={onClearForm}
+          title="Limpar dados"
+          type="button"
+          styles="w-[200px] dark:text-black bg-newRed dark:text-white"
+          icon={<ClearIcon />}
         />
       </div>
     </div>
