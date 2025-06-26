@@ -1,8 +1,5 @@
 import type { Config } from 'tailwindcss'
-
-
-
-
+import { colors } from './src/utils/colors/colors'
 
 const config: Config = {
   content: [
@@ -18,21 +15,7 @@ const config: Config = {
         'top-lg': '0 -7px 20px -7px rgba(0, 0, 0, 0.1)',
       },
       colors: {
-        primary: '#22B349',
-        newRed: '#FF3A20',
-        white: '#FFFFFF',
-        black: '#323031',
-        newGray: '#D9D9D9',
-        customGray: '#e5e7eb',
-        darkGray: '#B8B8B8',
-        light: '#F5F5F5',
-        newGreen: '#219F02',
-        terciary: '#1C6E8C',
-        unpaid: '#ffcdd2',
-        unpaidFont:' #c62828',
-        paid: '#c8e6c9',
-        paidFont: '#388e3c',
-        newYellow: '#F0F005',
+        ...colors,
       },
       borderRadius: {
         full: '100%',
