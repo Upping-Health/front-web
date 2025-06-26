@@ -1,10 +1,12 @@
+:root {
+  --primary-color: #306169;
+}
 .fc .fc-button {
   border: none;
   color: white;
   background-color: #323031;
   border-radius: 12px;
   box-shadow: none !important;
-
 }
 
 .dark .fc .fc-button {
@@ -12,7 +14,6 @@
 }
 
 .fc .fc-button:hover {
-  //background-color: #2563eb;
   cursor: pointer;
 }
 
@@ -23,7 +24,7 @@
   padding-right: 10px !important;
 }
 .fc .fc-today-button:hover {
-  background-color: #219f02 !important;
+  background-color: var(--primary-color) !important;
 }
 
 .fc .fc-myPrev-button,
@@ -41,7 +42,7 @@
 
 .fc .fc-myPrev-button:hover,
 .fc .fc-myNext-button:hover {
-  background-color: #b8b8b8 !important;
+  background-color: var(--primary-color) !important;
 }
 
 .fc-toolbar-title {
@@ -65,9 +66,19 @@
   background-color: #323031 !important ;
 }
 
+.fc-dayGridMonth-button:hover,
+.fc-timeGridWeek-button:hover,
+.fc-timeGridDay-button:hover {
+  background-color: var(--primary-color) !important;
+}
+.dark .fc-dayGridMonth-button:hover,
+.dark .fc-timeGridWeek-button:hover,
+.dark .fc-timeGridDay-button:hover {
+  background-color: var(--primary-color) !important;
+}
 
 .fc-button-active {
-  background-color: #22b349 !important;
+  background-color: var(--primary-color) !important;
 }
 
 .dark .fc .fc-button.fc-button-active {
