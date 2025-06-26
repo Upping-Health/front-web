@@ -26,7 +26,7 @@ const InputHeader = ({ label, placeholder, onChange, id, value }: any) => {
       value={value}
       onChange={onChange}
       type={'text'}
-      className={`text-black text-center  bg-white border border-solid outline-none border-gray  rounded-xl p-2 flex items-center justify-between w-[50%]`}
+      className={`text-black dark:text-white text-center  bg-white border border-solid outline-none border-gray  rounded-xl p-2 flex items-center justify-between w-[50%] dark:bg-slate-700 dark:border-slate-600`}
       placeholder={placeholder}
     />
   )
@@ -76,7 +76,7 @@ const HeaderFormMenu = ({}: ICustomFormMenu) => {
           onClick={() => {}}
           title="Visualizar"
           type="button"
-          styles="w-[200px]"
+          styles="w-[200px] dark:bg-white dark:text-black"
           icon={<VisibilityIcon />}
         />
       </div>

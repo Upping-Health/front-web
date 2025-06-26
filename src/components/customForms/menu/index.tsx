@@ -17,10 +17,10 @@ const ButtonFormMenu = ({ label, icon: Icon, onClick }: any) => {
   return (
     <button
       onClick={onClick}
-      className="py-2 px-3 rounded-xl border flex items-center gap-2 bg-white flex-shrink-0 transition-all duration-200 ease-in-out hover:bg-gray-100 active:scale-95 shadow-sm hover:shadow-md"
+      className="py-2 px-3 rounded-xl border flex items-center gap-2 bg-white flex-shrink-0 transition-all duration-200 ease-in-out hover:bg-gray-100 active:scale-95 shadow-sm hover:shadow-md dark:bg-slate-700 dark:border-slate-600"
     >
-      {Icon && <Icon className="text-base text-gray-700" />}
-      <p className="text-black font-semibold text-base">{label}</p>
+      {Icon && <Icon className="text-base text-gray-700 dark:text-white" />}
+      <p className="text-black font-semibold text-base dark:text-white">{label}</p>
     </button>
   )
 }
