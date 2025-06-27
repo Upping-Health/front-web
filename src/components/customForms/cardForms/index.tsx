@@ -12,7 +12,7 @@ const CardForm = ({}: ICustomForm) => {
 
       <p className='font-semibold dark:text-white'>Comece criando sua primeira pergunta.</p>
 
-      <p className='text-lg font-light dark:text-white'>Escolha um tipo de campo na barra lateral para começar</p>
+      <p className='text-lg font-light dark:text-white'>Escolha um tipo de campo para começar</p>
 
     </div>
   )

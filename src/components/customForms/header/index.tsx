@@ -42,7 +42,7 @@ const HeaderFormMenu = ({
           onClick={onSaveForms}
           title="Salvar"
           type="button"
-          styles="w-[200px] bg-primary"
+          styles="w-[200px] bg-green"
           icon={<SaveIcon />}
         />
       </div>

@@ -14,7 +14,7 @@ const QuestionInput = ({ label, placeholder, onChange, id, value }: Props) => (
       value={value}
       onChange={onChange}
       type="text"
-      className="text-black bg-white border border-solid outline-none border-gray rounded-xl p-2 dark:text-white dark:bg-slate-600 dark:placeholder:text-slate-400"
+      className="text-black bg-white border dark:border-slate-500 outline-none border-gray rounded-xl p-2 dark:text-white dark:bg-slate-600 dark:placeholder:text-slate-400"
       placeholder={placeholder}
     />
   </div>

@@ -10,7 +10,6 @@ interface IQuestions {
   label: string
   type: string
   typeLabel: string
-  icon: any
   description: string
   descriptionLabel: string
   options?: string[]
@@ -57,7 +56,6 @@ const CustomForms = () => {
           label: '',
           typeLabel: question.label,
           type: question.type,
-          icon: question.icon,
           description: '',
           descriptionLabel: question.description,
           options: [],
@@ -120,18 +118,44 @@ const CustomForms = () => {
   }, [])
 
   const validForms = useCallback(() => {
-    if (questions.length === 0) {
+    if (!title) {
       onShowFeedBack(
-        PreFeedBack.error('É preciso criar perguntas antes de prosseguir.'),
+        PreFeedBack.error('Defina o título antes de prosseguir.')
       )
       return false
     }
-    if (!title) {
-      onShowFeedBack(PreFeedBack.error('Defina o título antes de prosseguir.'))
+  
+    if (questions.length === 0) {
+      onShowFeedBack(
+        PreFeedBack.error('É preciso criar perguntas antes de prosseguir.')
+      )
       return false
     }
+  
+    for (const question of questions) {
+      if (!question.label?.trim()) {
+        onShowFeedBack(
+          PreFeedBack.error('Todas as perguntas precisam de um título.')
+        )
+        return false
+      }
+  
+      const needsOptions = ['select', 'checkbox', 'radio'].includes(question.type)
+      if (needsOptions) {
+        if (!Array.isArray(question.options) || question.options.length === 0) {
+          onShowFeedBack(
+            PreFeedBack.error(
+              `A pergunta "${question.label}" precisa de pelo menos 1 opção.`
+            )
+          )
+          return false
+        }
+      }
+    }
+  
     return true
   }, [title, questions])
+  
 
   const onVisibleForms = useCallback(() => {
     console.log(questions);

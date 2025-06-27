@@ -8,7 +8,6 @@ interface IQuestions {
   label: string
   type: string
   typeLabel: string
-  icon: ElementType
   description: string
   descriptionLabel: string
   options?: string[]
@@ -29,7 +28,7 @@ const GenerateQuestionForm = ({
 }: Props) => (
   <div className="rounded-xl bg-white p-4 shadow mb-3 dark:bg-slate-700 dark:border-slate-600">
     <QuestionHeader
-      icon={question.icon}
+      type={question.type}
       typeLabel={question.typeLabel}
       descriptionLabel={question.descriptionLabel}
       onRemove={onRemoveQuestion}

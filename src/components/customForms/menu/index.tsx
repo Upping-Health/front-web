@@ -13,7 +13,20 @@ interface ICustomFormMenu {
   onPushQuestions: (e: any) => void
 }
 
-const ButtonFormMenu = ({ label, icon: Icon, onClick }: any) => {
+export const formIcons: Record<string, React.ElementType> = {
+  text: TextFieldsIcon,
+  textarea: NotesIcon,
+  checkbox: CheckBoxIcon,
+  radio: RadioButtonCheckedIcon,
+  select: ArrowDropDownCircleIcon,
+  number: NumbersIcon,
+  date: CalendarTodayIcon,
+  file: AttachFileIcon,
+  default: FormatAlignJustifyIcon,
+}
+
+const ButtonFormMenu = ({ label, type, onClick }: any) => {
+  const Icon = formIcons[type] || formIcons.default
   return (
     <button
       onClick={onClick}
@@ -30,54 +43,47 @@ const CustomFormMenu = ({ onPushQuestions }: ICustomFormMenu) => {
     {
       label: 'Texto',
       type: 'text',
-      icon: TextFieldsIcon,
       description:
         'Ideal para nomes, títulos ou pequenas informações.',
     },
     {
       label: 'Parágrafo',
       type: 'textarea',
-      icon: NotesIcon,
       description:
         'Adequado para descrições ou respostas mais detalhadas.',
     },
     {
       label: 'Múltipla Escolha',
       type: 'checkbox',
-      icon: CheckBoxIcon,
       description:
         'Permite selecionar uma ou mais opção entre as disponíveis.',
     },
     {
       label: 'Caixa de Seleção',
       type: 'radio',
-      icon: RadioButtonCheckedIcon,
       description:
         'Permite selecionar apenas uma opção entre as disponíveis.',
     },
     {
       label: 'Lista Suspensa',
       type: 'select',
-      icon: ArrowDropDownCircleIcon,
       description:
         'Menu em formato de lista que permite escolher uma única opção.',
     },
     {
       label: 'Número',
       type: 'number',
-      icon: NumbersIcon,
       description: 'Campo para inserir apenas valores numéricos.',
     },
     {
       label: 'Data',
       type: 'date',
-      icon: CalendarTodayIcon,
       description: 'Campo para selecionar uma data específica no calendário.',
     },
     {
       label: 'Arquivo',
       type: 'file',
-      icon: AttachFileIcon,
+
       description: 'Permite o envio (upload) de um arquivo pelo usuário.',
     },
   ]
@@ -88,7 +94,7 @@ const CustomFormMenu = ({ onPushQuestions }: ICustomFormMenu) => {
         <ButtonFormMenu
           key={opt.type}
           label={opt.label}
-          icon={opt.icon || FormatAlignJustifyIcon}
+          type={opt.type}
           onClick={() => onPushQuestions(opt)}
         />
       ))}
