@@ -54,13 +54,13 @@ const CustomFormMenu = ({ onPushQuestions }: ICustomFormMenu) => {
     },
     {
       label: 'Múltipla Escolha',
-      type: 'checkbox',
+      type: 'radio',
       description:
         'Permite selecionar uma ou mais opção entre as disponíveis.',
     },
     {
       label: 'Caixa de Seleção',
-      type: 'radio',
+      type: 'checkbox',
       description:
         'Permite selecionar apenas uma opção entre as disponíveis.',
     },

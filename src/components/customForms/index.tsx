@@ -25,6 +25,8 @@ const CustomForms = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const router = useRouter()
 
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+
   useEffect(() => {
     setLoading(true)
     const saved = localStorage.getItem('customFormData')
@@ -163,7 +165,10 @@ const CustomForms = () => {
     const data = {
       title,
       description,
-      field: questions,
+      field: questions.map((q, index) => ({
+        ...q,
+        order: index + 1,
+      }))
     }
     localStorage.setItem('customFormData', JSON.stringify(data))
 
@@ -180,6 +185,25 @@ const CustomForms = () => {
     setQuestions([])
     localStorage.removeItem('customFormData')
   }, [questions])
+
+  const handleDragStart = (index: number) => {
+    setDraggedIndex(index);
+  };
+  
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault(); 
+  };
+  
+  const handleDrop = (index: number) => {
+    if (draggedIndex === null || draggedIndex === index) return;
+  
+    const updatedQuestions = [...questions];
+    const [removed] = updatedQuestions.splice(draggedIndex, 1);
+    updatedQuestions.splice(index, 0, removed);
+  
+    setQuestions(updatedQuestions);
+    setDraggedIndex(null);
+  };
 
   return (
     <div className="flex flex-col h-full items-center mt-4">
@@ -200,9 +224,15 @@ const CustomForms = () => {
           <CustomFormMenu onPushQuestions={onPushQuestions} />
 
           {questions.length > 0 ? (
-            questions.map((question, index) => (
+           questions.map((question, index) => (
+            <div
+              key={index}
+              draggable
+              onDragStart={() => handleDragStart(index)}
+              onDragOver={handleDragOver}
+              onDrop={() => handleDrop(index)}
+            >
               <GenerateQuestionForm
-                key={index}
                 question={question}
                 onRemoveQuestion={() => onRemoveQuestion(index)}
                 onEditLabel={(label: string, newLabel: string) =>
@@ -210,7 +240,8 @@ const CustomForms = () => {
                 }
                 onDuplicateQuestion={() => onDuplicateQuestion(index)}
               />
-            ))
+            </div>
+          ))
           ) : (
             <CardForm />
           )}

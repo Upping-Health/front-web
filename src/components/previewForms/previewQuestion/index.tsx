@@ -1,8 +1,9 @@
-import QuestionInput from "@/components/customForms/generateQuestionForm/questionInput"
-import PreviewCheckbox from "../previewCheckbox"
-import PreviewRadio from "../previewRadio"
-import PreviewTextArea from "../previewTextArea"
-import PreviewSelect from "../previewSelect"
+import PreviewByType from '../previewByType'
+import PreviewTextOrNumber from '../previewByType'
+import PreviewCheckbox from '../previewCheckbox'
+import PreviewRadio from '../previewRadio'
+import PreviewSelect from '../previewSelect'
+import PreviewTextArea from '../previewTextArea'
 
 interface IQuestion {
   label: string
@@ -15,7 +16,6 @@ interface IQuestion {
   required: boolean
 }
 
-
 const PreviewQuestion = ({ question }: { question: IQuestion }) => {
   const optionsSex = [{ value: 'ANAMNESE', label: 'Anamnese' }]
   return (
@@ -25,40 +25,67 @@ const PreviewQuestion = ({ question }: { question: IQuestion }) => {
         <span className="text-red">{question.required ? ' *' : ''}</span>
       </p>
 
-      {question.type === 'text' &&
-        <QuestionInput
+      {question.type === 'text' && (
+        <PreviewByType
           id={question.type}
           value=""
           onChange={(e) => {}}
-          placeholder="Escreva sua resposta"        
+          placeholder="Escreva sua resposta"
+          type="text"
         />
-      }
+      )}
 
-      {question.type === 'checkbox' &&
-        <PreviewCheckbox question={question} />
-      }
+      {question.type === 'number' && (
+        <PreviewByType
+          id={question.type}
+          value=""
+          onChange={(e) => {}}
+          placeholder="Escreva sua resposta"
+          type="number"
+        />
+      )}
 
-      {question.type === 'radio' &&
-        <PreviewRadio question={question} />
-      }
+      {question.type === 'date' && (
+        <PreviewByType
+          id={question.type}
+          value=""
+          onChange={(e) => {}}
+          placeholder="Escreva sua resposta"
+          type="date"
+        />
+      )}
 
-      {question.type === 'textarea' &&
+      {question.type === 'file' && (
+        <PreviewByType
+          id={question.type}
+          value=""
+          onChange={(e) => {}}
+          placeholder="Escreva sua resposta"
+          type="file"
+        />
+      )}
+
+      {question.type === 'checkbox' && <PreviewCheckbox question={question} />}
+
+      {question.type === 'radio' && <PreviewRadio question={question} />}
+
+      {question.type === 'textarea' && (
         <PreviewTextArea
           id={question.type}
           value=""
           onChange={(e) => {}}
           placeholder="Escreva sua respsota"
         />
-      }
+      )}
 
-      {question.type === 'select' &&
-        <PreviewSelect 
+      {question.type === 'select' && (
+        <PreviewSelect
           id={question.type}
           value=""
           onChange={() => {}}
           options={question.options ?? []}
         />
-      }
+      )}
     </div>
   )
 }

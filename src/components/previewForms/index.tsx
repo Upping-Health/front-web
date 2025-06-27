@@ -17,7 +17,6 @@ interface IFormPreview {
 }
 
 const PreviewForms = ({ formData }: { formData: IFormPreview }) => {
-  const optionsSex = [{ value: 'ANAMNESE', label: 'Anamnese' }]
   return (
     <div className="flex flex-col gap-2">
       <div className='mb-5'> 
