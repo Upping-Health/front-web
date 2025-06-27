@@ -5,17 +5,47 @@ import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import { colors } from '@/utils/colors/colors'
 import AddIcon from '@mui/icons-material/Add'
 import { CircularProgress } from '@mui/material'
-import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
+import RestaurantOutlinedIcon from '@mui/icons-material/RestaurantOutlined';
+import TableDash from '@/components/tableDash'
+import { useMemo } from 'react'
+
 const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
   const { data, loading } = useLoadPatients(false)
 
+  const columns = useMemo(
+    () => [
+      {
+        header: 'Nome',
+        field: 'name',
+      },
+      {
+        header: 'Energia',
+        field: 'energy'
+      },
+      {
+        header: 'Gordura',
+        field: 'energy'
+      },
+      {
+        header: 'Carboídratos',
+        field: 'energy'
+      },
+      {
+        header: 'Proteína',
+        field: 'energy'
+      }
+    
+    ],
+    [],
+  )
+
   return (
-    <div className="w-full relative">
+    <div className="w-full relative h-full">
       <TopDash
-        title="Cardápio"
+        title="Alimentos"
         description="Acompanhe e gerencie seus pacientes com facilidade."
-        icon={MenuBookOutlinedIcon}
-        textBtn={'Novo Cardápio'}
+        icon={RestaurantOutlinedIcon}
+        textBtn={'Novo Alimento'}
         onClick={() => {}}
       />
 
@@ -28,7 +58,9 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
           </div>
         </>
       ) : (
-        <></>
+        <>
+           <TableDash columns={columns} data={data} rowKey="id" />
+        </>
       )}
 
       {/* <ModalSelectPatient

@@ -13,8 +13,8 @@ const FormsList = ({ params }: { params: { id: string } }) => {
   return (
     <div className="w-full relative">
       <TopDash
-        title="Alimentos"
-        description="Acompanhe e gerencie seus pacientes com facilidade."
+        title="Formulário"
+        description="Crie e organize formulários personalizados para seus atendimentos."
         icon={QuestionAnswerOutlinedIcon}
         textBtn={'Novo Formulário'}
         onClick={() => router.push(`/forms/create`) }

@@ -2,21 +2,30 @@ interface ISelectHeaderProps {
   id: string
   value: string
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
-  options: { label: string; value: string }[]
+  options: string[]
   placeholder?: string
 }
 
 import { KeyboardArrowDown } from '@mui/icons-material'
+import { useMemo } from 'react';
 
-const SelectHeader = ({
+const PreviewSelect = ({
   id,
   value,
   onChange,
   options,
   placeholder,
 }: ISelectHeaderProps) => {
+
+  const optionsMenu = useMemo(() => {
+    return options.map((opt) => ({
+      value: opt,
+      label: opt
+    }))
+    
+  },[])
   return (
-    <div className="relative w-[50%]">
+    <div className="relative">
       <select
         id={id}
         value={value}
@@ -28,7 +37,7 @@ const SelectHeader = ({
             {placeholder}
           </option>
         )}
-        {options.map((option) => (
+        {optionsMenu.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
@@ -39,4 +48,4 @@ const SelectHeader = ({
   )
 }
 
-export default SelectHeader
+export default PreviewSelect

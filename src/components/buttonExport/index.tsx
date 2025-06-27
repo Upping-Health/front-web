@@ -13,7 +13,7 @@ const ButtonExport = ({onClick,  }: IButtonExportStyled) => {
       <FileDownloadOutlined 
       />
 
-      <p className='text-black dark:text-white font-medium'>Exportar</p>
+      <p className='text-black dark:text-white font-medium text-sm'>Exportar</p>
     </button>
   )
 }

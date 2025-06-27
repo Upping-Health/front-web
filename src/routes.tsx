@@ -77,22 +77,10 @@ export const dashboardTabs: Record<TabValue, Tab> = {
     },
   },
   planoalimentar: {
-    name: 'Plano Alimentar',
-    icon: <ChecklistIcon />,
+    name: 'Alimentos',
+    icon: <RestaurantIcon />,
     value: TABS_DASH.PLANOALIMENTAR,
-    path: '/foodplan',
-    children: {
-      food: {
-        name: 'Alimentos',
-        icon: <RestaurantIcon />,
-        path: '/foodplan/food',
-      },
-      menu: {
-        name: 'Cardápio',
-        icon: <MenuBookIcon />,
-        path: '/foodplan/menu',
-      },
-    },
+    path: '/food',
   },
   forms: {
     name: 'Formulários',
