@@ -9,9 +9,6 @@ import { useRouter } from 'next/navigation'
 interface IQuestions {
   label: string
   type: string
-  typeLabel: string
-  description: string
-  descriptionLabel: string
   options?: string[]
   required: boolean
 }
@@ -56,10 +53,7 @@ const CustomForms = () => {
         ...prev,
         {
           label: '',
-          typeLabel: question.label,
           type: question.type,
-          description: '',
-          descriptionLabel: question.description,
           options: [],
           required: true,
         },

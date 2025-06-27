@@ -3,10 +3,7 @@ import PreviewTypeText from './previewQuestion'
 interface IQuestion {
   label: string
   type: string
-  typeLabel: string
-  icon: any
   description: string
-  descriptionLabel: string
   options?: string[]
   required: boolean
 }

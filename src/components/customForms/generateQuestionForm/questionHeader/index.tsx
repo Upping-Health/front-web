@@ -5,17 +5,18 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import { ElementType } from 'react'
 import { QuestionAnswerOutlined } from '@mui/icons-material'
 import { formIcons } from '../../menu'
+import { formDescriptions, formLabels } from '@/utils/forms'
 
 interface Props {
   type: string
-  typeLabel: string
-  descriptionLabel: string
   onRemove: () => void
   onDuplicate: () => void
 }
 
-const QuestionHeader = ({ type, typeLabel, descriptionLabel, onRemove, onDuplicate }: Props) => {
+const QuestionHeader = ({ type, onRemove, onDuplicate }: Props) => {
   const Icon = formIcons[type] || formIcons.default
+  const label = formLabels[type] || 'Desconhecido';
+  const description = formDescriptions[type] || 'Desconhecido';
   
   return (
   <div className="flex items-center justify-between">
@@ -24,9 +25,9 @@ const QuestionHeader = ({ type, typeLabel, descriptionLabel, onRemove, onDuplica
         <Icon className="text-white" />
       </div>
       <div>
-        <p className="font-bold text-black dark:text-white">{typeLabel}</p>
+        <p className="font-bold text-black dark:text-white">{label}</p>
         <p className="font-extralight text-black dark:text-white max-w-[400px]">
-          {descriptionLabel}
+          {description}
         </p>
       </div>
     </div>

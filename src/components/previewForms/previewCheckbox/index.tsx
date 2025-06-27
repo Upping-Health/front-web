@@ -7,10 +7,7 @@ import { useState } from 'react'
 interface IQuestion {
   label: string
   type: string
-  typeLabel: string
-  icon: any
   description: string
-  descriptionLabel: string
   options?: string[]
   required: boolean
 }

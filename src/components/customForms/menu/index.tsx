@@ -9,6 +9,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked'
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle'
+import { formDescriptions, formLabels } from '@/utils/forms'
 interface ICustomFormMenu {
   onPushQuestions: (e: any) => void
 }
@@ -39,54 +40,12 @@ const ButtonFormMenu = ({ label, type, onClick }: any) => {
 }
 
 const CustomFormMenu = ({ onPushQuestions }: ICustomFormMenu) => {
-  const options = [
-    {
-      label: 'Texto',
-      type: 'text',
-      description:
-        'Ideal para nomes, títulos ou pequenas informações.',
-    },
-    {
-      label: 'Parágrafo',
-      type: 'textarea',
-      description:
-        'Adequado para descrições ou respostas mais detalhadas.',
-    },
-    {
-      label: 'Múltipla Escolha',
-      type: 'radio',
-      description:
-        'Permite selecionar uma ou mais opção entre as disponíveis.',
-    },
-    {
-      label: 'Caixa de Seleção',
-      type: 'checkbox',
-      description:
-        'Permite selecionar apenas uma opção entre as disponíveis.',
-    },
-    {
-      label: 'Lista Suspensa',
-      type: 'select',
-      description:
-        'Menu em formato de lista que permite escolher uma única opção.',
-    },
-    {
-      label: 'Número',
-      type: 'number',
-      description: 'Campo para inserir apenas valores numéricos.',
-    },
-    {
-      label: 'Data',
-      type: 'date',
-      description: 'Campo para selecionar uma data específica no calendário.',
-    },
-    {
-      label: 'Arquivo',
-      type: 'file',
-
-      description: 'Permite o envio (upload) de um arquivo pelo usuário.',
-    },
-  ]
+  const options = Object.keys(formLabels).map((type) => ({
+    type,
+    label: formLabels[type],
+    description: formDescriptions[type],
+  }))
+  
 
   return (
     <nav className="grid grid-cols-4 grid-rows-2 gap-2 max-w-full">
