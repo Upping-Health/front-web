@@ -1,4 +1,6 @@
 'use client'
+import CardForms from '@/components/cardForms'
+import CardForm from '@/components/customForms/cardForms'
 import TopDash from '@/components/topDash'
 import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import { dashboardTabs } from '@/routes'
@@ -29,7 +31,7 @@ const FormsList = ({ params }: { params: { id: string } }) => {
           </div>
         </>
       ) : (
-        <></>
+        <CardForms data={data}/>
       )}
 
       {/* <ModalSelectPatient

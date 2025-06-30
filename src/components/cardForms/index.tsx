@@ -22,6 +22,7 @@ import ButtonExport from '../buttonExport'
 import FilterTable from '../filterTable'
 import ProfileRounded from '../profileRounded'
 import masks from '@/utils/masks/masks'
+import QuizIcon from '@mui/icons-material/Quiz'
 interface TableProps {
   data: any[]
   pagination?: boolean
@@ -29,7 +30,7 @@ interface TableProps {
   search?: boolean
 }
 
-const CardPatients: React.FC<TableProps> = ({
+const CardForms: React.FC<TableProps> = ({
   data,
   pagination = true,
   itemsPerPage = 10,
@@ -98,42 +99,38 @@ const CardPatients: React.FC<TableProps> = ({
             return (
               <div
                 key={index}
-                className="bg-white p-3 rounded-xl shadow w-full dark:bg-slate-600 dark:border-slate-500"
+                className="bg-white p-3 rounded-xl shadow w-full  dark:bg-slate-600 dark:border-slate-500"
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex gap-3 items-center">
-                    <ProfileRounded user={data} />
-
+                <div className="flex flex-row items-center justify-between">
+                  <div className="flex gap-2 items-center">
+                    <div className="bg-newGreen h-12 w-12 rounded-xl flex justify-center items-center">
+                      <QuizIcon className="text-white" />
+                    </div>
                     <div>
-                      <p className="font-medium text-black dark:text-white">{data?.name}</p>
-
-                      <div className="flex gap-6 font-light text-sm text-black dark:text-white">
-                        <p>{data?.years ?? 0} anos</p>
-
-                        <p>{masks.cpfMask(data?.cpf)}</p>
-
-                        <p>{masks.phoneMask(data?.cpf)}</p>
-                      </div>
+                      <p className="font-bold text-black dark:text-white">
+                        Avaliação Nutricional Inicial
+                      </p>
+                      <p className="font-extralight text-black dark:text-white text-sm">
+                        Anamnese
+                      </p>
                     </div>
                   </div>
 
                   <div className="flex gap-2 items-center">
-                    <span className="bg-blue-50 border-blue-200 border h-[35px] px-4 flex items-center justify-center rounded-md text-blue-700 text-sm font-medium">
-                      10 consultas
-                    </span>
-                    {/* <ButtonActive active={data?.status === 'ACTIVE'} /> */}
+                    <ButtonActive active={data?.status === 'ACTIVE'} />
 
                     <ButtonStyled
                       onClick={() => {}}
-                      title={'Histórico'}
+                      title={'Respostas'}
                       type="button"
-                      styles="bg-terciary h-[35px] px-3 rounded-md"
+                      styles="bg-transparent border border-gray h-[35px] px-3 text-sm"
+                      textColor="text-black dark:text-white"
                     />
                     <ButtonStyled
                       onClick={() => {}}
-                      title={'Iniciar consulta'}
+                      title={'Editar'}
                       type="button"
-                      styles="bg-black h-[35px] px-3 rounded-md"
+                      styles="bg-black h-[35px] px-3 text-sm"
                     />
                   </div>
                 </div>
@@ -156,4 +153,4 @@ const CardPatients: React.FC<TableProps> = ({
   )
 }
 
-export default CardPatients
+export default CardForms
