@@ -25,24 +25,27 @@ export default function Login() {
   const formik = useFormik({
     initialValues: {
       email: '',
-      password: '',
+      password: '12345678',
     },
     onSubmit: async (values) => {
       setloading(true)
       setError('')
       try {
-        const response = await api.post('users/auth', {
+        const response = await api.post('/login', {
           email: values.email,
           password: values?.password,
         })
 
+        console.log(response);
         if (response.status === 200) {
-          const { data: user, token } = response?.data
-          if (user && token) {
-            Cookies.set('token', token, { expires: 30 })
+          const { data} = response?.data
+
+          if (data) {
+            Cookies.set('token', data.access_token, {expires: 365})
+            localStorage.setItem('user', JSON.stringify(data.user));
+            setuser(data.user as any)
+            console.log(data, 'data');
             router.push('/dashboard')
-            const decoded: any = jwtDecode(token)
-            setuser(decoded as any)
           }
         } else {
           setError('Credenciais inválidas, tente novamente.')
@@ -60,7 +63,6 @@ export default function Login() {
       onSubmit={formik.handleSubmit}
       className="w-screen h-screen flex justify-center items-center"
     >
-
       {loading && <Loading text="Autenticando..." />}
       {!loading && (
         <div className="w-[500px] s:w-[90%] flex flex-col justify-evenly p-6 bg-white shadow-lg rounded-xl gap-6">

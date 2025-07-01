@@ -13,6 +13,7 @@ import Image from 'next/image'
 import logoimg from '../../assets/logo.png'
 import { dashboardTabs } from '@/routes'
 import { colors } from '@/utils/colors/colors'
+import api from '@/services/api'
 
 export default function MenuMobile() {
   const { tabDashSelected, setTabDashSelected } = useTab()
@@ -20,14 +21,17 @@ export default function MenuMobile() {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
 
-  const handleLogout = () => {
-    Cookies.remove('token')
-    router.push('/login')
+  const handleLogout = async () => {
+
+    await api.post('/logout')
+      .then(() => {
+        Cookies.remove('token')
+        router.push('/login')
+      })
   }
 
   const visibleTabs = useMemo(() => {
     return Object.values(dashboardTabs).filter((tab) => {
-      // você pode filtrar por role aqui se quiser
       return true
     })
   }, [user?.role])

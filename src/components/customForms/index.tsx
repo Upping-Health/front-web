@@ -6,6 +6,7 @@ import CustomFormMenu from './menu'
 import { DefaultContext } from '@/contexts/defaultContext'
 import PreFeedBack from '@/utils/feedbackStatus'
 import { useRouter } from 'next/navigation'
+import api from '@/services/api'
 interface IQuestions {
   label: string
   type: string
@@ -170,7 +171,20 @@ const CustomForms = () => {
   }, [questions, title, description])
 
   const onSaveForms = useCallback(() => {
-    if (!validForms()) return
+    if (!validForms()) return;
+
+    const data = {
+      type_id: 1,
+      title,
+      description,
+      is_active: true,
+      fields: questions.map((q, index) => ({
+        ...q,
+        order: index + 1,
+      }))
+    }
+
+    api.post('/forms/store', data).catch((e) => console.log(e));
   }, [questions, title, description])
 
   const onClearForm = useCallback(() => {

@@ -2,6 +2,7 @@
 import CardForms from '@/components/cardForms'
 import CardForm from '@/components/customForms/cardForms'
 import TopDash from '@/components/topDash'
+import useLoadForms from '@/hooks/nutritionists/useLoadForms'
 import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import { dashboardTabs } from '@/routes'
 import { colors } from '@/utils/colors/colors'
@@ -10,7 +11,7 @@ import { CircularProgress } from '@mui/material'
 import { usePathname, useRouter } from 'next/navigation'
 
 const FormsList = ({ params }: { params: { id: string } }) => {
-  const { data, loading } = useLoadPatients(false)
+  const { data, loading } = useLoadForms(false)
   const router = useRouter()
   return (
     <div className="w-full relative">

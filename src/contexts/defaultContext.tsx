@@ -1,5 +1,6 @@
 
 'use client'
+import LoadingFullScreen from '@/components/loadingGlobal';
 import ModalFeedBackStatus from '@/components/modals/ModalFeedback';
 import DefaultContextInterface from '@/interfaces/default.interface';
 import FeedBackStatusInterface from '@/interfaces/feedbackStatus';
@@ -11,6 +12,7 @@ export const DefaultContext = createContext<DefaultContextInterface>({} as any)
 
 export default function DefaultProvider({ children }: any) {
   const [themeDark, setThemeDark] = useState<boolean>(false)
+  const [loadingGlobal, setloadingGlobal] = useState(false);
   const [user, setuser] = useState<User | null>(null);
   const [showModal, setshowModal] = useState<any>({
     open: false,
@@ -19,6 +21,8 @@ export default function DefaultProvider({ children }: any) {
     status: '',
   })
   
+  console.log(user, 'user');
+
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme')
     const shouldUseDark = storedTheme === 'dark' || (!storedTheme)
@@ -44,12 +48,11 @@ export default function DefaultProvider({ children }: any) {
   }
 
   useEffect(() => {
-    const token = Cookies.get('token');
-    if (token) {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
       try {
-        const decoded: any = jwtDecode(token);
-        setuser(decoded as any)
-        console.log(decoded);
+        const user = JSON.parse(userStr);
+        setuser(user as any)
       } catch (error) {
         setuser(null)
       }
@@ -70,7 +73,11 @@ export default function DefaultProvider({ children }: any) {
       onShowFeedBack,
       themeDark,
       toggleTheme,
+      loadingGlobal,
+      setloadingGlobal
     }}>
+
+      {loadingGlobal && <LoadingFullScreen />} 
       {children}
 
       <ModalFeedBackStatus 
