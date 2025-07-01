@@ -37,12 +37,12 @@ const CardForms: React.FC<TableProps> = ({
     <div className="relative flex flex-col gap-4 mt-10 s:h-[70%] d:h-[90%] justify-between py-3 w-full">
       <div>
         {search && (
-          <div className="flex mb-4 w-full h-[46px] gap-4">
+          <div className="flex mb-4 w-full justify-between flex-wrap gap-2">
             <InputStyled
               id="search"
               type="search"
               styles="border-gray bg-white py-3 dark:border-gray-600 dark:bg-gray-700"
-              stylesContainer="w-full"
+              stylesContainer="flex-1"
               stylesInput="font-light  w-full text-sm dark:bg-gray-700"
               icon={
                 <SearchIcon className="text-xl dark:text-white text-black" />
@@ -54,15 +54,28 @@ const CardForms: React.FC<TableProps> = ({
               placeholder="Buscar pacientes por nome, telefone ou email..."
             />
 
-            <FilterTable
-              options={[
-                { label: 'Ativo', value: 'active' },
-                { label: 'Inativo', value: 'inactive' },
-              ]}
-              onSelect={() => {}}
-              selected="inactive"
-            />
-            <ButtonExport onClick={() => {}} />
+            <div className="flex gap-2">
+              <FilterTable
+                options={[
+                  { label: 'Ativo', value: 'active' },
+                  { label: 'Inativo', value: 'inactive' },
+                ]}
+                onSelect={(value) => console.log(value)}
+                selected="active"
+                label="Ordenar por"
+              />
+
+              <FilterTable
+                options={[
+                  { label: 'Ativo', value: 'active' },
+                  { label: 'Inativo', value: 'inactive' },
+                ]}
+                onSelect={() => {}}
+                selected="inactive"
+              />
+
+              <ButtonExport onClick={() => {}} />
+            </div>
           </div>
         )}
 

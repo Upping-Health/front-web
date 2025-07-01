@@ -9,8 +9,8 @@ const Logo = ({ minimal }: any) => {
   return (
     <div className='flex flex-col justify-center items-center'>
       <Image src={LogoImg} alt='Logo' width={minimal ? 50: 100} height={minimal ? 80: 100}/>
-      <h1 className={`${minimal ? 'text-2xl' : 'text-4xl'} dark:text-white font-bold text-center`}>
-        NUTRI<span className="text-primary ">TECH</span>
+      <h1 className={`${minimal ? 'text-xl' : 'text-4xl'} dark:text-white font-bold text-center`}>
+        UPPING<span className="text-primary ">HEALTH</span>
       </h1>
 
     </div>

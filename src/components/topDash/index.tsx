@@ -26,7 +26,7 @@ const TopDash = ({
   href,
   disabled = false
 }: TopDashProps) => {
-  const baseButtonClasses = `py-3 rounded-xl font-semibold flex justify-center items-center gap-2 ${disabled ? 'bg-darkGray' : ''} bg-black text-white px-4 text-sm h-12 shadow-lg bg-primary`
+  const baseButtonClasses = `py-3 rounded-xl font-semibold flex justify-center items-center gap-2 ${disabled ? 'bg-darkGray' : ''} bg-black text-white px-4 text-sm h-12 shadow-lg bg-primary w-[180px]`
 
   return (
     <div className="flex mb-4 items-center justify-between flex-wrap gap-4">
@@ -49,7 +49,7 @@ const TopDash = ({
           icon={<BtnIcon style={{ color: colors.white, fontSize: 24 }} />}
           onClick={onClick}
           type="button"
-          styles="px-4 text-sm h-12 shadow-lg bg-primary"
+          styles="px-4 text-sm h-12 shadow-lg bg-primary w-[180px]"
         />
       ) : href ? (
         <Link

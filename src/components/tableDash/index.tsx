@@ -14,7 +14,7 @@ import PaginationDash from '../PaginationDash'
 import ButtonExport from '../buttonExport'
 import FilterTable from '../filterTable'
 import InputStyled from '../inputStyled'
-import NotFoundData from '../notFoundData' 
+import NotFoundData from '../notFoundData'
 
 interface TableProps {
   columns: Array<{
@@ -72,7 +72,7 @@ const TableDash: React.FC<TableProps> = ({
               id="search"
               type="search"
               styles="border-gray bg-white py-3 dark:border-gray-600 dark:bg-gray-700"
-              stylesContainer="w-[65%]"
+              stylesContainer="flex-1"
               stylesInput="font-light  w-full text-sm dark:bg-gray-700"
               icon={
                 <SearchIcon className="text-xl dark:text-white text-black" />
