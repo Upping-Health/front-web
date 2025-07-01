@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material'
 import React from 'react'
 
 interface IButtonStyled {
@@ -5,9 +6,16 @@ interface IButtonStyled {
   onClick?: () => void
   type?: 'submit' | 'button'
   disabled?: boolean
+  loading?: boolean
 }
 
-const ButtonActive = ({ onClick, type, active, disabled }: IButtonStyled) => {
+const ButtonActive = ({
+  onClick,
+  type,
+  active,
+  disabled,
+  loading,
+}: IButtonStyled) => {
   return (
     <button
       disabled={disabled}
@@ -31,11 +39,15 @@ const ButtonActive = ({ onClick, type, active, disabled }: IButtonStyled) => {
         ${active ? 'bg-paid' : 'bg-unpaid'}
       `}
     >
-      <p
-        className={`${active ? 'text-paidFont' : 'text-unpaidFont'} font-[600]`}
-      >
-        {active ? 'Ativo' : 'Inativo'}
-      </p>
+      {loading ? (
+        <CircularProgress size={16} className={`${active ? 'text-paidFont' : 'text-unpaidFont'}`} />
+      ) : (
+        <p
+          className={`${active ? 'text-paidFont' : 'text-unpaidFont'} font-[600]`}
+        >
+          {active ? 'Ativo' : 'Inativo'}
+        </p>
+      )}
     </button>
   )
 }

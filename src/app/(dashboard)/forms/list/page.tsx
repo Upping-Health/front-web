@@ -8,6 +8,8 @@ import { CircularProgress } from '@mui/material'
 
 const FormsList = ({ params }: { params: { id: string } }) => {
   const { data, loading } = useLoadForms(false)
+
+  console.log(data);
   return (
     <div className="w-full relative">
       <TopDash

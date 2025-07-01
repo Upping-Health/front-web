@@ -7,6 +7,8 @@ import CardForm from './cardForms'
 import GenerateQuestionForm from './generateQuestionForm'
 import HeaderFormMenu from './header'
 import CustomFormMenu from './menu'
+import { dashboardTabs } from '@/routes'
+import Loading from '@/components/layoutComponents/loading'
 interface IQuestions {
   label: string
   type: string
@@ -15,18 +17,32 @@ interface IQuestions {
 }
 
 const CustomForms = () => {
-  const { onShowFeedBack } = useContext(DefaultContext)
+  const { onShowFeedBack} = useContext(DefaultContext)
   const [questions, setQuestions] = useState<IQuestions[]>([])
   const [title, setTitle] = useState<string>('')
   const [typeForm, setTypeForm] = useState<string>('')
   const [description, setDescription] = useState<string>('')
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setloading] = useState(false);
+
   const router = useRouter()
 
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
 
+  const onSuccess = () => {
+    onShowFeedBack(PreFeedBack.success('Formulário cadastrado com sucesso!'))
+    router.push('/forms/list')
+  }
+
+  const onError = (e: any) => {
+    const errorMessage =
+      e?.response?.data?.error || 'Falhou ao cadastrar formulário.'
+    onShowFeedBack(PreFeedBack.error(errorMessage))
+    console.log('[ERROR API /patient]', errorMessage)
+  }
+
+
   useEffect(() => {
-    setLoading(true)
+    setloading(true)
     const saved = localStorage.getItem('customFormData')
     if (saved) {
       try {
@@ -38,7 +54,7 @@ const CustomForms = () => {
       } catch (error) {
         console.error('Erro ao carregar dados do formulário:', error)
       } finally {
-        setLoading(false)
+        setloading(false)
       }
     }
   }, [])
@@ -169,9 +185,11 @@ const CustomForms = () => {
     router.push('/forms/preview')
   }, [questions, title, description])
 
-  const onSaveForms = useCallback(() => {
+  const onSaveForms = useCallback(async () => {
     if (!validForms()) return
 
+
+    setloading(true)
     const data = {
       type_id: 1,
       title,
@@ -182,8 +200,15 @@ const CustomForms = () => {
         order: index + 1,
       })),
     }
+    
 
-    api.post('/forms/store', data).catch((e) => console.log(e))
+    await api.post('/forms/store', data)
+      .then((e) => {
+        localStorage.removeItem('customFormData')
+        onSuccess();
+      })
+      .catch((e) => onError(e))
+      .finally(() => setloading(false))
   }, [questions, title, description])
 
   const onClearForm = useCallback(() => {
@@ -214,6 +239,10 @@ const CustomForms = () => {
 
   return (
     <div className="flex flex-col h-full items-center mt-4">
+      {loading ? 
+        <Loading text='Enviando formulário...'/>
+        
+        :
       <div className="flex flex-col gap-4 w-full max-w-5xl">
         <HeaderFormMenu
           title={title}
@@ -252,6 +281,7 @@ const CustomForms = () => {
           <CardForm />
         )}
       </div>
+    }
     </div>
   )
 }
