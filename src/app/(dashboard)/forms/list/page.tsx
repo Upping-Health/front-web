@@ -1,14 +1,11 @@
 'use client'
 import CardForms from '@/components/cardForms'
-import CardForm from '@/components/customForms/cardForms'
 import TopDash from '@/components/topDash'
 import useLoadForms from '@/hooks/nutritionists/useLoadForms'
-import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
-import { dashboardTabs } from '@/routes'
 import { colors } from '@/utils/colors/colors'
 import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined'
 import { CircularProgress } from '@mui/material'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 const FormsList = ({ params }: { params: { id: string } }) => {
   const { data, loading } = useLoadForms(false)
@@ -20,7 +17,7 @@ const FormsList = ({ params }: { params: { id: string } }) => {
         description="Crie e organize formulários personalizados para seus atendimentos."
         icon={QuestionAnswerOutlinedIcon}
         textBtn={'Novo Formulário'}
-        onClick={() => router.push(`/forms/create`) }
+        href='/forms/create'
       />
 
       {loading ? (

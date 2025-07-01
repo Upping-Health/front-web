@@ -110,16 +110,16 @@ const CardForms: React.FC<TableProps> = ({
                     </div>
                     <div>
                       <p className="font-bold text-black dark:text-white">
-                        Avaliação Nutricional Inicial
+                        {data?.title}
                       </p>
                       <p className="font-extralight text-black dark:text-white text-sm">
-                        Anamnese
+                        {data?.type_id} 
                       </p>
                     </div>
                   </div>
 
                   <div className="flex gap-2 items-center">
-                    <ButtonActive active={data?.status === 'ACTIVE'} />
+                    <ButtonActive active={data?.is_active} />
 
                     <ButtonStyled
                       onClick={() => {}}

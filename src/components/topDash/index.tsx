@@ -1,7 +1,10 @@
 'use client'
+import Link from 'next/link'
 import { colors } from '@/utils/colors/colors'
 import AddIcon from '@mui/icons-material/Add'
+import type { ReactNode } from 'react'
 import ButtonStyled from '../button'
+
 interface TopDashProps {
   title: string
   description: string
@@ -9,6 +12,8 @@ interface TopDashProps {
   onClick?: () => void
   textBtn?: string
   btnIcon?: any
+  href?: string
+  disabled?: boolean
 }
 
 const TopDash = ({
@@ -17,12 +22,16 @@ const TopDash = ({
   icon: Icon,
   onClick,
   textBtn,
-  btnIcon: BtnIcon = AddIcon
+  btnIcon: BtnIcon = AddIcon,
+  href,
+  disabled = false
 }: TopDashProps) => {
+  const baseButtonClasses = `py-3 rounded-xl font-semibold flex justify-center items-center gap-2 ${disabled ? 'bg-darkGray' : ''} bg-black text-white px-4 text-sm h-12 shadow-lg bg-primary`
+
   return (
     <div className="flex mb-4 items-center justify-between flex-wrap gap-4">
       <div className="flex items-center ">
-        <div className="flex justify-center items-center bg-primary  p-2 rounded-xl mr-4 shadow-lg">
+        <div className="flex justify-center items-center bg-primary p-2 rounded-xl mr-4 shadow-lg">
           <Icon style={{ color: colors.white, fontSize: 48 }} />
         </div>
 
@@ -34,7 +43,7 @@ const TopDash = ({
         </div>
       </div>
 
-      {onClick && (
+      {onClick ? (
         <ButtonStyled
           title={textBtn}
           icon={<BtnIcon style={{ color: colors.white, fontSize: 24 }} />}
@@ -42,7 +51,18 @@ const TopDash = ({
           type="button"
           styles="px-4 text-sm h-12 shadow-lg bg-primary"
         />
-      )}
+      ) : href ? (
+        <Link
+          href={href}
+          className={baseButtonClasses}
+          aria-disabled={disabled}
+          tabIndex={disabled ? -1 : 0}
+          onClick={e => disabled && e.preventDefault()}
+        >
+          {BtnIcon && <BtnIcon style={{ color: colors.white, fontSize: 24 }} />}
+          {textBtn}
+        </Link>
+      ) : null}
     </div>
   )
 }
