@@ -14,7 +14,7 @@ import PaginationDash from '../PaginationDash'
 import ButtonExport from '../buttonExport'
 import FilterTable from '../filterTable'
 import InputStyled from '../inputStyled'
-import { CheckCircleOutline, Highlight, Tune } from '@mui/icons-material'
+import NotFoundData from '../notFoundData' 
 
 interface TableProps {
   columns: Array<{
@@ -87,16 +87,8 @@ const TableDash: React.FC<TableProps> = ({
             <div className="flex gap-2">
               <FilterTable
                 options={[
-                  {
-                    label: 'Ativo',
-                    value: 'active',
-                  
-                  },
-                  {
-                    label: 'Inativo',
-                    value: 'inactive',
-            
-                  },
+                  { label: 'Ativo', value: 'active' },
+                  { label: 'Inativo', value: 'inactive' },
                 ]}
                 onSelect={(value) => console.log(value)}
                 selected="active"
@@ -105,14 +97,8 @@ const TableDash: React.FC<TableProps> = ({
 
               <FilterTable
                 options={[
-                  {
-                    label: 'Ativo',
-                    value: 'active',
-                  },
-                  {
-                    label: 'Inativo',
-                    value: 'inactive',
-                  },
+                  { label: 'Ativo', value: 'active' },
+                  { label: 'Inativo', value: 'inactive' },
                 ]}
                 onSelect={() => {}}
                 selected="inactive"
@@ -123,7 +109,13 @@ const TableDash: React.FC<TableProps> = ({
           </div>
         )}
 
-        <div className="">
+        {/* Se não tiver dados, mostra o NotFoundData */}
+        {dataToDisplay.length === 0 ? (
+          <NotFoundData
+            title="Nenhum resultado encontrado"
+            description="Tente ajustar sua pesquisa ou filtros para encontrar os dados desejados."
+          />
+        ) : (
           <TableContainer
             component={Paper}
             sx={{
@@ -166,13 +158,8 @@ const TableDash: React.FC<TableProps> = ({
                     onClick={() => onRowClick?.(row)}
                     sx={{
                       cursor: onRowClick ? 'pointer' : 'default',
-
-                      '&:nth-of-type(even)': {
-                        backgroundColor: '#f6f6f6',
-                      },
-                      '&:hover': {
-                        backgroundColor: '#f6f6f6',
-                      },
+                      '&:nth-of-type(even)': { backgroundColor: '#f6f6f6' },
+                      '&:hover': { backgroundColor: '#f6f6f6' },
                     }}
                     className="dark:bg-slate-600 hover:dark:bg-slate-700"
                   >
@@ -182,7 +169,6 @@ const TableDash: React.FC<TableProps> = ({
                         <TableCell
                           key={index}
                           sx={{
-                            //padding: '8px',
                             color: colors.black,
                             textAlign: 'left',
                             whiteSpace: 'wrap',
@@ -200,10 +186,10 @@ const TableDash: React.FC<TableProps> = ({
               </TableBody>
             </MuiTable>
           </TableContainer>
-        </div>
+        )}
       </div>
 
-      {pagination && (
+      {pagination && dataToDisplay.length > 0 && (
         <div className="flex justify-end mt-2 pr-4">
           <PaginationDash
             count={numberPages}

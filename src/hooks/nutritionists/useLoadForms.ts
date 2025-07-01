@@ -12,7 +12,7 @@ const useLoadForms = (hidden: boolean) => {
     try {
       setloading(true)
       const res = await api.get(`/forms`)
-      setdata(res?.data?.data?.data ?? [])
+      setdata(res?.data?.data ?? [])
       console.log(res);
     } catch (error: any) {
       console.error('[ERROR API] /forms/', error?.response?.data)

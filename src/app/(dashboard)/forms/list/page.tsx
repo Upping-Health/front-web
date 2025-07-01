@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation'
 
 const FormsList = ({ params }: { params: { id: string } }) => {
   const { data, loading } = useLoadForms(false)
-  const router = useRouter()
   return (
     <div className="w-full relative">
       <TopDash
