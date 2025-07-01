@@ -12,7 +12,8 @@ export const DefaultContext = createContext<DefaultContextInterface>({} as any)
 
 export default function DefaultProvider({ children }: any) {
   const [themeDark, setThemeDark] = useState<boolean>(false)
-  const [loadingGlobal, setloadingGlobal] = useState(false);
+  const [loadingGlobal, setloadingGlobal] = useState<boolean>(false);
+  const [labelLoading, setLabelLoading] = useState<string | null>(null)
   const [user, setuser] = useState<User | null>(null);
   const [showModal, setshowModal] = useState<any>({
     open: false,
@@ -21,7 +22,6 @@ export default function DefaultProvider({ children }: any) {
     status: '',
   })
   
-  console.log(user, 'user');
 
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme')
@@ -74,10 +74,11 @@ export default function DefaultProvider({ children }: any) {
       themeDark,
       toggleTheme,
       loadingGlobal,
-      setloadingGlobal
+      setloadingGlobal,
+      setLabelLoading
     }}>
 
-      {loadingGlobal && <LoadingFullScreen />} 
+      {loadingGlobal && <LoadingFullScreen labelLoading={labelLoading}/>} 
       {children}
 
       <ModalFeedBackStatus 

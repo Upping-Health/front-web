@@ -10,17 +10,21 @@ import Cookies from 'js-cookie'
 import api from '@/services/api'
 
 const AsideFooter = ({ isCollapsed }: { isCollapsed: boolean }) => {
-  const { user, setloadingGlobal } = useContext(DefaultContext)
+  const { user, setloadingGlobal, setLabelLoading } = useContext(DefaultContext)
   const router = useRouter()
   const handleLogout = async () => {
     setloadingGlobal(true)
+    setLabelLoading('Fazendo logout...')
     await api
       .post('/logout')
       .then(() => {
         Cookies.remove('token')
         router.push('/login')
       })
-      .finally(() => setloadingGlobal(false))
+      .finally(() => {
+        setloadingGlobal(false)
+        setLabelLoading(null);
+      })
   }
   return (
     <div>

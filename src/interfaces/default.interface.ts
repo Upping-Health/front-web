@@ -9,4 +9,5 @@ export default interface DefaultContextInterface {
   toggleTheme: () => void
   loadingGlobal: boolean,
   setloadingGlobal: (e: boolean) => void,
+  setLabelLoading: (e: string | null) => void
  }
