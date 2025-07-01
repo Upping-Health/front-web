@@ -1,11 +1,11 @@
 'use client'
+import logoImg from '@/assets/logo.png'
 import Logo from '@/components/layoutComponents/logo'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
-import logoImg from '@/assets/images/profile.png';
 
 interface IAsideHeaderParams {
   isCollapsed: boolean
