@@ -1,21 +1,18 @@
 'use client'
 
 import api from '@/services/api'
-import { ROLE } from '@/utils/types/roles'
 import Cookies from 'js-cookie'
-
+import ButtonStyled from '@/components/buttonsComponents/button'
+import InputStyled from '@/components/inputsComponents/inputStyled'
+import Loading from '@/components/layoutComponents/loading'
+import Logo from '@/components/layoutComponents/logo'
+import { DefaultContext } from '@/contexts/defaultContext'
+import { colors } from '@/utils/colors/colors'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
 import { useContext, useState } from 'react'
-import { DefaultContext } from '@/contexts/defaultContext'
-import { jwtDecode } from 'jwt-decode'
-import Loading from '@/components/loading'
-import Logo from '@/components/logo'
-import InputStyled from '@/components/inputStyled'
-import ButtonStyled from '@/components/button'
-import { colors } from '@/utils/colors/colors'
 
 export default function Login() {
   const { setuser } = useContext(DefaultContext)
@@ -36,15 +33,15 @@ export default function Login() {
           password: values?.password,
         })
 
-        console.log(response);
+        console.log(response)
         if (response.status === 200) {
-          const { data} = response?.data
+          const { data } = response?.data
 
           if (data) {
-            Cookies.set('token', data.access_token, {expires: 365})
-            localStorage.setItem('user', JSON.stringify(data.user));
+            Cookies.set('token', data.access_token, { expires: 365 })
+            localStorage.setItem('user', JSON.stringify(data.user))
             setuser(data.user as any)
-            console.log(data, 'data');
+            console.log(data, 'data')
             router.push('/dashboard')
           }
         } else {
@@ -66,7 +63,7 @@ export default function Login() {
       {loading && <Loading text="Autenticando..." />}
       {!loading && (
         <div className="w-[500px] s:w-[90%] flex flex-col justify-evenly p-6 bg-white shadow-lg rounded-xl gap-6">
-          <div className=''>
+          <div className="">
             <Logo />
           </div>
 
@@ -117,7 +114,7 @@ export default function Login() {
               type="button"
               onClick={() => router.push('/register')}
               styles="w-full"
-              bgColor='bg-primary'
+              bgColor="bg-primary"
               title="Cadastre-se gratuitamente"
             />
           </div>

@@ -1,6 +1,6 @@
 'use client'
-import CardDash from '@/components/cardDash';
-import TopDash from '@/components/topDash';
+import CardDash from '@/components/tablesComponents/cardDash';
+import TopDash from '@/components/layoutComponents/topDash';
 import useLoadDashboardPatients from '@/hooks/dashboard/useLoadDashboardPatients';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import GroupOffIcon from '@mui/icons-material/GroupRemove';

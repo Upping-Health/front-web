@@ -1,28 +1,24 @@
 'use client'
-import ButtonStyled from '@/components/button'
-import InputStyled from '@/components/inputStyled'
-import Loading from '@/components/loading'
-import SelectStyled from '@/components/select'
+import ButtonStyled from '@/components/buttonsComponents/button'
+import InputStyled from '@/components/inputsComponents/inputStyled'
+import Loading from '@/components/layoutComponents/loading'
+import SelectStyled from '@/components/inputsComponents/select'
 import api from '@/services/api'
 import { colors } from '@/utils/colors/colors'
+import { formatDate } from '@/utils/format/date'
 import masks from '@/utils/masks/masks'
 import { ROLE } from '@/utils/types/roles'
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined'
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined'
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import MailOutlineIcon from '@mui/icons-material/MailOutline'
+import PersonIcon from '@mui/icons-material/Person'
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined'
 import WcIcon from '@mui/icons-material/Wc'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import PersonIcon from '@mui/icons-material/Person'
-import CustomizedSteppers from '@/components/StepBar'
-import HomeIcon from '@mui/icons-material/Home'
-import { formatDate } from '@/utils/format/date'
 const validate = async (values: any) => {
   const unmaskCpf = values.cpf.replace(/\D/g, '')
   const errors: any = {}
@@ -153,7 +149,6 @@ export default function Register() {
                 value={formik.values.gender}
                 onChange={formik.handleChange}
                 id="gender"
-  
               />
 
               <InputStyled

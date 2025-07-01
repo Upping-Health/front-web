@@ -1,9 +1,8 @@
 'use client'
-import Link from 'next/link'
 import { colors } from '@/utils/colors/colors'
 import AddIcon from '@mui/icons-material/Add'
-import type { ReactNode } from 'react'
-import ButtonStyled from '../button'
+import Link from 'next/link'
+import ButtonStyled from '@/components/buttonsComponents/button'
 
 interface TopDashProps {
   title: string
@@ -24,9 +23,9 @@ const TopDash = ({
   textBtn,
   btnIcon: BtnIcon = AddIcon,
   href,
-  disabled = false
+  disabled = false,
 }: TopDashProps) => {
-  const baseButtonClasses = `py-3 rounded-xl font-semibold flex justify-center items-center gap-2 ${disabled ? 'bg-darkGray' : ''} bg-black text-white px-4 text-sm h-12 shadow-lg bg-primary w-[180px]`
+  const baseButtonClasses = `py-3 rounded-xl font-semibold flex justify-center items-center gap-2 ${disabled ? 'bg-darkGray' : ''} bg-black text-white px-4 text-sm h-12 shadow-lg bg-primary`
 
   return (
     <div className="flex mb-4 items-center justify-between flex-wrap gap-4">
@@ -36,7 +35,9 @@ const TopDash = ({
         </div>
 
         <div>
-          <p className="text-black dark:text-white text-1xl font-bold uppercase">{title}</p>
+          <p className="text-black dark:text-white text-1xl font-bold uppercase">
+            {title}
+          </p>
           <p className="text-black dark:text-white text-sm font-light max-w-[400px]">
             {description}
           </p>
@@ -49,7 +50,7 @@ const TopDash = ({
           icon={<BtnIcon style={{ color: colors.white, fontSize: 24 }} />}
           onClick={onClick}
           type="button"
-          styles="px-4 text-sm h-12 shadow-lg bg-primary w-[180px]"
+          styles="px-4 text-sm h-12 shadow-lg bg-primary"
         />
       ) : href ? (
         <Link
@@ -57,7 +58,7 @@ const TopDash = ({
           className={baseButtonClasses}
           aria-disabled={disabled}
           tabIndex={disabled ? -1 : 0}
-          onClick={e => disabled && e.preventDefault()}
+          onClick={(e) => disabled && e.preventDefault()}
         >
           {BtnIcon && <BtnIcon style={{ color: colors.white, fontSize: 24 }} />}
           {textBtn}

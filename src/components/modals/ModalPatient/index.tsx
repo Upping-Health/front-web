@@ -1,6 +1,6 @@
-import ButtonStyled from '@/components/button'
-import InputStyled from '@/components/inputStyled'
-import SelectStyled from '@/components/select'
+import ButtonStyled from '@/components/buttonsComponents/button'
+import InputStyled from '@/components/inputsComponents/inputStyled'
+import SelectStyled from '@/components/inputsComponents/select'
 import { DefaultContext } from '@/contexts/defaultContext'
 import Patient from '@/interfaces/patient.interface'
 import api from '@/services/api'
@@ -23,7 +23,7 @@ import { CircularProgress, Modal } from '@mui/material'
 import { useFormik } from 'formik'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { validatPatient } from '../../../../formik/validators/validator-patient'
-import CustomizedSteppers from '../../StepBar'
+import CustomizedSteppers from '../../layoutComponents/stepBar'
 
 interface ModalParams {
   open: boolean

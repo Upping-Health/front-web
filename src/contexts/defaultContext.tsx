@@ -1,12 +1,10 @@
 
 'use client'
-import LoadingFullScreen from '@/components/loadingGlobal';
+import LoadingFullScreen from '@/components/layoutComponents/loadingGlobal';
 import ModalFeedBackStatus from '@/components/modals/ModalFeedback';
 import DefaultContextInterface from '@/interfaces/default.interface';
 import FeedBackStatusInterface from '@/interfaces/feedbackStatus';
 import User from '@/interfaces/user.interface';
-import Cookies from 'js-cookie';
-import { jwtDecode } from 'jwt-decode';
 import { createContext, useCallback, useEffect, useState } from 'react';
 export const DefaultContext = createContext<DefaultContextInterface>({} as any)
 

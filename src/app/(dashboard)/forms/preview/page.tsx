@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import { colors } from '@/utils/colors/colors'
 import { CircularProgress } from '@mui/material'
-import PreviewForms from '@/components/previewForms'
+import PreviewForms from '@/components/formsComponents/previewForms'
 
 interface IQuestion {
   label: string
@@ -49,8 +49,7 @@ const FormsPreview = ({ params }: { params: { id: string } }) => {
         </div>
       ) : formData ? (
         <div className="max-w-5xl mx-auto flex flex-col gap-6 mt-5 px-4">
-          <PreviewForms  formData={formData} />
-
+          <PreviewForms formData={formData} />
         </div>
       ) : (
         <p className="text-center mt-8 text-gray-500 dark:text-gray-400">

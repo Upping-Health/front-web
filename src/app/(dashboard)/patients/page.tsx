@@ -1,25 +1,24 @@
 'use client'
 import { useCallback, useContext, useMemo, useState } from 'react'
 
-import ButtonActive from '@/components/buttonActive'
+import ButtonActive from '@/components/buttonsComponents/buttonActive'
+import ButtonIconStyled from '@/components/buttonsComponents/buttonIcon'
 import ModalPatient from '@/components/modals/ModalPatient'
-import TableDash from '@/components/tableDash'
-import TopDash from '@/components/topDash'
+import ProfileRounded from '@/components/profileRounded'
+import TableDash from '@/components/tablesComponents/tableDash'
+import TopDash from '@/components/layoutComponents/topDash'
+import { DefaultContext } from '@/contexts/defaultContext'
 import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import Patient from '@/interfaces/patient.interface'
+import api from '@/services/api'
 import { colors } from '@/utils/colors/colors'
+import PreFeedBack from '@/utils/feedbackStatus'
 import masks from '@/utils/masks/masks'
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd'
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined'
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
 import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/navigation'
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import ButtonStyled from '@/components/button'
-import ButtonIconStyled from '@/components/buttonIcon'
-import ProfileRounded from '@/components/profileRounded'
-import api from '@/services/api'
-import { DefaultContext } from '@/contexts/defaultContext'
-import PreFeedBack from '@/utils/feedbackStatus'
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 
 const PacientesContent = () => {
   const {user, onShowFeedBack} = useContext(DefaultContext)

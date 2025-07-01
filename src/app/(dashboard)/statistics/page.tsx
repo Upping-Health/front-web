@@ -1,13 +1,12 @@
 'use client'
-import CardDash from '@/components/cardDash';
-import TopDash from '@/components/topDash'
-import Group from '@mui/icons-material/Group';
-import Groups from '@mui/icons-material/Groups';
-import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined'
-import { Skeleton } from '@mui/material'
+import CardDash from '@/components/tablesComponents/cardDash';
+import TopDash from '@/components/layoutComponents/topDash';
+import useLoadDashboardPatients from '@/hooks/dashboard/useLoadDashboardPatients';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import GroupOffIcon from '@mui/icons-material/GroupRemove';
-import useLoadDashboardPatients from '@/hooks/dashboard/useLoadDashboardPatients';
+import Groups from '@mui/icons-material/Groups';
+import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
+import { Skeleton } from '@mui/material';
 
 const DashboardContent = () => {
 

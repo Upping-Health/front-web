@@ -1,11 +1,9 @@
+import imageProfile from '@/assets/images/profile.png'
 import Patient from '@/interfaces/patient.interface'
-import React from 'react'
-import imageProfile from '../../assets/images/profile.png'
-import Image from 'next/image'
 import FemaleIcon from '@mui/icons-material/Female'
 import MaleIcon from '@mui/icons-material/Male'
-import TransgenderIcon from '@mui/icons-material/Transgender';
-import { colors } from '@/utils/colors/colors'
+import TransgenderIcon from '@mui/icons-material/Transgender'
+import Image from 'next/image'
 interface ICardProfile {
   user?: Patient | null
 }

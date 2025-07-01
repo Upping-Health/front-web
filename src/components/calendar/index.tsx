@@ -1,17 +1,15 @@
 // components/FullCalendarComponent.tsx
-import React, { useState, useRef } from 'react'
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
+import Schedule from '@/interfaces/schedule.interface'
 import { EventClickArg, EventContentArg } from '@fullcalendar/core'
 import ptBrLocale from '@fullcalendar/core/locales/pt-br'
-import { colors } from '@/utils/colors/colors'
-import './calendar-custom.css'
-import Schedule from '@/interfaces/schedule.interface'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction'
+import FullCalendar from '@fullcalendar/react'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import { useRef, useState } from 'react'
+import Wrapper from '../layoutComponents/wrapper'
 import ModalAgenda from '../modals/ModalAgenda'
-import Wrapper from '../wrapper'
-import { useDarkMode } from '@/hooks/theme/useDarkTheme'
+import './calendar-custom.css'
 const Calendar = ({
   schedule,
   loadNewData,
@@ -94,8 +92,8 @@ const Calendar = ({
           eventContent={renderEventContent}
           events={schedule?.map((e) => ({
             title: e.patientName,
-            start: e.startDate,
-            end: e.endDate,
+            start: e.start_time,
+            end: e.end_time,
             extendedProps: {
               ...e,
             },

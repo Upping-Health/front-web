@@ -1,27 +1,12 @@
-import React, { useMemo, useState } from 'react'
-import {
-  Table as MuiTable,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-} from '@mui/material'
-import { colors } from '@/utils/colors/colors'
-import PaginationDash from '../PaginationDash'
-import SearchIcon from '@mui/icons-material/Search'
-import InputStyled from '../inputStyled'
-import SelectStyled from '../select'
-import Wc from '@mui/icons-material/Wc'
-import ButtonActive from '../buttonActive'
-import ButtonStyled from '../button'
-import AssignmentInd from '@mui/icons-material/AssignmentInd'
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined'
-import ButtonExport from '../buttonExport'
-import FilterTable from '../filterTable'
-import ProfileRounded from '../profileRounded'
 import masks from '@/utils/masks/masks'
+import SearchIcon from '@mui/icons-material/Search'
+import React, { useMemo, useState } from 'react'
+import PaginationDash from '../paginationDash'
+import ButtonStyled from '@/components/buttonsComponents/button'
+import ButtonExport from '@/components/buttonsComponents/buttonExport'
+import FilterTable from '../filterTable'
+import InputStyled from '@/components/inputsComponents/inputStyled'
+import ProfileRounded from '@/components/profileRounded'
 interface TableProps {
   data: any[]
   pagination?: boolean
@@ -105,7 +90,9 @@ const CardPatients: React.FC<TableProps> = ({
                     <ProfileRounded user={data} />
 
                     <div>
-                      <p className="font-medium text-black dark:text-white">{data?.name}</p>
+                      <p className="font-medium text-black dark:text-white">
+                        {data?.name}
+                      </p>
 
                       <div className="flex gap-6 font-light text-sm text-black dark:text-white">
                         <p>{data?.years ?? 0} anos</p>

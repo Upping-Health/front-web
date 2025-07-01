@@ -10,11 +10,11 @@ import {
   TableRow,
 } from '@mui/material'
 import React, { useMemo, useState } from 'react'
-import PaginationDash from '../PaginationDash'
-import ButtonExport from '../buttonExport'
+import PaginationDash from '../paginationDash';
+import ButtonExport from '@/components/buttonsComponents/buttonExport'
 import FilterTable from '../filterTable'
-import InputStyled from '../inputStyled'
-import NotFoundData from '../notFoundData'
+import InputStyled from '@/components/inputsComponents/inputStyled'
+import NotFoundData from '@/components/layoutComponents/notFoundData'
 
 interface TableProps {
   columns: Array<{

@@ -1,12 +1,10 @@
 'use client'
-import CardPatients from '@/components/cardPatients'
-import TopDash from '@/components/topDash'
+import TableDash from '@/components/tablesComponents/tableDash'
+import TopDash from '@/components/layoutComponents/topDash'
 import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import { colors } from '@/utils/colors/colors'
-import AddIcon from '@mui/icons-material/Add'
+import RestaurantOutlinedIcon from '@mui/icons-material/RestaurantOutlined'
 import { CircularProgress } from '@mui/material'
-import RestaurantOutlinedIcon from '@mui/icons-material/RestaurantOutlined';
-import TableDash from '@/components/tableDash'
 import { useMemo } from 'react'
 
 const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
@@ -20,21 +18,20 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
       },
       {
         header: 'Energia',
-        field: 'energy'
+        field: 'energy',
       },
       {
         header: 'Gordura',
-        field: 'energy'
+        field: 'energy',
       },
       {
         header: 'Carboídratos',
-        field: 'energy'
+        field: 'energy',
       },
       {
         header: 'Proteína',
-        field: 'energy'
-      }
-    
+        field: 'energy',
+      },
     ],
     [],
   )
@@ -59,7 +56,7 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
         </>
       ) : (
         <>
-           <TableDash columns={columns} data={data} rowKey="id" />
+          <TableDash columns={columns} data={data} rowKey="id" />
         </>
       )}
 

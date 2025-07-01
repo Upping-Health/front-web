@@ -1,6 +1,6 @@
 // app/(dashboard)/patient/[id]/page.tsx
 'use client'
-import TopDash from '@/components/topDash';
+import TopDash from '@/components/layoutComponents/topDash';
 import useLoadPatientById from '@/hooks/nutritionists/useLoadPatientById';
 import AddIcon from '@mui/icons-material/Add';
 const ConsultHistory = ({ params }: { params: {id: string } }) => {

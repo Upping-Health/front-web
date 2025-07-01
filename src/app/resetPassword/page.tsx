@@ -1,7 +1,7 @@
 'use client'
-import ButtonStyled from '@/components/button'
-import InputStyled from '@/components/inputStyled'
-import Loading from '@/components/loading'
+import ButtonStyled from '@/components/buttonsComponents/button'
+import InputStyled from '@/components/inputsComponents/inputStyled'
+import Loading from '@/components/layoutComponents/loading'
 import { DefaultContext } from '@/contexts/defaultContext'
 import api from '@/services/api'
 

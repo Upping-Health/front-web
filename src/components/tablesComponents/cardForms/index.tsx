@@ -1,13 +1,14 @@
+import InputStyled from '@/components/inputsComponents/inputStyled'
 import QuizIcon from '@mui/icons-material/Quiz'
 import SearchIcon from '@mui/icons-material/Search'
 import React, { useMemo, useState } from 'react'
-import NotFoundData from '../notFoundData'
-import PaginationDash from '../PaginationDash'
-import ButtonStyled from '../button'
-import ButtonActive from '../buttonActive'
-import ButtonExport from '../buttonExport'
 import FilterTable from '../filterTable'
-import InputStyled from '../inputStyled'
+import ButtonExport from '@/components/buttonsComponents/buttonExport'
+import NotFoundData from '@/components/layoutComponents/notFoundData'
+import ButtonActive from '@/components/buttonsComponents/buttonActive'
+import ButtonStyled from '@/components/buttonsComponents/button'
+import PaginationDash from '../paginationDash'
+
 interface TableProps {
   data: any[]
   pagination?: boolean
