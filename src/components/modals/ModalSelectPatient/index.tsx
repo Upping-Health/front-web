@@ -1,5 +1,5 @@
-import AutocompleteStyled from '@/components/autoCompleteStyled'
-import ButtonStyled from '@/components/button'
+import AutocompleteStyled from '@/components/inputsComponents/autoCompleteStyled'
+import ButtonStyled from '@/components/buttonsComponents/button'
 import { DefaultContext } from '@/contexts/defaultContext'
 import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import { colors } from '@/utils/colors/colors'
