@@ -5,7 +5,7 @@ export default interface Schedule extends DefaultEntityType {
   nutritionistName: string
   patientName: string
   observation: string | null;
-  startDate: string;
-  endDate: string;
+  start_time: string;
+  end_time: string;
   nutritionistId: number;
 }

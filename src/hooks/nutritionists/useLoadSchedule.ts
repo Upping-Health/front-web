@@ -12,11 +12,10 @@ const useLoadSchedule = (hidden: boolean) => {
   const loadData = useCallback(async () => {
     try {
       setloading(true)
-      if(isNaN(Number(user?.id)))  return;
-      const res = await api.get(`/nutritionist/${user?.id}`)
+      const res = await api.get(`/calendars`)
       setdata(res?.data?.data)
     } catch (error: any) {
-      console.error('[ERROR API] /nutritionist/', error?.response?.data)
+      console.error('[ERROR API] /calendars/', error?.response?.data)
     } finally {
       setloading(false)
     }

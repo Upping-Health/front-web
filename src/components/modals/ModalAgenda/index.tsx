@@ -89,19 +89,19 @@ const ModalAgenda = ({
       formik.setValues({
         patient: '',
         observation: '',
-        startDate: '',
-        endDate: '',
+        start_time: '',
+        end_time: '',
 
       })
     }
     if (scheduleSelected) {
-      const { patientId, observation, startDate, endDate } =
+      const { patientId, observation, start_time, end_time } =
       scheduleSelected
       formik.setValues({
         patient: patientId.toString(),
         observation: observation ?? '',
-        startDate: convertUTCtoLocalISO(startDate),
-        endDate: convertUTCtoLocalISO(endDate),
+        start_time: convertUTCtoLocalISO(start_time),
+        end_time: convertUTCtoLocalISO(end_time),
 
       })
     }
@@ -111,8 +111,8 @@ const ModalAgenda = ({
     initialValues: {
       patient: '',
       observation: '',
-      startDate: '',
-      endDate: '',
+      start_time: '',
+      end_time: '',
 
     },
     validate: validateAgenda,
@@ -121,21 +121,22 @@ const ModalAgenda = ({
 
 
       const data = {
-        patientId: values.patient,
+        label_id: 1,
+        client_id: values.patient,
         observation: values.observation,
-        startDate: values.startDate,
-        endDate: values.endDate
+        start_time: values.start_time,
+        end_time: values.end_time
       }
       
 
       console.log(data);
       if (scheduleSelected) {
-        await api.put(`/nutritionist/schedule/${scheduleSelected.id}`, data)
+        await api.put(`/calendars/store`, data)
           .then(onSuccessUpdate)
           .catch(onErrorUpdate)
           .finally(() => setloading(false))
       } else {
-        await api.post('/nutritionist/schedule', data)
+        await api.post('/calendars/store', data)
           .then(onSuccess)
           .catch(onError)
           .finally(() => setloading(false))
@@ -296,11 +297,11 @@ const ModalAgenda = ({
                     <DatePickerStyled
                       id="startDate"
                       label="Ínicio da consulta"
-                      value={formik.values.startDate}
+                      value={formik.values.start_time}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      error={formik.errors.startDate}
-                      isTouched={formik.touched.startDate}
+                      error={formik.errors.start_time}
+                      isTouched={formik.touched.start_time}
                       stylesInput='dark:bg-slate-500 dark:text-white'
                     />
 
@@ -308,12 +309,12 @@ const ModalAgenda = ({
                     <DatePickerStyled
                       id="endDate"
                       label="Fim da Consulta"
-                      value={formik.values.endDate}
+                      value={formik.values.end_time}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      error={formik.errors.endDate}
+                      error={formik.errors.end_time}
                       stylesInput='dark:bg-slate-500 dark:text-white'
-                      isTouched={formik.touched.endDate}
+                      isTouched={formik.touched.end_time}
                     />
               
 

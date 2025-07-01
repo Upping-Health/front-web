@@ -30,8 +30,6 @@ const AgendaContent = () => {
   )
 
 
-  console.log(data);
-
 
   return (
     <>
