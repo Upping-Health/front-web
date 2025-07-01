@@ -13,8 +13,8 @@ const NotFoundData: React.FC<NotfoundProps> = ({ title, description }) => {
         <div className="bg-gray-200 w-20 h-20 flex items-center justify-center rounded-full mb-4">
           <DescriptionOutlinedIcon className="text-black" fontSize="large"/>
         </div>
-        <p className="text-black text-3xl text-center">{title}</p>
-        <p className="text-center pt-4 max-w-xs text-gray-600">{description}</p>
+        <p className="text-black dark:text-white text-3xl text-center">{title}</p>
+        <p className="text-center pt-4 max-w-xs text-gray-600 dark:text-white font-extralight">{description}</p>
       </div>
     </div>
   )

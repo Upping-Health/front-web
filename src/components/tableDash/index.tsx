@@ -109,7 +109,6 @@ const TableDash: React.FC<TableProps> = ({
           </div>
         )}
 
-        {/* Se não tiver dados, mostra o NotFoundData */}
         {dataToDisplay.length === 0 ? (
           <NotFoundData
             title="Nenhum resultado encontrado"
