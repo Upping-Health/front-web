@@ -1,12 +1,12 @@
 'use client'
 
 import { dashboardTabs } from '@/routes'
-import { usePathname, useRouter } from 'next/navigation'
-import React, { useCallback } from 'react'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+import React from 'react'
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import { useDarkMode } from '@/hooks/theme/useDarkTheme'
 
-// Tipos atualizados conforme novo formato
 interface IAsideNavParams {
   isCollapsed: boolean
   openTabs: string[]
@@ -40,18 +40,16 @@ interface IAsideNavSubItemProps {
   subtab: SubTab
   isCollapsed: boolean
   isSubActive: boolean
-  onClick: () => void
 }
 
 const AsideNavSubItem = ({
   subtab,
   isCollapsed,
   isSubActive,
-  onClick,
 }: IAsideNavSubItemProps) => {
   return (
-    <button
-      onClick={onClick}
+    <Link
+      href={subtab.path}
       className={`group flex items-center justify-between px-4 py-2 rounded-xl transition-all duration-300 w-full ${
         isCollapsed ? 'justify-center' : ''
       } ${isSubActive ? 'bg-primary text-white' : 'text-primary hover:text-white dark:text-white hover:bg-primary'}`}
@@ -72,7 +70,7 @@ const AsideNavSubItem = ({
           <span className="text-sm font-medium">{subtab.name}</span>
         )}
       </div>
-    </button>
+    </Link>
   )
 }
 
@@ -83,62 +81,76 @@ const AsideNavItem = ({
   toggleTab,
   isCurrentPath,
 }: IAsideNavItemProps) => {
-  const router = useRouter()
-  const pathname = usePathname()
-
-  const selectMenu = useCallback(() => {
-    router.push(tab.path)
-  }, [router, tab.path])
-
   return (
     <div key={tab.value}>
-      <button
-        onClick={() => {
-          if (tab.children) {
-            toggleTab(tab.value)
-          } else {
-            selectMenu()
-          }
-        }}
-        className={`group flex items-center justify-between px-2 py-2 rounded-xl transition-all duration-300 hover:text-white w-full ${
-          isCollapsed ? 'justify-center' : ''
-        } ${isCurrentPath ? 'bg-primary text-white' : 'text-primary dark:text-white hover:bg-primary'}`}
-      >
-        <div
-          className={`flex items-center gap-3 ${
-            isCollapsed ? 'justify-center w-full' : ''
-          }`}
+      {tab.children ? (
+        <button
+          onClick={() => toggleTab(tab.value)}
+          className={`group flex items-center justify-between px-2 py-2 rounded-xl transition-all duration-300 hover:text-white w-full ${
+            isCollapsed ? 'justify-center' : ''
+          } ${isCurrentPath ? 'bg-primary text-white' : 'text-primary dark:text-white hover:bg-primary'}`}
         >
-          {React.cloneElement(tab.icon, {
-            className: `
-              text-[24px]
-              ${isCurrentPath ? 'text-white' : 'text-primary dark:text-white'}
-              group-hover:text-white
-            `,
-          })}
-          {!isCollapsed && (
-            <span className="text-sm font-medium">{tab.name}</span>
-          )}
-        </div>
+          <div
+            className={`flex items-center gap-3 ${
+              isCollapsed ? 'justify-center w-full' : ''
+            }`}
+          >
+            {React.cloneElement(tab.icon, {
+              className: `
+                text-[24px]
+                ${isCurrentPath ? 'text-white' : 'text-primary dark:text-white'}
+                group-hover:text-white
+              `,
+            })}
+            {!isCollapsed && (
+              <span className="text-sm font-medium">{tab.name}</span>
+            )}
+          </div>
 
-        {!isCollapsed && tab.children && (
-          <KeyboardArrowDown
-            className={`
-              text-[16px]
-              transition-transform duration-300
-              ${isCurrentPath ? 'text-white' : 'text-primary dark:text-white'}
-              ${isExpanded ? 'rotate-180' : 'rotate-0'}
-              group-hover:text-white
-            `}
-          />
-        )}
-      </button>
+          {!isCollapsed && (
+            <KeyboardArrowDown
+              className={`
+                text-[16px]
+                transition-transform duration-300
+                ${isCurrentPath ? 'text-white' : 'text-primary dark:text-white'}
+                ${isExpanded ? 'rotate-180' : 'rotate-0'}
+                group-hover:text-white
+              `}
+            />
+          )}
+        </button>
+      ) : (
+        <Link
+          href={tab.path}
+          className={`group flex items-center justify-between px-2 py-2 rounded-xl transition-all duration-300 hover:text-white w-full ${
+            isCollapsed ? 'justify-center' : ''
+          } ${isCurrentPath ? 'bg-primary text-white' : 'text-primary dark:text-white hover:bg-primary'}`}
+        >
+          <div
+            className={`flex items-center gap-3 ${
+              isCollapsed ? 'justify-center w-full' : ''
+            }`}
+          >
+            {React.cloneElement(tab.icon, {
+              className: `
+                text-[24px]
+                ${isCurrentPath ? 'text-white' : 'text-primary dark:text-white'}
+                group-hover:text-white
+              `,
+            })}
+            {!isCollapsed && (
+              <span className="text-sm font-medium">{tab.name}</span>
+            )}
+          </div>
+        </Link>
+      )}
 
       {tab.children && isExpanded && (
         <div
           className={`${isCollapsed ? '' : 'ml-4'} flex flex-col gap-1 mt-2`}
         >
           {Object.values(tab.children).map((subtab) => {
+            const pathname = usePathname()
             const isSubActive = pathname === subtab.path
             return (
               <AsideNavSubItem
@@ -146,7 +158,6 @@ const AsideNavItem = ({
                 subtab={subtab}
                 isCollapsed={isCollapsed}
                 isSubActive={isSubActive}
-                onClick={() => router.push(subtab.path)}
               />
             )
           })}

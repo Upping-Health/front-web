@@ -1,12 +1,10 @@
 'use client'
-import { usePathname, useRouter } from 'next/navigation'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import AsideFooter from './asideFooter'
 import AsideHeader from './asideHeader'
 import AsideNav from './asideNav'
 
 const AsideBar = () => {
-  const router = useRouter()
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [openTabs, setOpenTabs] = useState<string[]>([])
 
