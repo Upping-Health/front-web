@@ -1,16 +1,15 @@
 'use client'
-import CardDash from '@/components/tablesComponents/cardDash';
-import TopDash from '@/components/layoutComponents/topDash';
-import useLoadDashboardPatients from '@/hooks/dashboard/useLoadDashboardPatients';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import GroupOffIcon from '@mui/icons-material/GroupRemove';
-import Groups from '@mui/icons-material/Groups';
-import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
-import { Skeleton } from '@mui/material';
+import CardDash from '@/components/tablesComponents/cardDash'
+import TopDash from '@/components/layoutComponents/topDash'
+import useLoadDashboardPatients from '@/hooks/dashboard/useLoadDashboardPatients'
+import GroupAddIcon from '@mui/icons-material/GroupAdd'
+import GroupOffIcon from '@mui/icons-material/GroupRemove'
+import Groups from '@mui/icons-material/Groups'
+import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined'
+import { Skeleton } from '@mui/material'
 
 const DashboardContent = () => {
-
-  const {data, loadData, loading} = useLoadDashboardPatients(false);
+  const { data, loadData, loading } = useLoadDashboardPatients(false)
 
   return (
     <div className="w-full ">
@@ -41,22 +40,35 @@ const DashboardContent = () => {
             />
           </>
         ) : (
-        <div className="flex flex-wrap gap-4 w-full">
-              <div className="flex-1 min-w-[250px]">
-                <CardDash className="bg-terciary" icon={<Groups />} title="Pacientes" value={data.totalPatients} />
-              </div>
-              <div className="flex-1 min-w-[250px]">
-                <CardDash className="bg-newGreen" icon={<GroupAddIcon />} title="Pacientes Ativos" value={data.totalPatientsActive} />
-              </div>
-              <div className="flex-1 min-w-[250px]">
-                <CardDash className="bg-newRed" icon={<GroupOffIcon />} title="Pacientes Inativos" value={data.totalPatientsInactive} />
-              </div>
-              {/* <div className="flex-1 min-w-[250px]">
+          <div className="flex flex-wrap gap-4 w-full">
+            <div className="flex-1 min-w-[250px]">
+              <CardDash
+                className="bg-terciary"
+                icon={<Groups />}
+                title="Pacientes"
+                value={data.totalPatients}
+              />
+            </div>
+            <div className="flex-1 min-w-[250px]">
+              <CardDash
+                className="bg-newGreen"
+                icon={<GroupAddIcon />}
+                title="Pacientes Ativos"
+                value={data.totalPatientsActive}
+              />
+            </div>
+            <div className="flex-1 min-w-[250px]">
+              <CardDash
+                className="bg-newRed"
+                icon={<GroupOffIcon />}
+                title="Pacientes Inativos"
+                value={data.totalPatientsInactive}
+              />
+            </div>
+            {/* <div className="flex-1 min-w-[250px]">
                 <CardDash icon={<Group />} title="Novos Pacientes" value={1} />
               </div> */}
-            </div>
-        
-        
+          </div>
         )}
       </div>
 

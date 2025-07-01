@@ -11,7 +11,6 @@ const PreviewTextArea = ({ placeholder, onChange, id, value }: Props) => (
     id={id}
     value={value}
     onChange={onChange}
-
     className="text-black bg-white border border-solid outline-none resize-none border-gray rounded-xl p-2 dark:text-white dark:bg-slate-600 dark:placeholder:text-slate-400 w-full"
     placeholder={placeholder}
     rows={2}

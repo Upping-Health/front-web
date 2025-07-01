@@ -30,7 +30,7 @@ const DatePickerStyled = ({
   styles,
   stylesInput,
   error,
-  isTouched
+  isTouched,
 }: IDatePickerStyled) => {
   return (
     <div className="flex flex-col w-full">

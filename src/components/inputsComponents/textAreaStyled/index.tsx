@@ -1,18 +1,18 @@
-import React from 'react';
+import React from 'react'
 
 interface ITextAreaStyled {
-  maxLength?: number;
-  disabled?: boolean;
-  id: string;
-  label?: string;
-  placeholder?: string;
-  value?: any;
-  onChange?: (value: any) => void;
-  styles?: string;
-  stylesTextArea?: string;
-  error?: string;
-  onBlur?: any;
-  isTouched?: boolean;
+  maxLength?: number
+  disabled?: boolean
+  id: string
+  label?: string
+  placeholder?: string
+  value?: any
+  onChange?: (value: any) => void
+  styles?: string
+  stylesTextArea?: string
+  error?: string
+  onBlur?: any
+  isTouched?: boolean
 }
 
 const TextAreaStyled = ({
@@ -55,7 +55,7 @@ const TextAreaStyled = ({
         <p className="font-light text-red text-sm pt-1 text-center">{error}</p>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default TextAreaStyled;
+export default TextAreaStyled

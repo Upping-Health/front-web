@@ -16,18 +16,17 @@ interface IFormPreview {
 const PreviewForms = ({ formData }: { formData: IFormPreview }) => {
   return (
     <div className="flex flex-col gap-2">
-      <div className='mb-5'> 
+      <div className="mb-5">
         <h1 className="text-3xl font-bold text-black dark:text-white">
           {formData.title}
         </h1>
         <p className="text-gray-600 dark:text-gray-300 mt-2">
           {formData.description}
         </p>
-
       </div>
-        {formData?.field?.map((field, index) => (
-          <PreviewTypeText key={index} question={field} />
-        ))}
+      {formData?.field?.map((field, index) => (
+        <PreviewTypeText key={index} question={field} />
+      ))}
     </div>
   )
 }

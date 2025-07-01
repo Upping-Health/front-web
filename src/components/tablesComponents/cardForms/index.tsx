@@ -81,14 +81,11 @@ const CardForms: React.FC<TableProps> = ({
         )}
 
         {dataToDisplay.length === 0 ? (
-
-          <NotFoundData 
-          
-            title='Nenhum formulário encontrado.'
-            description=' Crie formulários personalizados para coletar informações dos seus
-            pacientes de forma organizada e eficiente'
+          <NotFoundData
+            title="Nenhum formulário encontrado."
+            description=" Crie formulários personalizados para coletar informações dos seus
+            pacientes de forma organizada e eficiente"
           />
-      
         ) : (
           <div className="flex flex-row gap-4 justify-between flex-wrap">
             {dataToDisplay.map((data, index) => {

@@ -5,7 +5,7 @@ import api from '@/services/api'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
 const useLoadSchedule = (hidden: boolean) => {
-  const {user} = useContext(DefaultContext);
+  const { user } = useContext(DefaultContext)
   const [data, setdata] = useState<Schedule[]>([])
   const [loading, setloading] = useState<boolean>(false)
 

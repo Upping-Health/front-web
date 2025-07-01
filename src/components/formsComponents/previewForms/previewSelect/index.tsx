@@ -7,7 +7,7 @@ interface ISelectHeaderProps {
 }
 
 import { KeyboardArrowDown } from '@mui/icons-material'
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
 const PreviewSelect = ({
   id,
@@ -16,14 +16,12 @@ const PreviewSelect = ({
   options,
   placeholder,
 }: ISelectHeaderProps) => {
-
   const optionsMenu = useMemo(() => {
     return options.map((opt) => ({
       value: opt,
-      label: opt
+      label: opt,
     }))
-    
-  },[])
+  }, [])
   return (
     <div className="relative">
       <select

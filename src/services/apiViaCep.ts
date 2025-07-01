@@ -1,8 +1,7 @@
-import axios from "axios";
+import axios from 'axios'
 
 const apiViaCep = axios.create({
-  baseURL: 'https://viacep.com.br/ws/'
+  baseURL: 'https://viacep.com.br/ws/',
 })
 
-
-export default apiViaCep;
+export default apiViaCep

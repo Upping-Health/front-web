@@ -1,6 +1,5 @@
-
-export default interface DashboardPatients  {
-  totalPatients: number;
-  totalPatientsActive: number;
-  totalPatientsInactive: number;
+export default interface DashboardPatients {
+  totalPatients: number
+  totalPatientsActive: number
+  totalPatientsInactive: number
 }

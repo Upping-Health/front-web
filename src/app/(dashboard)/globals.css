@@ -23,10 +23,6 @@
   }
 
   .scroll-custom::-webkit-scrollbar-thumb:hover {
-    background-color: #22B349;
+    background-color: #22b349;
   }
-
-  
-
-
 }

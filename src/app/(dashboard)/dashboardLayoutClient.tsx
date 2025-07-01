@@ -1,11 +1,14 @@
-
 import AsideBar from '@/components/layoutComponents/asideBar'
 import FooterDash from '@/components/layoutComponents/footerDash'
 import HeaderDash from '@/components/layoutComponents/headerDash'
 import MenuMobile from '@/components/layoutComponents/menuMobile'
 import { Providers } from '@/contexts/providers/provider'
 
-export default function DashboardLayoutClient({ children }: { children: React.ReactNode }) {
+export default function DashboardLayoutClient({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <Providers>
       <main className="flex h-screen w-screen">

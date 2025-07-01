@@ -11,7 +11,7 @@ const config: Config = {
   theme: {
     extend: {
       boxShadow: {
-        top: '0 -1px 10px 0px rgba(0, 0, 0, 0.1)', 
+        top: '0 -1px 10px 0px rgba(0, 0, 0, 0.1)',
         'top-lg': '0 -7px 20px -7px rgba(0, 0, 0, 0.1)',
       },
       colors: {
@@ -29,7 +29,6 @@ const config: Config = {
       t: { min: '768px', max: '1139px' },
       s: { max: '767px' },
     },
-
   },
   darkMode: 'class',
   plugins: [],

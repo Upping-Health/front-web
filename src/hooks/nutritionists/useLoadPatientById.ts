@@ -4,7 +4,7 @@ import api from '@/services/api'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
 const useLoadPatientById = (id: string) => {
-  const {user} = useContext(DefaultContext);
+  const { user } = useContext(DefaultContext)
   const [data, setdata] = useState<Patient | null>(null)
   const [loading, setloading] = useState<boolean>(false)
 

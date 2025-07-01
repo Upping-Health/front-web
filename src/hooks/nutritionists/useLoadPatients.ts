@@ -4,14 +4,14 @@ import api from '@/services/api'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
 const useLoadPatients = (hidden: boolean) => {
-  const {user} = useContext(DefaultContext);
+  const { user } = useContext(DefaultContext)
   const [data, setdata] = useState<Patient[]>([])
   const [loading, setloading] = useState<boolean>(false)
 
   const loadData = useCallback(async () => {
     try {
       setloading(true)
-      if(isNaN(Number(user?.id)))  return;
+      if (isNaN(Number(user?.id))) return
       const res = await api.get(`/patients/${user?.id}`)
       setdata(res?.data?.data)
     } catch (error: any) {

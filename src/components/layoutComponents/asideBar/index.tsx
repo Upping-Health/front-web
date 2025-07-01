@@ -8,8 +8,6 @@ const AsideBar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [openTabs, setOpenTabs] = useState<string[]>([])
 
-
-
   return (
     <aside
       className={`flex relative flex-col justify-between h-screen bg-white dark:bg-gray-800 dark:border-gray-700 dark:border-r p-5 shadow-lg transition-all duration-300 ${
@@ -17,12 +15,12 @@ const AsideBar = () => {
       }`}
     >
       <div>
-        <AsideHeader 
+        <AsideHeader
           isCollapsed={isCollapsed}
           setIsCollapsed={setIsCollapsed}
         />
-    
-        <AsideNav 
+
+        <AsideNav
           isCollapsed={isCollapsed}
           openTabs={openTabs}
           setOpenTabs={setOpenTabs}

@@ -20,12 +20,10 @@ export default function MenuMobile() {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleLogout = async () => {
-
-    await api.post('/logout')
-      .then(() => {
-        Cookies.remove('token')
-        router.push('/login')
-      })
+    await api.post('/logout').then(() => {
+      Cookies.remove('token')
+      router.push('/login')
+    })
   }
 
   const visibleTabs = useMemo(() => {

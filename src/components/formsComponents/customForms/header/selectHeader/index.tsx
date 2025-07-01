@@ -23,7 +23,6 @@ const SelectHeader = ({
         onChange={onChange}
         className=" appearance-none text-black dark:text-white text-center bg-white border border-solid outline-none border-gray rounded-xl px-4 py-2 pr-10 w-full dark:bg-slate-700 dark:border-slate-600 h-[48px]"
       >
-  
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

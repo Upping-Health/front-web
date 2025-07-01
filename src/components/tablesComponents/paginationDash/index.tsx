@@ -1,28 +1,32 @@
-import * as React from 'react';
-import Pagination from '@mui/material/Pagination';
-import { colors } from '@/utils/colors/colors';
+import * as React from 'react'
+import Pagination from '@mui/material/Pagination'
+import { colors } from '@/utils/colors/colors'
 
 interface PaginationDashProps {
-  count: number;
-  currentPage: number;
-  setCurrentPage: (page: number) => void;
+  count: number
+  currentPage: number
+  setCurrentPage: (page: number) => void
 }
 
-
-
-const PaginationDash: React.FC<PaginationDashProps> = ({ count, currentPage, setCurrentPage}) => {
-  const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
-    console.log(event);
-    setCurrentPage(page);
-  };
-
+const PaginationDash: React.FC<PaginationDashProps> = ({
+  count,
+  currentPage,
+  setCurrentPage,
+}) => {
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number,
+  ) => {
+    console.log(event)
+    setCurrentPage(page)
+  }
 
   return (
     <div>
-      <Pagination 
-        count={count} 
+      <Pagination
+        count={count}
         onChange={handlePageChange}
-        variant="outlined" 
+        variant="outlined"
         shape="rounded"
         sx={{
           display: 'flex',
@@ -32,10 +36,10 @@ const PaginationDash: React.FC<PaginationDashProps> = ({ count, currentPage, set
             color: colors.white,
             borderColor: colors.black,
             borderWidth: 0,
-            opacity: 0.30,
-            
+            opacity: 0.3,
+
             '&.Mui-selected': {
-              backgroundColor:colors.black,
+              backgroundColor: colors.black,
               opacity: 100,
               color: colors.white,
               fontWeight: 'bold',
@@ -47,16 +51,13 @@ const PaginationDash: React.FC<PaginationDashProps> = ({ count, currentPage, set
             },
           },
 
-
           '.dark & .MuiPaginationItem-root': {
-            backgroundColor: 'oklch(27.8% 0.033 256.848)'
-          }
-        }}   
-      
+            backgroundColor: 'oklch(27.8% 0.033 256.848)',
+          },
+        }}
       />
     </div>
-  );
+  )
 }
 
-export default PaginationDash;
-
+export default PaginationDash

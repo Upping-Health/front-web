@@ -1,14 +1,12 @@
-import FeedBackStatusInterface from "@/interfaces/feedbackStatus";
-import { STATUS } from "../types/feedback";
+import FeedBackStatusInterface from '@/interfaces/feedbackStatus'
+import { STATUS } from '../types/feedback'
 
 class PreFeedBack {
-
   static success(description: string, title?: string): FeedBackStatusInterface {
     return {
       title: title || 'Sucesso!',
       description,
-      status: STATUS.SUCCESS
-
+      status: STATUS.SUCCESS,
     }
   }
 
@@ -19,7 +17,6 @@ class PreFeedBack {
       status: STATUS.ERROR,
     }
   }
-
 }
 
-export default PreFeedBack;
+export default PreFeedBack

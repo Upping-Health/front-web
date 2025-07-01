@@ -23,7 +23,7 @@ const AsideFooter = ({ isCollapsed }: { isCollapsed: boolean }) => {
       })
       .finally(() => {
         setloadingGlobal(false)
-        setLabelLoading(null);
+        setLabelLoading(null)
       })
   }
   return (

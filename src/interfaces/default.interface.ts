@@ -7,7 +7,7 @@ export default interface DefaultContextInterface {
   onShowFeedBack: (data: FeedBackStatusInterface) => void
   themeDark: boolean
   toggleTheme: () => void
-  loadingGlobal: boolean,
-  setloadingGlobal: (e: boolean) => void,
+  loadingGlobal: boolean
+  setloadingGlobal: (e: boolean) => void
   setLabelLoading: (e: string | null) => void
- }
+}

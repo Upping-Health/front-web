@@ -3,13 +3,10 @@ import { Tooltip } from '@mui/material'
 import React from 'react'
 
 interface ITooltipStyled {
-  children: any,
+  children: any
   title: string
 }
-const TooltipStyled = ({
-  children,
-  title
-}: ITooltipStyled) => {
+const TooltipStyled = ({ children, title }: ITooltipStyled) => {
   return (
     <Tooltip
       title={title}
@@ -32,7 +29,7 @@ const TooltipStyled = ({
         },
       }}
     >
-    {children}
+      {children}
     </Tooltip>
   )
 }

@@ -31,10 +31,11 @@ const ButtonActive = ({ onClick, type, active, disabled }: IButtonStyled) => {
         ${active ? 'bg-paid' : 'bg-unpaid'}
       `}
     >
-  
-
-      <p className={`${active ? 'text-paidFont' : 'text-unpaidFont'} font-[600]`}>{active ? 'Ativo' : 'Inativo'}</p>
-
+      <p
+        className={`${active ? 'text-paidFont' : 'text-unpaidFont'} font-[600]`}
+      >
+        {active ? 'Ativo' : 'Inativo'}
+      </p>
     </button>
   )
 }

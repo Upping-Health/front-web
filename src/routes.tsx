@@ -19,9 +19,8 @@ export const TABS_DASH = {
   FORMS: 'forms',
 } as const
 
-
 export type TabKey = keyof typeof TABS_DASH
-export type TabValue = typeof TABS_DASH[TabKey]
+export type TabValue = (typeof TABS_DASH)[TabKey]
 
 export interface SubTab {
   name: string

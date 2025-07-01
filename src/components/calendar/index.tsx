@@ -17,7 +17,6 @@ const Calendar = ({
   schedule: Schedule[]
   loadNewData: () => Promise<void>
 }) => {
-
   const [scheduleSelected, setScheduleSelected] = useState<Schedule | null>()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const calendarRef = useRef<FullCalendar | null>(null)
@@ -71,7 +70,6 @@ const Calendar = ({
                 const calendarApi = calendarRef.current?.getApi()
                 calendarApi?.prev()
               },
-
             },
             myNext: {
               text: '>',

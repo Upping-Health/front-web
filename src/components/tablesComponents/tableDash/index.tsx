@@ -10,7 +10,7 @@ import {
   TableRow,
 } from '@mui/material'
 import React, { useMemo, useState } from 'react'
-import PaginationDash from '../paginationDash';
+import PaginationDash from '../paginationDash'
 import ButtonExport from '@/components/buttonsComponents/buttonExport'
 import FilterTable from '../filterTable'
 import InputStyled from '@/components/inputsComponents/inputStyled'

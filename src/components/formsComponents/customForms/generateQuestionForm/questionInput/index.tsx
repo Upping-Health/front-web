@@ -8,7 +8,9 @@ interface Props {
 
 const QuestionInput = ({ label, placeholder, onChange, id, value }: Props) => (
   <div className="flex flex-col w-full">
-    {label && <label className="mb-1 text-darkGray dark:text-white">{label}</label>}
+    {label && (
+      <label className="mb-1 text-darkGray dark:text-white">{label}</label>
+    )}
     <input
       id={id}
       value={value}

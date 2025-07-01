@@ -8,7 +8,12 @@ interface Props {
   onAddOption: () => void
 }
 
-const QuestionOptions = ({ options, onEditOption, onRemoveOption, onAddOption }: Props) => (
+const QuestionOptions = ({
+  options,
+  onEditOption,
+  onRemoveOption,
+  onAddOption,
+}: Props) => (
   <div className="flex flex-col w-full gap-2 mt-3">
     <label className="text-darkGray dark:text-white">Opções</label>
     {options.map((option, i) => (
@@ -19,7 +24,10 @@ const QuestionOptions = ({ options, onEditOption, onRemoveOption, onAddOption }:
           onChange={(e) => onEditOption(i, e.target.value)}
           placeholder={`Opção ${i + 1}`}
         />
-        <button className="p-2 rounded-full hover:bg-red-100" onClick={() => onRemoveOption(i)}>
+        <button
+          className="p-2 rounded-full hover:bg-red-100"
+          onClick={() => onRemoveOption(i)}
+        >
           <CloseIcon className="text-red-700" />
         </button>
       </div>

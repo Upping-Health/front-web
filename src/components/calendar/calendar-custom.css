@@ -82,9 +82,8 @@
 }
 
 .dark .fc .fc-button.fc-button-active {
-  background-color: oklch(44.6% 0.043 257.281) !important; 
+  background-color: oklch(44.6% 0.043 257.281) !important;
 }
-
 
 .fc .fc-daygrid-day.fc-day-today {
   background-color: #f6f6f6 !important;
@@ -143,14 +142,13 @@
 }
 
 .dark .fc-daygrid-day-number {
-  color: #FFFFFF
+  color: #ffffff;
 }
 
-.fc-timegrid-axis-cushion  {
-  color: #FFFFFF
-
+.fc-timegrid-axis-cushion {
+  color: #ffffff;
 }
 
 .fc-timegrid-slot-label-cushion {
-  color: #FFFFFF
+  color: #ffffff;
 }

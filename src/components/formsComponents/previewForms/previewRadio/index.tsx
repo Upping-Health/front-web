@@ -19,7 +19,6 @@ const PreviewRadio = ({ question }: { question: IQuestion }) => {
   }
   return (
     <div className="flex flex-col gap-3">
-     
       {question.options?.map((option, index) => {
         const isChecked = selectedOption === option
         return (
@@ -34,7 +33,9 @@ const PreviewRadio = ({ question }: { question: IQuestion }) => {
             ) : (
               <RadioButtonUncheckedIcon className="text-gray-400 dark:text-white text-3xl" />
             )}
-            <span className="font-light text-black dark:text-white">{option}</span>
+            <span className="font-light text-black dark:text-white">
+              {option}
+            </span>
           </button>
         )
       })}

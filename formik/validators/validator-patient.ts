@@ -25,7 +25,7 @@ export const validatPatient = (values: any) => {
     errors.name = 'Minimo 4 caracteres'
   }
 
-  if(!values.birthDate){
+  if (!values.birthDate) {
     errors.birthDate = 'Este campo é necessário'
   }
 

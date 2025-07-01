@@ -19,7 +19,7 @@ const PreviewCheckbox = ({ question }: { question: IQuestion }) => {
     setSelectedOptions((prev) =>
       prev.includes(option)
         ? prev.filter((item) => item !== option)
-        : [...prev, option]
+        : [...prev, option],
     )
   }
 
@@ -39,7 +39,9 @@ const PreviewCheckbox = ({ question }: { question: IQuestion }) => {
             ) : (
               <CheckBoxOutlineBlankIcon className="text-gray-400 dark:text-white text-3xl" />
             )}
-            <span className="font-light text-black dark:text-white">{option}</span>
+            <span className="font-light text-black dark:text-white">
+              {option}
+            </span>
           </button>
         )
       })}

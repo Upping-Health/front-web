@@ -1,4 +1,3 @@
-
 export default function NotFound() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-light">
@@ -23,14 +22,11 @@ export default function NotFound() {
           </svg>
         </div>
 
-        <h1 className="text-4xl font-bold text-primary">
-          OPS!
-        </h1>
+        <h1 className="text-4xl font-bold text-primary">OPS!</h1>
         <p className="font-light text-black">
           A página que você está procurando não existe ou foi movida.
         </p>
-
       </div>
     </main>
-  );
+  )
 }

@@ -10,9 +10,11 @@ export const metadata: Metadata = {
   description: 'Gestão para nutriocionistas',
 }
 
-
-
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
       <body className={`${inter.className} bg-light dark:bg-gray-900`}>

@@ -23,8 +23,12 @@ const CardDash = ({ icon, title, value, className }: any) => {
   }, [value])
 
   return (
-    <div className={`flex items-center p-4 rounded-xl shadow-md bg-white  dark:bg-gray-700 hover:scale-105 transition-transform duration-300`}>
-      <div className={`p-2 rounded-xl flex items-center justify-center ${className}`}>
+    <div
+      className={`flex items-center p-4 rounded-xl shadow-md bg-white  dark:bg-gray-700 hover:scale-105 transition-transform duration-300`}
+    >
+      <div
+        className={`p-2 rounded-xl flex items-center justify-center ${className}`}
+      >
         {React.cloneElement(icon, {
           style: {
             fontSize: 58,

@@ -33,7 +33,9 @@ const ButtonFormMenu = ({ label, type, onClick }: any) => {
       className="py-2 px-3 rounded-xl border flex items-center gap-2 bg-white flex-shrink-0 transition-all duration-200 ease-in-out hover:bg-gray-100 active:scale-95 shadow-sm hover:shadow-md dark:bg-slate-700 dark:border-slate-600"
     >
       {Icon && <Icon className="text-base text-gray-700 dark:text-white" />}
-      <p className="text-black font-semibold text-base dark:text-white">{label}</p>
+      <p className="text-black font-semibold text-base dark:text-white">
+        {label}
+      </p>
     </button>
   )
 }
@@ -44,7 +46,6 @@ const CustomFormMenu = ({ onPushQuestions }: ICustomFormMenu) => {
     label: formLabels[type],
     description: formDescriptions[type],
   }))
-  
 
   return (
     <nav className="grid grid-cols-4 grid-rows-2 gap-2 max-w-full">

@@ -18,7 +18,7 @@ const AgendaContent = () => {
 
   const toggleModalOpen = useCallback(() => {
     setOpenModal(!openModal)
-    setDataSelected(null);
+    setDataSelected(null)
   }, [openModal])
 
   const toogleModalOpenWithData = useCallback(
@@ -28,8 +28,6 @@ const AgendaContent = () => {
     },
     [toggleModalOpen],
   )
-
-
 
   return (
     <>
@@ -57,12 +55,11 @@ const AgendaContent = () => {
         )}
       </div>
 
-      <ModalAgenda 
-          open={openModal}
-          setIsClose={toggleModalOpen}
-          scheduleSelected={null}
-          loadNewData={loadData}
-
+      <ModalAgenda
+        open={openModal}
+        setIsClose={toggleModalOpen}
+        scheduleSelected={null}
+        loadNewData={loadData}
       />
     </>
   )

@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 interface IButtonStyled {
   styles: string
@@ -11,7 +11,6 @@ interface IButtonStyled {
   type: 'submit' | 'button' | undefined
   disabled?: boolean
 }
-
 
 const ButtonHeader = ({
   styles,
@@ -37,4 +36,4 @@ const ButtonHeader = ({
   )
 }
 
-export default ButtonHeader;
+export default ButtonHeader

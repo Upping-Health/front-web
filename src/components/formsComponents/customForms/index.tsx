@@ -23,7 +23,7 @@ const CustomForms = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const router = useRouter()
 
-  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
 
   useEffect(() => {
     setLoading(true)
@@ -116,46 +116,45 @@ const CustomForms = () => {
 
   const validForms = useCallback(() => {
     if (!title) {
-      onShowFeedBack(
-        PreFeedBack.error('Defina o título antes de prosseguir.')
-      )
+      onShowFeedBack(PreFeedBack.error('Defina o título antes de prosseguir.'))
       return false
     }
-  
+
     if (questions.length === 0) {
       onShowFeedBack(
-        PreFeedBack.error('É preciso criar perguntas antes de prosseguir.')
+        PreFeedBack.error('É preciso criar perguntas antes de prosseguir.'),
       )
       return false
     }
-  
+
     for (const question of questions) {
       if (!question.label?.trim()) {
         onShowFeedBack(
-          PreFeedBack.error('Todas as perguntas precisam de um título.')
+          PreFeedBack.error('Todas as perguntas precisam de um título.'),
         )
         return false
       }
-  
-      const needsOptions = ['select', 'checkbox', 'radio'].includes(question.type)
+
+      const needsOptions = ['select', 'checkbox', 'radio'].includes(
+        question.type,
+      )
       if (needsOptions) {
         if (!Array.isArray(question.options) || question.options.length === 0) {
           onShowFeedBack(
             PreFeedBack.error(
-              `A pergunta "${question.label}" precisa de pelo menos 1 opção.`
-            )
+              `A pergunta "${question.label}" precisa de pelo menos 1 opção.`,
+            ),
           )
           return false
         }
       }
     }
-  
+
     return true
   }, [title, questions])
-  
 
   const onVisibleForms = useCallback(() => {
-    console.log(questions);
+    console.log(questions)
     if (!validForms()) return
     const data = {
       title,
@@ -163,7 +162,7 @@ const CustomForms = () => {
       field: questions.map((q, index) => ({
         ...q,
         order: index + 1,
-      }))
+      })),
     }
     localStorage.setItem('customFormData', JSON.stringify(data))
 
@@ -171,7 +170,7 @@ const CustomForms = () => {
   }, [questions, title, description])
 
   const onSaveForms = useCallback(() => {
-    if (!validForms()) return;
+    if (!validForms()) return
 
     const data = {
       type_id: 1,
@@ -181,10 +180,10 @@ const CustomForms = () => {
       fields: questions.map((q, index) => ({
         ...q,
         order: index + 1,
-      }))
+      })),
     }
 
-    api.post('/forms/store', data).catch((e) => console.log(e));
+    api.post('/forms/store', data).catch((e) => console.log(e))
   }, [questions, title, description])
 
   const onClearForm = useCallback(() => {
@@ -195,44 +194,43 @@ const CustomForms = () => {
   }, [questions])
 
   const handleDragStart = (index: number) => {
-    setDraggedIndex(index);
-  };
-  
+    setDraggedIndex(index)
+  }
+
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault(); 
-  };
-  
+    e.preventDefault()
+  }
+
   const handleDrop = (index: number) => {
-    if (draggedIndex === null || draggedIndex === index) return;
-  
-    const updatedQuestions = [...questions];
-    const [removed] = updatedQuestions.splice(draggedIndex, 1);
-    updatedQuestions.splice(index, 0, removed);
-  
-    setQuestions(updatedQuestions);
-    setDraggedIndex(null);
-  };
+    if (draggedIndex === null || draggedIndex === index) return
+
+    const updatedQuestions = [...questions]
+    const [removed] = updatedQuestions.splice(draggedIndex, 1)
+    updatedQuestions.splice(index, 0, removed)
+
+    setQuestions(updatedQuestions)
+    setDraggedIndex(null)
+  }
 
   return (
     <div className="flex flex-col h-full items-center mt-4">
-     
-        <div className="flex flex-col gap-4 w-full max-w-5xl">
-          <HeaderFormMenu
-            title={title}
-            setTitle={setTitle}
-            description={description}
-            setDescription={setDescription}
-            typeForm={typeForm}
-            setTypeForm={setTypeForm}
-            onVisibleForms={onVisibleForms}
-            onSaveForms={onSaveForms}
-            onClearForm={onClearForm}
-          />
+      <div className="flex flex-col gap-4 w-full max-w-5xl">
+        <HeaderFormMenu
+          title={title}
+          setTitle={setTitle}
+          description={description}
+          setDescription={setDescription}
+          typeForm={typeForm}
+          setTypeForm={setTypeForm}
+          onVisibleForms={onVisibleForms}
+          onSaveForms={onSaveForms}
+          onClearForm={onClearForm}
+        />
 
-          <CustomFormMenu onPushQuestions={onPushQuestions} />
+        <CustomFormMenu onPushQuestions={onPushQuestions} />
 
-          {questions.length > 0 ? (
-           questions.map((question, index) => (
+        {questions.length > 0 ? (
+          questions.map((question, index) => (
             <div
               key={index}
               draggable
@@ -250,11 +248,10 @@ const CustomForms = () => {
               />
             </div>
           ))
-          ) : (
-            <CardForm />
-          )}
-        </div>
-     
+        ) : (
+          <CardForm />
+        )}
+      </div>
     </div>
   )
 }

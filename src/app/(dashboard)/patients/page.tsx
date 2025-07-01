@@ -21,7 +21,7 @@ import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/navigation'
 
 const PacientesContent = () => {
-  const {user, onShowFeedBack} = useContext(DefaultContext)
+  const { user, onShowFeedBack } = useContext(DefaultContext)
   const [openModal, setOpenModal] = useState(false)
   const [dataSelected, setDataSelected] = useState<Patient | null>(null)
   const { loadData, data, loading } = useLoadPatients(false)
@@ -29,7 +29,7 @@ const PacientesContent = () => {
 
   const toggleModalOpen = useCallback(() => {
     setOpenModal(!openModal)
-    setDataSelected(null);
+    setDataSelected(null)
   }, [openModal])
 
   const toogleModalOpenWithData = useCallback(
@@ -41,33 +41,37 @@ const PacientesContent = () => {
   )
 
   const onSuccessUpdate = () => {
-    onShowFeedBack(PreFeedBack.success('Status do paciente atualizado com sucesso!'))
+    onShowFeedBack(
+      PreFeedBack.success('Status do paciente atualizado com sucesso!'),
+    )
   }
 
   const onErrorUpdate = (e: any) => {
     onShowFeedBack(PreFeedBack.error('Falhou ao atualizar status do paciente.'))
-
   }
 
-  const changeStatusPatient = useCallback((row: Patient) => {
-    if(!user) return;
-    const newStatus = row.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
-    api
-      .put(`/patient/status/${user.id}/${row.id}?status=${newStatus}`)
-      .then(() => {
-        row.status = newStatus;
-        data.slice()
-        onSuccessUpdate();
-      })
-      .catch((e: any) => onErrorUpdate(e))
-  },[user])
+  const changeStatusPatient = useCallback(
+    (row: Patient) => {
+      if (!user) return
+      const newStatus = row.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
+      api
+        .put(`/patient/status/${user.id}/${row.id}?status=${newStatus}`)
+        .then(() => {
+          row.status = newStatus
+          data.slice()
+          onSuccessUpdate()
+        })
+        .catch((e: any) => onErrorUpdate(e))
+    },
+    [user],
+  )
 
   const columns = useMemo(
     () => [
       {
         header: 'Foto',
         field: 'photo',
-        render: (_: any, row: any)  => <ProfileRounded user={row} />
+        render: (_: any, row: any) => <ProfileRounded user={row} />,
       },
       {
         header: 'Nome',
@@ -75,7 +79,7 @@ const PacientesContent = () => {
       },
       {
         header: 'Email',
-        field: 'email'
+        field: 'email',
       },
       {
         header: 'CPF',
@@ -90,18 +94,21 @@ const PacientesContent = () => {
       {
         header: 'Gênero',
         field: 'gender',
-        render: (value: any,) => value === 'MALE' ? 'Masculino' : value === 'FEMALE' ? 'Feminino' : 'Outros',
+        render: (value: any) =>
+          value === 'MALE'
+            ? 'Masculino'
+            : value === 'FEMALE'
+              ? 'Feminino'
+              : 'Outros',
       },
       {
         header: 'Status',
         field: 'status',
         render: (value: any, row: any) => (
-          <ButtonActive 
-            active={value === 'ACTIVE'} 
+          <ButtonActive
+            active={value === 'ACTIVE'}
             onClick={() => changeStatusPatient(row)}
-
           />
-      
         ),
       },
       {
@@ -111,11 +118,15 @@ const PacientesContent = () => {
           <ButtonIconStyled
             onClick={() => toogleModalOpenWithData(row)}
             type="button"
-            icon={<AssignmentIndIcon  style={{
-              color: colors.white,
-              fontSize: 20}} />}
+            icon={
+              <AssignmentIndIcon
+                style={{
+                  color: colors.white,
+                  fontSize: 20,
+                }}
+              />
+            }
             styles="h-8 w-8 bg-terciary"
-  
           />
         ),
       },
@@ -144,8 +155,7 @@ const PacientesContent = () => {
             </div>
           </>
         ) : (
-            <TableDash columns={columns} data={data} rowKey="id" />
-        
+          <TableDash columns={columns} data={data} rowKey="id" />
         )}
       </div>
 
@@ -154,7 +164,6 @@ const PacientesContent = () => {
         setIsClose={toggleModalOpen}
         loadData={loadData}
         patientSelected={dataSelected}
-        
       />
     </>
   )
