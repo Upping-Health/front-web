@@ -17,7 +17,7 @@ import { useContext } from 'react'
 import Cookies from 'js-cookie'
 
 const ProfileDrawer = ({ openMenu, setOpenMenu }: any) => {
-  const { user, setloadingGlobal, setLabelLoading } = useContext(DefaultContext)
+  const { user, onLogout } = useContext(DefaultContext)
   const router = useRouter()
 
   const menuItems = [
@@ -30,21 +30,6 @@ const ProfileDrawer = ({ openMenu, setOpenMenu }: any) => {
       },
     },
   ]
-
-  const handleLogout = async () => {
-    setloadingGlobal(true)
-    setLabelLoading('Fazendo logout...')
-    await api
-      .post('/logout')
-      .then(() => {
-        Cookies.remove('token')
-        router.push('/login')
-      })
-      .finally(() => {
-        setloadingGlobal(false)
-        setLabelLoading(null)
-      })
-  }
 
   return (
     <Drawer anchor="right" open={openMenu} onClose={() => setOpenMenu(false)}>
@@ -81,7 +66,7 @@ const ProfileDrawer = ({ openMenu, setOpenMenu }: any) => {
         </List>
         <div className="p-4 border-t">
           <button
-            onClick={handleLogout}
+            onClick={onLogout}
             className="w-full py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white flex justify-center items-center gap-2 shadow transition"
           >
             <LogoutIcon className="text-white" />

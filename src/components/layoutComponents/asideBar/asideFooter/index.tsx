@@ -2,30 +2,14 @@
 import { DefaultContext } from '@/contexts/defaultContext'
 import { colors } from '@/utils/colors/colors'
 import { ROLE_PTBR } from '@/utils/types/roles'
-import LogoutIcon from '@mui/icons-material/Logout'
 import PersonIcon from '@mui/icons-material/Person'
 import { useRouter } from 'next/navigation'
 import { useContext } from 'react'
-import Cookies from 'js-cookie'
-import api from '@/services/api'
 
 const AsideFooter = ({ isCollapsed }: { isCollapsed: boolean }) => {
   const router = useRouter()
   const { user, setloadingGlobal, setLabelLoading } = useContext(DefaultContext)
-  const handleLogout = async () => {
-    setloadingGlobal(true)
-    setLabelLoading('Fazendo logout...')
-    await api
-      .post('/logout')
-      .then(() => {
-        Cookies.remove('token')
-        router.push('/login')
-      })
-      .finally(() => {
-        setloadingGlobal(false)
-        setLabelLoading(null)
-      })
-  }
+
   return (
     <div>
       <div className="flex items-center gap-3 mb-4">

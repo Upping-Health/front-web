@@ -10,4 +10,5 @@ export default interface DefaultContextInterface {
   loadingGlobal: boolean
   setloadingGlobal: (e: boolean) => void
   setLabelLoading: (e: string | null) => void
+  onLogout: () => void
 }

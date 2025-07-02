@@ -6,12 +6,16 @@ import FeedBackStatusInterface from '@/interfaces/feedbackStatus'
 import User from '@/interfaces/user.interface'
 import { createContext, useCallback, useEffect, useState } from 'react'
 export const DefaultContext = createContext<DefaultContextInterface>({} as any)
+import Cookies from 'js-cookie'
+import api from '@/services/api'
+import { useRouter } from 'next/navigation'
 
 export default function DefaultProvider({ children }: any) {
   const [themeDark, setThemeDark] = useState<boolean>(false)
   const [loadingGlobal, setloadingGlobal] = useState<boolean>(false)
   const [labelLoading, setLabelLoading] = useState<string | null>(null)
   const [user, setuser] = useState<User | null>(null)
+  const router = useRouter()
   const [showModal, setshowModal] = useState<any>({
     open: false,
     title: '',
@@ -27,7 +31,6 @@ export default function DefaultProvider({ children }: any) {
   }, [])
 
   useEffect(() => {
-    console.log(themeDark)
     updateHtmlClass(themeDark)
     localStorage.setItem('theme', themeDark ? 'dark' : 'light')
   }, [themeDark])
@@ -66,6 +69,23 @@ export default function DefaultProvider({ children }: any) {
     [],
   )
 
+  const onLogout = useCallback(async () => {
+    setloadingGlobal(true)
+    setLabelLoading('Fazendo logout...')
+    await api
+      .post('user/logout')
+      .then(() => {
+        Cookies.remove('token')
+        localStorage.removeItem('user')
+        router.push('/login')
+      })
+      .catch((e) => console.log(e))
+      .finally(() => {
+        setloadingGlobal(false)
+        setLabelLoading(null)
+      })
+  }, [])
+
   return (
     <DefaultContext.Provider
       value={{
@@ -77,6 +97,7 @@ export default function DefaultProvider({ children }: any) {
         loadingGlobal,
         setloadingGlobal,
         setLabelLoading,
+        onLogout,
       }}
     >
       {loadingGlobal && <LoadingFullScreen labelLoading={labelLoading} />}

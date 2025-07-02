@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-import { getToken } from 'next-auth/jwt'
-import { ROLE } from './utils/types/roles'
-import { jwtDecode } from 'jwt-decode'
-
 export default async function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value
 
@@ -28,12 +24,5 @@ export default async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    '/',
-    '/login',
-    '/home',
-    '/dashboard',
-    '/register',
-    '/accountRecovery',
-  ],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 }
