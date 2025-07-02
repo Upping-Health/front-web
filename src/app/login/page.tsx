@@ -58,7 +58,7 @@ export default function Login() {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="w-screen h-screen flex justify-center items-center"
+      className="w-screen h-screen flex justify-center items-center bg-gray-100"
     >
       {loading && <Loading text="Autenticando..." />}
       {!loading && (

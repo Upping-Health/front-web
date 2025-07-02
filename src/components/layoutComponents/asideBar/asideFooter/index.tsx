@@ -10,8 +10,8 @@ import Cookies from 'js-cookie'
 import api from '@/services/api'
 
 const AsideFooter = ({ isCollapsed }: { isCollapsed: boolean }) => {
-  const { user, setloadingGlobal, setLabelLoading } = useContext(DefaultContext)
   const router = useRouter()
+  const { user, setloadingGlobal, setLabelLoading } = useContext(DefaultContext)
   const handleLogout = async () => {
     setloadingGlobal(true)
     setLabelLoading('Fazendo logout...')
@@ -47,7 +47,7 @@ const AsideFooter = ({ isCollapsed }: { isCollapsed: boolean }) => {
           </div>
         )}
       </div>
-      <button
+      {/* <button
         onClick={handleLogout}
         className={`w-full py-2 rounded-xl shadow-lg transition flex justify-center items-center gap-2  bg-black dark:bg-gray-700 ${
           isCollapsed ? 'text-center px-0' : ''
@@ -57,7 +57,7 @@ const AsideFooter = ({ isCollapsed }: { isCollapsed: boolean }) => {
         {!isCollapsed && (
           <p className="text-white text-sm font-semibold">Logout</p>
         )}
-      </button>
+      </button> */}
     </div>
   )
 }
