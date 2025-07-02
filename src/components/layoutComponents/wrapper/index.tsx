@@ -1,4 +1,3 @@
-import { useDarkMode } from '@/hooks/theme/useDarkTheme'
 import React from 'react'
 
 const Wrapper = ({ children }: any) => {

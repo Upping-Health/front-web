@@ -1,7 +1,6 @@
 import React from 'react'
 import { Autocomplete, TextField } from '@mui/material'
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import { useDarkMode } from '@/hooks/theme/useDarkTheme'
+import { useGetDarkTheme } from '@/hooks/theme/useGetDarkTheme'
 import { colors } from '@/utils/colors/colors'
 
 interface IAutocompleteStyled {
@@ -39,8 +38,8 @@ const AutocompleteStyled = ({
   stylesGlobal,
   stylesLabel,
 }: IAutocompleteStyled) => {
-  const { themeDark } = useDarkMode()
-  console.log(themeDark)
+  const { themeDark } = useGetDarkTheme()
+
   return (
     <div
       className={` w-[90%] ${stylesGlobal ?? ''} flex flex-col dark:text-white`}

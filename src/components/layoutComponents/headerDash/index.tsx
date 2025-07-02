@@ -1,18 +1,15 @@
 'use client'
-import ProfileRounded from '@/components/profileRounded'
-import { useDarkMode } from '@/hooks/theme/useDarkTheme'
+import { useGetDarkTheme } from '@/hooks/theme/useGetDarkTheme'
+import { colors } from '@/utils/colors/colors'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import LightModeIcon from '@mui/icons-material/LightMode'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import Drawer from '@mui/material/Drawer'
-import Button from '@mui/material/Button'
-import ProfileDrawer from '../profileDrawer'
 import Person from '@mui/icons-material/Person'
-import { colors } from '@/utils/colors/colors'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import ProfileDrawer from '../profileDrawer'
 
 const HeaderDash = () => {
-  const { themeDark, toggleTheme } = useDarkMode()
+  const { themeDark, toggleTheme } = useGetDarkTheme()
   const [openMenu, setOpenMenu] = useState(false)
   const router = useRouter()
 

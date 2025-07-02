@@ -36,7 +36,7 @@ const FilterTable: React.FC<FilterTableProps> = ({
   return (
     <>
       <button
-        className={`flex justify-center items-center border-gray  dark:border-gray-600 dark:bg-gray-700 dark:text-white bg-white border rounded-xl px-4 gap-2 h-[46px]`}
+        className={`flex justify-center items-center border-gray  dark:border-gray-600 dark:bg-gray-700 dark:text-white bg-white border rounded-xl px-4 gap-2`}
         onClick={handleClick}
       >
         {icon ? icon : <FilterAltOutlinedIcon />}

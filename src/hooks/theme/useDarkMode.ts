@@ -15,11 +15,20 @@ export default function useDarkMode() {
 
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme')
-    const shouldUseDark = storedTheme === 'dark' || !storedTheme
+
+    let shouldUseDark: boolean
+
+    if (storedTheme === 'dark') {
+      shouldUseDark = true
+    } else if (storedTheme === 'light') {
+      shouldUseDark = false
+    } else {
+      shouldUseDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    }
+
     setThemeDark(shouldUseDark)
     updateHtmlClass(shouldUseDark)
   }, [])
-
   useEffect(() => {
     updateHtmlClass(themeDark)
     localStorage.setItem('theme', themeDark ? 'dark' : 'light')

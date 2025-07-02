@@ -9,7 +9,7 @@ export const DefaultContext = createContext<DefaultContextInterface>({} as any)
 import Cookies from 'js-cookie'
 import api from '@/services/api'
 import { useRouter } from 'next/navigation'
-import { useDarkMode } from '@/hooks/theme/useDarkTheme'
+import useDarkMode from '@/hooks/theme/useDarkMode'
 
 type ShowModalType = {
   open: boolean

@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import React from 'react'
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
-import { useDarkMode } from '@/hooks/theme/useDarkTheme'
+import { useGetDarkTheme } from '@/hooks/theme/useGetDarkTheme'
 
 interface IAsideNavParams {
   isCollapsed: boolean
@@ -169,7 +169,7 @@ const AsideNavItem = ({
 
 const AsideNav = ({ isCollapsed, openTabs, setOpenTabs }: IAsideNavParams) => {
   const pathname = usePathname()
-  const { themeDark } = useDarkMode()
+  const { themeDark } = useGetDarkTheme()
 
   const toggleTab = (tabValue: string) => {
     setOpenTabs((prev) =>
