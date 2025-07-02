@@ -9,6 +9,7 @@ export const DefaultContext = createContext<DefaultContextInterface>({} as any)
 import Cookies from 'js-cookie'
 import api from '@/services/api'
 import { useRouter } from 'next/navigation'
+import { useDarkMode } from '@/hooks/theme/useDarkTheme'
 
 type ShowModalType = {
   open: boolean
@@ -18,7 +19,7 @@ type ShowModalType = {
 }
 
 export default function DefaultProvider({ children }: any) {
-  const [themeDark, setThemeDark] = useState<boolean>(false)
+  const { themeDark, toggleTheme } = useDarkMode()
   const [loadingGlobal, setloadingGlobal] = useState<boolean>(false)
   const [labelLoading, setLabelLoading] = useState<string | null>(null)
   const [user, setuser] = useState<User | null>(null)
@@ -29,29 +30,6 @@ export default function DefaultProvider({ children }: any) {
     description: '',
     status: '',
   })
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme')
-    const shouldUseDark = storedTheme === 'dark' || !storedTheme
-    setThemeDark(shouldUseDark)
-    updateHtmlClass(shouldUseDark)
-  }, [])
-
-  useEffect(() => {
-    updateHtmlClass(themeDark)
-    localStorage.setItem('theme', themeDark ? 'dark' : 'light')
-  }, [themeDark])
-
-  const toggleTheme = () => setThemeDark((prev) => !prev)
-
-  const updateHtmlClass = (enableDark: boolean) => {
-    const root = document.documentElement
-    if (enableDark) {
-      root.classList.add('dark')
-    } else {
-      root.classList.remove('dark')
-    }
-  }
 
   useEffect(() => {
     const userStr = localStorage.getItem('user')
