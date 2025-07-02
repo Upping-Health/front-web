@@ -10,13 +10,20 @@ import Cookies from 'js-cookie'
 import api from '@/services/api'
 import { useRouter } from 'next/navigation'
 
+type ShowModalType = {
+  open: boolean
+  title: string
+  description: string
+  status: string
+}
+
 export default function DefaultProvider({ children }: any) {
   const [themeDark, setThemeDark] = useState<boolean>(false)
   const [loadingGlobal, setloadingGlobal] = useState<boolean>(false)
   const [labelLoading, setLabelLoading] = useState<string | null>(null)
   const [user, setuser] = useState<User | null>(null)
   const router = useRouter()
-  const [showModal, setshowModal] = useState<any>({
+  const [showModal, setshowModal] = useState<ShowModalType>({
     open: false,
     title: '',
     description: '',
@@ -70,21 +77,20 @@ export default function DefaultProvider({ children }: any) {
   )
 
   const onLogout = useCallback(async () => {
-    setloadingGlobal(true)
-    setLabelLoading('Fazendo logout...')
-    await api
-      .post('user/logout')
-      .then(() => {
-        Cookies.remove('token')
-        localStorage.removeItem('user')
-        router.push('/login')
-      })
-      .catch((e) => console.log(e))
-      .finally(() => {
-        setloadingGlobal(false)
-        setLabelLoading(null)
-      })
-  }, [])
+    try {
+      setloadingGlobal(true)
+      setLabelLoading('Fazendo logout...')
+      await api.post('user/logout')
+    } catch (e) {
+      console.log(e)
+    } finally {
+      Cookies.remove('token')
+      localStorage.removeItem('user')
+      router.push('/login')
+      setloadingGlobal(false)
+      setLabelLoading(null)
+    }
+  }, [router])
 
   return (
     <DefaultContext.Provider

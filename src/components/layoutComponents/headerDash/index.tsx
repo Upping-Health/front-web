@@ -8,6 +8,8 @@ import { useRouter } from 'next/navigation'
 import Drawer from '@mui/material/Drawer'
 import Button from '@mui/material/Button'
 import ProfileDrawer from '../profileDrawer'
+import Person from '@mui/icons-material/Person'
+import { colors } from '@/utils/colors/colors'
 
 const HeaderDash = () => {
   const { themeDark, toggleTheme } = useDarkMode()
@@ -32,7 +34,11 @@ const HeaderDash = () => {
         </button>
 
         <button onClick={() => setOpenMenu(true)}>
-          <ProfileRounded />
+          <div
+            className={`bg-black dark:bg-gray-600 w-10 h-10 rounded-full flex items-center justify-center`}
+          >
+            <Person style={{ fontSize: 30, color: colors.white }} />
+          </div>
         </button>
       </div>
 

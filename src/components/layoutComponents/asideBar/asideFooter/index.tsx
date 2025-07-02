@@ -12,7 +12,7 @@ const AsideFooter = ({ isCollapsed }: { isCollapsed: boolean }) => {
 
   return (
     <div>
-      <div className="flex items-center gap-3 mb-4">
+      <div className="flex items-center gap-3">
         <div
           className={`bg-black dark:bg-gray-600 ${
             isCollapsed ? 'w-10 h-10' : 'w-12 h-12'

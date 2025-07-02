@@ -1,3 +1,8 @@
+'use client'
+
+import { useContext, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { DefaultContext } from '@/contexts/defaultContext'
 import AsideBar from '@/components/layoutComponents/asideBar'
 import FooterDash from '@/components/layoutComponents/footerDash'
 import HeaderDash from '@/components/layoutComponents/headerDash'
@@ -9,6 +14,20 @@ export default function DashboardLayoutClient({
 }: {
   children: React.ReactNode
 }) {
+  const { user, loadingGlobal } = useContext(DefaultContext)
+  const router = useRouter()
+
+  useEffect(() => {
+    console.log(user)
+    if (!loadingGlobal && !user) {
+      router.push('/login')
+    }
+  }, [user, loadingGlobal, router])
+
+  if (loadingGlobal || !user) {
+    return null
+  }
+
   return (
     <Providers>
       <main className="flex h-screen w-screen">
