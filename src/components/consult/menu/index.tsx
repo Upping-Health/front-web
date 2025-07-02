@@ -8,6 +8,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import FolderIcon from '@mui/icons-material/Folder'
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote'
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu'
 export const consultTabs = {
   antropometrias: {
     name: 'Antropometria',
@@ -23,6 +24,11 @@ export const consultTabs = {
     name: 'Anamnese',
     icon: <AssignmentIcon />,
     path: 'anamnesis',
+  },
+  mealPlan: {
+    name: 'Plano Alimentar',
+    icon: <RestaurantMenuIcon />,
+    path: 'meal-plan',
   },
   documents: {
     name: 'Documentos',
