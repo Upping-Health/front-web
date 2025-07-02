@@ -1,16 +1,15 @@
+import ButtonStyled from '@/components/buttonsComponents/button'
+import ButtonActive from '@/components/buttonsComponents/buttonActive'
+import ButtonExport from '@/components/buttonsComponents/buttonExport'
 import InputStyled from '@/components/inputsComponents/inputStyled'
+import NotFoundData from '@/components/layoutComponents/notFoundData'
+import api from '@/services/api'
 import QuizIcon from '@mui/icons-material/Quiz'
 import SearchIcon from '@mui/icons-material/Search'
+import { useRouter } from 'next/navigation'
 import React, { useCallback, useMemo, useState } from 'react'
 import FilterTable from '../filterTable'
-import ButtonExport from '@/components/buttonsComponents/buttonExport'
-import NotFoundData from '@/components/layoutComponents/notFoundData'
-import ButtonActive from '@/components/buttonsComponents/buttonActive'
-import ButtonStyled from '@/components/buttonsComponents/button'
 import PaginationDash from '../paginationDash'
-import api from '@/services/api'
-import Loading from '@/components/layoutComponents/loading'
-import { CircularProgress } from '@mui/material'
 
 interface TableProps {
   data: any[]
@@ -28,20 +27,21 @@ const CardForms: React.FC<TableProps> = ({
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
   const [loadingIds, setLoadingIds] = useState<string[]>([])
+  const router = useRouter()
 
   const updateStatusForm = useCallback((data: any) => {
-    setLoadingIds(prev => [...prev, data.uuid])
+    setLoadingIds((prev) => [...prev, data.uuid])
 
-    api.put(`/forms/change-status/${data.uuid}`)
+    api
+      .put(`/forms/change-status/${data.uuid}`)
       .then(() => {
-        data.is_active = !data.is_active;
+        data.is_active = !data.is_active
       })
       .catch(() => {})
       .finally(() => {
-
-        setLoadingIds(prev => prev.filter(item => item !== data.uuid))
+        setLoadingIds((prev) => prev.filter((item) => item !== data.uuid))
       })
-  },[])
+  }, [])
 
   const numberPages = Math.ceil(data.length / itemsPerPage)
 
@@ -130,15 +130,12 @@ const CardForms: React.FC<TableProps> = ({
                     </div>
 
                     <div className="flex gap-2 items-center">
-
-                     
-                        <ButtonActive
-                          active={data?.is_active}
-                          onClick={() => updateStatusForm(data)}
-                          disabled={isLoading}
-                          loading={isLoading}
-                        />
-                    
+                      <ButtonActive
+                        active={data?.is_active}
+                        onClick={() => updateStatusForm(data)}
+                        disabled={isLoading}
+                        loading={isLoading}
+                      />
 
                       <ButtonStyled
                         onClick={() => {}}
@@ -148,7 +145,7 @@ const CardForms: React.FC<TableProps> = ({
                         textColor="text-black dark:text-white"
                       />
                       <ButtonStyled
-                        onClick={() => {}}
+                        onClick={() => router.push(`/forms/${data.uuid}/edit`)}
                         title={'Editar'}
                         type="button"
                         styles="bg-black h-[35px] px-3 text-sm"

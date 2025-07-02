@@ -10,7 +10,11 @@ import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked'
 import TextFieldsIcon from '@mui/icons-material/TextFields'
 import React from 'react'
 interface ICustomFormMenu {
-  onPushQuestions: (e: any) => void
+  onPushQuestions: (e: {
+    label: string
+    type: string
+    description: string
+  }) => void
 }
 
 export const formIcons: Record<string, React.ElementType> = {

@@ -6,6 +6,7 @@ import InputHeader from './inputHeader'
 import ButtonHeader from './buttonHeader'
 import SelectHeader from './selectHeader'
 interface ICustomFormMenu {
+  id?: string
   title: string
   setTitle: React.Dispatch<React.SetStateAction<string>>
   description: string
@@ -14,16 +15,19 @@ interface ICustomFormMenu {
   setTypeForm: React.Dispatch<React.SetStateAction<string>>
   onVisibleForms: () => void
   onSaveForms: () => void
+  onUpdateForm: () => void
   onClearForm: () => void
 }
 
 const HeaderFormMenu = ({
+  id,
   title,
   setTitle,
   description,
   setDescription,
   onVisibleForms,
   onSaveForms,
+  onUpdateForm,
   onClearForm,
   typeForm,
   setTypeForm,
@@ -39,8 +43,11 @@ const HeaderFormMenu = ({
           placeholder="Título do formulário"
         />
         <ButtonHeader
-          onClick={onSaveForms}
-          title="Salvar"
+          onClick={() => {
+            if (id) onUpdateForm()
+            else onSaveForms()
+          }}
+          title={id ? 'Atualizar' : 'Salvar'}
           type="button"
           styles="w-[200px] bg-green"
           icon={<SaveIcon />}

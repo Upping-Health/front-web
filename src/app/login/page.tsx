@@ -21,7 +21,7 @@ export default function Login() {
   const [error, setError] = useState('')
   const formik = useFormik({
     initialValues: {
-      email: 'xguilherme1@gmail.com',
+      email: 'reggis@upping.com.br',
       password: '12345678',
     },
     onSubmit: async (values) => {
