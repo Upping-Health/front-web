@@ -35,7 +35,7 @@ const ProfileDrawer = ({ openMenu, setOpenMenu }: any) => {
   return (
     <Drawer anchor="right" open={openMenu} onClose={() => setOpenMenu(false)}>
       <div className="w-72 flex flex-col h-full bg-white dark:bg-gray-800">
-        <div className="flex flex-col items-center pt-8 pb-4 border-b">
+        <div className="flex flex-col items-center pt-8 pb-4 border-b-2 border-dotted">
           <div
             className={`bg-black dark:bg-gray-600 rounded-full flex items-center justify-center w-16 h-16`}
           >
@@ -70,7 +70,7 @@ const ProfileDrawer = ({ openMenu, setOpenMenu }: any) => {
             ))}
           </div>
         </List>
-        <div className="p-4 border-t">
+        <div className="p-4 border-t-2 border-dotted">
           <button
             onClick={onLogout}
             className="w-full py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white flex justify-center items-center gap-2 shadow transition"

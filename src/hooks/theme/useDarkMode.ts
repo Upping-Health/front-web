@@ -40,7 +40,7 @@ export default function useDarkMode() {
   }
 
   return {
-    themeDark: themeDark ?? false, // fallback caso seja null
+    themeDark: themeDark ?? false,
     toggleTheme,
   }
 }

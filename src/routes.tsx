@@ -88,3 +88,14 @@ export const dashboardTabs: Record<TabValue, Tab> = {
     path: '/forms/list',
   },
 }
+
+export const PATH_NAMES_PT_BR: Record<string, string> = {
+  '/dashboard': 'Dashboard',
+  '/schedule': 'Agenda',
+  '/patients': 'Pacientes',
+  '/consult': 'Consulta',
+  '/consult/new': 'Iniciar Consulta',
+  '/consult/history': 'Histórico',
+  '/food': 'Alimentos',
+  '/forms/list': 'Formulários',
+}
