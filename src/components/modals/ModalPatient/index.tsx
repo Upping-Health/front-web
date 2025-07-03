@@ -78,6 +78,7 @@ const ModalPatient = ({
     if (!open) return formik.resetForm()
     if (!patientSelected) {
       formik.setValues({
+        uuid: '',
         cpf: '',
         name: '',
         phone: '',
@@ -99,6 +100,7 @@ const ModalPatient = ({
       const { name, cpf, phone, email, birthDate, gender, objective, address } =
         patientSelected
       formik.setValues({
+        uuid: '',
         name: name,
         cpf: cpf,
         phone,
@@ -120,6 +122,7 @@ const ModalPatient = ({
 
   const formik = useFormik({
     initialValues: {
+      uuid: '',
       cpf: '',
       email: '',
       name: '',
@@ -136,41 +139,33 @@ const ModalPatient = ({
       state: '',
       zipCode: '',
     },
-    validate: validatPatient,
+    //validate: validatPatient,
     onSubmit: async (values) => {
       setloading(true)
-      const data: Omit<Patient, 'id' | 'created_at' | 'updated_at' | 'status'> =
-        {
-          cpf: masks.unmask(values.cpf),
-          phone: masks.unmask(values.phone),
-          name: values.name,
-          //status: values.status ? 'ACTIVE' : 'INACTIVE',
-          email: values.email,
-          gender: values.gender as 'MALE' | 'FEMALE' | 'OTHER',
-          //objective: values?.objective ?? '',
-          birthDate: formatDate(values.birthDate),
-          address: {
-            city: values.city,
-            complement: values?.complement ?? null,
-            neighborhood: values.neighborhood,
-            number: values.number,
-            state: values.state,
-            street: values.street,
-            zipCode: values.zipCode.replace(/\D/g, ''),
-          },
-        }
+      const data: Omit<any, 'id' | 'created_at' | 'updated_at' | 'status'> = {
+        cpf: masks.unmask(values.cpf),
+        phone: masks.unmask(values.phone),
+        name: values.name,
+        patient_id: values.uuid,
+        //status: values.status ? 'ACTIVE' : 'INACTIVE',
+        email: values.email,
+        // gender: values.gender as 'MALE' | 'FEMALE' | 'OTHER',
+        // //objective: values?.objective ?? '',
+        // birthDate: formatDate(values.birthDate),
+        // address: {
+        //   city: values.city,
+        //   complement: values?.complement ?? null,
+        //   neighborhood: values.neighborhood,
+        //   number: values.number,
+        //   state: values.state,
+        //   street: values.street,
+        //   zipCode: values.zipCode.replace(/\D/g, ''),
+        // },
+      }
 
       try {
-        if (patientSelected) {
-          const { cpf, ...dataWithoutCpf } = data
-
-          await api.put(`/patient/update/${patientSelected.id}`, dataWithoutCpf)
-          onSuccessUpdate()
-        } else {
-          await api.post(`/patient/create/${user?.id}`, data)
-          onSuccess()
-        }
-
+        await api.post(`/patients/store`, data)
+        onSuccess()
         await loadData()
       } catch (error) {
         if (patientSelected) {
@@ -228,11 +223,12 @@ const ModalPatient = ({
     if (cleanedCpf.length === 11) {
       setLoadingData(true)
       await api
-        .get(`/patientByCpf/${cleanedCpf}`)
+        .get(`/patients/${cleanedCpf}`)
         .then((response) => {
           console.log(response)
           if (response?.data?.data) {
             const { data } = response?.data
+            formik.setFieldValue('uuid', data?.uuid ?? '')
             formik.setFieldValue('name', data?.name ?? '')
             formik.setFieldValue('email', data?.email ?? '')
             formik.setFieldValue('phone', data?.phone ?? '')

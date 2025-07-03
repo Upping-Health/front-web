@@ -3,10 +3,10 @@ import { useCallback, useContext, useMemo, useState } from 'react'
 
 import ButtonActive from '@/components/buttonsComponents/buttonActive'
 import ButtonIconStyled from '@/components/buttonsComponents/buttonIcon'
+import TopDash from '@/components/layoutComponents/topDash'
 import ModalPatient from '@/components/modals/ModalPatient'
 import ProfileRounded from '@/components/profileRounded'
 import TableDash from '@/components/tablesComponents/tableDash'
-import TopDash from '@/components/layoutComponents/topDash'
 import { DefaultContext } from '@/contexts/defaultContext'
 import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import Patient from '@/interfaces/patient.interface'
@@ -71,7 +71,7 @@ const PacientesContent = () => {
       {
         header: 'Foto',
         field: 'photo',
-        render: (_: any, row: any) => <ProfileRounded user={row} />,
+        render: (_: any, row: any) => <ProfileRounded user={row?.patient} />,
       },
       {
         header: 'Nome',
@@ -83,8 +83,9 @@ const PacientesContent = () => {
       },
       {
         header: 'CPF',
-        field: 'cpf',
-        render: (value: any) => masks.cpfMask(value),
+        field: 'document',
+        render: (value: any, row: any) =>
+          masks.cpfMask(value ?? '000000000000'),
       },
       {
         header: 'Telefone',
@@ -106,7 +107,7 @@ const PacientesContent = () => {
         field: 'status',
         render: (value: any, row: any) => (
           <ButtonActive
-            active={value === 'ACTIVE'}
+            active={row.status === 1}
             onClick={() => changeStatusPatient(row)}
           />
         ),

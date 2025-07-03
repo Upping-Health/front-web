@@ -11,8 +11,7 @@ const useLoadPatients = (hidden: boolean) => {
   const loadData = useCallback(async () => {
     try {
       setloading(true)
-      if (isNaN(Number(user?.id))) return
-      const res = await api.get(`/patients/${user?.id}`)
+      const res = await api.get(`/patients`)
       setdata(res?.data?.data)
     } catch (error: any) {
       console.error('[ERROR API] /patients/', error?.response?.data)
