@@ -20,37 +20,41 @@ export const useCustomForm = (id?: string) => {
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
-  const [labelLoading, setLabelLoading] = useState<string>('')
+  const [labelLoading, setLabelLoading] = useState<string>('Buscando dados...')
   const [typeForm, setTypeForm] = useState<string>('Carregando...')
 
   const getFormData = useCallback(async (id: string) => {
-    setLabelLoading('Buscando dados do formulário...')
-    setLoading(true)
+    try {
+      setLabelLoading('Buscando dados do formulário...')
+      setLoading(true)
 
-    await api
-      .get(`/forms/${id}`)
-      .then((res) => {
-        console.log(res?.data?.data?.fields)
-        setTitle(res?.data?.data?.title)
-        setDescription(res?.data?.data?.description)
+      const { data } = await api.get(`/forms/${id}`)
+      const form = data?.data
 
-        const questionsMap = res?.data?.data?.fields.map((quest: any) => ({
+      setTitle(form?.title || '')
+      setDescription(form?.description || '')
+
+      const questionsMap =
+        form?.fields?.map((quest: any) => ({
           label: quest.label,
           type: quest.type,
-          options: quest?.options ?? null,
-          required: quest?.required === 1 ? true : false,
+          options: quest?.options ?? [],
+          required: quest?.required === 1,
           uuid: quest.uuid,
-        }))
+        })) || []
 
-        setQuestions(questionsMap)
-      })
-      .catch((e) => console.log(e))
-      .finally(() => setLoading(false))
+      setQuestions(questionsMap)
+    } catch (error) {
+      console.error('[ERROR getFormData]', error)
+    } finally {
+      setLoading(false)
+    }
   }, [])
 
   const getLocalStorageData = useCallback(() => {
     setLabelLoading('Buscando dados armazenados...')
     setLoading(true)
+
     const saved = localStorage.getItem('customFormData')
     if (saved) {
       try {
@@ -62,25 +66,56 @@ export const useCustomForm = (id?: string) => {
         console.error('Erro ao carregar dados do formulário:', error)
       }
     }
+
     setLoading(false)
   }, [])
 
   useEffect(() => {
     if (id) getFormData(id)
     else getLocalStorageData()
-  }, [id])
+  }, [id, getFormData, getLocalStorageData])
 
-  const onPushQuestions = useCallback(
-    (question: { label: string; type: string; description: string }) => {
-      setQuestions((prev) => [
-        ...prev,
-        {
-          label: '',
-          type: question.type,
-          options: [],
-          required: true,
-        },
-      ])
+  useEffect(() => {
+    const data = {
+      title,
+      description,
+      field: questions.map((q, index) => ({ ...q, order: index + 1 })),
+    }
+    localStorage.setItem('customFormData', JSON.stringify(data))
+  }, [title, description, questions])
+
+  const onPushQuestions = useCallback((question: { type: string }) => {
+    setQuestions((prev) => [
+      ...prev,
+      { label: '', type: question.type, options: [], required: true },
+    ])
+  }, [])
+
+  const onEditQuestionLabel = useCallback(
+    (index: number, field: string, value: string) => {
+      setQuestions((prev) =>
+        prev.map((q, i) => {
+          if (i !== index) return q
+
+          if (field === 'addOption') {
+            return { ...q, options: [...(q.options || []), ''] }
+          }
+
+          if (field.startsWith('removeOption.')) {
+            const idx = Number(field.split('.')[1])
+            return { ...q, options: q.options?.filter((_, i) => i !== idx) }
+          }
+
+          if (field.startsWith('options.')) {
+            const idx = Number(field.split('.')[1])
+            const newOptions = [...(q.options || [])]
+            newOptions[idx] = value
+            return { ...q, options: newOptions }
+          }
+
+          return { ...q, [field]: value }
+        }),
+      )
     },
     [],
   )
@@ -94,37 +129,12 @@ export const useCustomForm = (id?: string) => {
     })
   }, [])
 
-  const onEditQuestionLabel = useCallback(
-    (index: number, field: string, value: string) => {
-      setQuestions((prev) =>
-        prev.map((q, i) => {
-          if (i !== index) return q
-          if (field === 'addOption') {
-            return { ...q, options: [...(q.options || []), ''] }
-          }
-          if (field.startsWith('removeOption.')) {
-            const idx = Number(field.split('.')[1])
-            return { ...q, options: q.options?.filter((_, i) => i !== idx) }
-          }
-          if (field.startsWith('options.')) {
-            const idx = Number(field.split('.')[1])
-            const newOptions = [...(q.options || [])]
-            newOptions[idx] = value
-            return { ...q, options: newOptions }
-          }
-          return { ...q, [field]: value }
-        }),
-      )
-    },
-    [],
-  )
-
   const onRemoveQuestion = useCallback((index: number) => {
     setQuestions((prev) => prev.filter((_, i) => i !== index))
   }, [])
 
   const validForms = useCallback(() => {
-    if (!title) {
+    if (!title.trim()) {
       onShowFeedBack(PreFeedBack.error('Defina o título antes de prosseguir.'))
       return false
     }
@@ -147,7 +157,7 @@ export const useCustomForm = (id?: string) => {
       )
       if (
         needsOptions &&
-        (!Array.isArray(question.options) || question.options.length === 0)
+        (!question.options || question.options.length === 0)
       ) {
         onShowFeedBack(
           PreFeedBack.error(
@@ -159,90 +169,76 @@ export const useCustomForm = (id?: string) => {
     }
 
     return true
-  }, [title, questions])
+  }, [title, questions, onShowFeedBack])
 
   const onVisibleForms = useCallback(() => {
     if (!validForms()) return
-
-    const data = {
-      title,
-      description,
-      field: questions.map((q, index) => ({ ...q, order: index + 1 })),
-    }
-
-    localStorage.setItem('customFormData', JSON.stringify(data))
     router.push('/forms/preview')
-  }, [questions, title, description])
+  }, [validForms, router])
 
   const onSaveForms = useCallback(async () => {
     if (!validForms()) return
 
-    setLabelLoading('Enviando formulário...')
-    setLoading(true)
+    try {
+      setLabelLoading('Enviando formulário...')
+      setLoading(true)
 
-    const data = {
-      type_id: 1,
-      title,
-      description,
-      is_active: true,
-      fields: questions.map((q, index) => ({ ...q, order: index + 1 })),
+      const data = {
+        type_id: 1,
+        title,
+        description,
+        is_active: true,
+        fields: questions.map((q, index) => ({ ...q, order: index + 1 })),
+      }
+
+      await api.post('/forms/store', data)
+
+      localStorage.removeItem('customFormData')
+      onShowFeedBack(PreFeedBack.success('Formulário cadastrado com sucesso!'))
+      router.push('/forms/list')
+    } catch (e: any) {
+      const errorMessage =
+        e?.response?.data?.error || 'Falhou ao cadastrar formulário.'
+      onShowFeedBack(PreFeedBack.error(errorMessage))
+      console.error('[ERROR API /forms/store]', errorMessage)
+    } finally {
+      setLoading(false)
     }
-
-    await api
-      .post('/forms/store', data)
-      .then(() => {
-        localStorage.removeItem('customFormData')
-        onShowFeedBack(
-          PreFeedBack.success('Formulário cadastrado com sucesso!'),
-        )
-        router.push('/forms/list')
-      })
-      .catch((e) => {
-        const errorMessage =
-          e?.response?.data?.error || 'Falhou ao cadastrar formulário.'
-        onShowFeedBack(PreFeedBack.error(errorMessage))
-        console.log('[ERROR API /forms/store]', errorMessage)
-      })
-      .finally(() => setLoading(false))
-  }, [questions, title, description])
+  }, [validForms, title, description, questions, router, onShowFeedBack])
 
   const onUpdateForm = useCallback(async () => {
     if (!validForms() || !id) return
-    setLabelLoading('Atualizando formulário...')
-    setLoading(true)
 
-    const data = {
-      type_id: 1,
-      title,
-      description,
-      is_active: true,
-      fields: questions.map((q, index) => ({
-        ...q,
-        order: index + 1,
-        required: q.required ? 1 : 0,
-      })),
+    try {
+      setLabelLoading('Atualizando formulário...')
+      setLoading(true)
+
+      const data = {
+        type_id: 1,
+        title,
+        description,
+        is_active: true,
+        fields: questions.map((q, index) => ({
+          ...q,
+          order: index + 1,
+          required: q.required ? 1 : 0,
+        })),
+      }
+
+      await api.put(`/forms/update/${id}`, data)
+
+      localStorage.removeItem('customFormData')
+      onShowFeedBack(PreFeedBack.success('Formulário atualizado com sucesso!'))
+      router.push('/forms/list')
+    } catch (e: any) {
+      const errorMessage =
+        e?.response?.data?.error || 'Falhou ao atualizar formulário.'
+      onShowFeedBack(PreFeedBack.error(errorMessage))
+      console.error('[ERROR API /forms/update]', errorMessage)
+    } finally {
+      setLoading(false)
     }
-
-    console.log(questions)
-
-    await api
-      .put(`/forms/update/${id}`, data)
-      .then(() => {
-        localStorage.removeItem('customFormData')
-        onShowFeedBack(
-          PreFeedBack.success('Formulário cadastrado com sucesso!'),
-        )
-        router.push('/forms/list')
-      })
-      .catch((e) => {
-        console.log(e)
-        const errorMessage =
-          e?.response?.data?.error || 'Falhou ao cadastrar formulário.'
-        onShowFeedBack(PreFeedBack.error(errorMessage))
-        console.log('[ERROR API /forms/store]', errorMessage)
-      })
-      .finally(() => setLoading(false))
-  }, [questions, title, description, id])
+  }, [validForms, title, description, questions, id, router, onShowFeedBack])
 
   const onClearForm = useCallback(() => {
     setTitle('')

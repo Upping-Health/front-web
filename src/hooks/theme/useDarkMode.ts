@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 
 export default function useDarkMode() {
-  const [themeDark, setThemeDark] = useState<boolean>(false)
+  const [themeDark, setThemeDark] = useState<boolean | null>(null)
 
   const updateHtmlClass = (enableDark: boolean) => {
     const root = document.documentElement
@@ -15,7 +15,6 @@ export default function useDarkMode() {
 
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme')
-
     let shouldUseDark: boolean
 
     if (storedTheme === 'dark') {
@@ -29,15 +28,19 @@ export default function useDarkMode() {
     setThemeDark(shouldUseDark)
     updateHtmlClass(shouldUseDark)
   }, [])
+
   useEffect(() => {
+    if (themeDark === null) return
     updateHtmlClass(themeDark)
     localStorage.setItem('theme', themeDark ? 'dark' : 'light')
   }, [themeDark])
 
-  const toggleTheme = () => setThemeDark((prev) => !prev)
+  const toggleTheme = () => {
+    setThemeDark((prev) => !prev)
+  }
 
   return {
-    themeDark,
+    themeDark: themeDark ?? false, // fallback caso seja null
     toggleTheme,
   }
 }
