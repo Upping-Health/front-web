@@ -2,6 +2,7 @@ import { colors } from '@/utils/colors/colors'
 import { STATUS } from '@/utils/types/feedback'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import ErrorIcon from '@mui/icons-material/Error'
+import CloseIcon from '@mui/icons-material/Close'
 import { Modal } from '@mui/material'
 import { useEffect, useState } from 'react'
 
@@ -20,9 +21,9 @@ const ModalFeedBackStatus = ({
   title,
   description,
 }: ModalFeedBackStatusProps) => {
-  const [timer, setTimer] = useState<number>(3)
+  const [timer, setTimer] = useState<number>(5)
   const StatusIcon = status === STATUS.SUCCESS ? CheckCircleIcon : ErrorIcon
-  console.log(status)
+
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null
     if (open) {
@@ -32,7 +33,7 @@ const ModalFeedBackStatus = ({
           const newTimer = prevTimer - 1
           if (newTimer <= 0) {
             clearInterval(interval!)
-            setIsClose()
+            //setIsClose()
           }
           return newTimer
         })
@@ -41,28 +42,41 @@ const ModalFeedBackStatus = ({
       clearInterval(interval)
     }
     return () => {
-      if (interval) {
-        clearInterval(interval)
-      }
+      if (interval) clearInterval(interval)
     }
   }, [open, setIsClose])
 
   return (
     <Modal
       open={open}
-      onClose={setIsClose}
-      className="flex justify-center items-center"
+      className="flex justify-center items-center backdrop-blur-sm"
     >
-      <div className="bg-white rounded-20 p-4 text-center">
-        <StatusIcon
-          style={{
-            fontSize: 96,
-            color: status === STATUS.SUCCESS ? colors.green : colors.red,
-          }}
-        />
-        <h1 className="font-bold text-3xl pt-3 pb-2">{title}</h1>
-        <p className="font-light ">{description}</p>
-        {/* <p className='pt-3 font-bold '>{'00:0'+timer}</p> */}
+      <div className="relative bg-white rounded-3xl p-6 text-center shadow-2xl max-w-sm w-full mx-4">
+        <button
+          onClick={setIsClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+        >
+          <CloseIcon />
+        </button>
+
+        <div
+          className={`mx-auto flex items-center justify-center rounded-full w-32 h-32 ${
+            status === STATUS.SUCCESS ? 'bg-green-100' : 'bg-red-100'
+          }`}
+        >
+          <StatusIcon
+            style={{
+              fontSize: 96,
+              color:
+                status === STATUS.SUCCESS ? colors.newGreen : colors.newRed,
+            }}
+          />
+        </div>
+
+        <h1 className="font-semibold text-2xl pt-4 pb-2 text-gray-800">
+          {title}
+        </h1>
+        <p className="font-normal text-gray-600">{description}</p>
       </div>
     </Modal>
   )
