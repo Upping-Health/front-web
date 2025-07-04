@@ -39,6 +39,8 @@ export default function DefaultProvider({ children }: any) {
         setuser(user as any)
       } catch (error) {
         setuser(null)
+        Cookies.remove('token')
+        router.push('/login')
       }
     }
   }, [])

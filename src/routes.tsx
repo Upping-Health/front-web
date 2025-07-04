@@ -9,6 +9,7 @@ import RestaurantIcon from '@mui/icons-material/Restaurant'
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer'
 import ChecklistIcon from '@mui/icons-material/Checklist'
 import { JSX } from 'react'
+import { Person } from '@mui/icons-material'
 
 export const TABS_DASH = {
   DASH: 'dash',
@@ -17,6 +18,7 @@ export const TABS_DASH = {
   CONSULTA: 'consulta',
   PLANOALIMENTAR: 'planoalimentar',
   FORMS: 'forms',
+  REGISTER: 'registers',
 } as const
 
 export type TabKey = keyof typeof TABS_DASH
@@ -44,6 +46,12 @@ export const dashboardTabs: Record<TabValue, Tab> = {
     icon: <DashboardIcon />,
     value: TABS_DASH.DASH,
     path: '/dashboard',
+  },
+  registers: {
+    name: 'Usuários',
+    icon: <Person />,
+    value: TABS_DASH.DASH,
+    path: '/users',
   },
   agenda: {
     name: 'Agenda',

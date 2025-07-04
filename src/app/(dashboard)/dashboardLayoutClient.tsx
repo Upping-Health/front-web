@@ -8,6 +8,7 @@ import FooterDash from '@/components/layoutComponents/footerDash'
 import HeaderDash from '@/components/layoutComponents/headerDash'
 import MenuMobile from '@/components/layoutComponents/menuMobile'
 import { Providers } from '@/contexts/providers/provider'
+import LoadingFullScreen from '@/components/layoutComponents/loadingGlobal'
 
 export default function DashboardLayoutClient({
   children,
@@ -18,14 +19,13 @@ export default function DashboardLayoutClient({
   const router = useRouter()
 
   useEffect(() => {
-    console.log(user)
     if (!loadingGlobal && !user) {
       router.push('/login')
     }
   }, [user, loadingGlobal, router])
 
   if (loadingGlobal || !user) {
-    return null
+    return <LoadingFullScreen labelLoading={'Carregando dados do usuário...'} />
   }
 
   return (

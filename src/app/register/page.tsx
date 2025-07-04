@@ -21,19 +21,7 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-
-const validate = async (values: any) => {
-  const unmaskCpf = values.document.replace(/\D/g, '')
-  const errors: any = {}
-  if (!values.document) {
-    errors.document = 'Este campo é necessário'
-  } else if (values.document.length < 14) {
-    errors.document = 'Informe o cpf completo'
-  } else if (!masks.validaCpf(unmaskCpf)) {
-    errors.document = 'CPF inválido'
-  }
-  return errors
-}
+import { validateClient } from '../../../formik/validators/validate-client'
 
 export default function Register() {
   const router = useRouter()
@@ -41,36 +29,36 @@ export default function Register() {
 
   const formik = useFormik({
     initialValues: {
+      typePerson: 'common',
       document: '',
       name: '',
-      email: '',
       phone: '',
-      gender: 'MALE',
       birthDate: '',
+      email: '',
       password: '',
-      confirmPassword: '',
-      role: ROLE.NUTRITIONIST,
-      typePerson: 'PF', // ADICIONADO
+      password_confirmation: '',
     },
-    validate,
+    validate: validateClient,
     onSubmit: async (values) => {
       setloading(true)
       const data = {
-        cpf: masks.unmask(values.document),
+        document: masks.unmask(values.document),
         email: values.email,
         name: values.name,
         phone: masks.unmask(values.phone),
-        birthDate: formatDate(values.birthDate),
-        gender: values.gender,
+        birthDate: values.birthDate,
         active: true,
-        role: ROLE.NUTRITIONIST,
         password: values.password,
-        typePerson: values.typePerson, // ADICIONADO
+        password_confirmation: values.password,
+        type: values.typePerson,
       }
 
       api
-        .post('nutritionist/create', data)
-        .then(() => router.push('/login'))
+        .post('register', data)
+        .then((response) => {
+          console.log(response?.data)
+          router.push('/login')
+        })
         .catch((error) =>
           console.error('[ERROR API /users]', error?.response?.data),
         )
@@ -92,7 +80,7 @@ export default function Register() {
           <form className="flex flex-col" onSubmit={formik.handleSubmit}>
             <div className="flex flex-col gap-2 h-full">
               <div className="flex items-center gap-4 mt-2 justify-center">
-                {['PF', 'PJ'].map((option) => {
+                {['common', 'company'].map((option) => {
                   const isChecked = formik.values.typePerson === option
                   return (
                     <button
@@ -107,7 +95,9 @@ export default function Register() {
                         <RadioButtonUncheckedIcon className="text-gray-400 text-3xl" />
                       )}
                       <span className="font-light text-black">
-                        {option === 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica'}
+                        {option === 'common'
+                          ? 'Pessoa Física'
+                          : 'Pessoa Jurídica'}
                       </span>
                     </button>
                   )
@@ -118,14 +108,14 @@ export default function Register() {
                 id="document"
                 onChange={formik.handleChange}
                 value={
-                  formik.values.typePerson === 'PJ'
+                  formik.values.typePerson === 'company'
                     ? masks.cnpjMask(formik.values.document)
                     : masks.cpfMask(formik.values.document)
                 }
-                label={formik.values.typePerson === 'PJ' ? 'CNPJ' : 'CPF'}
+                label={formik.values.typePerson === 'company' ? 'CNPJ' : 'CPF'}
                 type="tel"
                 placeholder={
-                  formik.values.typePerson === 'PJ'
+                  formik.values.typePerson === 'company'
                     ? '00.000.000/0000-00'
                     : '000.000.000-00'
                 }
@@ -143,15 +133,6 @@ export default function Register() {
                     style={{ color: colors.primary }}
                   />
                 }
-              />
-              <InputStyled
-                id="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                label="E-mail"
-                type="text"
-                placeholder="exemplo@gmail.com"
-                icon={<MailOutlineIcon style={{ color: colors.primary }} />}
               />
 
               <InputStyled
@@ -180,12 +161,22 @@ export default function Register() {
                 }
               />
 
-              <SelectStyled
+              {/* <SelectStyled
                 label="Sexo"
                 icon={<WcIcon style={{ color: colors.primary }} />}
                 value={formik.values.gender}
                 onChange={formik.handleChange}
                 id="gender"
+              /> */}
+
+              <InputStyled
+                id="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                label="E-mail"
+                type="text"
+                placeholder="exemplo@gmail.com"
+                icon={<MailOutlineIcon style={{ color: colors.primary }} />}
               />
 
               <InputStyled
