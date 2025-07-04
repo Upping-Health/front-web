@@ -5,7 +5,11 @@ import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import { colors } from '@/utils/colors/colors'
 import { CircularProgress } from '@mui/material'
 import PreviewForms from '@/components/formsComponents/previewForms'
+import TopDash from '@/components/layoutComponents/topDash'
+import { useRouter } from 'next/navigation'
 
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswerOutlined'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 interface IQuestion {
   label: string
   type: string
@@ -26,7 +30,7 @@ interface IFormPreview {
 const FormsPreview = ({ params }: { params: { id: string } }) => {
   const { data, loading } = useLoadPatients(false)
   const [formData, setFormData] = useState<IFormPreview | null>(null)
-
+  const router = useRouter()
   useEffect(() => {
     const saved = localStorage.getItem('customFormData')
     if (saved) {
@@ -48,7 +52,16 @@ const FormsPreview = ({ params }: { params: { id: string } }) => {
           />
         </div>
       ) : formData ? (
-        <div className="max-w-5xl mx-auto flex flex-col gap-6 mt-5 px-4">
+        <div className="max-w-5xl mx-auto flex flex-col gap-6 px-4">
+          <TopDash
+            title="Preview do formulário"
+            onClick={() => router.back()}
+            description="Visualize como o formulário será exibido aos usuários antes de publicá-lo."
+            icon={QuestionAnswerIcon}
+            btnIcon={ArrowBackIcon}
+            textBtn="Voltar"
+          />
+
           <PreviewForms formData={formData} />
         </div>
       ) : (

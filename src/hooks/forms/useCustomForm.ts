@@ -23,33 +23,59 @@ export const useCustomForm = (id?: string) => {
   const [labelLoading, setLabelLoading] = useState<string>('Buscando dados...')
   const [typeForm, setTypeForm] = useState<string>('Carregando...')
 
-  const getFormData = useCallback(async (id: string) => {
-    try {
-      setLabelLoading('Buscando dados do formulário...')
-      setLoading(true)
-
-      const { data } = await api.get(`/forms/${id}`)
-      const form = data?.data
-
-      setTitle(form?.title || '')
-      setDescription(form?.description || '')
-
-      const questionsMap =
-        form?.fields?.map((quest: any) => ({
-          label: quest.label,
-          type: quest.type,
-          options: quest?.options ?? [],
-          required: quest?.required === 1,
-          uuid: quest.uuid,
-        })) || []
-
-      setQuestions(questionsMap)
-    } catch (error) {
-      console.error('[ERROR getFormData]', error)
-    } finally {
-      setLoading(false)
+  const updateLocalStorage = useCallback((field: string, value: any) => {
+    const saved = localStorage.getItem('customFormData')
+    let parsed = {}
+    if (saved) {
+      try {
+        parsed = JSON.parse(saved)
+      } catch (e) {
+        console.error('Erro ao parsear localStorage:', e)
+      }
     }
+    const updated = { ...parsed, [field]: value }
+    localStorage.setItem('customFormData', JSON.stringify(updated))
   }, [])
+
+  const getFormData = useCallback(
+    async (id: string) => {
+      try {
+        setLabelLoading('Buscando dados do formulário...')
+        setLoading(true)
+
+        const { data } = await api.get(`/forms/${id}`)
+        const form = data?.data
+
+        setTitle(form?.title || '')
+        setDescription(form?.description || '')
+
+        const questionsMap =
+          form?.fields?.map((quest: any) => ({
+            label: quest.label,
+            type: quest.type,
+            options: quest?.options ?? [],
+            required: quest?.required === 1,
+            uuid: quest.uuid,
+          })) || []
+
+        setQuestions(questionsMap)
+        updateLocalStorage('title', form?.title || '')
+        updateLocalStorage('description', form?.description || '')
+        updateLocalStorage(
+          'field',
+          questionsMap.map((q: any, index: number) => ({
+            ...q,
+            order: index + 1,
+          })),
+        )
+      } catch (error) {
+        console.error('[ERROR getFormData]', error)
+      } finally {
+        setLoading(false)
+      }
+    },
+    [updateLocalStorage],
+  )
 
   const getLocalStorageData = useCallback(() => {
     setLabelLoading('Buscando dados armazenados...')
@@ -70,31 +96,55 @@ export const useCustomForm = (id?: string) => {
     setLoading(false)
   }, [])
 
+  const onChangeTitle = useCallback(
+    (newTitle: string) => {
+      setTitle(newTitle)
+      updateLocalStorage('title', newTitle)
+    },
+    [updateLocalStorage],
+  )
+
+  const onChangeDescription = useCallback(
+    (newDescription: string) => {
+      setDescription(newDescription)
+      updateLocalStorage('description', newDescription)
+    },
+    [updateLocalStorage],
+  )
+
+  const updateLocalStorageQuestions = useCallback(
+    (newQuestions: IQuestions[]) => {
+      updateLocalStorage(
+        'field',
+        newQuestions.map((q, index) => ({ ...q, order: index + 1 })),
+      )
+    },
+    [updateLocalStorage],
+  )
+
   useEffect(() => {
     if (id) getFormData(id)
     else getLocalStorageData()
   }, [id, getFormData, getLocalStorageData])
 
-  useEffect(() => {
-    const data = {
-      title,
-      description,
-      field: questions.map((q, index) => ({ ...q, order: index + 1 })),
-    }
-    localStorage.setItem('customFormData', JSON.stringify(data))
-  }, [title, description, questions])
-
-  const onPushQuestions = useCallback((question: { type: string }) => {
-    setQuestions((prev) => [
-      ...prev,
-      { label: '', type: question.type, options: [], required: true },
-    ])
-  }, [])
+  const onPushQuestions = useCallback(
+    (question: { type: string }) => {
+      setQuestions((prev) => {
+        const updated = [
+          ...prev,
+          { label: '', type: question.type, options: [], required: true },
+        ]
+        updateLocalStorageQuestions(updated)
+        return updated
+      })
+    },
+    [updateLocalStorageQuestions],
+  )
 
   const onEditQuestionLabel = useCallback(
     (index: number, field: string, value: string) => {
-      setQuestions((prev) =>
-        prev.map((q, i) => {
+      setQuestions((prev) => {
+        const updated = prev.map((q, i) => {
           if (i !== index) return q
 
           if (field === 'addOption') {
@@ -114,24 +164,38 @@ export const useCustomForm = (id?: string) => {
           }
 
           return { ...q, [field]: value }
-        }),
-      )
+        })
+
+        updateLocalStorageQuestions(updated)
+        return updated
+      })
     },
-    [],
+    [updateLocalStorageQuestions],
   )
 
-  const onDuplicateQuestion = useCallback((index: number) => {
-    setQuestions((prev) => {
-      const duplicated = { ...prev[index] }
-      const updated = [...prev]
-      updated.splice(index + 1, 0, duplicated)
-      return updated
-    })
-  }, [])
+  const onDuplicateQuestion = useCallback(
+    (index: number) => {
+      setQuestions((prev) => {
+        const duplicated = { ...prev[index] }
+        const updated = [...prev]
+        updated.splice(index + 1, 0, duplicated)
+        updateLocalStorageQuestions(updated)
+        return updated
+      })
+    },
+    [updateLocalStorageQuestions],
+  )
 
-  const onRemoveQuestion = useCallback((index: number) => {
-    setQuestions((prev) => prev.filter((_, i) => i !== index))
-  }, [])
+  const onRemoveQuestion = useCallback(
+    (index: number) => {
+      setQuestions((prev) => {
+        const updated = prev.filter((_, i) => i !== index)
+        updateLocalStorageQuestions(updated)
+        return updated
+      })
+    },
+    [updateLocalStorageQuestions],
+  )
 
   const validForms = useCallback(() => {
     if (!title.trim()) {
@@ -251,9 +315,9 @@ export const useCustomForm = (id?: string) => {
     questions,
     setQuestions,
     title,
-    setTitle,
+    onChangeTitle,
     description,
-    setDescription,
+    onChangeDescription,
     loading,
     onPushQuestions,
     onDuplicateQuestion,

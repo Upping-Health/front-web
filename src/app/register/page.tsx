@@ -16,18 +16,21 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import PersonIcon from '@mui/icons-material/Person'
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined'
 import WcIcon from '@mui/icons-material/Wc'
+import RadioButtonChecked from '@mui/icons-material/RadioButtonChecked'
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+
 const validate = async (values: any) => {
-  const unmaskCpf = values.cpf.replace(/\D/g, '')
+  const unmaskCpf = values.document.replace(/\D/g, '')
   const errors: any = {}
-  if (!values.cpf) {
-    errors.cpf = 'Este campo é necessário'
-  } else if (values.cpf.length < 14) {
-    errors.cpf = 'Informe o cpf completo'
+  if (!values.document) {
+    errors.document = 'Este campo é necessário'
+  } else if (values.document.length < 14) {
+    errors.document = 'Informe o cpf completo'
   } else if (!masks.validaCpf(unmaskCpf)) {
-    errors.cpf = 'CPF inválido'
+    errors.document = 'CPF inválido'
   }
   return errors
 }
@@ -38,7 +41,7 @@ export default function Register() {
 
   const formik = useFormik({
     initialValues: {
-      cpf: '',
+      document: '',
       name: '',
       email: '',
       phone: '',
@@ -47,12 +50,13 @@ export default function Register() {
       password: '',
       confirmPassword: '',
       role: ROLE.NUTRITIONIST,
+      typePerson: 'PF', // ADICIONADO
     },
     validate,
     onSubmit: async (values) => {
       setloading(true)
       const data = {
-        cpf: masks.unmask(values.cpf),
+        cpf: masks.unmask(values.document),
         email: values.email,
         name: values.name,
         phone: masks.unmask(values.phone),
@@ -61,6 +65,7 @@ export default function Register() {
         active: true,
         role: ROLE.NUTRITIONIST,
         password: values.password,
+        typePerson: values.typePerson, // ADICIONADO
       }
 
       api
@@ -72,6 +77,7 @@ export default function Register() {
         .finally(() => setloading(false))
     },
   })
+
   return (
     <main className="w-screen h-screen flex justify-center items-center">
       {loading && <Loading text="Carregando..." />}
@@ -85,13 +91,44 @@ export default function Register() {
 
           <form className="flex flex-col" onSubmit={formik.handleSubmit}>
             <div className="flex flex-col gap-2 h-full">
+              <div className="flex items-center gap-4 mt-2 justify-center">
+                {['PF', 'PJ'].map((option) => {
+                  const isChecked = formik.values.typePerson === option
+                  return (
+                    <button
+                      key={option}
+                      type="button"
+                      onClick={() => formik.setFieldValue('typePerson', option)}
+                      className="flex items-center gap-2 mt-1 rounded-full"
+                    >
+                      {isChecked ? (
+                        <RadioButtonChecked className="text-primary text-3xl" />
+                      ) : (
+                        <RadioButtonUncheckedIcon className="text-gray-400 text-3xl" />
+                      )}
+                      <span className="font-light text-black">
+                        {option === 'PF' ? 'Pessoa Física' : 'Pessoa Jurídica'}
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+
               <InputStyled
-                id="cpf"
+                id="document"
                 onChange={formik.handleChange}
-                value={masks.cpfMask(formik.values.cpf)}
-                label="CPF"
+                value={
+                  formik.values.typePerson === 'PJ'
+                    ? masks.cnpjMask(formik.values.document)
+                    : masks.cpfMask(formik.values.document)
+                }
+                label={formik.values.typePerson === 'PJ' ? 'CNPJ' : 'CPF'}
                 type="tel"
-                placeholder="000.000.000-00"
+                placeholder={
+                  formik.values.typePerson === 'PJ'
+                    ? '00.000.000/0000-00'
+                    : '000.000.000-00'
+                }
                 icon={<ArticleOutlinedIcon style={{ color: colors.primary }} />}
               />
               <InputStyled

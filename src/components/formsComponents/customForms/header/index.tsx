@@ -8,9 +8,9 @@ import SelectHeader from './selectHeader'
 interface ICustomFormMenu {
   id?: string
   title: string
-  setTitle: React.Dispatch<React.SetStateAction<string>>
+  setTitle: (e: string) => void
   description: string
-  setDescription: React.Dispatch<React.SetStateAction<string>>
+  setDescription: (e: string) => void
   typeForm: string
   setTypeForm: React.Dispatch<React.SetStateAction<string>>
   onVisibleForms: () => void

@@ -67,18 +67,18 @@ const HeaderDash = () => {
   return (
     <>
       <div className="flex border-b border-b-gray items-center px-4 py-2 relative bg-white dark:bg-gray-800 dark:border-gray-700 dark:border-b shadow-lg gap-4">
-        <div className="flex-grow"></div>
+        <div className="flex-grow">
+          <p className="text-sm text-slate-500 dark:text-white">
+            {currentTime}
+          </p>
+        </div>
 
-        <p className="text-sm text-slate-500 dark:text-white">{currentTime}</p>
         <HeaderButton onClick={toggleTheme}>
           {themeDark ? (
             <LightModeIcon className="text-white text-lg" />
           ) : (
             <DarkModeIcon className="text-gray-600 text-lg" />
           )}
-          <p className="dark:text-white text-sm font-light">
-            {themeDark ? 'Escuro' : 'Claro'}
-          </p>
         </HeaderButton>
 
         <HeaderButton onClick={() => setOpenNotifications(true)}>

@@ -7,15 +7,19 @@ import CustomFormMenu from './menu'
 import Loading from '@/components/layoutComponents/loading'
 import { useDragAndDrop } from '@/hooks/forms/useDragAndDrop'
 import { QuestionList } from './questionList'
+import TopDash from '@/components/layoutComponents/topDash'
+import { useRouter } from 'next/navigation'
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswerOutlined'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 const CustomForms = ({ id }: { id?: string }) => {
   const {
     questions,
     setQuestions,
     title,
-    setTitle,
+    onChangeTitle,
     description,
-    setDescription,
+    onChangeDescription,
     loading,
     onPushQuestions,
     onDuplicateQuestion,
@@ -34,15 +38,25 @@ const CustomForms = ({ id }: { id?: string }) => {
 
   if (loading) return <Loading text={labelLoading} />
 
+  const router = useRouter()
+
   return (
-    <div className="flex flex-col h-full items-center mt-4">
+    <div className="flex flex-col h-full items-center">
       <div className="flex flex-col gap-4 w-full max-w-5xl">
+        <TopDash
+          title="Criar formulário"
+          onClick={() => router.back()}
+          description="Crie formulários personalizados para coletar informações específicas."
+          icon={QuestionAnswerIcon}
+          btnIcon={ArrowBackIcon}
+          textBtn="Voltar"
+        />
         <HeaderFormMenu
           id={id}
           title={title}
-          setTitle={setTitle}
+          setTitle={onChangeTitle}
           description={description}
-          setDescription={setDescription}
+          setDescription={onChangeDescription}
           onVisibleForms={onVisibleForms}
           onSaveForms={onSaveForms}
           onUpdateForm={onUpdateForm}
