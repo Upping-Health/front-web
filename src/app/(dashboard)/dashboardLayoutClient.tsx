@@ -15,18 +15,8 @@ export default function DashboardLayoutClient({
 }: {
   children: React.ReactNode
 }) {
-  const { user, loadingGlobal } = useContext(DefaultContext)
+  const { user, loadingGlobal, labelLoading } = useContext(DefaultContext)
   const router = useRouter()
-
-  useEffect(() => {
-    if (!loadingGlobal && !user) {
-      router.push('/login')
-    }
-  }, [user, loadingGlobal, router])
-
-  if (loadingGlobal || !user) {
-    return <LoadingFullScreen labelLoading={'Carregando dados do usuário...'} />
-  }
 
   return (
     <Providers>

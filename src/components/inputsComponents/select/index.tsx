@@ -23,9 +23,9 @@ const SelectStyled = ({
   stylesLabel,
 }: ISelectStyled) => {
   const optionsSex = [
-    { value: 'MALE', text: 'Masculino' },
-    { value: 'FEMALE', text: 'Feminino' },
-    { value: 'OTHER', text: 'Outros' },
+    { value: 'male', text: 'Masculino' },
+    { value: 'female', text: 'Feminino' },
+    { value: 'other', text: 'Outros' },
   ]
 
   const optionsSelect = useMemo(() => {

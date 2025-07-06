@@ -1,0 +1,304 @@
+import ButtonStyled from '@/components/buttonsComponents/button'
+import InputStyled from '@/components/inputsComponents/inputStyled'
+import SelectStyled from '@/components/inputsComponents/select'
+import { DefaultContext } from '@/contexts/defaultContext'
+import api from '@/services/api'
+import { colors } from '@/utils/colors/colors'
+import PreFeedBack from '@/utils/feedbackStatus'
+import masks from '@/utils/masks/masks'
+import ArticleOutlined from '@mui/icons-material/ArticleOutlined'
+import CalendarMonthOutlined from '@mui/icons-material/CalendarMonthOutlined'
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
+import LocalPhoneOutlined from '@mui/icons-material/LocalPhoneOutlined'
+import PersonOutlineOutlined from '@mui/icons-material/PersonOutlineOutlined'
+import Wc from '@mui/icons-material/Wc'
+import { CircularProgress, Modal } from '@mui/material'
+import { useFormik } from 'formik'
+import { useContext, useEffect, useMemo, useState } from 'react'
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount'
+interface ModalParams {
+  open: boolean
+  setIsClose: () => void
+  userSelected?: any | null
+  loadData: () => Promise<void>
+}
+
+const ModalUser = ({
+  open,
+  setIsClose,
+  userSelected,
+  loadData,
+}: ModalParams) => {
+  const { onShowFeedBack, roles } = useContext(DefaultContext)
+  const [viewTwo, setViewTwo] = useState(false)
+  const [loading, setloading] = useState(false)
+  const [loadingData, setLoadingData] = useState(false)
+
+  const onSuccess = () => {
+    onShowFeedBack(PreFeedBack.success('Usuário cadastrado com sucesso!'))
+    setIsClose()
+  }
+
+  const onSuccessUpdate = () => {
+    onShowFeedBack(PreFeedBack.success('Usuário atualizado com sucesso!'))
+    setIsClose()
+  }
+
+  const onError = (e: any) => {
+    const errorMessage =
+      e?.response?.data?.error || 'Falhou ao cadastrar usuário.'
+    onShowFeedBack(PreFeedBack.error(errorMessage))
+    console.log('[ERROR API /patient]', errorMessage)
+  }
+
+  const onErrorUpdate = (e: any) => {
+    const errorMessage =
+      e?.response?.data?.error || 'Falhou ao atualizar usuário.'
+    onShowFeedBack(PreFeedBack.error(errorMessage))
+    console.log('[ERROR API /patient]', errorMessage)
+  }
+
+  useEffect(() => {
+    setViewTwo(false)
+    if (!open) return formik.resetForm()
+    if (!userSelected) {
+      formik.setValues({
+        cpf: '',
+        name: '',
+        email: '',
+        phone: '',
+        birthDate: '',
+        gender: 'male',
+        role: '',
+      })
+    }
+    if (userSelected) {
+      const { name, cpf, phone, email, birthDate, gender, objective, address } =
+        userSelected
+      formik.setValues({
+        cpf: cpf,
+        name: name,
+        phone,
+        email,
+        birthDate: birthDate,
+        gender,
+        role: '',
+      })
+    }
+  }, [userSelected, open])
+
+  const formik = useFormik({
+    initialValues: {
+      cpf: '',
+      name: '',
+      email: '',
+      phone: '',
+      birthDate: '',
+      gender: 'male',
+      role: '',
+    },
+    //validate: validatPatient,
+    onSubmit: async (values) => {
+      setloading(true)
+      const data: any = {
+        cpf: masks.unmask(values.cpf),
+        phone: masks.unmask(values.phone),
+        name: values.name,
+        email: values.email,
+        gender: values.gender as 'male' | 'female' | 'other',
+        role_id: Number(values.role),
+        birthDate: values.birthDate,
+        password: 'password',
+        password_confirmation: 'password',
+      }
+
+      try {
+        await api.post(`/register`, data)
+        onSuccess()
+        await loadData()
+      } catch (error) {
+        if (userSelected) {
+          onErrorUpdate(error)
+        } else {
+          onError(error)
+        }
+      } finally {
+        setloading(false)
+      }
+    },
+  })
+
+  const options = useMemo(
+    () => roles.map((e) => ({ value: e.id, text: e.name })),
+    [roles],
+  )
+
+  return (
+    <Modal
+      open={open}
+      onClose={setIsClose}
+      className="flex justify-center items-center"
+    >
+      <div className="bg-white dark:bg-slate-500 rounded-20 px-5 py-4 w-[85%] max-w-[500px]">
+        <p className="font-semibold text-xl text-center uppercase pb-5 dark:text-white">
+          {userSelected ? 'Atualizar Usuário' : 'Cadastro de Usuário'}
+        </p>
+
+        <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
+          {loadingData ? (
+            <div className="flex items-center flex-col justify-center py-6 gap-4">
+              <CircularProgress style={{ fontSize: 36, color: colors.black }} />
+              <p className="text-black font-semibold">Buscando dados...</p>
+            </div>
+          ) : (
+            <>
+              <div className="flex flex-col gap-2">
+                <InputStyled
+                  id="cpf"
+                  onChange={formik.handleChange}
+                  value={masks.cpfMask(formik.values.cpf)}
+                  label="CPF"
+                  type="tel"
+                  placeholder="000.000.000-00"
+                  icon={
+                    <ArticleOutlined className="text-black dark:text-white" />
+                  }
+                  error={formik.errors.cpf}
+                  onBlur={formik.handleBlur}
+                  isTouched={formik.touched.cpf}
+                  stylesInput="dark:bg-slate-500"
+                  stylesLabel="dark:text-white"
+                />
+                <InputStyled
+                  id="name"
+                  onChange={formik.handleChange}
+                  value={formik.values.name}
+                  label="Nome"
+                  type="text"
+                  placeholder="Exemplo"
+                  icon={
+                    <PersonOutlineOutlined className="text-black dark:text-white" />
+                  }
+                  error={formik.errors.name}
+                  onBlur={formik.handleBlur}
+                  isTouched={formik.touched.name}
+                  stylesInput="dark:bg-slate-500"
+                  stylesLabel="dark:text-white"
+                />
+
+                <InputStyled
+                  id="email"
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                  label="E-mail"
+                  type="text"
+                  placeholder="exemplo@gmail.com"
+                  icon={
+                    <EmailOutlinedIcon className="text-black dark:text-white" />
+                  }
+                  error={formik.errors.email}
+                  onBlur={formik.handleBlur}
+                  isTouched={formik.touched.email}
+                  stylesInput="dark:bg-slate-500"
+                  stylesLabel="dark:text-white"
+                />
+
+                <InputStyled
+                  id="phone"
+                  onChange={formik.handleChange}
+                  value={masks.phoneMask(formik.values.phone)}
+                  label="Telefone"
+                  type="text"
+                  placeholder="(00) 00000-0000"
+                  icon={
+                    <LocalPhoneOutlined className="text-black dark:text-white" />
+                  }
+                  maxLength={15}
+                  error={formik.errors.phone}
+                  onBlur={formik.handleBlur}
+                  isTouched={formik.touched.phone}
+                  stylesInput="dark:bg-slate-500"
+                  stylesLabel="dark:text-white"
+                />
+
+                <InputStyled
+                  id="birthDate"
+                  onChange={formik.handleChange}
+                  value={masks.dateMask(formik.values.birthDate)}
+                  label="Data de Nascimento"
+                  type="text"
+                  placeholder="DD/MM/YYYY"
+                  icon={
+                    <CalendarMonthOutlined className="text-black dark:text-white" />
+                  }
+                  maxLength={10}
+                  error={formik.errors.birthDate}
+                  onBlur={formik.handleBlur}
+                  isTouched={formik.touched.birthDate}
+                  stylesInput="dark:bg-slate-500"
+                  stylesLabel="dark:text-white"
+                />
+
+                <SelectStyled
+                  label="Sexo"
+                  icon={<Wc className="text-black dark:text-white" />}
+                  value={formik.values.gender}
+                  onChange={formik.handleChange}
+                  id="gender"
+                  styles="dark:text-white"
+                  stylesLabel="dark:text-white"
+                />
+
+                <SelectStyled
+                  label="Função"
+                  icon={
+                    <SupervisorAccountIcon className="text-black dark:text-white" />
+                  }
+                  value={formik.values.role}
+                  onChange={formik.handleChange}
+                  id="role"
+                  styles="dark:text-white"
+                  stylesLabel="dark:text-white"
+                  options={options}
+                />
+
+                <div className="flex gap-5 pt-5">
+                  <ButtonStyled
+                    type="button"
+                    onClick={setIsClose}
+                    styles="w-full"
+                    bgColor="bg-newRed"
+                    title="Cancelar"
+                  />
+
+                  {loading ? (
+                    <ButtonStyled
+                      bgColor="bg-darkGray"
+                      textColor="text-white"
+                      type="submit"
+                      styles="w-full"
+                      title="Cadastrando..."
+                      icon={
+                        <CircularProgress
+                          style={{ width: 20, height: 20, color: '#FFFFFF' }}
+                        />
+                      }
+                    />
+                  ) : (
+                    <ButtonStyled
+                      type="submit"
+                      styles="w-full"
+                      title={'Cadastrar'}
+                    />
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+        </form>
+      </div>
+    </Modal>
+  )
+}
+
+export default ModalUser

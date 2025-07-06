@@ -9,7 +9,6 @@ import { useContext } from 'react'
 const AsideFooter = ({ isCollapsed }: { isCollapsed: boolean }) => {
   const router = useRouter()
   const { user, setloadingGlobal, setLabelLoading } = useContext(DefaultContext)
-
   return (
     <div>
       <div className="flex items-center gap-3">
@@ -26,22 +25,11 @@ const AsideFooter = ({ isCollapsed }: { isCollapsed: boolean }) => {
               {user?.name?.substring(0, 17)}
             </p>
             <p className="text-black dark:text-white text-sm font-light">
-              {ROLE_PTBR[user?.role || 'admin']}
+              {user?.role?.name ?? 'SuperAdmin'}
             </p>
           </div>
         )}
       </div>
-      {/* <button
-        onClick={handleLogout}
-        className={`w-full py-2 rounded-xl shadow-lg transition flex justify-center items-center gap-2  bg-black dark:bg-gray-700 ${
-          isCollapsed ? 'text-center px-0' : ''
-        }`}
-      >
-        <LogoutIcon style={{ color: colors.white }} />
-        {!isCollapsed && (
-          <p className="text-white text-sm font-semibold">Logout</p>
-        )}
-      </button> */}
     </div>
   )
 }

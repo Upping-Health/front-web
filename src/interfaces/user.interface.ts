@@ -5,7 +5,10 @@ export default interface User extends DefaultEntityType {
   name: string
   phone: string
   email: string
-  role: 'admin' | 'superAdmin' | 'nutritionist'
+  role: {
+    id: number
+    name: string
+  }
   password: string
   active: boolean
 }

@@ -1,15 +1,16 @@
 'use client'
+
 import LoadingFullScreen from '@/components/layoutComponents/loadingGlobal'
 import ModalFeedBackStatus from '@/components/modals/ModalFeedback'
 import DefaultContextInterface from '@/interfaces/default.interface'
 import FeedBackStatusInterface from '@/interfaces/feedbackStatus'
 import User from '@/interfaces/user.interface'
 import { createContext, useCallback, useEffect, useState } from 'react'
-export const DefaultContext = createContext<DefaultContextInterface>({} as any)
 import Cookies from 'js-cookie'
 import api from '@/services/api'
 import { useRouter } from 'next/navigation'
 import useDarkMode from '@/hooks/theme/useDarkMode'
+import useLoadOperationData from '@/hooks/operation/useLoadOperationData'
 
 type ShowModalType = {
   open: boolean
@@ -18,13 +19,19 @@ type ShowModalType = {
   status: string
 }
 
-export default function DefaultProvider({ children }: any) {
+export const DefaultContext = createContext<DefaultContextInterface>({} as any)
+
+export default function DefaultProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const { themeDark, toggleTheme } = useDarkMode()
-  const [loadingGlobal, setloadingGlobal] = useState<boolean>(false)
+  const [loadingGlobal, setLoadingGlobal] = useState(false)
   const [labelLoading, setLabelLoading] = useState<string | null>(null)
-  const [user, setuser] = useState<User | null>(null)
+  const [user, setUser] = useState<User | null>(null)
   const router = useRouter()
-  const [showModal, setshowModal] = useState<ShowModalType>({
+  const [showModal, setShowModal] = useState<ShowModalType>({
     open: false,
     title: '',
     description: '',
@@ -35,67 +42,77 @@ export default function DefaultProvider({ children }: any) {
     const userStr = localStorage.getItem('user')
     if (userStr) {
       try {
-        const user = JSON.parse(userStr)
-        setuser(user as any)
-      } catch (error) {
-        setuser(null)
+        const parsedUser = JSON.parse(userStr)
+        setUser(parsedUser)
+      } catch {
+        setUser(null)
         Cookies.remove('token')
         router.push('/login')
       }
     }
-  }, [])
+  }, [router])
 
   const onShowFeedBack = useCallback(
-    ({ title, description, status }: FeedBackStatusInterface) =>
-      setshowModal({
+    ({ title, description, status }: FeedBackStatusInterface) => {
+      setShowModal({
         open: true,
         title,
         description,
         status,
-      }),
+      })
+    },
     [],
   )
 
   const onLogout = useCallback(async () => {
     try {
-      setloadingGlobal(true)
+      setLoadingGlobal(true)
       setLabelLoading('Fazendo logout...')
       await api.post('user/logout')
     } catch (e) {
-      console.log(e)
+      console.error(e)
     } finally {
       Cookies.remove('token')
       localStorage.removeItem('user')
       router.push('/login')
-      setloadingGlobal(false)
+      setLoadingGlobal(false)
       setLabelLoading(null)
     }
   }, [router])
+
+  const { roles } = useLoadOperationData({
+    user,
+    setloadingGlobal: setLoadingGlobal,
+  })
 
   return (
     <DefaultContext.Provider
       value={{
         user,
-        setuser,
+        setuser: setUser,
         onShowFeedBack,
         themeDark,
         toggleTheme,
         loadingGlobal,
-        setloadingGlobal,
+        setloadingGlobal: setLoadingGlobal,
         setLabelLoading,
         onLogout,
+        labelLoading,
+        roles,
       }}
     >
-      {loadingGlobal && <LoadingFullScreen labelLoading={labelLoading} />}
       {children}
+      <>
+        <LoadingFullScreen open={loadingGlobal} labelLoading={labelLoading} />
 
-      <ModalFeedBackStatus
-        open={showModal.open}
-        title={showModal.title}
-        description={showModal.description}
-        status={showModal.status}
-        setIsClose={() => setshowModal({ ...showModal, open: false })}
-      />
+        <ModalFeedBackStatus
+          open={showModal.open}
+          title={showModal.title}
+          description={showModal.description}
+          status={showModal.status}
+          setIsClose={() => setShowModal((prev) => ({ ...prev, open: false }))}
+        />
+      </>
     </DefaultContext.Provider>
   )
 }

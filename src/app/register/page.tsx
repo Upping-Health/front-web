@@ -20,10 +20,13 @@ import RadioButtonChecked from '@mui/icons-material/RadioButtonChecked'
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { validateClient } from '../../../formik/validators/validate-client'
+import { DefaultContext } from '@/contexts/defaultContext'
+import Cookies from 'js-cookie'
 
 export default function Register() {
+  const { setuser } = useContext(DefaultContext)
   const router = useRouter()
   const [loading, setloading] = useState(false)
 
@@ -47,17 +50,25 @@ export default function Register() {
         name: values.name,
         phone: masks.unmask(values.phone),
         birthDate: values.birthDate,
-        active: true,
+        status: true,
         password: values.password,
         password_confirmation: values.password,
         type: values.typePerson,
       }
 
       api
-        .post('register', data)
+        .post('clients/store', data)
         .then((response) => {
           console.log(response?.data)
-          router.push('/login')
+
+          const { data } = response?.data
+
+          if (data) {
+            Cookies.set('token', data.token, { expires: 365 })
+            localStorage.setItem('user', JSON.stringify(data.client))
+            setuser(data.user as any)
+            router.push('/dashboard')
+          }
         })
         .catch((error) =>
           console.error('[ERROR API /users]', error?.response?.data),
@@ -114,6 +125,9 @@ export default function Register() {
                 }
                 label={formik.values.typePerson === 'company' ? 'CNPJ' : 'CPF'}
                 type="tel"
+                onBlur={formik.handleBlur}
+                error={formik.errors.document}
+                isTouched={formik.touched.document}
                 placeholder={
                   formik.values.typePerson === 'company'
                     ? '00.000.000/0000-00'
@@ -133,6 +147,9 @@ export default function Register() {
                     style={{ color: colors.primary }}
                   />
                 }
+                onBlur={formik.handleBlur}
+                error={formik.errors.name}
+                isTouched={formik.touched.name}
               />
 
               <InputStyled
@@ -145,6 +162,9 @@ export default function Register() {
                 icon={
                   <LocalPhoneOutlinedIcon style={{ color: colors.primary }} />
                 }
+                onBlur={formik.handleBlur}
+                error={formik.errors.phone}
+                isTouched={formik.touched.phone}
               />
 
               <InputStyled
@@ -159,6 +179,9 @@ export default function Register() {
                     style={{ color: colors.primary }}
                   />
                 }
+                onBlur={formik.handleBlur}
+                error={formik.errors.birthDate}
+                isTouched={formik.touched.birthDate}
               />
 
               {/* <SelectStyled
@@ -177,6 +200,9 @@ export default function Register() {
                 type="text"
                 placeholder="exemplo@gmail.com"
                 icon={<MailOutlineIcon style={{ color: colors.primary }} />}
+                onBlur={formik.handleBlur}
+                error={formik.errors.email}
+                isTouched={formik.touched.email}
               />
 
               <InputStyled
@@ -187,6 +213,9 @@ export default function Register() {
                 type="password"
                 placeholder="***********"
                 icon={<LockOutlinedIcon style={{ color: colors.primary }} />}
+                onBlur={formik.handleBlur}
+                error={formik.errors.password}
+                isTouched={formik.touched.password}
               />
             </div>
 
