@@ -7,22 +7,30 @@ import { useCallback, useEffect, useState } from 'react'
 
 interface IOperationData {
   user: User | null
-  setloadingGlobal: (e: boolean) => void
+  loadingGlobal: boolean
+  setLoadingGlobal: (e: boolean) => void
+  setLabelLoading: (e: string) => void
 }
 
-const useLoadOperationData = ({ user, setloadingGlobal }: IOperationData) => {
+const useLoadOperationData = ({
+  user,
+  loadingGlobal,
+  setLoadingGlobal,
+  setLabelLoading,
+}: IOperationData) => {
   const [roles, setroles] = useState<IRole[]>([])
 
   useEffect(() => {
-    if (!user) return
-    setloadingGlobal(true)
+    if (!user && loadingGlobal) return
+    setLabelLoading('Carregando dados do usuário...')
+    setLoadingGlobal(true)
     api
       .get('roles')
       .then((res) => {
         setroles(res?.data?.data)
       })
-      .finally(() => setloadingGlobal(false))
-  }, [user])
+      .finally(() => setLoadingGlobal(false))
+  }, [])
 
   return {
     roles,

@@ -1,6 +1,7 @@
 'use client'
 import { CircularProgress, Modal } from '@mui/material'
 import { colors } from '@/utils/colors/colors'
+import { useEffect } from 'react'
 
 const LoadingFullScreen = ({
   open,
@@ -9,14 +10,15 @@ const LoadingFullScreen = ({
   open: boolean
   labelLoading: string | null
 }) => {
-  if (!open) return null
-
+  useEffect(() => {
+    console.log(open, 'OPEN')
+  }, [open])
   return (
     <Modal
       open={open}
-      className="flex justify-center items-center backdrop-blur-sm"
+      className="flex justify-center items-center backdrop-blur-md"
     >
-      <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-60 flex flex-col justify-center items-center z-[9999]">
+      <div className="flex flex-col justify-center items-center">
         <CircularProgress size={100} style={{ color: colors.white }} />
 
         <p className="text-white mt-4">

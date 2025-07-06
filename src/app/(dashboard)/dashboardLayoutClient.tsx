@@ -1,23 +1,19 @@
 'use client'
 
-import { useContext, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { DefaultContext } from '@/contexts/defaultContext'
 import AsideBar from '@/components/layoutComponents/asideBar'
 import FooterDash from '@/components/layoutComponents/footerDash'
 import HeaderDash from '@/components/layoutComponents/headerDash'
 import MenuMobile from '@/components/layoutComponents/menuMobile'
+import { DefaultContext } from '@/contexts/defaultContext'
 import { Providers } from '@/contexts/providers/provider'
-import LoadingFullScreen from '@/components/layoutComponents/loadingGlobal'
+import { useRouter } from 'next/navigation'
+import { useContext } from 'react'
 
 export default function DashboardLayoutClient({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const { user, loadingGlobal, labelLoading } = useContext(DefaultContext)
-  const router = useRouter()
-
   return (
     <Providers>
       <main className="flex h-screen w-screen">

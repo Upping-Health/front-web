@@ -64,6 +64,13 @@ export default function DefaultProvider({
     [],
   )
 
+  const { roles } = useLoadOperationData({
+    user,
+    loadingGlobal,
+    setLoadingGlobal,
+    setLabelLoading,
+  })
+
   const onLogout = useCallback(async () => {
     try {
       setLoadingGlobal(true)
@@ -79,11 +86,6 @@ export default function DefaultProvider({
       setLabelLoading(null)
     }
   }, [router])
-
-  const { roles } = useLoadOperationData({
-    user,
-    setloadingGlobal: setLoadingGlobal,
-  })
 
   return (
     <DefaultContext.Provider
