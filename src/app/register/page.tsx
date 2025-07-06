@@ -24,6 +24,7 @@ import { useContext, useState } from 'react'
 import { validateClient } from '../../../formik/validators/validate-client'
 import { DefaultContext } from '@/contexts/defaultContext'
 import Cookies from 'js-cookie'
+import BusinessIcon from '@mui/icons-material/Business'
 
 export default function Register() {
   const { setuser } = useContext(DefaultContext)
@@ -39,6 +40,7 @@ export default function Register() {
       birthDate: '',
       email: '',
       password: '',
+      fantasy_name: '',
       password_confirmation: '',
     },
     validate: validateClient,
@@ -78,19 +80,20 @@ export default function Register() {
   })
 
   return (
-    <main className="w-screen h-screen flex justify-center items-center">
+    <main className="w-screen h-screen flex justify-center items-center bg-light">
       {loading && <Loading text="Carregando..." />}
 
       {!loading && (
         <div className="w-[500px] s:w-[90%] flex flex-col justify-evenly p-6 py-2 bg-white shadow-lg rounded-xl gap-6">
           <div className="text-center">
-            <PersonIcon style={{ fontSize: 48 }} />
-            <p className="font-light uppercase text-2xl">Cadastro</p>
+            <p className="font-semibold uppercase text-2xl">Crie sua conta</p>
+            <p className="font-light">
+              Preencha os dados abaixo para se cadastrar
+            </p>
           </div>
-
           <form className="flex flex-col" onSubmit={formik.handleSubmit}>
             <div className="flex flex-col gap-2 h-full">
-              <div className="flex items-center gap-4 mt-2 justify-center">
+              <div className="flex items-center gap-4 justify-center">
                 {['common', 'company'].map((option) => {
                   const isChecked = formik.values.typePerson === option
                   return (
@@ -150,6 +153,19 @@ export default function Register() {
                 onBlur={formik.handleBlur}
                 error={formik.errors.name}
                 isTouched={formik.touched.name}
+              />
+
+              <InputStyled
+                id="fantasy_name"
+                onChange={formik.handleChange}
+                value={formik.values.fantasy_name}
+                label="Nome fantasia"
+                type="text"
+                placeholder="Exemplo"
+                icon={<BusinessIcon style={{ color: colors.primary }} />}
+                onBlur={formik.handleBlur}
+                error={formik.errors.fantasy_name}
+                isTouched={formik.touched.fantasy_name}
               />
 
               <InputStyled
@@ -219,7 +235,7 @@ export default function Register() {
               />
             </div>
 
-            <div className="mt-5 py-5">
+            <div className="py-5">
               <ButtonStyled
                 type="submit"
                 styles="w-full"

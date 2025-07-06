@@ -4,28 +4,26 @@ import { useCallback, useContext, useMemo, useState } from 'react'
 import ButtonActive from '@/components/buttonsComponents/buttonActive'
 import ButtonIconStyled from '@/components/buttonsComponents/buttonIcon'
 import TopDash from '@/components/layoutComponents/topDash'
-import ModalPatient from '@/components/modals/ModalPatient'
+import ModalUser from '@/components/modals/ModalUser'
 import ProfileRounded from '@/components/profileRounded'
 import TableDash from '@/components/tablesComponents/tableDash'
 import { DefaultContext } from '@/contexts/defaultContext'
-import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
+import useLoadUsers from '@/hooks/users/useLoadUsers'
 import Patient from '@/interfaces/patient.interface'
 import api from '@/services/api'
 import { colors } from '@/utils/colors/colors'
 import PreFeedBack from '@/utils/feedbackStatus'
 import masks from '@/utils/masks/masks'
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd'
-import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined'
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
+import SupervisorAccountOutlinedIcon from '@mui/icons-material/SupervisorAccountOutlined'
 import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/navigation'
-import ModalUser from '@/components/modals/ModalUser'
-import SupervisorAccountOutlinedIcon from '@mui/icons-material/SupervisorAccountOutlined'
 const UsersContent = () => {
-  const { user, onShowFeedBack, roles } = useContext(DefaultContext)
+  const { user, onShowFeedBack } = useContext(DefaultContext)
   const [openModal, setOpenModal] = useState(false)
   const [dataSelected, setDataSelected] = useState<Patient | null>(null)
-  const { loadData, data, loading } = useLoadPatients(false)
+  const { loadData, data, loading } = useLoadUsers(false)
   const router = useRouter()
 
   const toggleModalOpen = useCallback(() => {
@@ -104,31 +102,17 @@ const UsersContent = () => {
               : 'Outros',
       },
       {
+        header: 'Função',
+        field: 'role',
+        render: (value: any, row: any) => row.role?.name ?? 'N/A',
+      },
+      {
         header: 'Status',
         field: 'status',
         render: (value: any, row: any) => (
           <ButtonActive
             active={row.status === 1}
             onClick={() => changeStatus(row)}
-          />
-        ),
-      },
-      {
-        header: '#',
-        field: '{row}',
-        render: (_: any, row: any) => (
-          <ButtonIconStyled
-            onClick={() => toogleModalOpenWithData(row)}
-            type="button"
-            icon={
-              <AssignmentIndIcon
-                style={{
-                  color: colors.white,
-                  fontSize: 20,
-                }}
-              />
-            }
-            styles="h-8 w-8 bg-terciary"
           />
         ),
       },

@@ -75,7 +75,7 @@ export default function DefaultProvider({
     try {
       setLoadingGlobal(true)
       setLabelLoading('Fazendo logout...')
-      await api.post('user/logout')
+      await api.post('users/logout')
     } catch (e) {
       console.error(e)
     } finally {
