@@ -11,7 +11,7 @@ const AsideBar = () => {
   return (
     <aside
       className={`flex relative flex-col justify-between h-screen bg-white dark:bg-gray-800 dark:border-gray-700 dark:border-r p-5 shadow-lg transition-all duration-300 ${
-        isCollapsed ? 'w-20' : 'w-56'
+        isCollapsed ? 'w-20' : 'w-72'
       }`}
     >
       <div>

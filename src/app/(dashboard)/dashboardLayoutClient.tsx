@@ -18,7 +18,7 @@ export default function DashboardLayoutClient({
 }) {
   return (
     <Providers>
-      <NextTopLoader color={colors.primary} showSpinner={false} />
+      <NextTopLoader color={colors.primary} height={4} showSpinner={false} />
       <main className="flex h-screen w-screen">
         <AsideBar />
         <div className="flex flex-col h-full w-full">
