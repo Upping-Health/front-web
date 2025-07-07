@@ -16,6 +16,7 @@ import { CircularProgress, Modal } from '@mui/material'
 import { useFormik } from 'formik'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount'
+import { IRole } from '@/interfaces/role.interface'
 interface ModalParams {
   open: boolean
   setIsClose: () => void
@@ -29,7 +30,8 @@ const ModalUser = ({
   userSelected,
   loadData,
 }: ModalParams) => {
-  const { onShowFeedBack, roles } = useContext(DefaultContext)
+  const { onShowFeedBack } = useContext(DefaultContext)
+  const [roles, setRoles] = useState<IRole[]>([])
   const [viewTwo, setViewTwo] = useState(false)
   const [loading, setloading] = useState(false)
   const [loadingData, setLoadingData] = useState(false)
@@ -39,10 +41,16 @@ const ModalUser = ({
     setIsClose()
   }
 
-  const onSuccessUpdate = () => {
-    onShowFeedBack(PreFeedBack.success('Usuário atualizado com sucesso!'))
-    setIsClose()
-  }
+  useEffect(() => {
+    setLoadingData(true)
+    api
+      .get('roles')
+      .then((response) => {
+        setRoles(response?.data?.data)
+      })
+      .catch(() => {})
+      .finally(() => setLoadingData(false))
+  }, [open])
 
   const onError = (e: any) => {
     const errorMessage =
@@ -139,7 +147,7 @@ const ModalUser = ({
       onClose={setIsClose}
       className="flex justify-center items-center"
     >
-      <div className="bg-white dark:bg-slate-500 rounded-20 px-5 py-4 w-[85%] max-w-[500px]">
+      <div className="bg-white dark:bg-slate-800 rounded-20 px-5 py-4 w-[85%] max-w-[500px]">
         <p className="font-semibold text-xl text-center uppercase pb-5 dark:text-white">
           {userSelected ? 'Atualizar Usuário' : 'Cadastro de Usuário'}
         </p>
@@ -147,8 +155,10 @@ const ModalUser = ({
         <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
           {loadingData ? (
             <div className="flex items-center flex-col justify-center py-6 gap-4">
-              <CircularProgress style={{ fontSize: 36, color: colors.black }} />
-              <p className="text-black font-semibold">Buscando dados...</p>
+              <CircularProgress className="dark:text-white text-black text-2xl" />
+              <p className="text-black font-semibold dark:text-white">
+                Buscando dados...
+              </p>
             </div>
           ) : (
             <>
@@ -166,8 +176,6 @@ const ModalUser = ({
                   error={formik.errors.cpf}
                   onBlur={formik.handleBlur}
                   isTouched={formik.touched.cpf}
-                  stylesInput="dark:bg-slate-500"
-                  stylesLabel="dark:text-white"
                 />
                 <InputStyled
                   id="name"
@@ -182,8 +190,6 @@ const ModalUser = ({
                   error={formik.errors.name}
                   onBlur={formik.handleBlur}
                   isTouched={formik.touched.name}
-                  stylesInput="dark:bg-slate-500"
-                  stylesLabel="dark:text-white"
                 />
 
                 <InputStyled
@@ -199,8 +205,6 @@ const ModalUser = ({
                   error={formik.errors.email}
                   onBlur={formik.handleBlur}
                   isTouched={formik.touched.email}
-                  stylesInput="dark:bg-slate-500"
-                  stylesLabel="dark:text-white"
                 />
 
                 <InputStyled
@@ -217,8 +221,6 @@ const ModalUser = ({
                   error={formik.errors.phone}
                   onBlur={formik.handleBlur}
                   isTouched={formik.touched.phone}
-                  stylesInput="dark:bg-slate-500"
-                  stylesLabel="dark:text-white"
                 />
 
                 <InputStyled
@@ -235,8 +237,6 @@ const ModalUser = ({
                   error={formik.errors.birthDate}
                   onBlur={formik.handleBlur}
                   isTouched={formik.touched.birthDate}
-                  stylesInput="dark:bg-slate-500"
-                  stylesLabel="dark:text-white"
                 />
 
                 <SelectStyled
@@ -245,8 +245,6 @@ const ModalUser = ({
                   value={formik.values.gender}
                   onChange={formik.handleChange}
                   id="gender"
-                  styles="dark:text-white"
-                  stylesLabel="dark:text-white"
                 />
 
                 <SelectStyled
@@ -257,8 +255,6 @@ const ModalUser = ({
                   value={formik.values.role}
                   onChange={formik.handleChange}
                   id="role"
-                  styles="dark:text-white"
-                  stylesLabel="dark:text-white"
                   options={options}
                 />
 

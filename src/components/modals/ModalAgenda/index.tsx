@@ -145,6 +145,8 @@ const ModalAgenda = ({
   const steps = ['Selecione o paciente', 'Dados da Consulta']
 
   const patientSearch = useMemo(() => {
+    console.log(data)
+    console.log(formik.values.patient)
     return (
       data.find(
         (option) =>
@@ -153,7 +155,7 @@ const ModalAgenda = ({
     )
   }, [data, formik.values.patient])
   useEffect(() => {
-    console.log(formik.values)
+    console.log(patientSearch)
   }, [formik.values])
   return (
     <>
@@ -162,7 +164,7 @@ const ModalAgenda = ({
         onClose={setIsClose}
         className="flex justify-center items-center"
       >
-        <div className="bg-white rounded-20 px-5 py-4 w-[85%] max-w-[500px] dark:bg-slate-500">
+        <div className="bg-white rounded-20 px-5 py-4 w-[85%] max-w-[500px] dark:bg-slate-800">
           <p className="font-semibold text-xl text-center uppercase pb-5 dark:text-white">
             {scheduleSelected ? 'Atualizar Agenda' : 'Cadastro de Agenda'}
           </p>
@@ -194,6 +196,7 @@ const ModalAgenda = ({
                         value={patientSearch}
                         options={data.map((d: any) => ({
                           id: d.uuid,
+                          name: d.name,
                           label: d.name,
                         }))}
                         getOptionLabel={(option) => option.name}
@@ -202,6 +205,7 @@ const ModalAgenda = ({
                         }}
                         stylesLabel="dark:text-white"
                       />
+
                       <Tooltip
                         componentsProps={{
                           tooltip: {
@@ -292,24 +296,24 @@ const ModalAgenda = ({
                     <CardProfile user={patientSearch} />
 
                     <DatePickerStyled
-                      id="startDate"
+                      id="start_time"
                       label="Ínicio da consulta"
                       value={formik.values.start_time}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       error={formik.errors.start_time}
                       isTouched={formik.touched.start_time}
-                      stylesInput="dark:bg-slate-500 dark:text-white"
+                      stylesInput="dark:bg-slate-800 dark:text-white"
                     />
 
                     <DatePickerStyled
-                      id="endDate"
+                      id="end_time"
                       label="Fim da Consulta"
                       value={formik.values.end_time}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       error={formik.errors.end_time}
-                      stylesInput="dark:bg-slate-500 dark:text-white"
+                      stylesInput="dark:bg-slate-800 dark:text-white"
                       isTouched={formik.touched.end_time}
                     />
 
@@ -320,7 +324,7 @@ const ModalAgenda = ({
                       label="Digite uma observação"
                       placeholder="Digite uma observação (Opcional)"
                       maxLength={250}
-                      stylesTextArea="dark:bg-slate-500 dark:text-white"
+                      stylesTextArea="dark:bg-slate-800 dark:text-white"
                     />
 
                     <div className="flex gap-5 pt-5">

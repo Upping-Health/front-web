@@ -1,5 +1,6 @@
 import React from 'react'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+
 interface IInputStyled {
   maxLength?: number
   disabled?: boolean
@@ -19,6 +20,7 @@ interface IInputStyled {
   isTouched?: boolean
   stylesLabel?: string
 }
+
 const InputStyled = ({
   maxLength,
   disabled,
@@ -39,14 +41,16 @@ const InputStyled = ({
   stylesLabel,
 }: IInputStyled) => {
   return (
-    <div className={`${stylesContainer ? stylesContainer : ''} flex flex-col `}>
+    <div className={`${stylesContainer ?? ''} flex flex-col`}>
       {label && (
-        <label className={`${stylesLabel} 'mb-1 text-darkGray text-sm'`}>
+        <label className={`${stylesLabel ?? ''} mb-1 text-darkGray text-sm`}>
           {label}
         </label>
       )}
       <div
-        className={`${styles ? styles : ''} bg-none  border border-solid outline-none border-gray  rounded-xl p-2 flex items-center justify-between ${disabled ? 'bg-customGray' : ''}`}
+        className={`bg-none border border-solid outline-none border-gray rounded-xl p-2 flex items-center justify-between dark:border-slate-700 ${
+          disabled ? 'bg-customGray' : ''
+        } ${styles ?? ''}`}
       >
         <div className="flex items-center gap-3 w-full">
           {icon}
@@ -57,13 +61,13 @@ const InputStyled = ({
             value={value}
             onChange={onChange}
             type={type}
-            className={`${disabled ? 'bg-customGray' : 'bg-white'}  ${stylesInput ? stylesInput : ''} outline-none text-black w-[70%]`}
             placeholder={placeholder}
             onBlur={onBlur}
+            className={`dark:bg-slate-800 outline-none text-black w-[70% dark:text-white ${stylesInput ?? ''}`}
           />
         </div>
         {edit && (
-          <button className="pr-2">
+          <button type="button" className="pr-2">
             <EditOutlinedIcon />
           </button>
         )}

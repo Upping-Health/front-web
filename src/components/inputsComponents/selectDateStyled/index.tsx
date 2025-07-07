@@ -1,5 +1,4 @@
 import React from 'react'
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 
 interface IDatePickerStyled {
   id: string
@@ -34,7 +33,11 @@ const DatePickerStyled = ({
 }: IDatePickerStyled) => {
   return (
     <div className="flex flex-col w-full">
-      {label && <label className="mb-1 text-darkGray text-sm">{label}</label>}
+      {label && (
+        <label className="mb-1 text-darkGray dark:text-white text-sm">
+          {label}
+        </label>
+      )}
       <div
         className={`${styles ? styles : ''} bg-none border border-gray border-solid outline-none rounded-xl p-2 flex items-center justify-between ${
           disabled ? 'bg-customGray' : ''
