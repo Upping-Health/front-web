@@ -8,6 +8,8 @@ import { DefaultContext } from '@/contexts/defaultContext'
 import { Providers } from '@/contexts/providers/provider'
 import { useRouter } from 'next/navigation'
 import { useContext } from 'react'
+import NextTopLoader from 'nextjs-toploader'
+import { colors } from '@/utils/colors/colors'
 
 export default function DashboardLayoutClient({
   children,
@@ -16,11 +18,9 @@ export default function DashboardLayoutClient({
 }) {
   return (
     <Providers>
+      <NextTopLoader color={colors.primary} showSpinner={false} />
       <main className="flex h-screen w-screen">
-        <div className="s:hidden">
-          <AsideBar />
-        </div>
-
+        <AsideBar />
         <div className="flex flex-col h-full w-full">
           <HeaderDash />
 
@@ -32,9 +32,9 @@ export default function DashboardLayoutClient({
             <FooterDash />
           </div>
 
-          <div className="t:hidden d:hidden">
+          {/* <div className="t:hidden d:hidden">
             <MenuMobile />
-          </div>
+          </div> */}
         </div>
       </main>
     </Providers>
