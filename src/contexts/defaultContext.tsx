@@ -66,7 +66,6 @@ export default function DefaultProvider({
 
   const { roles } = useLoadOperationData({
     user,
-    loadingGlobal,
     setLoadingGlobal,
     setLabelLoading,
   })

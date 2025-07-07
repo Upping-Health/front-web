@@ -60,9 +60,9 @@ const CardForms: React.FC<TableProps> = ({
             <InputStyled
               id="search"
               type="search"
-              styles="border-gray bg-white py-3 dark:border-gray-600 dark:bg-gray-700"
+              styles="border-gray bg-white py-3 dark:bg-gray-700 dark:!border-gray-600"
               stylesContainer="flex-1"
-              stylesInput="font-light  w-full text-sm dark:bg-gray-700"
+              stylesInput="font-light w-full text-sm dark:!bg-gray-700"
               icon={
                 <SearchIcon className="text-xl dark:text-white text-black" />
               }

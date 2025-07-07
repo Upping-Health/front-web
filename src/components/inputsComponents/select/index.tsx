@@ -40,7 +40,7 @@ const SelectStyled = ({
         </label>
       )}
       <div
-        className={`${styles} border border-gray border-solid outline-none rounded-xl p-2 flex items-center justify-between text-black`}
+        className={`${styles} border border-gray dark:border-slate-700 border-solid outline-none rounded-xl p-2 flex items-center justify-between text-black`}
       >
         <div className="flex items-center w-full relative">
           {icon}
@@ -48,7 +48,7 @@ const SelectStyled = ({
             name={id}
             value={value}
             onChange={onChange}
-            className=" w-full font-semibold appearance-none outline-none bg-transparent pl-4 "
+            className=" w-full font-semibold appearance-none outline-none bg-transparent pl-4 dark:text-white "
           >
             {optionsSelect?.map((item: any) => (
               <option className="text-black" value={item.value}>
@@ -57,7 +57,7 @@ const SelectStyled = ({
             ))}
           </select>
           <div className="absolute right-0 pointer-events-none">
-            <KeyboardArrowDownIcon />
+            <KeyboardArrowDownIcon className="dark:text-white" />
           </div>
         </div>
       </div>

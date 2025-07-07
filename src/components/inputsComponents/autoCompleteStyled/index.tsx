@@ -62,7 +62,7 @@ const AutocompleteStyled = ({
             onChange={onChange}
             getOptionLabel={getOptionLabel}
             fullWidth
-            className="dark:bg-slate-500 dark:text-white"
+            className="dark:bg-slate-800 dark:text-white"
             sx={{
               backgroundColor: disabled ? '#e5e5e5' : 'white',
               flex: 1,

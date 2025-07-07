@@ -10,6 +10,7 @@ import { useRef, useState } from 'react'
 import Wrapper from '../layoutComponents/wrapper'
 import ModalAgenda from '../modals/ModalAgenda'
 import './calendar-custom.css'
+import ButtonStyled from '../buttonsComponents/button'
 const Calendar = ({
   schedule,
   loadNewData,
@@ -50,55 +51,86 @@ const Calendar = ({
     )
   }
 
+  const legends = [
+    { name: 'Consulta', color: '#2196F3' },
+    { name: 'Retorno', color: '#4CAF50' },
+    { name: 'Previsão de retorno', color: '#E91E63' },
+    { name: 'Outros', color: '#9E9E9E' },
+    { name: 'Google Agenda', color: '#FF9800' },
+  ]
+
   return (
     <>
       <Wrapper>
-        <FullCalendar
-          ref={calendarRef}
-          themeSystem="bootstrap5"
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
-          headerToolbar={{
-            left: 'myPrev,myNext today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay',
-          }}
-          customButtons={{
-            myPrev: {
-              text: '<',
-              click: () => {
-                const calendarApi = calendarRef.current?.getApi()
-                calendarApi?.prev()
+        <div className="w-full">
+          <FullCalendar
+            ref={calendarRef}
+            themeSystem="bootstrap5"
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            initialView="dayGridMonth"
+            headerToolbar={{
+              left: 'myPrev,myNext today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay',
+            }}
+            customButtons={{
+              myPrev: {
+                text: '<',
+                click: () => {
+                  const calendarApi = calendarRef.current?.getApi()
+                  calendarApi?.prev()
+                },
               },
-            },
-            myNext: {
-              text: '>',
-              click: () => {
-                const calendarApi = calendarRef.current?.getApi()
-                calendarApi?.next()
+              myNext: {
+                text: '>',
+                click: () => {
+                  const calendarApi = calendarRef.current?.getApi()
+                  calendarApi?.next()
+                },
               },
-            },
-          }}
-          locale={ptBrLocale}
-          buttonText={{
-            today: 'Hoje',
-            month: 'Mês',
-            week: 'Semana',
-            day: 'Dia',
-          }}
-          dayHeaderFormat={{ weekday: 'short' }}
-          eventContent={renderEventContent}
-          events={schedule?.map((e) => ({
-            title: e.patientName,
-            start: e.start_time,
-            end: e.end_time,
-            extendedProps: {
-              ...e,
-            },
-          }))}
-          eventClick={handleEventClick}
-          height="auto"
-        />
+            }}
+            locale={ptBrLocale}
+            buttonText={{
+              today: 'Hoje',
+              month: 'Mês',
+              week: 'Semana',
+              day: 'Dia',
+            }}
+            dayHeaderFormat={{ weekday: 'short' }}
+            eventContent={renderEventContent}
+            events={schedule?.map((e) => ({
+              title: e.patientName,
+              start: e.start_time,
+              end: e.end_time,
+              extendedProps: {
+                ...e,
+              },
+            }))}
+            eventClick={handleEventClick}
+            height="auto"
+          />
+        </div>
+
+        <div className="pt-4 bg-light dark:bg-slate-800 rounded-xl w-60 flex flex-col p-5">
+          <div>
+            <p className="text-center text-xl dark:text-white">Legendas</p>
+            <div className="flex flex-col mt-6 gap-2">
+              {legends.map((leg, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <div
+                    className="w-6 h-6 rounded "
+                    style={{ backgroundColor: leg.color }}
+                  />
+                  <p className="m-0 text-sm font-light dark:text-white">
+                    {leg.name}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div></div>
+        </div>
       </Wrapper>
 
       <ModalAgenda

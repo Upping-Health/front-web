@@ -226,6 +226,20 @@ const ModalPatient = ({
     [formik.values],
   )
 
+  const clearPatientData = () => {
+    formik.setFieldValue('uuid', '')
+    formik.setFieldValue('name', '')
+    formik.setFieldValue('email', '')
+    formik.setFieldValue('phone', '')
+    formik.setFieldValue('gender', '')
+    formik.setFieldValue('birthDate', '')
+    formik.setFieldValue('street', '')
+    formik.setFieldValue('zipCode', '')
+    formik.setFieldValue('city', '')
+    formik.setFieldValue('state', '')
+    formik.setFieldValue('neighborhood', '')
+  }
+
   const autoCompletePatientData = useCallback(async (document: string) => {
     const cleanedCpf = masks.unmask(document)
     if (cleanedCpf.length === 11) {
@@ -234,8 +248,8 @@ const ModalPatient = ({
         .get(`/patients/${cleanedCpf}`)
         .then((response) => {
           console.log(response)
-          if (response?.data?.data) {
-            const { data } = response?.data
+          const data = response?.data?.data
+          if (data) {
             formik.setFieldValue('uuid', data?.uuid ?? '')
             formik.setFieldValue('name', data?.name ?? '')
             formik.setFieldValue('email', data?.email ?? '')
@@ -250,9 +264,14 @@ const ModalPatient = ({
               'neighborhood',
               data?.address?.neighborhood ?? '',
             )
+          } else {
+            clearPatientData()
           }
         })
-        .catch((error) => console.log('[ERROR/API] patientByCpf', error))
+        .catch((error) => {
+          console.log('[ERROR/API] patientByCpf', error)
+          clearPatientData()
+        })
         .finally(() => setLoadingData(false))
     }
   }, [])
@@ -272,7 +291,7 @@ const ModalPatient = ({
       onClose={setIsClose}
       className="flex justify-center items-center"
     >
-      <div className="bg-white dark:bg-slate-500 rounded-20 px-5 py-4 w-[85%] max-w-[500px]">
+      <div className="bg-white dark:bg-slate-800 rounded-20 px-5 py-4 w-[85%] max-w-[500px]">
         <p className="font-semibold text-xl text-center uppercase pb-5 dark:text-white">
           {patientSelected ? 'Atualizar Paciente' : 'Cadastro de Paciente'}
         </p>
@@ -280,8 +299,10 @@ const ModalPatient = ({
         <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
           {loadingData ? (
             <div className="flex items-center flex-col justify-center py-6 gap-4">
-              <CircularProgress style={{ fontSize: 36, color: colors.black }} />
-              <p className="text-black font-semibold">Buscando dados...</p>
+              <CircularProgress className="text-3xl dark:text-white" />
+              <p className="text-black dark:text-white font-semibold">
+                Buscando dados...
+              </p>
             </div>
           ) : (
             <>
@@ -322,7 +343,7 @@ const ModalPatient = ({
                     error={formik.errors.name}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.name}
-                    stylesInput="dark:bg-slate-500"
+                    stylesInput="dark:bg-slate-800 dark:text-white"
                     stylesLabel="dark:text-white"
                   />
 
@@ -339,7 +360,7 @@ const ModalPatient = ({
                     error={formik.errors.email}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.email}
-                    stylesInput="dark:bg-slate-500"
+                    stylesInput="dark:bg-slate-800 dark:text-white"
                     stylesLabel="dark:text-white"
                   />
 
@@ -357,7 +378,7 @@ const ModalPatient = ({
                     error={formik.errors.phone}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.phone}
-                    stylesInput="dark:bg-slate-500"
+                    stylesInput="dark:bg-slate-800 dark:text-white"
                     stylesLabel="dark:text-white"
                   />
 
@@ -439,7 +460,7 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-500"
+                    stylesInput="dark:bg-slate-800 dark:text-white"
                     stylesLabel="dark:text-white"
                   />
 
@@ -456,7 +477,7 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-500"
+                    stylesInput="dark:bg-slate-800 dark:text-white"
                     stylesLabel="dark:text-white"
                   />
                   <InputStyled
@@ -472,7 +493,7 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-500"
+                    stylesInput="dark:bg-slate-800 dark:text-white"
                     stylesLabel="dark:text-white"
                   />
                   <InputStyled
@@ -488,7 +509,7 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-500"
+                    stylesInput="dark:bg-slate-800 dark:text-white"
                     stylesLabel="dark:text-white"
                   />
                   <InputStyled
@@ -504,7 +525,7 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-500"
+                    stylesInput="dark:bg-slate-800 dark:text-white"
                     stylesLabel="dark:text-white"
                   />
                   <InputStyled
@@ -520,7 +541,7 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-500"
+                    stylesInput="dark:bg-slate-800 dark:text-white"
                     stylesLabel="dark:text-white"
                   />
                   <SelectStyled
