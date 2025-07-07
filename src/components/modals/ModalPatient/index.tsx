@@ -79,11 +79,11 @@ const ModalPatient = ({
     if (!patientSelected) {
       formik.setValues({
         uuid: '',
-        cpf: '',
+        document: '',
         name: '',
         phone: '',
         email: '',
-        birthDate: '',
+        birth_date: '',
         objective: '',
         gender: 'MALE',
         status: false,
@@ -97,17 +97,25 @@ const ModalPatient = ({
       })
     }
     if (patientSelected) {
-      const { name, cpf, phone, email, birthDate, gender, objective, address } =
-        patientSelected
+      const {
+        name,
+        document,
+        phone,
+        email,
+        birth_date,
+        gender,
+        objective,
+        address,
+      } = patientSelected
       formik.setValues({
         uuid: '',
         name: name,
-        cpf: cpf,
+        document: document,
         phone,
         status: 'ACTIVE' ? true : false,
         objective: objective ? objective : '',
         email,
-        birthDate: birthDate,
+        birth_date: birth_date,
         gender,
         street: address?.street ?? '',
         number: address?.number ?? '',
@@ -123,12 +131,12 @@ const ModalPatient = ({
   const formik = useFormik({
     initialValues: {
       uuid: '',
-      cpf: '',
+      document: '',
       email: '',
       name: '',
       phone: '',
       status: false,
-      birthDate: '',
+      birth_date: '',
       gender: 'MALE',
       objective: '',
       street: '',
@@ -143,7 +151,7 @@ const ModalPatient = ({
     onSubmit: async (values) => {
       setloading(true)
       const data: Omit<any, 'id' | 'created_at' | 'updated_at' | 'status'> = {
-        cpf: masks.unmask(values.cpf),
+        document: masks.unmask(values.document),
         phone: masks.unmask(values.phone),
         name: values.name,
         patient_id: values.uuid,
@@ -151,7 +159,7 @@ const ModalPatient = ({
         email: values.email,
         // gender: values.gender as 'MALE' | 'FEMALE' | 'OTHER',
         // //objective: values?.objective ?? '',
-        // birthDate: formatDate(values.birthDate),
+        // birth_date: formatDate(values.birth_date),
         // address: {
         //   city: values.city,
         //   complement: values?.complement ?? null,
@@ -218,8 +226,8 @@ const ModalPatient = ({
     [formik.values],
   )
 
-  const autoCompletePatientData = useCallback(async (cpf: string) => {
-    const cleanedCpf = masks.unmask(cpf)
+  const autoCompletePatientData = useCallback(async (document: string) => {
+    const cleanedCpf = masks.unmask(document)
     if (cleanedCpf.length === 11) {
       setLoadingData(true)
       await api
@@ -233,7 +241,7 @@ const ModalPatient = ({
             formik.setFieldValue('email', data?.email ?? '')
             formik.setFieldValue('phone', data?.phone ?? '')
             formik.setFieldValue('gender', data?.gender ?? '')
-            formik.setFieldValue('birthDate', data?.birthDate ?? '')
+            formik.setFieldValue('birth_date', data?.birth_date ?? '')
             formik.setFieldValue('street', data?.address?.street ?? '')
             formik.setFieldValue('zipCode', data?.address?.zipCode ?? '')
             formik.setFieldValue('city', data?.address?.city ?? '')
@@ -254,8 +262,8 @@ const ModalPatient = ({
   }, [formik.values.zipCode])
 
   useEffect(() => {
-    autoCompletePatientData(formik.values.cpf)
-  }, [formik.values.cpf])
+    autoCompletePatientData(formik.values.document)
+  }, [formik.values.document])
   const steps = ['Dados Pessoais', 'Endereço']
 
   return (
@@ -286,18 +294,18 @@ const ModalPatient = ({
               {!viewTwo && (
                 <div className="flex flex-col gap-2">
                   <InputStyled
-                    id="cpf"
+                    id="document"
                     onChange={formik.handleChange}
-                    value={masks.cpfMask(formik.values.cpf)}
+                    value={masks.cpfMask(formik.values.document)}
                     label="CPF"
                     type="tel"
                     placeholder="000.000.000-00"
                     icon={
                       <ArticleOutlined className="text-black dark:text-white" />
                     }
-                    error={formik.errors.cpf}
+                    error={formik.errors.document}
                     onBlur={formik.handleBlur}
-                    isTouched={formik.touched.cpf}
+                    isTouched={formik.touched.document}
                     stylesInput="dark:bg-slate-500"
                     stylesLabel="dark:text-white"
                   />
@@ -354,9 +362,9 @@ const ModalPatient = ({
                   />
 
                   <InputStyled
-                    id="birthDate"
+                    id="birth_date"
                     onChange={formik.handleChange}
-                    value={masks.dateMask(formik.values.birthDate)}
+                    value={masks.dateMask(formik.values.birth_date)}
                     label="Data de Nascimento"
                     type="text"
                     placeholder="DD/MM/YYYY"
@@ -364,9 +372,9 @@ const ModalPatient = ({
                       <CalendarMonthOutlined className="text-black dark:text-white" />
                     }
                     maxLength={10}
-                    error={formik.errors.birthDate}
+                    error={formik.errors.birth_date}
                     onBlur={formik.handleBlur}
-                    isTouched={formik.touched.birthDate}
+                    isTouched={formik.touched.birth_date}
                     stylesInput="dark:bg-slate-500"
                     stylesLabel="dark:text-white"
                   />

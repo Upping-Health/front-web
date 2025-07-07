@@ -31,8 +31,8 @@ export default {
         .replace(/(\d)(\d{4})$/, '$1-$2')
         .replace(/(\d{4})\d+?$/, '$1')
   },
-  cpfMask: (cpf = '') => {
-    return cpf
+  cpfMask: (document = '') => {
+    return document
       .replace(/\D/g, '')
       .replace(/(\d{3})(\d)/, '$1.$2')
       .replace(/(\d{3})(\d)/, '$1.$2')
@@ -72,38 +72,38 @@ export default {
     })
   },
 
-  validaCpf: (cpf: string) => {
-    cpf = cpf.replace(/[^\d]+/g, '')
-    console.log(cpf)
-    if (cpf == '') return false
+  validaCpf: (document: string) => {
+    document = document.replace(/[^\d]+/g, '')
+    console.log(document)
+    if (document == '') return false
     // Elimina CPFs invalidos conhecidos
     if (
-      cpf.length != 11 ||
-      cpf == '00000000000' ||
-      cpf == '11111111111' ||
-      cpf == '22222222222' ||
-      cpf == '33333333333' ||
-      cpf == '44444444444' ||
-      cpf == '55555555555' ||
-      cpf == '66666666666' ||
-      cpf == '77777777777' ||
-      cpf == '88888888888' ||
-      cpf == '99999999999'
+      document.length != 11 ||
+      document == '00000000000' ||
+      document == '11111111111' ||
+      document == '22222222222' ||
+      document == '33333333333' ||
+      document == '44444444444' ||
+      document == '55555555555' ||
+      document == '66666666666' ||
+      document == '77777777777' ||
+      document == '88888888888' ||
+      document == '99999999999'
     )
       return false
     // Valida 1o digito
     let add = 0
     let i = 0
-    for (i; i < 9; i++) add += parseInt(cpf.charAt(i)) * (10 - i)
+    for (i; i < 9; i++) add += parseInt(document.charAt(i)) * (10 - i)
     let rev = 11 - (add % 11)
     if (rev == 10 || rev == 11) rev = 0
-    if (rev != parseInt(cpf.charAt(9))) return false
+    if (rev != parseInt(document.charAt(9))) return false
     // Valida 2o digito
     add = 0
-    for (i = 0; i < 10; i++) add += parseInt(cpf.charAt(i)) * (11 - i)
+    for (i = 0; i < 10; i++) add += parseInt(document.charAt(i)) * (11 - i)
     rev = 11 - (add % 11)
     if (rev == 10 || rev == 11) rev = 0
-    if (rev != parseInt(cpf.charAt(10))) return false
+    if (rev != parseInt(document.charAt(10))) return false
     return true
   },
   validaCnpj: (cnpj: string): boolean => {

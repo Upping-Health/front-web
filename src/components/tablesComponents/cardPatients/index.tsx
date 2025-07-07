@@ -97,9 +97,9 @@ const CardPatients: React.FC<TableProps> = ({
                       <div className="flex gap-6 font-light text-sm text-black dark:text-white">
                         <p>{data?.years ?? 0} anos</p>
 
-                        <p>{masks.cpfMask(data?.cpf)}</p>
+                        <p>{masks.cpfMask(data?.document)}</p>
 
-                        <p>{masks.phoneMask(data?.cpf)}</p>
+                        <p>{masks.phoneMask(data?.phone)}</p>
                       </div>
                     </div>
                   </div>
