@@ -71,24 +71,32 @@ const ModalUser = ({
     if (!open) return formik.resetForm()
     if (!userSelected) {
       formik.setValues({
-        cpf: '',
+        document: '',
         name: '',
         email: '',
         phone: '',
-        birthDate: '',
+        birth_date: '',
         gender: 'male',
         role: '',
       })
     }
     if (userSelected) {
-      const { name, cpf, phone, email, birthDate, gender, objective, address } =
-        userSelected
+      const {
+        name,
+        document,
+        phone,
+        email,
+        birth_date,
+        gender,
+        objective,
+        address,
+      } = userSelected
       formik.setValues({
-        cpf: cpf,
+        document: document,
         name: name,
         phone,
         email,
-        birthDate: birthDate,
+        birth_date: birth_date,
         gender,
         role: '',
       })
@@ -97,11 +105,11 @@ const ModalUser = ({
 
   const formik = useFormik({
     initialValues: {
-      cpf: '',
+      document: '',
       name: '',
       email: '',
       phone: '',
-      birthDate: '',
+      birth_date: '',
       gender: 'male',
       role: '',
     },
@@ -109,13 +117,13 @@ const ModalUser = ({
     onSubmit: async (values) => {
       setloading(true)
       const data: any = {
-        document: masks.unmask(values.cpf),
+        document: masks.unmask(values.document),
         phone: masks.unmask(values.phone),
         name: values.name,
         email: values.email,
         gender: values.gender as 'male' | 'female' | 'other',
         role_id: Number(values.role),
-        birthDate: values.birthDate,
+        birth_date: values.birth_date,
         password: 'password',
         password_confirmation: 'password',
       }
@@ -164,18 +172,20 @@ const ModalUser = ({
             <>
               <div className="flex flex-col gap-2">
                 <InputStyled
-                  id="cpf"
+                  id="document"
                   onChange={formik.handleChange}
-                  value={masks.cpfMask(formik.values.cpf)}
+                  value={masks.cpfMask(formik.values.document)}
                   label="CPF"
                   type="tel"
                   placeholder="000.000.000-00"
                   icon={
                     <ArticleOutlined className="text-black dark:text-white" />
                   }
-                  error={formik.errors.cpf}
+                  error={formik.errors.document}
                   onBlur={formik.handleBlur}
-                  isTouched={formik.touched.cpf}
+                  isTouched={formik.touched.document}
+                  stylesInput="dark:bg-slate-500"
+                  stylesLabel="dark:text-white"
                 />
                 <InputStyled
                   id="name"
@@ -224,9 +234,9 @@ const ModalUser = ({
                 />
 
                 <InputStyled
-                  id="birthDate"
+                  id="birth_date"
                   onChange={formik.handleChange}
-                  value={masks.dateMask(formik.values.birthDate)}
+                  value={masks.dateMask(formik.values.birth_date)}
                   label="Data de Nascimento"
                   type="text"
                   placeholder="DD/MM/YYYY"
@@ -234,9 +244,11 @@ const ModalUser = ({
                     <CalendarMonthOutlined className="text-black dark:text-white" />
                   }
                   maxLength={10}
-                  error={formik.errors.birthDate}
+                  error={formik.errors.birth_date}
                   onBlur={formik.handleBlur}
-                  isTouched={formik.touched.birthDate}
+                  isTouched={formik.touched.birth_date}
+                  stylesInput="dark:bg-slate-500"
+                  stylesLabel="dark:text-white"
                 />
 
                 <SelectStyled

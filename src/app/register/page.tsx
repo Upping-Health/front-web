@@ -37,7 +37,7 @@ export default function Register() {
       document: '',
       name: '',
       phone: '',
-      birthDate: '',
+      birth_date: '',
       email: '',
       password: '',
       fantasy_name: '',
@@ -51,7 +51,7 @@ export default function Register() {
         email: values.email,
         name: values.name,
         phone: masks.unmask(values.phone),
-        birthDate: values.birthDate,
+        birth_date: values.birth_date,
         status: true,
         password: values.password,
         password_confirmation: values.password,
@@ -191,8 +191,8 @@ export default function Register() {
                 />
 
                 <InputStyled
-                  id="birthDate"
-                  value={masks.dateMask(formik.values.birthDate)}
+                  id="birth_date"
+                  value={masks.dateMask(formik.values.birth_date)}
                   onChange={formik.handleChange}
                   label="Data de Nascimento"
                   type="tel"
@@ -203,8 +203,8 @@ export default function Register() {
                     />
                   }
                   onBlur={formik.handleBlur}
-                  error={formik.errors.birthDate}
-                  isTouched={formik.touched.birthDate}
+                  error={formik.errors.birth_date}
+                  isTouched={formik.touched.birth_date}
                 />
 
                 {/* <SelectStyled

@@ -1,7 +1,7 @@
 import DefaultEntityType from './default'
 
 export default interface User extends DefaultEntityType {
-  cpf: string
+  document: string
   name: string
   phone: string
   email: string

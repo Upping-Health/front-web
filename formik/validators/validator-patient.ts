@@ -1,16 +1,16 @@
 import masks from '@/utils/masks/masks'
 
 export const validatPatient = (values: any) => {
-  const unmaskCpf = values.cpf.replace(/\D/g, '')
+  const unmaskCpf = values.document.replace(/\D/g, '')
   const unmaskPhone = values.phone.replace(/\D/g, '')
   let errors: any = {}
 
-  if (!values.cpf) {
-    errors.cpf = 'Este campo é necessário'
-  } else if (masks.cpfMask(values.cpf).length < 14) {
-    errors.cpf = 'Informe o cpf completo'
+  if (!values.document) {
+    errors.document = 'Este campo é necessário'
+  } else if (masks.cpfMask(values.document).length < 14) {
+    errors.document = 'Informe o document completo'
   } else if (!masks.validaCpf(unmaskCpf)) {
-    errors.cpf = 'CPF inválido'
+    errors.document = 'CPF inválido'
   }
 
   if (!unmaskPhone) {
@@ -25,8 +25,8 @@ export const validatPatient = (values: any) => {
     errors.name = 'Minimo 4 caracteres'
   }
 
-  if (!values.birthDate) {
-    errors.birthDate = 'Este campo é necessário'
+  if (!values.birth_date) {
+    errors.birth_date = 'Este campo é necessário'
   }
 
   if (!values.zipCode) {

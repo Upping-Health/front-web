@@ -1,7 +1,7 @@
 import masks from '@/utils/masks/masks'
 
 export const validateApiarist = (values: any) => {
-  const unmaskCpf = values.cpf.replace(/\D/g, '')
+  const unmaskCpf = values.document.replace(/\D/g, '')
   const unmaskPhone = values.phone.replace(/\D/g, '')
   let errors: any = {}
 
@@ -20,12 +20,12 @@ export const validateApiarist = (values: any) => {
     errors.longitude = 'Longitude deve estar entre -180 e 180'
   }
 
-  if (!values.cpf) {
-    errors.cpf = 'Este campo é necessário'
-  } else if (masks.cpfMask(values.cpf).length < 14) {
-    errors.cpf = 'Informe o cpf completo'
+  if (!values.document) {
+    errors.document = 'Este campo é necessário'
+  } else if (masks.cpfMask(values.document).length < 14) {
+    errors.document = 'Informe o document completo'
   } else if (!masks.validaCpf(unmaskCpf)) {
-    errors.cpf = 'CPF inválido'
+    errors.document = 'CPF inválido'
   }
 
   if (!unmaskPhone) {

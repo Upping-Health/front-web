@@ -30,8 +30,8 @@ export const validateClient = (values: any) => {
     errors.phone = 'Este campo é necessário'
   }
 
-  if (!values.birthDate) {
-    errors.birthDate = 'Este campo é necessário'
+  if (!values.birth_date) {
+    errors.birth_date = 'Este campo é necessário'
   }
 
   if (!values.email) {
