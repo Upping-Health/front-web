@@ -164,7 +164,7 @@ const ModalPatient = ({
       }
 
       try {
-        await api.post(`/patients/store`, data)
+        await api.post(`/patients/link-patient-to-professional`, data)
         onSuccess()
         await loadData()
       } catch (error) {

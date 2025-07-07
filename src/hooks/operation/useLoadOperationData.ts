@@ -22,7 +22,7 @@ const useLoadOperationData = ({
 
   useEffect(() => {
     if (!user && loadingGlobal) return
-    setLabelLoading('Carregando dados do usuário...')
+    //setLabelLoading('Carregando dados do usuário...')
     // setLoadingGlobal(true)
     api
       .get('roles')

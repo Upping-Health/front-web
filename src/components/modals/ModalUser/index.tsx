@@ -101,7 +101,7 @@ const ModalUser = ({
     onSubmit: async (values) => {
       setloading(true)
       const data: any = {
-        cpf: masks.unmask(values.cpf),
+        document: masks.unmask(values.cpf),
         phone: masks.unmask(values.phone),
         name: values.name,
         email: values.email,
@@ -113,7 +113,7 @@ const ModalUser = ({
       }
 
       try {
-        await api.post(`/register`, data)
+        await api.post(`users/register`, data)
         onSuccess()
         await loadData()
       } catch (error) {

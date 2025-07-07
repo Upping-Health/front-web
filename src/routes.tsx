@@ -53,17 +53,17 @@ export const dashboardTabs: Record<TabValue, Tab> = {
     value: TABS_DASH.DASH,
     path: '/users',
   },
-  agenda: {
-    name: 'Agenda',
-    icon: <CalendarMonthIcon />,
-    value: TABS_DASH.AGENDA,
-    path: '/schedule',
-  },
   pacientes: {
     name: 'Pacientes',
     icon: <GroupsIcon />,
     value: TABS_DASH.PACIENTES,
     path: '/patients',
+  },
+  agenda: {
+    name: 'Agenda',
+    icon: <CalendarMonthIcon />,
+    value: TABS_DASH.AGENDA,
+    path: '/schedule',
   },
   consulta: {
     name: 'Consulta',

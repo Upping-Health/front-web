@@ -76,6 +76,8 @@ const ModalAgenda = ({
     console.log('[ERROR API /patient]', errorMessage)
   }
 
+  console.log(data)
+
   useEffect(() => {
     setViewTwo(false)
     if (!open) return formik.resetForm()
@@ -145,7 +147,8 @@ const ModalAgenda = ({
   const patientSearch = useMemo(() => {
     return (
       data.find(
-        (option) => option.id.toString() === formik.values.patient.toString(),
+        (option) =>
+          option?.uuid?.toString() === formik.values?.patient?.toString(),
       ) || null
     )
   }, [data, formik.values.patient])
@@ -189,7 +192,10 @@ const ModalAgenda = ({
                         icon={<Person className="dark:text-white text-black" />}
                         placeholder="Selecione o paciente"
                         value={patientSearch}
-                        options={data}
+                        options={data.map((d: any) => ({
+                          id: d.uuid,
+                          label: d.name,
+                        }))}
                         getOptionLabel={(option) => option.name}
                         onChange={(event: any, newValue: any) => {
                           formik.setFieldValue('patient', newValue?.id || '')

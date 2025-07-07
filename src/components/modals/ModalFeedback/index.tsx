@@ -33,7 +33,7 @@ const ModalFeedBackStatus = ({
           const newTimer = prevTimer - 1
           if (newTimer <= 0) {
             clearInterval(interval!)
-            //setIsClose()
+            setIsClose()
           }
           return newTimer
         })

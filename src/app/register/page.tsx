@@ -80,180 +80,188 @@ export default function Register() {
   })
 
   return (
-    <main className="w-screen h-screen flex justify-center items-center bg-light">
+    <main className="w-screen h-screen flex justify-center items-center">
       {loading && <Loading text="Carregando..." />}
 
       {!loading && (
-        <div className="w-[500px] s:w-[90%] flex flex-col justify-evenly p-6 py-2 bg-white shadow-lg rounded-xl gap-6">
-          <div className="text-center">
-            <p className="font-semibold uppercase text-2xl">Crie sua conta</p>
-            <p className="font-light">
-              Preencha os dados abaixo para se cadastrar
-            </p>
-          </div>
-          <form className="flex flex-col" onSubmit={formik.handleSubmit}>
-            <div className="flex flex-col gap-2 h-full">
-              <div className="flex items-center gap-4 justify-center">
-                {['common', 'company'].map((option) => {
-                  const isChecked = formik.values.typePerson === option
-                  return (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => formik.setFieldValue('typePerson', option)}
-                      className="flex items-center gap-2 mt-1 rounded-full"
-                    >
-                      {isChecked ? (
-                        <RadioButtonChecked className="text-primary text-3xl" />
-                      ) : (
-                        <RadioButtonUncheckedIcon className="text-gray-400 text-3xl" />
-                      )}
-                      <span className="font-light text-black">
-                        {option === 'common'
-                          ? 'Pessoa Física'
-                          : 'Pessoa Jurídica'}
-                      </span>
-                    </button>
-                  )
-                })}
-              </div>
-
-              <InputStyled
-                id="document"
-                onChange={formik.handleChange}
-                value={
-                  formik.values.typePerson === 'company'
-                    ? masks.cnpjMask(formik.values.document)
-                    : masks.cpfMask(formik.values.document)
-                }
-                label={formik.values.typePerson === 'company' ? 'CNPJ' : 'CPF'}
-                type="tel"
-                onBlur={formik.handleBlur}
-                error={formik.errors.document}
-                isTouched={formik.touched.document}
-                placeholder={
-                  formik.values.typePerson === 'company'
-                    ? '00.000.000/0000-00'
-                    : '000.000.000-00'
-                }
-                icon={<ArticleOutlinedIcon style={{ color: colors.primary }} />}
-              />
-              <InputStyled
-                id="name"
-                onChange={formik.handleChange}
-                value={formik.values.name}
-                label="Nome"
-                type="text"
-                placeholder="Exemplo"
-                icon={
-                  <PersonOutlineOutlinedIcon
-                    style={{ color: colors.primary }}
-                  />
-                }
-                onBlur={formik.handleBlur}
-                error={formik.errors.name}
-                isTouched={formik.touched.name}
-              />
-
-              <InputStyled
-                id="fantasy_name"
-                onChange={formik.handleChange}
-                value={formik.values.fantasy_name}
-                label="Nome fantasia"
-                type="text"
-                placeholder="Exemplo"
-                icon={<BusinessIcon style={{ color: colors.primary }} />}
-                onBlur={formik.handleBlur}
-                error={formik.errors.fantasy_name}
-                isTouched={formik.touched.fantasy_name}
-              />
-
-              <InputStyled
-                id="phone"
-                value={masks.phoneMask(formik.values.phone)}
-                onChange={formik.handleChange}
-                label="Telefone"
-                type="text"
-                placeholder="(00) 00000-0000"
-                icon={
-                  <LocalPhoneOutlinedIcon style={{ color: colors.primary }} />
-                }
-                onBlur={formik.handleBlur}
-                error={formik.errors.phone}
-                isTouched={formik.touched.phone}
-              />
-
-              <InputStyled
-                id="birthDate"
-                value={masks.dateMask(formik.values.birthDate)}
-                onChange={formik.handleChange}
-                label="Data de Nascimento"
-                type="tel"
-                placeholder="DD/MM/YYYY"
-                icon={
-                  <CalendarMonthOutlinedIcon
-                    style={{ color: colors.primary }}
-                  />
-                }
-                onBlur={formik.handleBlur}
-                error={formik.errors.birthDate}
-                isTouched={formik.touched.birthDate}
-              />
-
-              {/* <SelectStyled
-                label="Sexo"
-                icon={<WcIcon style={{ color: colors.primary }} />}
-                value={formik.values.gender}
-                onChange={formik.handleChange}
-                id="gender"
-              /> */}
-
-              <InputStyled
-                id="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                label="E-mail"
-                type="text"
-                placeholder="exemplo@gmail.com"
-                icon={<MailOutlineIcon style={{ color: colors.primary }} />}
-                onBlur={formik.handleBlur}
-                error={formik.errors.email}
-                isTouched={formik.touched.email}
-              />
-
-              <InputStyled
-                id="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                label="Senha"
-                type="password"
-                placeholder="***********"
-                icon={<LockOutlinedIcon style={{ color: colors.primary }} />}
-                onBlur={formik.handleBlur}
-                error={formik.errors.password}
-                isTouched={formik.touched.password}
-              />
-            </div>
-
-            <div className="py-5">
-              <ButtonStyled
-                type="submit"
-                styles="w-full"
-                bgColor="bg-black"
-                title="Cadastrar"
-              />
-              <p className="text-center text-sm font-light mt-2">
-                Já possui uma conta?{' '}
-                <a
-                  href="login"
-                  className="text-primary font-medium hover:underline transition"
-                >
-                  Entre aqui
-                </a>
+        <>
+          <div className="w-[500px] s:w-[90%] flex flex-col justify-evenly p-6 py-2 bg-white shadow-lg rounded-xl gap-6">
+            <div className="text-center">
+              <p className="font-semibold uppercase text-2xl">Crie sua conta</p>
+              <p className="font-light">
+                Preencha os dados abaixo para se cadastrar
               </p>
             </div>
-          </form>
-        </div>
+            <form className="flex flex-col" onSubmit={formik.handleSubmit}>
+              <div className="flex flex-col gap-2 h-full">
+                <div className="flex items-center gap-4 justify-center">
+                  {['common', 'company'].map((option) => {
+                    const isChecked = formik.values.typePerson === option
+                    return (
+                      <button
+                        key={option}
+                        type="button"
+                        onClick={() =>
+                          formik.setFieldValue('typePerson', option)
+                        }
+                        className="flex items-center gap-2 mt-1 rounded-full"
+                      >
+                        {isChecked ? (
+                          <RadioButtonChecked className="text-primary text-3xl" />
+                        ) : (
+                          <RadioButtonUncheckedIcon className="text-gray-400 text-3xl" />
+                        )}
+                        <span className="font-light text-black">
+                          {option === 'common'
+                            ? 'Pessoa Física'
+                            : 'Pessoa Jurídica'}
+                        </span>
+                      </button>
+                    )
+                  })}
+                </div>
+
+                <InputStyled
+                  id="document"
+                  onChange={formik.handleChange}
+                  value={
+                    formik.values.typePerson === 'company'
+                      ? masks.cnpjMask(formik.values.document)
+                      : masks.cpfMask(formik.values.document)
+                  }
+                  label={
+                    formik.values.typePerson === 'company' ? 'CNPJ' : 'CPF'
+                  }
+                  type="tel"
+                  onBlur={formik.handleBlur}
+                  error={formik.errors.document}
+                  isTouched={formik.touched.document}
+                  placeholder={
+                    formik.values.typePerson === 'company'
+                      ? '00.000.000/0000-00'
+                      : '000.000.000-00'
+                  }
+                  icon={
+                    <ArticleOutlinedIcon style={{ color: colors.primary }} />
+                  }
+                />
+                <InputStyled
+                  id="name"
+                  onChange={formik.handleChange}
+                  value={formik.values.name}
+                  label="Nome"
+                  type="text"
+                  placeholder="Exemplo"
+                  icon={
+                    <PersonOutlineOutlinedIcon
+                      style={{ color: colors.primary }}
+                    />
+                  }
+                  onBlur={formik.handleBlur}
+                  error={formik.errors.name}
+                  isTouched={formik.touched.name}
+                />
+
+                <InputStyled
+                  id="fantasy_name"
+                  onChange={formik.handleChange}
+                  value={formik.values.fantasy_name}
+                  label="Nome fantasia"
+                  type="text"
+                  placeholder="Exemplo"
+                  icon={<BusinessIcon style={{ color: colors.primary }} />}
+                  onBlur={formik.handleBlur}
+                  error={formik.errors.fantasy_name}
+                  isTouched={formik.touched.fantasy_name}
+                />
+
+                <InputStyled
+                  id="phone"
+                  value={masks.phoneMask(formik.values.phone)}
+                  onChange={formik.handleChange}
+                  label="Telefone"
+                  type="text"
+                  placeholder="(00) 00000-0000"
+                  icon={
+                    <LocalPhoneOutlinedIcon style={{ color: colors.primary }} />
+                  }
+                  onBlur={formik.handleBlur}
+                  error={formik.errors.phone}
+                  isTouched={formik.touched.phone}
+                />
+
+                <InputStyled
+                  id="birthDate"
+                  value={masks.dateMask(formik.values.birthDate)}
+                  onChange={formik.handleChange}
+                  label="Data de Nascimento"
+                  type="tel"
+                  placeholder="DD/MM/YYYY"
+                  icon={
+                    <CalendarMonthOutlinedIcon
+                      style={{ color: colors.primary }}
+                    />
+                  }
+                  onBlur={formik.handleBlur}
+                  error={formik.errors.birthDate}
+                  isTouched={formik.touched.birthDate}
+                />
+
+                {/* <SelectStyled
+                  label="Sexo"
+                  icon={<WcIcon style={{ color: colors.primary }} />}
+                  value={formik.values.gender}
+                  onChange={formik.handleChange}
+                  id="gender"
+                /> */}
+
+                <InputStyled
+                  id="email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  label="E-mail"
+                  type="text"
+                  placeholder="exemplo@gmail.com"
+                  icon={<MailOutlineIcon style={{ color: colors.primary }} />}
+                  onBlur={formik.handleBlur}
+                  error={formik.errors.email}
+                  isTouched={formik.touched.email}
+                />
+
+                <InputStyled
+                  id="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  label="Senha"
+                  type="password"
+                  placeholder="***********"
+                  icon={<LockOutlinedIcon style={{ color: colors.primary }} />}
+                  onBlur={formik.handleBlur}
+                  error={formik.errors.password}
+                  isTouched={formik.touched.password}
+                />
+              </div>
+
+              <div className="py-5">
+                <ButtonStyled
+                  type="submit"
+                  styles="w-full"
+                  bgColor="bg-black"
+                  title="Cadastrar"
+                />
+                <p className="text-center text-sm font-light mt-2">
+                  Já possui uma conta?{' '}
+                  <a
+                    href="login"
+                    className="text-primary font-medium hover:underline transition"
+                  >
+                    Entre aqui
+                  </a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </>
       )}
     </main>
   )
