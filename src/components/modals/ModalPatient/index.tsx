@@ -157,18 +157,18 @@ const ModalPatient = ({
         patient_id: values.uuid,
         //status: values.status ? 'ACTIVE' : 'INACTIVE',
         email: values.email,
-        // gender: values.gender as 'MALE' | 'FEMALE' | 'OTHER',
-        // //objective: values?.objective ?? '',
-        // birth_date: formatDate(values.birth_date),
-        // address: {
-        //   city: values.city,
-        //   complement: values?.complement ?? null,
-        //   neighborhood: values.neighborhood,
-        //   number: values.number,
-        //   state: values.state,
-        //   street: values.street,
-        //   zipCode: values.zipCode.replace(/\D/g, ''),
-        // },
+        gender: values.gender as 'MALE' | 'FEMALE' | 'OTHER',
+        //objective: values?.objective ?? '',
+        birth_date: values.birth_date,
+        address: {
+          city: values.city,
+          complement: values?.complement ?? null,
+          neighborhood: values.neighborhood,
+          number: values.number,
+          state: values.state,
+          street: values.street,
+          zip_code: values.zipCode.replace(/\D/g, ''),
+        },
       }
 
       try {
