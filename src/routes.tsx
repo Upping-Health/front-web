@@ -69,19 +69,19 @@ export const dashboardTabs: Record<TabValue, Tab> = {
     name: 'Consulta',
     icon: <LocalHospitalIcon />,
     value: TABS_DASH.CONSULTA,
-    path: '/consult',
-    children: {
-      new: {
-        name: 'Iniciar',
-        icon: <AddIcon />,
-        path: '/consult/new',
-      },
-      history: {
-        name: 'Histórico',
-        icon: <HistoryIcon />,
-        path: '/consult/history',
-      },
-    },
+    path: '/consult/new',
+    // children: {
+    //   new: {
+    //     name: 'Iniciar',
+    //     icon: <AddIcon />,
+    //     path: '/consult/new',
+    //   },
+    //   history: {
+    //     name: 'Histórico',
+    //     icon: <HistoryIcon />,
+    //     path: '/consult/history',
+    //   },
+    // },
   },
   planoalimentar: {
     name: 'Alimentos',

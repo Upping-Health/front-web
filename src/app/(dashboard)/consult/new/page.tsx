@@ -1,22 +1,20 @@
 'use client'
-import CardForms from '@/components/tablesComponents/tableForms'
+import CardPatients from '@/components/tablesComponents/tablePatients'
 import TopDash from '@/components/layoutComponents/topDash'
-import useLoadForms from '@/hooks/nutritionists/useLoadForms'
+import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import { colors } from '@/utils/colors/colors'
-import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined'
+import AddIcon from '@mui/icons-material/Add'
 import { CircularProgress } from '@mui/material'
 
-const FormsList = ({ params }: { params: { id: string } }) => {
-  const { data, loading } = useLoadForms(false)
+const ConsultPageId = ({ params }: { params: { id: string } }) => {
+  const { data, loading } = useLoadPatients(false)
 
   return (
     <div className="w-full relative">
       <TopDash
-        title="Formulário"
-        description="Crie e organize formulários personalizados para seus atendimentos."
-        icon={QuestionAnswerOutlinedIcon}
-        textBtn={'Novo Formulário'}
-        href="/forms/create"
+        title="Iniciar consulta"
+        description="Acompanhe e gerencie seus pacientes com facilidade."
+        icon={AddIcon}
       />
 
       {loading ? (
@@ -28,7 +26,7 @@ const FormsList = ({ params }: { params: { id: string } }) => {
           </div>
         </>
       ) : (
-        <CardForms data={data} />
+        <CardPatients data={data} itemsPerPage={6} />
       )}
 
       {/* <ModalSelectPatient
@@ -41,4 +39,4 @@ const FormsList = ({ params }: { params: { id: string } }) => {
   )
 }
 
-export default FormsList
+export default ConsultPageId

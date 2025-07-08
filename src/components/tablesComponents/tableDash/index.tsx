@@ -129,8 +129,8 @@ const TableDash: React.FC<TableProps> = ({
                 tableLayout: 'auto',
               }}
             >
-              <TableHead className="bg-white dark:bg-slate-700 dark:border-gray-600">
-                <TableRow>
+              <TableHead className="bg-white dark:bg-gray-800 dark:border-gray-600">
+                <TableRow className="borer-none">
                   {columns.map((col, index) => (
                     <TableCell
                       key={index}
@@ -142,7 +142,7 @@ const TableDash: React.FC<TableProps> = ({
                         fontWeight: 900,
                         color: colors.black,
                       }}
-                      className="dark:text-white"
+                      className="dark:text-white dark:border-slate-600"
                     >
                       {col.header.toUpperCase()}
                     </TableCell>
@@ -160,7 +160,7 @@ const TableDash: React.FC<TableProps> = ({
                       '&:nth-of-type(even)': { backgroundColor: '#f6f6f6' },
                       '&:hover': { backgroundColor: '#f6f6f6' },
                     }}
-                    className="dark:bg-slate-600 hover:dark:bg-slate-700"
+                    className="dark:bg-gray-700 hover:dark:bg-slate-700"
                   >
                     {columns.map((col, index) => {
                       const value = row[col.field]
@@ -174,7 +174,7 @@ const TableDash: React.FC<TableProps> = ({
                             fontSize: '0.8rem',
                             padding: '0.5rem 2rem',
                           }}
-                          className="dark:text-white"
+                          className="dark:text-white dark:border-gray-600"
                         >
                           {col.render ? col.render(value, row) : value}
                         </TableCell>

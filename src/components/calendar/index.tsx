@@ -11,6 +11,8 @@ import Wrapper from '../layoutComponents/wrapper'
 import ModalAgenda from '../modals/ModalAgenda'
 import './calendar-custom.css'
 import ButtonStyled from '../buttonsComponents/button'
+import AddIcon from '@mui/icons-material/Add'
+import { colors } from '@/utils/colors/colors'
 const Calendar = ({
   schedule,
   loadNewData,
@@ -114,7 +116,7 @@ const Calendar = ({
           />
         </div>
 
-        <div className="pt-4 bg-light dark:bg-slate-800 rounded-xl w-60 flex flex-col p-5">
+        <div className="pt-4 bg-light dark:bg-slate-800 rounded-xl w-60 flex flex-col items-center justify-between p-5">
           <div>
             <p className="text-center text-xl dark:text-white">Legendas</p>
             <div className="flex flex-col mt-6 gap-2">
@@ -132,7 +134,15 @@ const Calendar = ({
             </div>
           </div>
 
-          <div></div>
+          <div className="w-full">
+            <ButtonStyled
+              title={'Nova legenda'}
+              onClick={() => {}}
+              icon={<AddIcon style={{ color: colors.white, fontSize: 24 }} />}
+              type="button"
+              styles="px-4 text-sm h-12 shadow-lg dark:bg-gray-700 w-full"
+            />
+          </div>
         </div>
       </Wrapper>
 

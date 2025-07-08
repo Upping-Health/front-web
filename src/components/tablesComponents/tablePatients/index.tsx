@@ -82,7 +82,7 @@ const CardPatients: React.FC<TableProps> = ({
             return (
               <div
                 key={index}
-                className="bg-white p-3 rounded-xl shadow w-full dark:bg-slate-600 dark:border-slate-500"
+                className="bg-white p-3 rounded-xl shadow w-full dark:bg-gray-700 border dark:border-gray-600"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex gap-3 items-center">

@@ -17,7 +17,7 @@ const ProfileRounded = ({ user, width, height, styles }: ICardProfile) => {
     .toUpperCase()
 
   return (
-    <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center text-sm font-medium text-white">
+    <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center text-sm font-medium text-white dark:bg-gray dark:text-black">
       {initials}
 
       {/* <Image
