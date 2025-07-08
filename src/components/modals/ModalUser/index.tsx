@@ -295,7 +295,7 @@ const ModalUser = ({
                   ) : (
                     <ButtonStyled
                       type="submit"
-                      styles="w-full"
+                      styles="w-full dark:bg-white dark:text-black"
                       title={'Cadastrar'}
                     />
                   )}

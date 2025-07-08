@@ -436,7 +436,7 @@ const ModalPatient = ({
                     ) : (
                       <ButtonStyled
                         type="button"
-                        styles="w-full"
+                        styles="w-full dark:bg-white dark:text-black"
                         title={'Próximo'}
                         onClick={() => setViewTwo(true)}
                       />
@@ -585,7 +585,7 @@ const ModalPatient = ({
                     ) : (
                       <ButtonStyled
                         type="submit"
-                        styles="w-full"
+                        styles="w-full dark:bg-white dark:text-black"
                         title={patientSelected ? 'Atualizar' : 'Cadastrar'}
                       />
                     )}

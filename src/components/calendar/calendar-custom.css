@@ -17,6 +17,10 @@
   cursor: pointer;
 }
 
+.fc-daygrid-day-frame {
+  cursor: pointer;
+}
+
 .fc .fc-today-button {
   background-color: #323031 !important;
   opacity: 1 !important;

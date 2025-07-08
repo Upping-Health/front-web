@@ -2,6 +2,7 @@ import DefaultEntityType from './default'
 
 export default interface Patient extends DefaultEntityType {
   name: string
+  uuid: string
   phone: string
   email: string
   document: string

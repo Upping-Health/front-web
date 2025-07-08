@@ -35,8 +35,7 @@ const ModalAgenda = ({
   const { onShowFeedBack, user } = useContext(DefaultContext)
   const [viewTwo, setViewTwo] = useState(false)
   const [loading, setloading] = useState(false)
-  const [loadingData, setLoadingData] = useState(false)
-  const { data, loadData } = useLoadPatients(!open)
+  const { data, loadData, loading: loadingData } = useLoadPatients(!open)
   const [openModal, setOpenModal] = useState(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -76,7 +75,12 @@ const ModalAgenda = ({
     console.log('[ERROR API /patient]', errorMessage)
   }
 
-  console.log(data)
+  const formatDateTime = (dateTime: string) => {
+    if (dateTime.includes('T')) {
+      return dateTime.replace('T', ' ') + ':00'
+    }
+    return dateTime
+  }
 
   useEffect(() => {
     setViewTwo(false)
@@ -90,9 +94,9 @@ const ModalAgenda = ({
       })
     }
     if (scheduleSelected) {
-      const { patientId, observation, start_time, end_time } = scheduleSelected
+      const { patient, observation, start_time, end_time } = scheduleSelected
       formik.setValues({
-        patient: patientId.toString(),
+        patient: patient?.uuid?.toString() ?? '',
         observation: observation ?? '',
         start_time: convertUTCtoLocalISO(start_time),
         end_time: convertUTCtoLocalISO(end_time),
@@ -113,10 +117,10 @@ const ModalAgenda = ({
 
       const data = {
         label_id: 1,
-        client_id: values.patient,
+        patient_id: values.patient,
         observation: values.observation,
-        start_time: values.start_time,
-        end_time: values.end_time,
+        start_time: formatDateTime(values.start_time),
+        end_time: formatDateTime(values.end_time),
       }
 
       console.log(data)
@@ -145,8 +149,6 @@ const ModalAgenda = ({
   const steps = ['Selecione o paciente', 'Dados da Consulta']
 
   const patientSearch = useMemo(() => {
-    console.log(data)
-    console.log(formik.values.patient)
     return (
       data.find(
         (option) =>
@@ -172,10 +174,10 @@ const ModalAgenda = ({
           <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
             {loadingData ? (
               <div className="flex items-center flex-col justify-center py-6 gap-4">
-                <CircularProgress
-                  style={{ fontSize: 36, color: colors.black }}
-                />
-                <p className="text-black font-semibold">Buscando dados...</p>
+                <CircularProgress className="text-3xl dark:text-white" />
+                <p className="text-black dark:text-white font-semibold">
+                  Buscando dados...
+                </p>
               </div>
             ) : (
               <>
@@ -201,6 +203,7 @@ const ModalAgenda = ({
                         }))}
                         getOptionLabel={(option) => option.name}
                         onChange={(event: any, newValue: any) => {
+                          console.log(newValue)
                           formik.setFieldValue('patient', newValue?.id || '')
                         }}
                         stylesLabel="dark:text-white"
@@ -273,7 +276,7 @@ const ModalAgenda = ({
                       ) : (
                         <ButtonStyled
                           type="button"
-                          styles="w-full"
+                          styles="w-full dark:bg-white dark:text-black"
                           title={'Próximo'}
                           disabled={!formik.values.patient}
                           onClick={() => {
@@ -356,7 +359,7 @@ const ModalAgenda = ({
                       ) : (
                         <ButtonStyled
                           type="submit"
-                          styles="w-full"
+                          styles="w-full dark:bg-white dark:text-black"
                           title={scheduleSelected ? 'Atualizar' : 'Cadastrar'}
                         />
                       )}

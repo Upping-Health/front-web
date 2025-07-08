@@ -99,7 +99,7 @@ const Calendar = ({
             dayHeaderFormat={{ weekday: 'short' }}
             eventContent={renderEventContent}
             events={schedule?.map((e) => ({
-              title: e.patientName,
+              title: e?.patient?.name,
               start: e.start_time,
               end: e.end_time,
               extendedProps: {
@@ -108,6 +108,9 @@ const Calendar = ({
             }))}
             eventClick={handleEventClick}
             height="auto"
+            dateClick={() => {
+              setOpenModal(true)
+            }}
           />
         </div>
 
