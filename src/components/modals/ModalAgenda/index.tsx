@@ -174,7 +174,7 @@ const ModalAgenda = ({
           <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
             {loadingData ? (
               <div className="flex items-center flex-col justify-center py-6 gap-4">
-                <CircularProgress className="text-3xl dark:text-white" />
+                <CircularProgress className="text-3xl dark:text-white text-black" />
                 <p className="text-black dark:text-white font-semibold">
                   Buscando dados...
                 </p>

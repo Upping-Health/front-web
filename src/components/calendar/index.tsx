@@ -13,6 +13,7 @@ import './calendar-custom.css'
 import ButtonStyled from '../buttonsComponents/button'
 import AddIcon from '@mui/icons-material/Add'
 import { colors } from '@/utils/colors/colors'
+import ModalLegends from '../modals/ModalLegends'
 const Calendar = ({
   schedule,
   loadNewData,
@@ -21,7 +22,9 @@ const Calendar = ({
   loadNewData: () => Promise<void>
 }) => {
   const [scheduleSelected, setScheduleSelected] = useState<Schedule | null>()
+  const [legendSelected, setLegendSelected] = useState<any>(null)
   const [openModal, setOpenModal] = useState<boolean>(false)
+  const [openLegendModal, setOpenLegendModal] = useState<boolean>(false)
   const calendarRef = useRef<FullCalendar | null>(null)
 
   const handleEventClick = (arg: EventClickArg) => {
@@ -32,6 +35,11 @@ const Calendar = ({
   const handleCloseModal = () => {
     setOpenModal(false)
     setScheduleSelected(null)
+  }
+
+  const handleCloseLegendModal = () => {
+    setOpenLegendModal(false)
+    setLegendSelected(null)
   }
 
   const renderEventContent = (eventInfo: EventContentArg) => {
@@ -137,7 +145,7 @@ const Calendar = ({
           <div className="w-full">
             <ButtonStyled
               title={'Nova legenda'}
-              onClick={() => {}}
+              onClick={() => setOpenLegendModal(true)}
               icon={<AddIcon style={{ color: colors.white, fontSize: 24 }} />}
               type="button"
               styles="px-4 text-sm h-12 shadow-lg dark:bg-gray-700 w-full"
@@ -150,6 +158,13 @@ const Calendar = ({
         open={openModal}
         setIsClose={handleCloseModal}
         scheduleSelected={scheduleSelected}
+        loadNewData={loadNewData}
+      />
+
+      <ModalLegends
+        open={openLegendModal}
+        setIsClose={handleCloseLegendModal}
+        legendSelected={legendSelected}
         loadNewData={loadNewData}
       />
     </>

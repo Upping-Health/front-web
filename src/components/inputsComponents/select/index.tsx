@@ -35,7 +35,7 @@ const SelectStyled = ({
   return (
     <div className="flex flex-col ">
       {label && (
-        <label className={`${stylesLabel} 'mb-1 text-darkGray text-sm'`}>
+        <label className={`${stylesLabel} mb-1 text-darkGray text-sm`}>
           {label}
         </label>
       )}

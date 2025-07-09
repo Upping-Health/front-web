@@ -7,7 +7,7 @@ interface IInputStyled {
   id: string
   label?: string
   type: string
-  icon: React.ReactElement
+  icon?: React.ReactElement
   placeholder?: string
   value?: any
   onChange?: (value: any) => void
@@ -43,7 +43,7 @@ const InputStyled = ({
   return (
     <div className={`${stylesContainer ?? ''} flex flex-col`}>
       {label && (
-        <label className={`${stylesLabel ?? ''} mb-1 text-darkGray text-sm`}>
+        <label className={` mb-1 text-darkGray text-sm ${stylesLabel ?? ''}`}>
           {label}
         </label>
       )}
@@ -52,7 +52,9 @@ const InputStyled = ({
           disabled ? 'bg-customGray' : ''
         } ${styles ?? ''}`}
       >
-        <div className="flex items-center gap-3 w-full">
+        <div
+          className={`flex items-center gap-3 w-full ${type === 'color' ? 'justify-center' : ''}`}
+        >
           {icon}
           <input
             maxLength={maxLength}
@@ -63,7 +65,7 @@ const InputStyled = ({
             type={type}
             placeholder={placeholder}
             onBlur={onBlur}
-            className={`dark:bg-slate-800 outline-none text-black w-[70% dark:text-white ${stylesInput ?? ''}`}
+            className={`dark:bg-slate-800 outline-none text-black w-[70%] dark:text-white ${stylesInput ?? ''}`}
           />
         </div>
         {edit && (
