@@ -21,20 +21,15 @@ export default function DashboardLayoutClient({
       <NextTopLoader color={colors.primary} height={4} showSpinner={false} />
       <main className="flex h-screen w-screen">
         <AsideBar />
-        <div className="flex flex-col h-full w-full">
+
+        <div className="flex flex-col w-full">
           <HeaderDash />
 
           <div className="flex-grow bg-gray-100 dark:bg-gray-900 p-4 pb-10 md:pb-0 overflow-auto scroll-custom">
             <div className="flex h-full justify-center w-full">{children}</div>
           </div>
 
-          <div className="s:hidden">
-            <FooterDash />
-          </div>
-
-          {/* <div className="t:hidden d:hidden">
-            <MenuMobile />
-          </div> */}
+          <FooterDash />
         </div>
       </main>
     </Providers>

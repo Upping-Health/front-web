@@ -53,6 +53,7 @@ const ProfileDrawer = ({ openMenu, setOpenMenu }: any) => {
           <div className="px-5 flex flex-col gap-3">
             {menuItems.map((item) => (
               <Link
+                key={item.href}
                 href={item.href}
                 className={`group flex items-center justify-between px-2 py-2 rounded-xl transition-all duration-300 hover:text-white w-full text-primary dark:text-white hover:bg-primary`}
               >

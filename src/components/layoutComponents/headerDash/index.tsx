@@ -66,7 +66,7 @@ const HeaderDash = () => {
 
   return (
     <>
-      <div className="flex border-b border-b-gray items-center px-4 py-2 relative bg-white dark:bg-gray-800 dark:border-gray-700 dark:border-b shadow-lg gap-4">
+      <div className="flex h-14 border-b border-b-gray items-center px-4 py-2 relative bg-white dark:bg-gray-800 dark:border-gray-700 shadow-lg gap-4">
         <div className="flex-grow">
           <p className="text-sm text-slate-500 dark:text-white">
             {currentTime}

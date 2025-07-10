@@ -21,24 +21,29 @@ const DashboardContent = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
         {loading ? (
-          <>
-            <Skeleton
-              variant="rectangular"
-              height={100}
-              className="rounded-xl bg-light dark:bg-gray-700"
-            />
-            <Skeleton
-              variant="rectangular"
-              height={100}
-              className="rounded-xl bg-light dark:bg-gray-700"
-            />
-
-            <Skeleton
-              variant="rectangular"
-              height={100}
-              className="rounded-xl bg-light dark:bg-gray-700"
-            />
-          </>
+          <div className="flex flex-wrap gap-4 w-full">
+            <div className="flex-1 min-w-[250px]">
+              <Skeleton
+                variant="rectangular"
+                height={100}
+                className="rounded-xl bg-gray-300 dark:bg-gray-700"
+              />
+            </div>
+            <div className="flex-1 min-w-[250px]">
+              <Skeleton
+                variant="rectangular"
+                height={100}
+                className="rounded-xl bg-gray-300 dark:bg-gray-700"
+              />
+            </div>
+            <div className="flex-1 min-w-[250px]">
+              <Skeleton
+                variant="rectangular"
+                height={100}
+                className="rounded-xl bg-gray-300 dark:bg-gray-700"
+              />
+            </div>
+          </div>
         ) : (
           <div className="flex flex-wrap gap-4 w-full">
             <div className="flex-1 min-w-[250px]">
@@ -65,9 +70,6 @@ const DashboardContent = () => {
                 value={data.totalPatientsInactive}
               />
             </div>
-            {/* <div className="flex-1 min-w-[250px]">
-                <CardDash icon={<Group />} title="Novos Pacientes" value={1} />
-              </div> */}
           </div>
         )}
       </div>
