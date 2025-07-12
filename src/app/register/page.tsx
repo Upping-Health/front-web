@@ -144,6 +144,8 @@ export default function Register() {
                   icon={
                     <ArticleOutlinedIcon style={{ color: colors.primary }} />
                   }
+                  styles="dark:border-gray"
+                  stylesInput="dark:bg-white dark:!text-black"
                 />
                 <InputStyled
                   id="name"
@@ -160,19 +162,8 @@ export default function Register() {
                   onBlur={formik.handleBlur}
                   error={formik.errors.name}
                   isTouched={formik.touched.name}
-                />
-
-                <InputStyled
-                  id="fantasy_name"
-                  onChange={formik.handleChange}
-                  value={formik.values.fantasy_name}
-                  label="Nome fantasia"
-                  type="text"
-                  placeholder="Exemplo"
-                  icon={<BusinessIcon style={{ color: colors.primary }} />}
-                  onBlur={formik.handleBlur}
-                  error={formik.errors.fantasy_name}
-                  isTouched={formik.touched.fantasy_name}
+                  styles="dark:border-gray"
+                  stylesInput="dark:bg-white dark:!text-black"
                 />
 
                 <InputStyled
@@ -188,6 +179,8 @@ export default function Register() {
                   onBlur={formik.handleBlur}
                   error={formik.errors.phone}
                   isTouched={formik.touched.phone}
+                  styles="dark:border-gray"
+                  stylesInput="dark:bg-white dark:!text-black"
                 />
 
                 <InputStyled
@@ -205,6 +198,8 @@ export default function Register() {
                   onBlur={formik.handleBlur}
                   error={formik.errors.birth_date}
                   isTouched={formik.touched.birth_date}
+                  styles="dark:border-gray"
+                  stylesInput="dark:bg-white dark:!text-black"
                 />
 
                 {/* <SelectStyled
@@ -226,6 +221,8 @@ export default function Register() {
                   onBlur={formik.handleBlur}
                   error={formik.errors.email}
                   isTouched={formik.touched.email}
+                  styles="dark:border-gray"
+                  stylesInput="dark:bg-white dark:!text-black"
                 />
 
                 <InputStyled
@@ -239,6 +236,8 @@ export default function Register() {
                   onBlur={formik.handleBlur}
                   error={formik.errors.password}
                   isTouched={formik.touched.password}
+                  styles="dark:border-gray"
+                  stylesInput="dark:bg-white dark:!text-black"
                 />
               </div>
 

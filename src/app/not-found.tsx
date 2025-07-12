@@ -6,7 +6,7 @@ export default function NotFound() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-light">
       <div className="w-full max-w-md text-center bg-white p-10 rounded-xl shadow">
         <div className="mb-6 flex justify-center">
-          <DoNotDisturbIcon />
+          <DoNotDisturbIcon className="text-3xl" />
         </div>
 
         <h1 className="text-4xl font-bold text-primary">OPS!</h1>

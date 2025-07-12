@@ -35,7 +35,7 @@ const MenuConsult = () => {
             className={`
                 group flex items-center gap-3 px-3 py-2 rounded-md
                 transition-colors duration-200
-                ${isActive ? 'bg-gray-400 text-white dark:text-white' : 'text-black dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'}
+                ${isActive ? 'bg-primary text-white dark:text-white' : 'text-black dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'}
               `}
           >
             {React.cloneElement(tab.icon, {

@@ -58,6 +58,8 @@ export default function AccountRecovery() {
                     type="text"
                     placeholder="exemplo@gmail.com"
                     icon={<MailOutlineIcon style={{ color: colors.primary }} />}
+                    styles="dark:border-gray"
+                    stylesInput="dark:bg-white dark:!text-black"
                   />
                 </div>
               </div>

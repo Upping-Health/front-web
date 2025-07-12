@@ -41,7 +41,7 @@ const InputStyled = ({
   stylesLabel,
 }: IInputStyled) => {
   return (
-    <div className={`${stylesContainer ?? ''} flex flex-col`}>
+    <div className={`${stylesContainer ?? ''} flex flex-col `}>
       {label && (
         <label className={` mb-1 text-darkGray text-sm ${stylesLabel ?? ''}`}>
           {label}
@@ -68,11 +68,6 @@ const InputStyled = ({
             className={`dark:bg-slate-800 outline-none text-black w-[70%] dark:text-white ${stylesInput ?? ''}`}
           />
         </div>
-        {edit && (
-          <button type="button" className="pr-2">
-            <EditOutlinedIcon />
-          </button>
-        )}
       </div>
       {error && isTouched && (
         <p className="font-light text-red text-sm pt-1 text-center">{error}</p>

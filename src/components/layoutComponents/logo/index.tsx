@@ -2,7 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import logoImg from '@/assets/logo.png'
 
-const Logo = ({ minimal }: any) => {
+const Logo = ({ minimal, styles }: any) => {
   // const textColorClass = type === 'white' ? 'text-white' : 'text-black';
   // const className = `text-4xl font-bold text-center ${textColorClass} ${styles}`;
   return (
@@ -14,7 +14,7 @@ const Logo = ({ minimal }: any) => {
         height={minimal ? 80 : 100}
       />
       <h1
-        className={`${minimal ? 'text-xl' : 'text-4xl'} dark:text-white font-bold text-center`}
+        className={`${minimal ? 'text-xl' : 'text-4xl'} dark:text-white font-bold text-center ${styles}`}
       >
         UPPING<span className="text-primary ">HEALTH</span>
       </h1>

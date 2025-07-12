@@ -63,7 +63,7 @@ export default function Login() {
       {!loading && (
         <div className="w-[500px] s:w-[90%] flex flex-col justify-evenly p-6 bg-white shadow-lg rounded-xl gap-6">
           <div className="">
-            <Logo />
+            <Logo styles="dark:!text-black" />
           </div>
 
           <div className="flex flex-col">
@@ -76,6 +76,8 @@ export default function Login() {
                 type="text"
                 placeholder="exemplo@gmail.com"
                 icon={<MailOutlineIcon style={{ color: colors.primary }} />}
+                styles="dark:border-gray"
+                stylesInput="dark:bg-white dark:!text-black"
               />
               <InputStyled
                 id="password"
@@ -85,6 +87,8 @@ export default function Login() {
                 type="password"
                 placeholder="***********"
                 icon={<LockOutlinedIcon style={{ color: colors.primary }} />}
+                styles="dark:border-gray"
+                stylesInput="dark:bg-white dark:!text-black"
               />
             </div>
             {error && (
