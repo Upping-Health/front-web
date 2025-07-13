@@ -15,7 +15,7 @@ export const TABS_DASH = {
   DASH: 'dash',
   AGENDA: 'agenda',
   PACIENTES: 'pacientes',
-  CONSULTA: 'consulta',
+  //CONSULTA: 'consulta',
   PLANOALIMENTAR: 'planoalimentar',
   FORMS: 'forms',
   REGISTER: 'registers',
@@ -65,24 +65,24 @@ export const dashboardTabs: Record<TabValue, Tab> = {
     value: TABS_DASH.AGENDA,
     path: '/schedule',
   },
-  consulta: {
-    name: 'Consulta',
-    icon: <LocalHospitalIcon />,
-    value: TABS_DASH.CONSULTA,
-    path: '/consult/teste',
-    // children: {
-    //   new: {
-    //     name: 'Iniciar',
-    //     icon: <AddIcon />,
-    //     path: '/consult/new',
-    //   },
-    //   history: {
-    //     name: 'Histórico',
-    //     icon: <HistoryIcon />,
-    //     path: '/consult/history',
-    //   },
-    // },
-  },
+  // consulta: {
+  //   name: 'Consulta',
+  //   icon: <LocalHospitalIcon />,
+  //   value: TABS_DASH.CONSULTA,
+  //   path: '/consult/{id}/anthropometry',
+  //   // children: {
+  //   //   new: {
+  //   //     name: 'Iniciar',
+  //   //     icon: <AddIcon />,
+  //   //     path: '/consult/new',
+  //   //   },
+  //   //   history: {
+  //   //     name: 'Histórico',
+  //   //     icon: <HistoryIcon />,
+  //   //     path: '/consult/history',
+  //   //   },
+  //   // },
+  // },
   planoalimentar: {
     name: 'Alimentos',
     icon: <RestaurantIcon />,

@@ -2,6 +2,7 @@ import StraightenIcon from '@mui/icons-material/Straighten'
 import FlashOnIcon from '@mui/icons-material/FlashOn'
 import Link from 'next/link'
 import React from 'react'
+import SettingsIcon from '@mui/icons-material/Settings'
 
 export const consultTabs = {
   antropometrias: {
@@ -12,13 +13,18 @@ export const consultTabs = {
   calculos: {
     name: 'Cálculos energéticos',
     icon: <FlashOnIcon />,
-    path: '',
+    path: '/',
   },
 
   exames: {
     name: 'Exames',
     icon: <StraightenIcon />,
-    path: '',
+    path: '/',
+  },
+  config: {
+    name: 'Configurações',
+    icon: <SettingsIcon />,
+    path: '/',
   },
 }
 

@@ -27,6 +27,7 @@ const ButtonActive = ({
         px-3
         w-[65px]
         rounded-[6px]
+        shadow-md
         font-medium
         flex
         justify-center
@@ -40,7 +41,10 @@ const ButtonActive = ({
       `}
     >
       {loading ? (
-        <CircularProgress size={16} className={`${active ? 'text-paidFont' : 'text-unpaidFont'}`} />
+        <CircularProgress
+          size={16}
+          className={`${active ? 'text-paidFont' : 'text-unpaidFont'}`}
+        />
       ) : (
         <p
           className={`${active ? 'text-paidFont' : 'text-unpaidFont'} font-[600]`}

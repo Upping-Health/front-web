@@ -40,7 +40,6 @@ export default function Login() {
             Cookies.set('token', data.access_token, { expires: 365 })
             localStorage.setItem('user', JSON.stringify(data.user))
             setuser(data.user as any)
-            console.log(data, 'data')
             router.push('/dashboard')
           }
         } else {
@@ -92,7 +91,7 @@ export default function Login() {
               />
             </div>
             {error && (
-              <p className="text-center text-primary font-semibold text-sm">
+              <p className="text-center text-red-600 font-light text-sm">
                 {error}
               </p>
             )}

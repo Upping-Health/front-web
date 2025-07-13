@@ -15,7 +15,7 @@ import Person from '@mui/icons-material/Person'
 import { CircularProgress, Modal, Tooltip } from '@mui/material'
 import { useFormik } from 'formik'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { validateAgenda } from '../../../../formik/validators/validate-agenda'
+import { validateAgenda } from '@/formik/validators/validate-agenda'
 import CustomizedSteppers from '../../layoutComponents/stepBar'
 import ModalPatient from '../ModalPatient'
 

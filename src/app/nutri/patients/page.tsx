@@ -19,6 +19,8 @@ import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined'
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
 import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/navigation'
+import ButtonStyled from '@/components/buttonsComponents/button'
+import Link from 'next/link'
 
 const PacientesContent = () => {
   const { user, onShowFeedBack } = useContext(DefaultContext)
@@ -116,19 +118,13 @@ const PacientesContent = () => {
         header: '#',
         field: '{row}',
         render: (_: any, row: any) => (
-          <ButtonIconStyled
-            onClick={() => toogleModalOpenWithData(row)}
-            type="button"
-            icon={
-              <AssignmentIndIcon
-                style={{
-                  color: colors.white,
-                  fontSize: 20,
-                }}
-              />
-            }
-            styles="h-8 w-8 bg-terciary"
-          />
+          <Link
+            href={`/patients/${row.uuid}/anthropometry`}
+            className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-6 shadow-md transition-all duration-300 h-[35px] max-w-[120px]"
+          >
+            <AssignmentIndIcon style={{ fontSize: 20 }} />
+            <span>Consulta</span>
+          </Link>
         ),
       },
     ],

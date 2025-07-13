@@ -22,7 +22,7 @@ import Wc from '@mui/icons-material/Wc'
 import { CircularProgress, Modal } from '@mui/material'
 import { useFormik } from 'formik'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { validatPatient } from '../../../../formik/validators/validator-patient'
+import { validatPatient } from '@/formik/validators/validator-patient'
 import CustomizedSteppers from '../../layoutComponents/stepBar'
 
 interface ModalParams {

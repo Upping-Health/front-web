@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 import { useContext } from 'react'
 import NextTopLoader from 'nextjs-toploader'
 import { colors } from '@/utils/colors/colors'
+import { notFound } from 'next/navigation'
 
 export default function DashboardLayoutClient({
   children,
