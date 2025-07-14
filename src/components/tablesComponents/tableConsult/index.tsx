@@ -65,7 +65,7 @@ const TableConsult: React.FC<TableProps> = ({
   }, [currentPage, filteredData])
 
   return (
-    <div className="flex flex-col gap-4 s:h-[70%] py-3 w-full bg-white h-full rounded-xl p-4 shadow-sm dark:bg-gray-800">
+    <div className="flex flex-col gap-4 s:h-[70%] w-full h-full rounded-xl px-4 ">
       <div className="h-full">
         {/* {search && (
           <div className="flex mb-4 w-full justify-between flex-wrap gap-2">
@@ -109,16 +109,6 @@ const TableConsult: React.FC<TableProps> = ({
             </div>
           </div>
         )} */}
-
-        <div className="flex justify-end">
-          <ButtonStyled
-            title={'Nova Antroprometria'}
-            icon={<AddCircle style={{ color: colors.white, fontSize: 24 }} />}
-            onClick={() => {}}
-            type="button"
-            styles="px-4 text-sm h-12 shadow-lg bg-primary "
-          />
-        </div>
 
         {dataToDisplay.length === 0 ? (
           <NotFoundData
