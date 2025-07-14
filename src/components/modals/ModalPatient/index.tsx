@@ -147,7 +147,7 @@ const ModalPatient = ({
       state: '',
       zipCode: '',
     },
-    //validate: validatPatient,
+    validate: validatPatient,
     onSubmit: async (values) => {
       setloading(true)
       const data: Omit<any, 'id' | 'created_at' | 'updated_at' | 'status'> = {
@@ -283,7 +283,7 @@ const ModalPatient = ({
   useEffect(() => {
     autoCompletePatientData(formik.values.document)
   }, [formik.values.document])
-  const steps = ['Dados Pessoais', 'Endereço']
+  const steps = ['Dados Pessoais', 'Endereço (Opcional)']
 
   return (
     <Modal

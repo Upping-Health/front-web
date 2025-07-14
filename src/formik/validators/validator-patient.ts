@@ -29,23 +29,23 @@ export const validatPatient = (values: any) => {
     errors.birth_date = 'Este campo é necessário'
   }
 
-  if (!values.zipCode) {
-    errors.zipCode = 'Este campo é necessário'
-  }
-  if (!values.street) {
-    errors.street = 'Este campo é necessário'
-  }
-  if (!values.number) {
-    errors.number = 'Este campo é necessário'
-  }
-  if (!values.neighborhood) {
-    errors.neighborhood = 'Este campo é necessário'
-  }
-  if (!values.city) {
-    errors.city = 'Este campo é necessário'
-  }
-  if (!values.state) {
-    errors.state = 'Este campo é necessário'
-  }
+  // if (!values.zipCode) {
+  //   errors.zipCode = 'Este campo é necessário'
+  // }
+  // if (!values.street) {
+  //   errors.street = 'Este campo é necessário'
+  // }
+  // if (!values.number) {
+  //   errors.number = 'Este campo é necessário'
+  // }
+  // if (!values.neighborhood) {
+  //   errors.neighborhood = 'Este campo é necessário'
+  // }
+  // if (!values.city) {
+  //   errors.city = 'Este campo é necessário'
+  // }
+  // if (!values.state) {
+  //   errors.state = 'Este campo é necessário'
+  // }
   return errors
 }

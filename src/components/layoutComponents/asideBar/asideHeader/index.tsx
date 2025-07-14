@@ -1,5 +1,4 @@
 'use client'
-import logoImg from '@/assets/logo.png'
 import Logo from '@/components/layoutComponents/logo'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
@@ -29,11 +28,7 @@ const AsideHeader = ({ isCollapsed, setIsCollapsed }: IAsideHeaderParams) => {
       <div
         className={`flex justify-center mb-6 ${isCollapsed ? 'mt-10' : 'mt-6'}`}
       >
-        {isCollapsed ? (
-          <Image src={logoImg} alt="Logo" width={100} height={100} />
-        ) : (
-          <Logo minimal />
-        )}
+        <Logo minimal />
       </div>
     </div>
   )

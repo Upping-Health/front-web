@@ -13,6 +13,8 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
 import { useContext, useState } from 'react'
+import Image from 'next/image'
+import logoImg from '@/assets/upping_light.png'
 
 export default function Login() {
   const { setuser } = useContext(DefaultContext)
@@ -61,8 +63,8 @@ export default function Login() {
       {loading && <Loading text="Autenticando..." />}
       {!loading && (
         <div className="w-[500px] s:w-[90%] flex flex-col justify-evenly p-6 bg-white shadow-lg rounded-xl gap-6">
-          <div className="">
-            <Logo styles="dark:!text-black" />
+          <div className="flex flex-col justify-center items-center">
+            <Image src={logoImg} alt="Logo" width={170} height={170} />
           </div>
 
           <div className="flex flex-col">
