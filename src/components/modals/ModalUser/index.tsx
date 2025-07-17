@@ -129,7 +129,7 @@ const ModalUser = ({
       }
 
       try {
-        await api.post(`users/register`, data)
+        await api.post(`users/new-user`, data)
         onSuccess()
         await loadData()
       } catch (error) {
