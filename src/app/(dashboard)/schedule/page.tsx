@@ -14,7 +14,7 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 const AgendaContent = () => {
   const [openModal, setOpenModal] = useState(false)
   const [dataSelected, setDataSelected] = useState<Patient | null>(null)
-  const { loadData, data, loading } = useLoadSchedule(false)
+  const { loadData, data, loading, clientSettings } = useLoadSchedule(false)
 
   const toggleModalOpen = useCallback(() => {
     setOpenModal(!openModal)
@@ -50,7 +50,11 @@ const AgendaContent = () => {
           </>
         ) : (
           <>
-            <CalendarComponent schedule={data} loadNewData={loadData} />
+            <CalendarComponent
+              schedule={data}
+              loadNewData={loadData}
+              clientSettings={clientSettings}
+            />
           </>
         )}
       </div>
