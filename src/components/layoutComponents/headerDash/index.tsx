@@ -33,22 +33,10 @@ const HeaderDash = () => {
   const { themeDark, toggleTheme } = useGetDarkTheme()
   const [openMenu, setOpenMenu] = useState(false)
   const [openNotifications, setOpenNotifications] = useState(false)
-  // const pathname = usePathname()
-  // const pathnames = pathname.split('/').filter((x) => x)
-
-  const [currentTime, setCurrentTime] = useState(
-    new Date().toLocaleString('pt-BR', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    }),
-  )
+  const [currentTime, setCurrentTime] = useState<string | null>(null)
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const updateTime = () => {
       setCurrentTime(
         new Date().toLocaleString('pt-BR', {
           weekday: 'long',
@@ -59,8 +47,10 @@ const HeaderDash = () => {
           minute: '2-digit',
         }),
       )
-    }, 60000)
+    }
 
+    updateTime()
+    const interval = setInterval(updateTime, 60000)
     return () => clearInterval(interval)
   }, [])
 
@@ -68,9 +58,11 @@ const HeaderDash = () => {
     <>
       <div className="flex h-14 border-b border-b-gray items-center px-4 py-2 relative bg-white dark:bg-gray-800 dark:border-gray-700 shadow-lg gap-4">
         <div className="flex-grow">
-          <p className="text-sm text-slate-500 dark:text-white">
-            {currentTime}
-          </p>
+          {currentTime && (
+            <p className="text-sm text-slate-500 dark:text-white">
+              {currentTime}
+            </p>
+          )}
         </div>
 
         <HeaderButton onClick={toggleTheme}>

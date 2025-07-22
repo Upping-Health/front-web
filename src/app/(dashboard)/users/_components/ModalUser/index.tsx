@@ -17,6 +17,8 @@ import { useFormik } from 'formik'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount'
 import { IRole } from '@/interfaces/role.interface'
+import { toFormikValidationSchema } from 'zod-formik-adapter'
+import { validateCreateUser } from '@/formik/validators/validator-user'
 interface ModalParams {
   open: boolean
   setIsClose: () => void
@@ -54,9 +56,9 @@ const ModalUser = ({
 
   const onError = (e: any) => {
     const errorMessage =
-      e?.response?.data?.error || 'Falhou ao cadastrar usuário.'
+      e?.response?.data?.message || 'Falhou ao cadastrar usuário.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
-    console.log('[ERROR API /patient]', errorMessage)
+    console.log('[ERROR API users/new-user]', errorMessage)
   }
 
   const onErrorUpdate = (e: any) => {
@@ -77,7 +79,7 @@ const ModalUser = ({
         phone: '',
         birth_date: '',
         gender: 'male',
-        role: '',
+        role: '3',
       })
     }
     if (userSelected) {
@@ -113,7 +115,7 @@ const ModalUser = ({
       gender: 'male',
       role: '',
     },
-    //validate: validatPatient,
+    validationSchema: validateCreateUser,
     onSubmit: async (values) => {
       setloading(true)
       const data: any = {
@@ -297,6 +299,7 @@ const ModalUser = ({
                       type="submit"
                       styles="w-full dark:bg-white dark:text-black"
                       title={'Cadastrar'}
+                      disabled={!formik.isValid}
                     />
                   )}
                 </div>

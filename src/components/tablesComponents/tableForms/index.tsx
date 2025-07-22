@@ -137,18 +137,18 @@ const CardForms: React.FC<TableProps> = ({
                         loading={isLoading}
                       />
 
-                      <ButtonStyled
+                      {/* <ButtonStyled
                         onClick={() => {}}
                         title={'Respostas'}
                         type="button"
                         styles="bg-transparent border border-gray h-[35px] px-3 text-sm"
                         textColor="text-black dark:text-white"
-                      />
+                      /> */}
                       <ButtonStyled
                         onClick={() => router.push(`/forms/${data.uuid}/edit`)}
                         title={'Editar'}
                         type="button"
-                        styles="bg-black h-[35px] px-3 text-sm"
+                        styles="bg-black h-[35px] px-3 text-sm shadow-md"
                       />
                     </div>
                   </div>

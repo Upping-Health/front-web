@@ -77,7 +77,7 @@ export default function Login() {
                 type="text"
                 placeholder="exemplo@gmail.com"
                 icon={<MailOutlineIcon style={{ color: colors.primary }} />}
-                styles="dark:border-gray"
+                styles="dark:!border-gray"
                 stylesInput="dark:bg-white dark:!text-black"
               />
               <InputStyled
@@ -88,7 +88,7 @@ export default function Login() {
                 type="password"
                 placeholder="***********"
                 icon={<LockOutlinedIcon style={{ color: colors.primary }} />}
-                styles="dark:border-gray"
+                styles="dark:!border-gray"
                 stylesInput="dark:bg-white dark:!text-black"
               />
             </div>
