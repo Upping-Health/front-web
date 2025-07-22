@@ -12,7 +12,7 @@ const FormsList = ({ params }: { params: { id: string } }) => {
   return (
     <div className="w-full relative">
       <TopDash
-        title="Formulário"
+        title="Formulários"
         description="Crie e organize formulários personalizados para seus atendimentos."
         icon={QuestionAnswerOutlinedIcon}
         textBtn={'Novo Formulário'}
