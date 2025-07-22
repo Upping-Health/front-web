@@ -23,15 +23,16 @@ const useLoadSchedule = (hidden: boolean) => {
 
   const loadClientSettings = useCallback(async () => {
     try {
-      const res = await api.get('/clients/show') // Endpoint para configurações
+      const res = await api.get('/clients/setting/show')
       return {
-        working_days: res.data.working_days || [1, 2, 3, 4, 5],
-        start_time: res.data.start_time || '08:00:00',
-        end_time: res.data.end_time || '17:00:00',
-        appointment_duration: res.data.appointment_duration || 30,
-        break_between_appointments: res.data.break_between_appointments || 10,
-        lunch_start: res.data.lunch_start,
-        lunch_end: res.data.lunch_end,
+        working_days: res.data.data.working_days || [1, 2, 3, 4, 5],
+        start_time: res.data.data.start_time || '08:00:00',
+        end_time: res.data.data.end_time || '17:00:00',
+        appointment_duration: res.data.data.appointment_duration || 30,
+        break_between_appointments:
+          res.data.data.break_between_appointments || 10,
+        lunch_start: res.data.data.lunch_start,
+        lunch_end: res.data.data.lunch_end,
       }
     } catch (error) {
       console.error('Erro ao buscar configurações:', error)
