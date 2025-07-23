@@ -75,7 +75,7 @@ const SettingsContent = () => {
   })
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full flex flex-col ">
       <TopDash
         title="Configurações de Agenda"
         description="Gerencie seus horários e preferências de agendamento."
@@ -85,9 +85,9 @@ const SettingsContent = () => {
       <div className="h-full w-full flex gap-4">
         <form
           onSubmit={formik.handleSubmit}
-          className="flex flex-col flex-1 rounded-xl bg-white shadow-sm dark:bg-gray-800"
+          className="flex flex-col flex-1 rounded-xl bg-white shadow-sm dark:!bg-gray-800  overflow-y-auto"
         >
-          <div className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-5">
+          <div className="flex-1 p-4 flex flex-col gap-5 overflow-x-auto">
             <div className="flex flex-col gap-4">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 Dias de funcionamento
@@ -122,7 +122,7 @@ const SettingsContent = () => {
                   onBlur={formik.handleBlur}
                   error={formik.errors.start_time as string}
                   isTouched={formik.touched.start_time}
-                  stylesInput="w-full"
+                  stylesInput="w-full dark:!bg-gray-800"
                   stylesContainer="flex-1"
                 />
                 <InputStyled
@@ -134,7 +134,7 @@ const SettingsContent = () => {
                   onBlur={formik.handleBlur}
                   error={formik.errors.end_time as string}
                   isTouched={formik.touched.end_time}
-                  stylesInput="w-full"
+                  stylesInput="w-full dark:!bg-gray-800"
                   stylesContainer="flex-1"
                 />
               </div>
@@ -154,6 +154,7 @@ const SettingsContent = () => {
                   onBlur={formik.handleBlur}
                   error={formik.errors.appointment_duration as string}
                   isTouched={formik.touched.appointment_duration}
+                  stylesInput="w-full dark:!bg-gray-800"
                 />
                 <InputStyled
                   id="max_daily_appointments"
@@ -164,6 +165,7 @@ const SettingsContent = () => {
                   onBlur={formik.handleBlur}
                   error={formik.errors.max_daily_appointments as string}
                   isTouched={formik.touched.max_daily_appointments}
+                  stylesInput="w-full dark:!bg-gray-800"
                 />
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 items-center">
@@ -174,6 +176,7 @@ const SettingsContent = () => {
                   value={formik.values.break_between_appointments}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
+                  stylesInput="w-full dark:!bg-gray-800"
                 />
 
                 <SingleCheckbox
@@ -198,7 +201,7 @@ const SettingsContent = () => {
                   value={formik.values.lunch_start}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  stylesInput="w-full"
+                  stylesInput="w-full dark:!bg-gray-800"
                   stylesContainer="flex-1"
                 />
                 <InputStyled
@@ -208,13 +211,41 @@ const SettingsContent = () => {
                   value={formik.values.lunch_end}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  stylesInput="w-full"
+                  stylesInput="w-full dark:!bg-gray-800"
                   stylesContainer="flex-1"
                 />
               </div>
             </div>
+
+            {/* <div className="flex flex-col gap-4">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                Pausa para almoço
+              </h3>
+              <div className="flex flex-row gap-4">
+                <InputStyled
+                  id="lunch_start"
+                  label="Início"
+                  type="time"
+                  value={formik.values.lunch_start}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                    stylesInput="w-full dark:!bg-gray-800"
+                  stylesContainer="flex-1"
+                />
+                <InputStyled
+                  id="lunch_end"
+                  label="Fim"
+                  type="time"
+                  value={formik.values.lunch_end}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                    stylesInput="w-full dark:!bg-gray-800"
+                  stylesContainer="flex-1"
+                />
+              </div>
+            </div> */}
           </div>
-          <div className="border-t border-gray-200 dark:border-gray-700 px-6 py-3 flex justify-end ">
+          <div className="border-t border-gray-200 dark:border-gray-700 px-6 py-3 flex justify-end">
             {loading ? (
               <ButtonStyled
                 bgColor="bg-darkGray"
