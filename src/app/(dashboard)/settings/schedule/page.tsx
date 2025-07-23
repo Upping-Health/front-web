@@ -6,6 +6,14 @@ import { useFormik } from 'formik'
 import InputStyled from '@/components/inputsComponents/inputStyled'
 import { validateSettingsSchedule } from '@/formik/validators/validator-settings'
 import ButtonStyled from '@/components/buttonsComponents/button'
+import api from '@/services/api'
+import { useContext, useState } from 'react'
+import { DefaultContext } from '@/contexts/defaultContext'
+import PreFeedBack from '@/utils/feedbackStatus'
+import { CircularProgress } from '@mui/material'
+import CheckBoxIcon from '@mui/icons-material/CheckBox'
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
+import SingleCheckbox from '@/components/inputsComponents/checkboxStyled'
 
 const diasSemana = {
   monday: 'Segunda',
@@ -18,6 +26,20 @@ const diasSemana = {
 }
 
 const SettingsContent = () => {
+  const [loading, setLoading] = useState<boolean>(false)
+  const { onShowFeedBack } = useContext(DefaultContext)
+
+  const onSuccess = () => {
+    onShowFeedBack(PreFeedBack.success('Configuração cadastrada com sucesso!'))
+  }
+
+  const onError = (e: any) => {
+    const errorMessage =
+      e?.response?.data?.message || 'Falhou ao cadastrar configurações.'
+    onShowFeedBack(PreFeedBack.error(errorMessage))
+    console.log('[ERROR API /clients/setting/store]', errorMessage)
+  }
+
   const formik = useFormik({
     initialValues: {
       working_days: {
@@ -39,8 +61,16 @@ const SettingsContent = () => {
       lunch_end: '13:30',
     },
     validationSchema: validateSettingsSchedule,
-    onSubmit: (values) => {
-      console.log('Configurações salvas:', values)
+    onSubmit: async (values) => {
+      setLoading(true)
+      try {
+        const { data } = await api.post('/clients/setting/store', values)
+        onSuccess()
+      } catch (error) {
+        onError(error)
+      } finally {
+        setLoading(false)
+      }
     },
   })
 
@@ -57,103 +87,155 @@ const SettingsContent = () => {
           onSubmit={formik.handleSubmit}
           className="flex flex-col flex-1 rounded-xl bg-white shadow-sm dark:bg-gray-800"
         >
-          <div className="flex-1 overflow-y-auto px-6 py-4 flex flex-col gap-6">
-            <div className="flex flex-row w-full gap-4">
-              <InputStyled
-                id="start_time"
-                label="Início do expediente"
-                type="time"
-                value={formik.values.start_time}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.errors.start_time as string}
-                isTouched={formik.touched.start_time}
-                stylesInput="w-full"
-                stylesContainer="flex-1"
-              />
-
-              <InputStyled
-                id="end_time"
-                label="Fim do expediente"
-                type="time"
-                value={formik.values.end_time}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.errors.end_time as string}
-                isTouched={formik.touched.end_time}
-                stylesInput="w-full"
-                stylesContainer="flex-1"
-              />
+          <div className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-5">
+            <div className="flex flex-col gap-4">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                Dias de funcionamento
+              </h3>
+              <div className="flex flex-wrap gap-4 justify-between">
+                {Object.entries(diasSemana).map(([key, label]) => (
+                  <SingleCheckbox
+                    key={key}
+                    label={label}
+                    checked={
+                      formik.values.working_days[key as keyof typeof diasSemana]
+                    }
+                    onChange={(val) =>
+                      formik.setFieldValue(`working_days.${key}`, val)
+                    }
+                  />
+                ))}
+              </div>
             </div>
 
-            <div className="flex flex-row w-full gap-4">
-              <InputStyled
-                id="appointment_duration"
-                label="Duração do Atendimento (min)"
-                type="number"
-                value={formik.values.appointment_duration}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.errors.appointment_duration as string}
-                isTouched={formik.touched.appointment_duration}
-                stylesContainer="flex-1"
-              />
-
-              <InputStyled
-                id="max_daily_appointments"
-                label="Máx. Atendimentos por dia"
-                type="number"
-                value={formik.values.max_daily_appointments}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.errors.max_daily_appointments as string}
-                isTouched={formik.touched.max_daily_appointments}
-                stylesContainer="flex-1"
-              />
-
-              <InputStyled
-                id="break_between_appointments"
-                label="Intervalo entre atendimentos (min)"
-                type="number"
-                value={formik.values.break_between_appointments}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                stylesContainer="flex-1"
-              />
+            <div className="flex flex-col gap-4">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                Horário de expediente
+              </h3>
+              <div className="flex flex-row gap-4">
+                <InputStyled
+                  id="start_time"
+                  label="Início"
+                  type="time"
+                  value={formik.values.start_time}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.errors.start_time as string}
+                  isTouched={formik.touched.start_time}
+                  stylesInput="w-full"
+                  stylesContainer="flex-1"
+                />
+                <InputStyled
+                  id="end_time"
+                  label="Fim"
+                  type="time"
+                  value={formik.values.end_time}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.errors.end_time as string}
+                  isTouched={formik.touched.end_time}
+                  stylesInput="w-full"
+                  stylesContainer="flex-1"
+                />
+              </div>
             </div>
 
-            <div className="flex flex-row w-full gap-4">
-              <InputStyled
-                id="lunch_start"
-                label="Início do Almoço"
-                type="time"
-                value={formik.values.lunch_start}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                stylesInput="w-full"
-                stylesContainer="flex-1"
-              />
+            <div className="flex flex-col gap-4">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                Configurações de atendimento
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <InputStyled
+                  id="appointment_duration"
+                  label="Duração (min)"
+                  type="number"
+                  value={formik.values.appointment_duration}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.errors.appointment_duration as string}
+                  isTouched={formik.touched.appointment_duration}
+                />
+                <InputStyled
+                  id="max_daily_appointments"
+                  label="Máx. atendimentos/dia"
+                  type="number"
+                  value={formik.values.max_daily_appointments}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.errors.max_daily_appointments as string}
+                  isTouched={formik.touched.max_daily_appointments}
+                />
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 items-center">
+                <InputStyled
+                  id="break_between_appointments"
+                  label="Intervalo (min)"
+                  type="number"
+                  value={formik.values.break_between_appointments}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
 
-              <InputStyled
-                id="lunch_end"
-                label="Fim do Almoço"
-                type="time"
-                value={formik.values.lunch_end}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                stylesInput="w-full"
-                stylesContainer="flex-1"
-              />
+                <SingleCheckbox
+                  label="Permitir overbooking"
+                  checked={formik.values.allow_overbooking}
+                  onChange={(val) =>
+                    formik.setFieldValue('allow_overbooking', val)
+                  }
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                Pausa para almoço
+              </h3>
+              <div className="flex flex-row gap-4">
+                <InputStyled
+                  id="lunch_start"
+                  label="Início"
+                  type="time"
+                  value={formik.values.lunch_start}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  stylesInput="w-full"
+                  stylesContainer="flex-1"
+                />
+                <InputStyled
+                  id="lunch_end"
+                  label="Fim"
+                  type="time"
+                  value={formik.values.lunch_end}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  stylesInput="w-full"
+                  stylesContainer="flex-1"
+                />
+              </div>
             </div>
           </div>
-
-          <div className="border-t border-gray-200 dark:border-gray-700 px-6 py-3 flex justify-end bg-white dark:bg-gray-800">
-            <ButtonStyled
-              type="submit"
-              styles="w-[150px]"
-              bgColor="bg-green"
-              title="Salvar"
-            />
+          <div className="border-t border-gray-200 dark:border-gray-700 px-6 py-3 flex justify-end ">
+            {loading ? (
+              <ButtonStyled
+                bgColor="bg-darkGray"
+                textColor="text-white"
+                type="submit"
+                styles="w-[150px]"
+                title="Salvando..."
+                icon={
+                  <CircularProgress
+                    style={{ width: 20, height: 20, color: '#FFFFFF' }}
+                  />
+                }
+              />
+            ) : (
+              <ButtonStyled
+                type="submit"
+                styles="w-[150px] bg-green-600 dark:bg-white dark:text-black"
+                title={'Salvar'}
+                disabled={!formik.isValid}
+              />
+            )}
           </div>
         </form>
 
