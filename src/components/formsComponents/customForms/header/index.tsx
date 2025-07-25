@@ -49,7 +49,7 @@ const HeaderFormMenu = ({
           }}
           title={id ? 'Atualizar' : 'Salvar'}
           type="button"
-          styles="w-[200px] bg-green"
+          styles="w-[200px] bg-green-600"
           icon={<SaveIcon />}
         />
       </div>

@@ -262,7 +262,7 @@ const SettingsContent = () => {
             ) : (
               <ButtonStyled
                 type="submit"
-                styles="w-[150px] bg-green-600 dark:bg-white dark:text-black"
+                styles="w-[150px] bg-green-600"
                 title={'Salvar'}
                 disabled={!formik.isValid}
               />

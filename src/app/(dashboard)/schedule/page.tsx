@@ -31,7 +31,7 @@ const AgendaContent = () => {
 
   return (
     <>
-      <div className="w-full relative">
+      <div className="w-full flex flex-col ">
         <TopDash
           title="Agenda"
           description="Acompanhe e organize seus compromissos com agilidade e precisão."

@@ -148,7 +148,7 @@ const CardForms: React.FC<TableProps> = ({
                         onClick={() => router.push(`/forms/${data.uuid}/edit`)}
                         title={'Editar'}
                         type="button"
-                        styles="bg-black h-[35px] px-3 text-sm shadow-md"
+                        styles="bg-black h-[35px] px-3 text-sm shadow-md dark:bg-white dark:text-black"
                       />
                     </div>
                   </div>
