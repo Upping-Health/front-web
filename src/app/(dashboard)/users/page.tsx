@@ -1,10 +1,9 @@
 'use client'
 import { useCallback, useContext, useMemo, useState } from 'react'
 
-import ButtonActive from '@/components/buttonsComponents/buttonActive'
-import ButtonIconStyled from '@/components/buttonsComponents/buttonIcon'
-import TopDash from '@/components/layoutComponents/topDash'
 import ModalUser from '@/app/(dashboard)/users/_components/ModalUser'
+import ButtonActive from '@/components/buttonsComponents/buttonActive'
+import TopDash from '@/components/layoutComponents/topDash'
 import ProfileRounded from '@/components/profileRounded'
 import TableDash from '@/components/tablesComponents/tableDash'
 import { DefaultContext } from '@/contexts/defaultContext'
@@ -14,11 +13,11 @@ import api from '@/services/api'
 import { colors } from '@/utils/colors/colors'
 import PreFeedBack from '@/utils/feedbackStatus'
 import masks from '@/utils/masks/masks'
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd'
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
 import SupervisorAccountOutlinedIcon from '@mui/icons-material/SupervisorAccountOutlined'
 import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/navigation'
+
 const UsersContent = () => {
   const { user, onShowFeedBack } = useContext(DefaultContext)
   const [openModal, setOpenModal] = useState(false)

@@ -8,7 +8,7 @@ import { colors } from '@/utils/colors/colors'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'NutriTECH',
+  title: 'UppingHealth',
   description: 'Gestão para nutriocionistas',
 }
 
