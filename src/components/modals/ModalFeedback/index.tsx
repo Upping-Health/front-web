@@ -68,7 +68,9 @@ const ModalFeedBackStatus = ({
             style={{
               fontSize: 96,
               color:
-                status === STATUS.SUCCESS ? colors.newGreen : colors.newRed,
+                status === STATUS.SUCCESS
+                  ? colors.green.DEFAULT
+                  : colors.red.DEFAULT,
             }}
           />
         </div>

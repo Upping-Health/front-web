@@ -6,7 +6,6 @@ const colors = {
     ...tailwindColors.red,
     DEFAULT: '#ef4444',
   },
-  newRed: '#ef4444',
   white: '#FFFFFF',
   black: '#323031',
   gray: {
@@ -24,7 +23,6 @@ const colors = {
     ...tailwindColors.green,
     DEFAULT: '#41b96f',
   },
-  newGreen: '#41b96f',
   terciary: '#4b8690',
   unpaid: '#ffcdd2',
   unpaidFont: ' #c62828',

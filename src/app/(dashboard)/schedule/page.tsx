@@ -10,11 +10,14 @@ import CalendarComponent from '@/app/(dashboard)/schedule/_components/Calendar'
 import ModalAgenda from '@/app/(dashboard)/schedule/_components/ModalAgenda'
 import useLoadSchedule from '@/hooks/nutritionists/useLoadSchedule'
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined'
+import useLoadClientSettings from '@/hooks/clients/useLoadClientSettings'
 
 const AgendaContent = () => {
   const [openModal, setOpenModal] = useState(false)
   const [dataSelected, setDataSelected] = useState<Patient | null>(null)
-  const { loadData, data, loading, clientSettings } = useLoadSchedule(false)
+  const { loadData, data, loading } = useLoadSchedule(false)
+  const { data: settings, loading: loadingSettings } =
+    useLoadClientSettings(false)
 
   const toggleModalOpen = useCallback(() => {
     setOpenModal(!openModal)
@@ -41,10 +44,10 @@ const AgendaContent = () => {
         />
 
         <CalendarComponent
-          loadingCalendar={loading}
+          loadingCalendar={loading && loadingSettings}
           schedule={data}
           loadNewData={loadData}
-          clientSettings={clientSettings}
+          clientSettings={settings}
         />
       </div>
 
