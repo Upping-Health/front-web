@@ -40,21 +40,12 @@ const AgendaContent = () => {
           textBtn="Novo Agendamento"
         />
 
-        {loading ? (
-          <>
-            <div className="flex h-3/4 justify-center w-full items-center">
-              <CircularProgress className="dark:text-white text-primary text-2xl" />
-            </div>
-          </>
-        ) : (
-          <>
-            <CalendarComponent
-              schedule={data}
-              loadNewData={loadData}
-              clientSettings={clientSettings}
-            />
-          </>
-        )}
+        <CalendarComponent
+          loadingCalendar={loading}
+          schedule={data}
+          loadNewData={loadData}
+          clientSettings={clientSettings}
+        />
       </div>
 
       <ModalAgenda

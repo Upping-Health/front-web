@@ -19,10 +19,12 @@ import { CircularProgress } from '@mui/material'
 
 const Calendar = ({
   schedule,
+  loadingCalendar,
   loadNewData,
   clientSettings,
 }: {
   schedule: Schedule[]
+  loadingCalendar: boolean
   loadNewData: () => Promise<void>
   clientSettings?: {
     working_days?: number[]
@@ -122,66 +124,72 @@ const Calendar = ({
     <>
       <Wrapper>
         <div className="w-full">
-          <FullCalendar
-            ref={calendarRef}
-            themeSystem="bootstrap5"
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            initialView="dayGridMonth"
-            slotMinTime={clientSettings?.start_time || '08:00:00'}
-            slotMaxTime={clientSettings?.end_time || '17:00:00'}
-            businessHours={businessHours}
-            slotLabelFormat={{
-              hour: '2-digit',
-              minute: '2-digit',
-              hour12: false,
-              omitZeroMinute: false,
-            }}
-            slotDuration={slotDuration}
-            slotLabelInterval={slotLabelInterval}
-            headerToolbar={{
-              left: 'myPrev,myNext today',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay',
-            }}
-            customButtons={{
-              myPrev: {
-                text: '<',
-                click: () => {
-                  const calendarApi = calendarRef.current?.getApi()
-                  calendarApi?.prev()
+          {loadingCalendar ? (
+            <div className="flex h-3/4 justify-center w-full items-center">
+              <CircularProgress className="dark:text-white text-primary text-2xl" />
+            </div>
+          ) : (
+            <FullCalendar
+              ref={calendarRef}
+              themeSystem="bootstrap5"
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+              initialView="dayGridMonth"
+              slotMinTime={clientSettings?.start_time || '08:00:00'}
+              slotMaxTime={clientSettings?.end_time || '17:00:00'}
+              businessHours={businessHours}
+              slotLabelFormat={{
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false,
+                omitZeroMinute: false,
+              }}
+              slotDuration={slotDuration}
+              slotLabelInterval={slotLabelInterval}
+              headerToolbar={{
+                left: 'myPrev,myNext today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay',
+              }}
+              customButtons={{
+                myPrev: {
+                  text: '<',
+                  click: () => {
+                    const calendarApi = calendarRef.current?.getApi()
+                    calendarApi?.prev()
+                  },
                 },
-              },
-              myNext: {
-                text: '>',
-                click: () => {
-                  const calendarApi = calendarRef.current?.getApi()
-                  calendarApi?.next()
+                myNext: {
+                  text: '>',
+                  click: () => {
+                    const calendarApi = calendarRef.current?.getApi()
+                    calendarApi?.next()
+                  },
                 },
-              },
-            }}
-            locale={ptBrLocale}
-            buttonText={{
-              today: 'Hoje',
-              month: 'Mês',
-              week: 'Semana',
-              day: 'Dia',
-            }}
-            dayHeaderFormat={{ weekday: 'short' }}
-            eventContent={renderEventContent}
-            events={schedule?.map((e) => ({
-              title: e?.patient?.name,
-              start: e.start_time,
-              end: e.end_time,
-              extendedProps: {
-                ...e,
-              },
-            }))}
-            eventClick={handleEventClick}
-            height="100%"
-            dateClick={() => {
-              setOpenModal(true)
-            }}
-          />
+              }}
+              locale={ptBrLocale}
+              buttonText={{
+                today: 'Hoje',
+                month: 'Mês',
+                week: 'Semana',
+                day: 'Dia',
+              }}
+              dayHeaderFormat={{ weekday: 'short' }}
+              eventContent={renderEventContent}
+              events={schedule?.map((e) => ({
+                title: e?.patient?.name,
+                start: e.start_time,
+                end: e.end_time,
+                extendedProps: {
+                  ...e,
+                },
+              }))}
+              eventClick={handleEventClick}
+              height="100%"
+              dateClick={() => {
+                setOpenModal(true)
+              }}
+            />
+          )}
         </div>
 
         <div className="bg-light dark:bg-slate-800 rounded-xl w-60 flex flex-col items-start justify-between p-4">
@@ -191,9 +199,7 @@ const Calendar = ({
             </div>
             {loading && (
               <div className="flex justify-center w-full h-full items-center">
-                <CircularProgress
-                  style={{ width: 30, height: 30, color: colors.primary }}
-                />
+                <CircularProgress className="dark:text-white text-primary text-2xl" />
               </div>
             )}
 
