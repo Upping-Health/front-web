@@ -21,7 +21,7 @@ const QuestionHeader = ({ type, onRemove, onDuplicate }: Props) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex gap-2 items-center">
-        <div className="bg-newGreen h-14 w-14 rounded-xl flex justify-center items-center">
+        <div className="bg-green h-14 w-14 rounded-xl flex justify-center items-center">
           <Icon className="text-white" />
         </div>
         <div>

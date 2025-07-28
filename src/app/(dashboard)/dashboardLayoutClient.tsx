@@ -3,14 +3,9 @@
 import AsideBar from '@/components/layoutComponents/asideBar'
 import FooterDash from '@/components/layoutComponents/footerDash'
 import HeaderDash from '@/components/layoutComponents/headerDash'
-import MenuMobile from '@/components/layoutComponents/menuMobile'
-import { DefaultContext } from '@/contexts/defaultContext'
 import { Providers } from '@/contexts/providers/provider'
-import { useRouter } from 'next/navigation'
-import { useContext } from 'react'
-import NextTopLoader from 'nextjs-toploader'
 import { colors } from '@/utils/colors/colors'
-import { notFound } from 'next/navigation'
+import NextTopLoader from 'nextjs-toploader'
 
 export default function DashboardLayoutClient({
   children,

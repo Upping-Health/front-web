@@ -1,8 +1,6 @@
 'use client'
 import { DefaultContext } from '@/contexts/defaultContext'
 import DashboardPatients from '@/interfaces/dashPatients.interface'
-import Patient from '@/interfaces/patient.interface'
-import api from '@/services/api'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
 const useLoadDashboardPatients = (hidden: boolean) => {
@@ -18,8 +16,8 @@ const useLoadDashboardPatients = (hidden: boolean) => {
     try {
       setloading(true)
       if (isNaN(Number(user?.id))) return
-      const res = await api.get(`/dashboard/patients/${user?.id}`)
-      setdata(res?.data?.data)
+      // const res = await api.get(`/dashboard/patients/${user?.id}`)
+      // setdata(res?.data?.data)
     } catch (error: any) {
       console.error('[ERROR API] /patients/', error?.response?.data)
     } finally {

@@ -56,7 +56,7 @@ const DashboardContent = () => {
             </div>
             <div className="flex-1 min-w-[250px]">
               <CardDash
-                className="bg-newGreen"
+                className="bg-green"
                 icon={<GroupAddIcon />}
                 title="Pacientes Ativos"
                 value={data.totalPatientsActive}
