@@ -26,20 +26,18 @@
     background-color: #22b349;
   }
 
-  @layer components {
-    input[type='time']::-webkit-calendar-picker-indicator,
-    input[type='date']::-webkit-calendar-picker-indicator,
-    input[type='datetime-local']::-webkit-calendar-picker-indicator,
-    input[type='month']::-webkit-calendar-picker-indicator {
-      filter: none;
-    }
+  input[type='time']::-webkit-calendar-picker-indicator,
+  input[type='date']::-webkit-calendar-picker-indicator,
+  input[type='datetime-local']::-webkit-calendar-picker-indicator,
+  input[type='month']::-webkit-calendar-picker-indicator {
+    filter: none;
+  }
 
-    .dark input[type='time']::-webkit-calendar-picker-indicator,
-    .dark input[type='date']::-webkit-calendar-picker-indicator,
-    .dark input[type='datetime-local']::-webkit-calendar-picker-indicator,
-    .dark input[type='month']::-webkit-calendar-picker-indicator {
-      filter: invert(1) brightness(1.5);
-      cursor: pointer;
-    }
+  .dark input[type='time']::-webkit-calendar-picker-indicator,
+  .dark input[type='date']::-webkit-calendar-picker-indicator,
+  .dark input[type='datetime-local']::-webkit-calendar-picker-indicator,
+  .dark input[type='month']::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(1.5);
+    cursor: pointer;
   }
 }
