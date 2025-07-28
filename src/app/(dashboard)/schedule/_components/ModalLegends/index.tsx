@@ -16,14 +16,21 @@ import { CircularProgress, Modal, Tooltip } from '@mui/material'
 import { useFormik } from 'formik'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { validateAgenda } from '@/formik/validators/validate-agenda'
-import CustomizedSteppers from '../../layoutComponents/stepBar'
-import ModalPatient from '../ModalPatient'
+import CustomizedSteppers from '../../../../../components/layoutComponents/stepBar'
+import ModalPatient from '../../../patients/_components/ModalPatient'
 import InputStyled from '@/components/inputsComponents/inputStyled'
+
+interface ScheduleLegend {
+  id: number
+  uuid: string
+  name: string
+  color: string
+}
 
 interface ModalParams {
   open: boolean
   setIsClose: () => void
-  legendSelected?: Schedule | null
+  legendSelected?: ScheduleLegend | null
   loadNewData: () => Promise<void>
 }
 
@@ -38,47 +45,28 @@ const ModalLegends = ({
 
   const [openModal, setOpenModal] = useState(false)
 
-  function convertUTCtoLocalISO(dateString: string): string {
-    const date = new Date(dateString)
-
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-    const hours = String(date.getHours()).padStart(2, '0')
-    const minutes = String(date.getMinutes()).padStart(2, '0')
-
-    return `${year}-${month}-${day}T${hours}:${minutes}`
-  }
-
   const onSuccess = () => {
-    onShowFeedBack(PreFeedBack.success('Paciente cadastrado com sucesso!'))
+    onShowFeedBack(PreFeedBack.success('Legenda cadastrada com sucesso!'))
     setIsClose()
   }
 
   const onSuccessUpdate = () => {
-    onShowFeedBack(PreFeedBack.success('Paciente atualizado com sucesso!'))
+    onShowFeedBack(PreFeedBack.success('Legenda atualizada com sucesso!'))
     setIsClose()
   }
 
   const onError = (e: any) => {
     const errorMessage =
-      e?.response?.data?.error || 'Falhou ao cadastrar paciente.'
+      e?.response?.data?.error || 'Falhou ao cadastrar legenda.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
-    console.log('[ERROR API /patient]', errorMessage)
+    console.log('[ERROR API /calendars/label]', errorMessage)
   }
 
   const onErrorUpdate = (e: any) => {
     const errorMessage =
-      e?.response?.data?.error || 'Falhou ao atualizar paciente.'
+      e?.response?.data?.error || 'Falhou ao atualizar legenda.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
-    console.log('[ERROR API /patient]', errorMessage)
-  }
-
-  const formatDateTime = (dateTime: string) => {
-    if (dateTime.includes('T')) {
-      return dateTime.replace('T', ' ') + ':00'
-    }
-    return dateTime
+    console.log('[ERROR API /calendars/label]', errorMessage)
   }
 
   useEffect(() => {
@@ -86,17 +74,15 @@ const ModalLegends = ({
     if (!legendSelected) {
       formik.setValues({
         name: '',
-        color: '',
+        color: '#000000',
       })
     }
     if (legendSelected) {
-      // const { patient, observation, start_time, end_time } = legendSelected
-      // formik.setValues({
-      //   patient: patient?.uuid?.toString() ?? '',
-      //   observation: observation ?? '',
-      //   start_time: convertUTCtoLocalISO(start_time),
-      //   end_time: convertUTCtoLocalISO(end_time),
-      // })
+      const { name, color } = legendSelected
+      formik.setValues({
+        name,
+        color,
+      })
     }
   }, [legendSelected, open])
 
@@ -105,17 +91,31 @@ const ModalLegends = ({
       name: '',
       color: '#00000000',
     },
-    validate: validateAgenda,
     onSubmit: async (values) => {
       setloading(true)
+
+      const data = {
+        name: values.name,
+        color: values.color,
+      }
+
+      if (legendSelected) {
+        await api
+          .put(`calendars/labels/update/${legendSelected.uuid}`, data)
+          .then(onSuccessUpdate)
+          .catch(onErrorUpdate)
+          .finally(() => setloading(false))
+      } else {
+        await api
+          .post('calendars/labels/store', data)
+          .then(onSuccess)
+          .catch(onError)
+          .finally(() => setloading(false))
+      }
 
       loadNewData()
     },
   })
-
-  const toggleModalOpen = useCallback(() => {
-    setOpenModal(!openModal)
-  }, [openModal])
 
   return (
     <>
@@ -171,7 +171,7 @@ const ModalLegends = ({
                 type="button"
                 onClick={setIsClose}
                 styles="w-full"
-                bgColor="bg-newRed"
+                bgColor="bg-red-600"
                 title="Voltar"
               />
 
@@ -195,7 +195,7 @@ const ModalLegends = ({
               ) : (
                 <ButtonStyled
                   type="submit"
-                  styles="w-full dark:bg-white dark:text-black"
+                  styles="w-full bg-green-600"
                   title={legendSelected ? 'Atualizar' : 'Cadastrar'}
                 />
               )}

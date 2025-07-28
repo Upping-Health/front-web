@@ -6,8 +6,8 @@ import Patient from '@/interfaces/patient.interface'
 import { colors } from '@/utils/colors/colors'
 import { CircularProgress } from '@mui/material'
 
-import CalendarComponent from '@/components/calendar'
-import ModalAgenda from '@/components/modals/ModalAgenda'
+import CalendarComponent from '@/app/(dashboard)/schedule/_components/Calendar'
+import ModalAgenda from '@/app/(dashboard)/schedule/_components/ModalAgenda'
 import useLoadSchedule from '@/hooks/nutritionists/useLoadSchedule'
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined'
 
@@ -43,9 +43,7 @@ const AgendaContent = () => {
         {loading ? (
           <>
             <div className="flex h-3/4 justify-center w-full items-center">
-              <CircularProgress
-                style={{ width: 80, height: 80, color: colors.primary }}
-              />
+              <CircularProgress className="dark:text-white text-primary text-2xl" />
             </div>
           </>
         ) : (

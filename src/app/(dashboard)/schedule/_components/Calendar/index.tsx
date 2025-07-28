@@ -7,13 +7,15 @@ import interactionPlugin from '@fullcalendar/interaction'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { useRef, useState, useMemo } from 'react'
-import Wrapper from '../layoutComponents/wrapper'
-import ModalAgenda from '../modals/ModalAgenda'
+import Wrapper from '../../../../../components/layoutComponents/wrapper'
+import ModalAgenda from '../ModalAgenda'
 import './calendar-custom.css'
-import ButtonStyled from '../buttonsComponents/button'
+import ButtonStyled from '../../../../../components/buttonsComponents/button'
 import AddIcon from '@mui/icons-material/Add'
 import { colors } from '@/utils/colors/colors'
-import ModalLegends from '../modals/ModalLegends'
+import ModalLegends from '../ModalLegends'
+import useLoadScheduleLabels from '@/hooks/nutritionists/useLoadScheduleLabels'
+import { CircularProgress } from '@mui/material'
 
 const Calendar = ({
   schedule,
@@ -35,6 +37,7 @@ const Calendar = ({
   }
 }) => {
   const [scheduleSelected, setScheduleSelected] = useState<Schedule | null>()
+  const { data, loadData, loading } = useLoadScheduleLabels(false)
   const [legendSelected, setLegendSelected] = useState<any>(null)
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openLegendModal, setOpenLegendModal] = useState<boolean>(false)
@@ -91,6 +94,11 @@ const Calendar = ({
     setLegendSelected(null)
   }
 
+  const handleOpenLegendModal = (legend: any) => {
+    setOpenLegendModal(true)
+    setLegendSelected(legend)
+  }
+
   const renderEventContent = (eventInfo: EventContentArg) => {
     const start = eventInfo.event.start
 
@@ -109,14 +117,6 @@ const Calendar = ({
       </div>
     )
   }
-
-  const legends = [
-    { name: 'Consulta', color: '#2196F3' },
-    { name: 'Retorno', color: '#4CAF50' },
-    { name: 'Previsão de retorno', color: '#E91E63' },
-    { name: 'Outros', color: '#9E9E9E' },
-    { name: 'Google Agenda', color: '#FF9800' },
-  ]
 
   return (
     <>
@@ -177,29 +177,49 @@ const Calendar = ({
               },
             }))}
             eventClick={handleEventClick}
-            height="auto"
+            height="100%"
             dateClick={() => {
               setOpenModal(true)
             }}
           />
         </div>
 
-        <div className="pt-4 bg-light dark:bg-slate-800 rounded-xl w-60 flex flex-col items-center justify-between p-5">
-          <div>
-            <p className="text-center text-xl dark:text-white">Legendas</p>
-            <div className="flex flex-col mt-6 gap-2">
-              {legends.map((leg, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <div
-                    className="w-6 h-6 rounded "
-                    style={{ backgroundColor: leg.color }}
-                  />
-                  <p className="m-0 text-sm font-light dark:text-white">
-                    {leg.name}
-                  </p>
-                </div>
-              ))}
+        <div className="bg-light dark:bg-slate-800 rounded-xl w-60 flex flex-col items-start justify-between p-4">
+          <div className="w-full h-full">
+            <div className="flex justify-center w-full items-center ">
+              <p className="text-center text-xl dark:text-white">Legendas</p>
             </div>
+            {loading && (
+              <div className="flex justify-center w-full h-full items-center">
+                <CircularProgress
+                  style={{ width: 30, height: 30, color: colors.primary }}
+                />
+              </div>
+            )}
+
+            {!loading && (
+              <>
+                <div className="flex flex-1 flex-col mt-6 gap-2 ">
+                  {data?.map((leg, index) => (
+                    <button
+                      key={index}
+                      className="flex items-center justify-start gap-2 transition-all duration-200 hover:bg-gray-200 hover:dark:bg-gray-600   rounded-md p-1"
+                      onClick={() => {
+                        handleOpenLegendModal(leg)
+                      }}
+                    >
+                      <div
+                        className="min-w-6 min-h-6 rounded shadow-sm"
+                        style={{ backgroundColor: leg.color }}
+                      />
+                      <p className="m-0 text-sm font-light dark:text-white">
+                        {leg.name}
+                      </p>
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
 
           <div className="w-full">
@@ -225,7 +245,7 @@ const Calendar = ({
         open={openLegendModal}
         setIsClose={handleCloseLegendModal}
         legendSelected={legendSelected}
-        loadNewData={loadNewData}
+        loadNewData={loadData}
       />
     </>
   )

@@ -10,6 +10,7 @@ import StepLabel from '@mui/material/StepLabel'
 import Stepper from '@mui/material/Stepper'
 import { styled } from '@mui/material/styles'
 import * as React from 'react'
+import { colors } from '@/utils/colors/colors' // <-- Importa suas cores
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -17,12 +18,12 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   },
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      backgroundImage: 'linear-gradient(95deg, #22B349 0%, #1D1D1D 100%)',
+      backgroundImage: `linear-gradient(95deg, ${colors.primary} 0%, #1D1D1D 100%)`,
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      backgroundImage: 'linear-gradient(95deg, #22B349 0%, #1D1D1D 100%)',
+      backgroundImage: `linear-gradient(95deg, ${colors.primary} 0%, #1D1D1D 100%)`,
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
@@ -55,14 +56,14 @@ const ColorlibStepIconRoot = styled('div')<{
     {
       props: ({ ownerState }) => ownerState.active,
       style: {
-        backgroundImage: 'linear-gradient(136deg, #22B349 0%, #1D1D1D 100%)',
+        backgroundImage: `linear-gradient(136deg, ${colors.primary} 0%, #1D1D1D 100%)`,
         boxShadow: '0 4px 10px 0 rgba(0,0,0,.21)',
       },
     },
     {
       props: ({ ownerState }) => ownerState.completed,
       style: {
-        backgroundImage: 'linear-gradient(136deg, #22B349 0%, #1D1D1D 100%)',
+        backgroundImage: `linear-gradient(136deg, ${colors.primary} 0%, #1D1D1D 100%)`,
       },
     },
   ],

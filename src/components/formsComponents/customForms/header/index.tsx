@@ -82,7 +82,7 @@ const HeaderFormMenu = ({
           onClick={onClearForm}
           title="Limpar dados"
           type="button"
-          styles="w-[200px] dark:text-black bg-newRed dark:text-white"
+          styles="w-[200px] dark:text-black bg-red-600 dark:text-white"
           icon={<ClearIcon />}
         />
       </div>

@@ -25,7 +25,7 @@ const ButtonStyled = ({
     <button
       disabled={disabled}
       type={type}
-      className={`${disabled ? 'bg-darkGray' : ''} ${bgColor ? bgColor : ''} ${textColor ? textColor : 'text-white'} py-3 bg-black  rounded-xl font-semibold flex justify-center hover:opacity-70 items-center gap-2 transition duration-200 ease-in-out ${styles ? styles : ''} `}
+      className={`${disabled ? '!bg-darkGray' : ''} ${bgColor ? bgColor : ''} ${textColor ? textColor : 'text-white'} py-3 bg-black  rounded-xl font-semibold flex justify-center hover:opacity-70 items-center gap-2 transition duration-200 ease-in-out ${styles ? styles : ''} `}
       onClick={onClick}
     >
       {icon && React.cloneElement(icon)}

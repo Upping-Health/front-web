@@ -23,7 +23,7 @@ import { CircularProgress, Modal } from '@mui/material'
 import { useFormik } from 'formik'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { validatPatient } from '@/formik/validators/validator-patient'
-import CustomizedSteppers from '../../layoutComponents/stepBar'
+import CustomizedSteppers from '../../../../../components/layoutComponents/stepBar'
 
 interface ModalParams {
   open: boolean
@@ -416,7 +416,7 @@ const ModalPatient = ({
                       type="button"
                       onClick={setIsClose}
                       styles="w-full"
-                      bgColor="bg-newRed"
+                      bgColor="bg-red-600"
                       title="Cancelar"
                     />
 
@@ -436,7 +436,7 @@ const ModalPatient = ({
                     ) : (
                       <ButtonStyled
                         type="button"
-                        styles="w-full dark:bg-white dark:text-black"
+                        styles="w-full bg-green-600"
                         title={'Próximo'}
                         onClick={() => setViewTwo(true)}
                       />
@@ -565,7 +565,7 @@ const ModalPatient = ({
                       type="button"
                       onClick={() => setViewTwo(false)}
                       styles="w-full"
-                      bgColor="bg-newRed"
+                      bgColor="bg-red-600"
                       title="Voltar"
                     />
 
@@ -585,7 +585,7 @@ const ModalPatient = ({
                     ) : (
                       <ButtonStyled
                         type="submit"
-                        styles="w-full dark:bg-white dark:text-black"
+                        styles="w-full bg-green-600"
                         title={patientSelected ? 'Atualizar' : 'Cadastrar'}
                       />
                     )}

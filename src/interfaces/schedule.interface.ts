@@ -2,6 +2,7 @@ import DefaultEntityType from './default'
 
 export default interface Schedule extends DefaultEntityType {
   patient_id: number
+  uuid: string
   nutritionistName: string
   patientName: string
   observation: string | null

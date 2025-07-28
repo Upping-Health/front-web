@@ -16,8 +16,8 @@ import { CircularProgress, Modal, Tooltip } from '@mui/material'
 import { useFormik } from 'formik'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { validateAgenda } from '@/formik/validators/validate-agenda'
-import CustomizedSteppers from '../../layoutComponents/stepBar'
-import ModalPatient from '../ModalPatient'
+import CustomizedSteppers from '../../../../../components/layoutComponents/stepBar'
+import ModalPatient from '../../../patients/_components/ModalPatient'
 
 interface ModalParams {
   open: boolean
@@ -126,7 +126,7 @@ const ModalAgenda = ({
       console.log(data)
       if (scheduleSelected) {
         await api
-          .put(`/calendars/store`, data)
+          .put(`/calendars/update/${scheduleSelected.uuid}`, data)
           .then(onSuccessUpdate)
           .catch(onErrorUpdate)
           .finally(() => setloading(false))
@@ -252,7 +252,7 @@ const ModalAgenda = ({
                         type="button"
                         onClick={setIsClose}
                         styles="w-full"
-                        bgColor="bg-newRed"
+                        bgColor="bg-red-600"
                         title="Cancelar"
                       />
 
@@ -276,7 +276,7 @@ const ModalAgenda = ({
                       ) : (
                         <ButtonStyled
                           type="button"
-                          styles="w-full dark:bg-white dark:text-black"
+                          styles="w-full bg-green-600"
                           title={'Próximo'}
                           disabled={!formik.values.patient}
                           onClick={() => {
@@ -335,7 +335,7 @@ const ModalAgenda = ({
                         type="button"
                         onClick={() => setViewTwo(false)}
                         styles="w-full"
-                        bgColor="bg-newRed"
+                        bgColor="bg-red-600"
                         title="Voltar"
                       />
 
@@ -359,7 +359,7 @@ const ModalAgenda = ({
                       ) : (
                         <ButtonStyled
                           type="submit"
-                          styles="w-full dark:bg-white dark:text-black"
+                          styles="w-full bg-green-600"
                           title={scheduleSelected ? 'Atualizar' : 'Cadastrar'}
                         />
                       )}

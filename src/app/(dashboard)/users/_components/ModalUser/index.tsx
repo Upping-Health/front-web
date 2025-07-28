@@ -2,8 +2,9 @@ import ButtonStyled from '@/components/buttonsComponents/button'
 import InputStyled from '@/components/inputsComponents/inputStyled'
 import SelectStyled from '@/components/inputsComponents/select'
 import { DefaultContext } from '@/contexts/defaultContext'
+import { validateCreateUser } from '@/formik/validators/validator-user'
+import { IRole } from '@/interfaces/role.interface'
 import api from '@/services/api'
-import { colors } from '@/utils/colors/colors'
 import PreFeedBack from '@/utils/feedbackStatus'
 import masks from '@/utils/masks/masks'
 import ArticleOutlined from '@mui/icons-material/ArticleOutlined'
@@ -11,14 +12,11 @@ import CalendarMonthOutlined from '@mui/icons-material/CalendarMonthOutlined'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 import LocalPhoneOutlined from '@mui/icons-material/LocalPhoneOutlined'
 import PersonOutlineOutlined from '@mui/icons-material/PersonOutlineOutlined'
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount'
 import Wc from '@mui/icons-material/Wc'
 import { CircularProgress, Modal } from '@mui/material'
 import { useFormik } from 'formik'
 import { useContext, useEffect, useMemo, useState } from 'react'
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount'
-import { IRole } from '@/interfaces/role.interface'
-import { toFormikValidationSchema } from 'zod-formik-adapter'
-import { validateCreateUser } from '@/formik/validators/validator-user'
 interface ModalParams {
   open: boolean
   setIsClose: () => void
@@ -277,7 +275,7 @@ const ModalUser = ({
                     type="button"
                     onClick={setIsClose}
                     styles="w-full"
-                    bgColor="bg-newRed"
+                    bgColor="bg-red-600"
                     title="Cancelar"
                   />
 
@@ -297,7 +295,7 @@ const ModalUser = ({
                   ) : (
                     <ButtonStyled
                       type="submit"
-                      styles="w-full dark:bg-white dark:text-black"
+                      styles="w-full bg-green-600"
                       title={'Cadastrar'}
                       disabled={!formik.isValid}
                     />
