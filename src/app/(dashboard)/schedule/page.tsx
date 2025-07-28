@@ -44,7 +44,7 @@ const AgendaContent = () => {
         />
 
         <CalendarComponent
-          loadingCalendar={loading && loadingSettings}
+          loadingCalendar={loading || loadingSettings}
           schedule={data}
           loadNewData={loadData}
           clientSettings={settings}
