@@ -22,7 +22,7 @@ import Wc from '@mui/icons-material/Wc'
 import { CircularProgress, Modal } from '@mui/material'
 import { useFormik } from 'formik'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { validatPatient } from '@/formik/validators/validator-patient'
+import { validatePatientSchema } from '@/formik/validators/validator-patient'
 import CustomizedSteppers from '../../../../../components/layoutComponents/stepBar'
 
 interface ModalParams {
@@ -38,7 +38,7 @@ const ModalPatient = ({
   patientSelected,
   loadData,
 }: ModalParams) => {
-  const { onShowFeedBack, user } = useContext(DefaultContext)
+  const { onShowFeedBack } = useContext(DefaultContext)
   const [viewTwo, setViewTwo] = useState(false)
   const [loading, setloading] = useState(false)
   const [loadingData, setLoadingData] = useState(false)
@@ -67,12 +67,6 @@ const ModalPatient = ({
     console.log('[ERROR API /patient]', errorMessage)
   }
 
-  const optionsSex = [
-    { value: 'MALE', text: 'Masculino' },
-    { value: 'FEMALE', text: 'Feminino' },
-    { value: 'OTHER', text: 'Outros' },
-  ]
-
   useEffect(() => {
     setViewTwo(false)
     if (!open) return formik.resetForm()
@@ -85,7 +79,7 @@ const ModalPatient = ({
         email: '',
         birth_date: '',
         objective: '',
-        gender: 'MALE',
+        gender: 'male',
         status: false,
         street: '',
         number: '',
@@ -128,6 +122,14 @@ const ModalPatient = ({
     }
   }, [patientSelected, open])
 
+  function convertDMYtoISO(dateStr: string): string {
+    if (!dateStr) return ''
+    const parts = dateStr.split('/')
+    if (parts.length !== 3) return ''
+    const [day, month, year] = parts
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+  }
+
   const formik = useFormik({
     initialValues: {
       uuid: '',
@@ -137,7 +139,7 @@ const ModalPatient = ({
       phone: '',
       status: false,
       birth_date: '',
-      gender: 'MALE',
+      gender: 'male',
       objective: '',
       street: '',
       number: '',
@@ -147,19 +149,17 @@ const ModalPatient = ({
       state: '',
       zipCode: '',
     },
-    validate: validatPatient,
+    validationSchema: validatePatientSchema,
     onSubmit: async (values) => {
       setloading(true)
       const data: Omit<any, 'id' | 'created_at' | 'updated_at' | 'status'> = {
         document: masks.unmask(values.document),
         phone: masks.unmask(values.phone),
         name: values.name,
-        patient_id: values.uuid,
-        //status: values.status ? 'ACTIVE' : 'INACTIVE',
+        patient_id: values?.uuid ?? null,
         email: values.email,
-        gender: values.gender as 'MALE' | 'FEMALE' | 'OTHER',
-        //objective: values?.objective ?? '',
-        birth_date: values.birth_date,
+        gender: values.gender as 'male' | 'female' | 'other',
+        birth_date: convertDMYtoISO(values.birth_date),
         address: {
           city: values.city,
           complement: values?.complement ?? null,
@@ -231,7 +231,7 @@ const ModalPatient = ({
     formik.setFieldValue('name', '')
     formik.setFieldValue('email', '')
     formik.setFieldValue('phone', '')
-    formik.setFieldValue('gender', '')
+    formik.setFieldValue('gender', 'male')
     formik.setFieldValue('birthDate', '')
     formik.setFieldValue('street', '')
     formik.setFieldValue('zipCode', '')
@@ -299,8 +299,8 @@ const ModalPatient = ({
         <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
           {loadingData ? (
             <div className="flex items-center flex-col justify-center py-6 gap-4">
-              <CircularProgress className="text-3xl dark:text-white" />
-              <p className="text-black dark:text-white font-semibold">
+              <CircularProgress className="text-3xl dark:text-white text-primary" />
+              <p className="text-primary dark:text-white font-semibold">
                 Buscando dados...
               </p>
             </div>
@@ -406,7 +406,6 @@ const ModalPatient = ({
                     value={formik.values.gender}
                     onChange={formik.handleChange}
                     id="gender"
-                    options={optionsSex}
                     styles="dark:text-white"
                     stylesLabel="dark:text-white"
                   />
@@ -438,6 +437,7 @@ const ModalPatient = ({
                         type="button"
                         styles="w-full bg-green-600"
                         title={'Próximo'}
+                        disabled={!formik.isValid}
                         onClick={() => setViewTwo(true)}
                       />
                     )}

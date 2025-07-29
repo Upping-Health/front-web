@@ -10,6 +10,7 @@ import React, { useContext } from 'react'
 import SettingsIcon from '@mui/icons-material/Settings'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import PaymentsIcon from '@mui/icons-material/Payments'
+import { ROLE_PTBR } from '@/utils/types/roles'
 const ProfileDrawer = ({ openMenu, setOpenMenu }: any) => {
   const { user, onLogout } = useContext(DefaultContext)
   const router = useRouter()
@@ -45,7 +46,7 @@ const ProfileDrawer = ({ openMenu, setOpenMenu }: any) => {
             {user?.name}
           </p>
           <p className="text-gray-500 dark:text-gray-400 text-sm">
-            Nutricionista
+            {ROLE_PTBR[user?.role?.name as any]}
           </p>
         </div>
 

@@ -28,9 +28,9 @@ const CardProfile = ({ user }: ICardProfile) => {
           <p className="font-extralight dark:text-white  mr-2">
             {user?.years ?? 0} anos
           </p>
-          {user?.gender === 'FEMALE' ? (
+          {user?.gender === 'female' ? (
             <FemaleIcon className="dark:text-white" />
-          ) : user?.gender === 'MALE' ? (
+          ) : user?.gender === 'male' ? (
             <MaleIcon className="dark:text-white" />
           ) : (
             <TransgenderIcon className="dark:text-white" />

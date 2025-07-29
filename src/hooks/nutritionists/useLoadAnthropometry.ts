@@ -3,7 +3,7 @@ import Patient from '@/interfaces/patient.interface'
 import api from '@/services/api'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
-const useLoadPatients = (hidden: boolean) => {
+const useLoadAnthropometryByUUID = (uuid: string, hidden: boolean) => {
   const { user } = useContext(DefaultContext)
   const [data, setdata] = useState<Patient[]>([])
   const [loading, setloading] = useState<boolean>(true)
@@ -11,7 +11,7 @@ const useLoadPatients = (hidden: boolean) => {
   const loadData = useCallback(async () => {
     try {
       setloading(true)
-      const res = await api.get(`/patients`)
+      const res = await api.get(`/anthropometrics/show/${uuid}`)
       setdata(res?.data?.data)
     } catch (error: any) {
       console.error('[ERROR API] /patients/', error?.response?.data)
@@ -21,10 +21,10 @@ const useLoadPatients = (hidden: boolean) => {
   }, [user])
 
   useEffect(() => {
-    if (!hidden) loadData()
-  }, [loadData, hidden])
+    if (!hidden && uuid) loadData()
+  }, [loadData, hidden, uuid])
 
   return { loading, data, loadData }
 }
 
-export default useLoadPatients
+export default useLoadAnthropometryByUUID

@@ -98,9 +98,9 @@ const PacientesContent = () => {
         header: 'Gênero',
         field: 'gender',
         render: (value: any) =>
-          value === 'MALE'
+          value === 'male'
             ? 'Masculino'
-            : value === 'FEMALE'
+            : value === 'female'
               ? 'Feminino'
               : 'Outros',
       },

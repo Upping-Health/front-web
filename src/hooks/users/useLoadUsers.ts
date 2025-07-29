@@ -5,7 +5,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 const useLoadUsers = (hidden: boolean) => {
   const { user } = useContext(DefaultContext)
   const [data, setdata] = useState<any[]>([])
-  const [loading, setloading] = useState<boolean>(false)
+  const [loading, setloading] = useState<boolean>(true)
 
   const loadData = useCallback(async () => {
     try {

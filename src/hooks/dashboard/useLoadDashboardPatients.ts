@@ -10,7 +10,7 @@ const useLoadDashboardPatients = (hidden: boolean) => {
     totalPatientsActive: 0,
     totalPatientsInactive: 0,
   })
-  const [loading, setloading] = useState<boolean>(false)
+  const [loading, setloading] = useState<boolean>(true)
 
   const loadData = useCallback(async () => {
     try {

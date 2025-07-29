@@ -7,6 +7,7 @@ import { IRole } from '@/interfaces/role.interface'
 import api from '@/services/api'
 import PreFeedBack from '@/utils/feedbackStatus'
 import masks from '@/utils/masks/masks'
+import { ROLE_PTBR } from '@/utils/types/roles'
 import ArticleOutlined from '@mui/icons-material/ArticleOutlined'
 import CalendarMonthOutlined from '@mui/icons-material/CalendarMonthOutlined'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
@@ -145,8 +146,8 @@ const ModalUser = ({
   })
 
   const options = useMemo(
-    () => roles.map((e) => ({ value: e.id, text: e.name })),
-    [roles],
+    () => roles.map((e) => ({ value: e.id, text: ROLE_PTBR[e.name] })),
+    [roles, ROLE_PTBR],
   )
 
   return (

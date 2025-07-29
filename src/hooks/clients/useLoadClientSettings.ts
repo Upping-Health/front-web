@@ -27,7 +27,7 @@ const DEFAULT_SETTINGS: ClientSettings = {
 const useLoadClientSettings = (hidden: boolean) => {
   const { user } = useContext(DefaultContext)
   const [data, setData] = useState<ClientSettings>(DEFAULT_SETTINGS)
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
 
   const loadClientSettings = useCallback(async (): Promise<ClientSettings> => {
     try {

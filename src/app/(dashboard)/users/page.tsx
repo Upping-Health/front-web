@@ -17,6 +17,7 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
 import SupervisorAccountOutlinedIcon from '@mui/icons-material/SupervisorAccountOutlined'
 import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/navigation'
+import { ROLE_PTBR } from '@/utils/types/roles'
 
 const UsersContent = () => {
   const { user, onShowFeedBack } = useContext(DefaultContext)
@@ -64,6 +65,8 @@ const UsersContent = () => {
     [user],
   )
 
+  console.log(data)
+
   const columns = useMemo(
     () => [
       {
@@ -103,7 +106,7 @@ const UsersContent = () => {
       {
         header: 'Função',
         field: 'role',
-        render: (value: any, row: any) => row.role?.name ?? 'N/A',
+        render: (value: any, row: any) => ROLE_PTBR[row?.role?.name],
       },
       {
         header: 'Status',
@@ -116,7 +119,7 @@ const UsersContent = () => {
         ),
       },
     ],
-    [toogleModalOpenWithData, changeStatus],
+    [toogleModalOpenWithData, changeStatus, ROLE_PTBR],
   )
 
   return (
