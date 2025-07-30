@@ -6,23 +6,29 @@ import useLoadAnthropometry from '@/hooks/nutritionists/useLoadAnthropometry'
 import useLoadPatientByUUID from '@/hooks/nutritionists/useLoadPatientById'
 import { Person } from '@mui/icons-material'
 import { CircularProgress } from '@mui/material'
-import { notFound } from 'next/navigation'
-import PatientNotFound from '../../_components/PatientNotFound'
+import { notFound, useRouter } from 'next/navigation'
 import { useCallback } from 'react'
+import PatientNotFound from '../../../_components/PatientNotFound'
+import api from '@/services/api'
 
 interface PageProps {
   params: {
-    id: string
+    patientId: string
+    anthropometryId: string
   }
 }
 
-const AnthropometryPage = ({ params }: PageProps) => {
-  const { data, loadData, loading } = useLoadAnthropometry(params.id, false)
+const AnthropometryCreatePage = ({ params }: PageProps) => {
+  const { data, loadData, loading } = useLoadAnthropometry(
+    params.anthropometryId,
+    false,
+  )
+  const router = useRouter()
   const {
     data: patientData,
     loadData: patientLoadData,
     loading: patientLoading,
-  } = useLoadPatientByUUID(params.id)
+  } = useLoadPatientByUUID(params.patientId)
 
   const LoadingData = ({ label }: { label: string }) => {
     return (
@@ -44,25 +50,13 @@ const AnthropometryPage = ({ params }: PageProps) => {
   return (
     <div className="w-full h-full flex flex-col">
       <TopDash
-        title={patientData?.name ?? 'Paciente'}
+        title={'Avaliação antropométrica'}
         description={''}
         icon={Person}
-        href="/"
-        textBtn="Nova antropometria"
       />
-      <div className="h-full w-full flex gap-4">
-        {loading ? (
-          <LoadingData label="Carregando histórico de antropometria..." />
-        ) : (
-          <TableConsult rowKey="id" data={data} columns={[]} />
-        )}
-
-        <div className="h-full flex justify-end">
-          <MenuConsult />
-        </div>
-      </div>
+      <div className="h-full w-full flex gap-4"></div>
     </div>
   )
 }
 
-export default AnthropometryPage
+export default AnthropometryCreatePage
