@@ -4,7 +4,7 @@ import TopDash from '@/components/layoutComponents/topDash'
 import TableConsult from '@/components/tablesComponents/tableConsult'
 import useLoadAnthropometry from '@/hooks/nutritionists/useLoadAnthropometry'
 import useLoadPatientByUUID from '@/hooks/nutritionists/useLoadPatientById'
-import { Person } from '@mui/icons-material'
+import { Person, Straighten } from '@mui/icons-material'
 import { CircularProgress } from '@mui/material'
 import { notFound } from 'next/navigation'
 import PatientNotFound from '../../_components/PatientNotFound'
@@ -15,6 +15,7 @@ import clsx from 'clsx'
 import LoadingFullScreen from '@/components/layoutComponents/loadingGlobal'
 import { DefaultContext } from '@/contexts/defaultContext'
 import PreFeedBack from '@/utils/feedbackStatus'
+import { SEX_PT_BR } from '@/utils/types/sex'
 
 interface PageProps {
   params: {
@@ -50,50 +51,48 @@ const AnthropometryPage = ({ params }: PageProps) => {
   const handleNewAnthropometry = async () => {
     setIsNavigating(true)
 
+    console.log(patientData)
     try {
       const response = await api.post('/anthropometrics/store', {
-        patient_id: patientData?.id,
-        evaluation_date: new Date().toISOString().substring(0, 10),
-        weight: 75.5,
-        height: 178,
-        waist_circumference: 84.5,
-        hip_circumference: 98.2,
-        neck_circumference: 38.2,
-        body_fat_percentage: null,
-        muscle_mass_percentage: null,
-        observations:
-          'Paciente apresentou boa evolução desde a última avaliação',
+        patient_id: 3, // VER A QUESTÃO DO ID
+        evaluation_date: '2024-01-23',
+        weight: 60.7,
+        height: 169,
+        body_fat_percentage: 6.15,
+        muscle_mass_percentage: 93.85,
+        observations: '1ª Avaliação Física',
         body_fat_method: 'pollock_7',
         skin_fold: {
-          triceps: 12.5,
-          biceps: 8.2,
-          subscapular: 15.3,
-          suprailiac: 10.7,
-          abdominal: 18.1,
-          thigh: 20.5,
-          chest: 9.8,
-          midaxillary: 11.2,
+          triceps: 4.0,
+          biceps: null,
+          subscapular: 7.0,
+          suprailiac: 8.0,
+          abdominal: 9.0,
+          thigh: 7.0,
+          chest: 4.0,
+          midaxillary: 6.0,
         },
         body_circumference: {
-          waist: 84.5,
-          hip: 98.2,
-          neck: 38.2,
-          shoulder: 46.5,
-          chest: 102.0,
-          abdominal: 86.7,
-          relaxed_right_arm: 30.2,
+          waist: 70.0,
+          hip: 88.0,
+          neck: null,
+          shoulder: null,
+          chest: 86.0,
+          abdominal: 73.0,
+          relaxed_right_arm: 27.5,
           contracted_right_arm: 32.0,
-          right_forearm: 27.1,
-          right_proximal_thigh: 58.3,
-          right_mid_thigh: 54.0,
-          right_distal_thigh: 48.5,
-          right_calf: 36.8,
-          relaxed_left_arm: 29.9,
-          contracted_left_arm: 31.5,
-          left_proximal_thigh: 58.0,
-          left_mid_thigh: 53.6,
-          left_distal_thigh: 48.2,
-          left_calf: 36.5,
+          right_forearm: null,
+          right_proximal_thigh: null,
+          right_mid_thigh: 51.0,
+          right_distal_thigh: null,
+          right_calf: 34.0,
+          relaxed_left_arm: 27.5,
+          contracted_left_arm: 32.0,
+          left_forearm: null,
+          left_proximal_thigh: null,
+          left_mid_thigh: 52.5,
+          left_distal_thigh: null,
+          left_calf: 33.0,
         },
       })
 
@@ -128,7 +127,7 @@ const AnthropometryPage = ({ params }: PageProps) => {
     >
       <TopDash
         title={patientData?.name ?? 'Paciente'}
-        description={''}
+        description={`${Math.abs(Number(patientData?.age) || 0).toFixed(0)} anos, ${SEX_PT_BR[patientData?.gender ?? 'male']}`}
         icon={Person}
         onClick={handleNewAnthropometry}
         textBtn="Nova antropmetria"
