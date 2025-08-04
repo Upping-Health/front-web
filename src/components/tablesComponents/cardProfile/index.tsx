@@ -26,7 +26,7 @@ const CardProfile = ({ user }: ICardProfile) => {
         </p>
         <div className="flex items-center">
           <p className="font-extralight dark:text-white  mr-2">
-            {user?.years ?? 0} anos
+            {user?.age ?? 0} anos
           </p>
           {user?.gender === 'female' ? (
             <FemaleIcon className="dark:text-white" />
