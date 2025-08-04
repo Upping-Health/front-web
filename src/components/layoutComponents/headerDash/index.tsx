@@ -59,7 +59,7 @@ const HeaderDash = () => {
       <div className="flex h-14 border-b border-b-gray items-center px-4 py-2 relative bg-white dark:bg-gray-800 dark:border-gray-700 shadow-lg gap-4">
         <div className="flex-grow">
           {currentTime && (
-            <p className="text-sm text-slate-500 dark:text-white">
+            <p className="text-sm text-slate-600 dark:text-white">
               {currentTime}
             </p>
           )}

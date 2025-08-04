@@ -11,7 +11,7 @@ interface ScheduleLabel {
 const useLoadScheduleLabels = (hidden: boolean) => {
   const { user } = useContext(DefaultContext)
   const [data, setData] = useState<ScheduleLabel[]>([])
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
 
   const loadData = useCallback(async () => {
     try {

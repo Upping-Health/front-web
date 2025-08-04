@@ -3,7 +3,7 @@ export const STATUS = {
   ERROR: 'error',
 }
 
-export const ROLE_PTBR = {
+export const STATUS_PTBR = {
   [STATUS.SUCCESS]: 'Sucesso',
   [STATUS.ERROR]: 'Erro',
 }

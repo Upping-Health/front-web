@@ -25,7 +25,7 @@ const AsideFooter = ({ isCollapsed }: { isCollapsed: boolean }) => {
               {user?.name?.substring(0, 17)}
             </p>
             <p className="text-black dark:text-white text-sm font-light">
-              {user?.role?.name ?? 'SuperAdmin'}
+              {ROLE_PTBR[user?.role?.name ?? '']}
             </p>
           </div>
         )}

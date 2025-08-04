@@ -23,7 +23,7 @@
   }
 
   .scroll-custom::-webkit-scrollbar-thumb:hover {
-    background-color: #22b349;
+    background-color: #4b8690;
   }
 
   input[type='time']::-webkit-calendar-picker-indicator,

@@ -6,9 +6,9 @@ export default interface Patient extends DefaultEntityType {
   phone: string
   email: string
   document: string
-  years?: number
+  age: number | null
   birth_date: string
-  gender: 'MALE' | 'FEMALE' | 'OTHER'
+  gender: 'male' | 'female' | 'other'
   status: 'ACTIVE' | 'INACTIVE'
   objective?: string
   address: {

@@ -39,17 +39,29 @@ export default function DefaultProvider({
   })
 
   useEffect(() => {
-    const userStr = localStorage.getItem('user')
-    if (userStr) {
+    const loadUserFromStorage = () => {
+      const userStr = localStorage.getItem('user')
+      if (!userStr) {
+        redirectToLogin()
+        return
+      }
       try {
         const parsedUser = JSON.parse(userStr)
         setUser(parsedUser)
-      } catch {
-        setUser(null)
-        Cookies.remove('token')
-        router.push('/login')
+      } catch (error) {
+        console.error(error)
+        redirectToLogin()
       }
     }
+
+    const redirectToLogin = () => {
+      setUser(null)
+      Cookies.remove('token')
+      localStorage.removeItem('user')
+      router.push('/login')
+    }
+
+    loadUserFromStorage()
   }, [router])
 
   const onShowFeedBack = useCallback(

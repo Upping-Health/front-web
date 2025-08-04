@@ -19,6 +19,7 @@ interface IInputStyled {
   onBlur?: any
   isTouched?: boolean
   stylesLabel?: string
+  highlight?: boolean
 }
 
 const InputStyled = ({
@@ -39,22 +40,25 @@ const InputStyled = ({
   isTouched,
   stylesContainer,
   stylesLabel,
+  highlight,
 }: IInputStyled) => {
   return (
-    <div className={`${stylesContainer ?? ''} flex flex-col `}>
+    <div className={`${stylesContainer ?? ''} flex flex-col`}>
       {label && (
-        <label className={` mb-1 text-darkGray text-sm ${stylesLabel ?? ''}`}>
+        <label className={`mb-1 text-darkGray text-sm ${stylesLabel ?? ''}`}>
           {label}
         </label>
       )}
       <div
-        className={`bg-none border border-solid outline-none border-gray rounded-xl p-2 flex items-center justify-between dark:border-slate-700 ${
-          disabled ? 'bg-customGray' : ''
-        } ${styles ?? ''}`}
+        className={`bg-none relative border border-solid outline-none rounded-xl p-2 flex items-center justify-between
+          border-gray dark:border-slate-700
+          ${disabled ? 'bg-customGray' : ''}
+          ${styles ?? ''}`}
       >
-        <div
-          className={`flex items-center gap-3 w-full ${type === 'color' ? 'justify-center' : ''}`}
-        >
+        {highlight && (
+          <div className="absolute left-0 top-0 bottom-0 w-2 rounded-l-md bg-primary" />
+        )}
+        <div className={`flex items-center gap-3 w-full relative`}>
           {icon}
           <input
             maxLength={maxLength}
@@ -65,7 +69,7 @@ const InputStyled = ({
             type={type}
             placeholder={placeholder}
             onBlur={onBlur}
-            className={`dark:bg-slate-800 outline-none text-black dark:text-white w-full ${stylesInput ?? ''}`}
+            className={`dark:bg-slate-800 outline-none text-black dark:text-white w-full pl-1 ${stylesInput ?? ''}`}
           />
         </div>
       </div>

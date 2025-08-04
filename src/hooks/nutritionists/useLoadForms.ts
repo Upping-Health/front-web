@@ -6,7 +6,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 
 const useLoadForms = (hidden: boolean) => {
   const [data, setdata] = useState<Schedule[]>([])
-  const [loading, setloading] = useState<boolean>(false)
+  const [loading, setloading] = useState<boolean>(true)
 
   const loadData = useCallback(async () => {
     try {

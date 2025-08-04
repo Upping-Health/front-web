@@ -3,28 +3,28 @@ import Patient from '@/interfaces/patient.interface'
 import api from '@/services/api'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
-const useLoadPatientById = (id: string) => {
+const useLoadPatientByUUID = (uuid: string) => {
   const { user } = useContext(DefaultContext)
   const [data, setdata] = useState<Patient | null>(null)
-  const [loading, setloading] = useState<boolean>(false)
+  const [loading, setloading] = useState<boolean>(true)
 
   const loadData = useCallback(async () => {
     try {
       setloading(true)
-      const res = await api.get(`/patients/${id}`)
+      const res = await api.get(`/patients/show/${uuid}`)
       setdata(res?.data?.data)
     } catch (error: any) {
       console.error('[ERROR API] /patients/', error?.response?.data)
     } finally {
       setloading(false)
     }
-  }, [user, id])
+  }, [user, uuid])
 
   useEffect(() => {
-    if (!isNaN(Number(id))) loadData()
-  }, [loadData, id])
+    if (uuid) loadData()
+  }, [loadData, uuid])
 
   return { loading, data, loadData }
 }
 
-export default useLoadPatientById
+export default useLoadPatientByUUID
