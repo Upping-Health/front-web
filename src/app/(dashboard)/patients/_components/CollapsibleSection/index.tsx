@@ -21,7 +21,7 @@ export function CollapsibleSection({
         onClick={() => setOpen(!open)}
         className="flex items-center justify-between cursor-pointer"
       >
-        <h2 className="text-lg font-semibold text-primary">{title}</h2>
+        <h2 className="text-xl font-semibold text-primary">{title}</h2>
 
         <IconButton size="small">
           {open ? (

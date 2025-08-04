@@ -50,6 +50,7 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
     initialValues: {
       weight: 60.7,
       height: 169,
+      evaluation_date: '',
       body_fat_percentage: 6.15,
       muscle_mass_percentage: 93.85,
       observations: '1ª Avaliação Física',
@@ -90,7 +91,6 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
     validationSchema: validateCreateAnthropometry,
     onSubmit: async (values) => {
       try {
-        // TODO: Submissão
       } catch (error) {
         console.error(error)
       }

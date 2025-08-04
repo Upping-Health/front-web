@@ -33,10 +33,11 @@ export interface BodyCircumference {
 }
 
 export interface AnthropometryFormValues {
-  weight: number | ''
-  height: number | ''
-  body_fat_percentage: number | ''
-  muscle_mass_percentage: number | ''
+  evaluation_date: string
+  weight: number
+  height: number
+  body_fat_percentage: number
+  muscle_mass_percentage: number
   observations: string
   body_fat_method: string
   skin_fold: SkinFold

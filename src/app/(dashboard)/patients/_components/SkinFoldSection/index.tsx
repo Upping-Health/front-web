@@ -1,6 +1,7 @@
 import { BodyFatMethodSelector } from '../BodyFatMethodSelector'
 import { CollapsibleSection } from '../CollapsibleSection'
 import { DynamicInputGrid } from '../DynamicInputGrid'
+
 const SKINFOLD_LABELS = [
   { label: 'Tricipital', key: 'triceps' },
   { label: 'Bicipital', key: 'biceps' },
@@ -11,6 +12,24 @@ const SKINFOLD_LABELS = [
   { label: 'Coxa', key: 'thigh' },
   { label: 'Toráxica', key: 'chest' },
 ]
+
+const METHOD_SKINFOLD_MAP: Record<string, string[]> = {
+  pollock_3: ['triceps', 'chest', 'thigh'],
+  pollock_7: [
+    'triceps',
+    'subscapular',
+    'chest',
+    'midaxillary',
+    'abdominal',
+    'thigh',
+    'suprailiac',
+  ],
+  faulkner: ['triceps', 'subscapular', 'suprailiac', 'abdominal'],
+  guedes: ['triceps', 'subscapular', 'suprailiac', 'abdominal'],
+  petroski: ['triceps', 'suprailiac', 'thigh'],
+  durnin: ['triceps', 'biceps', 'subscapular', 'suprailiac'],
+  nenhuma: [],
+}
 
 interface Props {
   values: any
@@ -26,15 +45,20 @@ export const SkinFoldSection = ({
   selectedMethod,
   handleChange,
   handleBlur,
-}: Props) => (
-  <CollapsibleSection title="Dobras cutâneas">
-    <BodyFatMethodSelector selected={selectedMethod} onSelect={setMethod} />
-    <DynamicInputGrid
-      values={values}
-      labels={SKINFOLD_LABELS}
-      prefix="skin_fold"
-      onChange={handleChange}
-      onBlur={handleBlur}
-    />
-  </CollapsibleSection>
-)
+}: Props) => {
+  const activeKeys = METHOD_SKINFOLD_MAP[selectedMethod] || []
+
+  return (
+    <CollapsibleSection title="Dobras cutâneas">
+      <BodyFatMethodSelector selected={selectedMethod} onSelect={setMethod} />
+      <DynamicInputGrid
+        values={values}
+        labels={SKINFOLD_LABELS}
+        prefix="skin_fold"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        highlightKeys={activeKeys}
+      />
+    </CollapsibleSection>
+  )
+}

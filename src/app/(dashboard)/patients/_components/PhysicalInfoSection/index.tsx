@@ -3,10 +3,11 @@ import { CollapsibleSection } from '../CollapsibleSection'
 
 interface Props {
   values: {
-    weight: number | ''
-    height: number | ''
-    body_fat_percentage: number | ''
-    muscle_mass_percentage: number | ''
+    evaluation_date: string
+    weight: number
+    height: number
+    body_fat_percentage: number
+    muscle_mass_percentage: number
     observations: string
   }
   handleChange: (e: React.ChangeEvent<any>) => void
@@ -20,6 +21,17 @@ export const PhysicalInfoSection = ({
 }: Props) => (
   <CollapsibleSection title="Informações Físicas">
     <div className="flex flex-col gap-4">
+      <div className="flex flex-col w-full">
+        <InputStyled
+          id="evaluation_date"
+          label="Data da avaliação"
+          type="date"
+          placeholder="Observações"
+          value={values.evaluation_date}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+      </div>
       <div className="flex gap-4">
         <div className="flex flex-col w-full">
           <InputStyled
