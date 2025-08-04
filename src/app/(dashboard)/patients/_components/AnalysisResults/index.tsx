@@ -24,8 +24,8 @@ export default function AnalysesResults({ title, data }: AnalysesResultsProps) {
             index === data.length - 1 ? 'rounded-b-lg' : ''
           }`}
         >
-          <span className="text-sm">{title}</span>
-          <span className="font-bold text-black text-sm">{value}</span>
+          <span className="text-sm italic">{title}</span>
+          <span className="font-bold text-black text-sm italic">{value}</span>
         </div>
       ))}
     </CollapsibleSection>
