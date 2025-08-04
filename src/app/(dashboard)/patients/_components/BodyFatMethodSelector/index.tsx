@@ -22,7 +22,7 @@ export const BodyFatMethodSelector = ({ selected, onSelect }: Props) => (
         key={value}
         type="button"
         onClick={() => onSelect(value)}
-        styles={`!py-2 border border-primary ${
+        styles={`!py-2 border border-primary text-sm ${
           selected === value ? 'bg-transparent text-primary' : 'bg-primary'
         }`}
         textColor={selected === value ? 'text-primary' : 'text-white'}

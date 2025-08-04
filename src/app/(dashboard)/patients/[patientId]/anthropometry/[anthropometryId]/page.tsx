@@ -17,6 +17,7 @@ import { BodyCircumferenceSection } from '../../../_components/BodyCircumference
 import { validateCreateAnthropometry } from '@/formik/validators/validator-anthroprometry'
 import { AnthropometryFormValues } from '@/interfaces/anthroprometry.interface'
 import MenuConsult from '@/components/consult-components/menu'
+import AnalysisSidebar from '../../../_components/AnalysisSidebar'
 
 interface PageProps {
   params: {
@@ -113,34 +114,37 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
         icon={Straighten}
       />
 
-      <form
-        onSubmit={formik.handleSubmit}
-        className="h-full w-full flex flex-col gap-4 mb-14"
-      >
-        <PhysicalInfoSection
-          values={formik.values}
-          handleChange={formik.handleChange}
-          handleBlur={formik.handleBlur}
-        />
-
-        <SkinFoldSection
-          values={formik.values.skin_fold}
-          selectedMethod={formik.values.body_fat_method}
-          setMethod={(value: any) =>
-            formik.setFieldValue('body_fat_method', value)
-          }
-          handleChange={formik.handleChange}
-          handleBlur={formik.handleBlur}
-        />
-
-        <div className="">
-          <BodyCircumferenceSection
-            values={formik.values.body_circumference}
+      <main className="flex gap-4">
+        <form
+          onSubmit={formik.handleSubmit}
+          className="h-full w-3/4 flex flex-col gap-4 mb-14"
+        >
+          <PhysicalInfoSection
+            values={formik.values}
             handleChange={formik.handleChange}
             handleBlur={formik.handleBlur}
           />
-        </div>
-      </form>
+
+          <SkinFoldSection
+            values={formik.values.skin_fold}
+            selectedMethod={formik.values.body_fat_method}
+            setMethod={(value: any) =>
+              formik.setFieldValue('body_fat_method', value)
+            }
+            handleChange={formik.handleChange}
+            handleBlur={formik.handleBlur}
+          />
+
+          <div className="">
+            <BodyCircumferenceSection
+              values={formik.values.body_circumference}
+              handleChange={formik.handleChange}
+              handleBlur={formik.handleBlur}
+            />
+          </div>
+        </form>
+        <AnalysisSidebar />
+      </main>
     </div>
   )
 }
