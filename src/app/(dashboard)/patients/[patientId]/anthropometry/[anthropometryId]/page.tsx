@@ -143,15 +143,13 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
             handleBlur={formik.handleBlur}
           />
 
-          <div className="">
-            <BodyCircumferenceSection
-              values={formik.values.body_circumference}
-              handleChange={formik.handleChange}
-              handleBlur={formik.handleBlur}
-            />
-          </div>
+          <BodyCircumferenceSection
+            values={formik.values.body_circumference}
+            handleChange={formik.handleChange}
+            handleBlur={formik.handleBlur}
+          />
         </form>
-        <AnalysisSidebar />
+        <AnalysisSidebar values={formik.values} />
       </main>
     </div>
   )

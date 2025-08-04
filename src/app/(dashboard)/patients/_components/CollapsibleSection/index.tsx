@@ -16,7 +16,7 @@ export function CollapsibleSection({
   const [open, setOpen] = useState(defaultOpen)
 
   return (
-    <div className="shadow-sm rounded-xl p-4 mb-4 bg-white">
+    <div className="shadow-sm rounded-xl p-4 bg-white">
       <div
         onClick={() => setOpen(!open)}
         className="flex items-center justify-between cursor-pointer"
