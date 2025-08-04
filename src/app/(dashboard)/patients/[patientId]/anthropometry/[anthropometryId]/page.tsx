@@ -18,6 +18,7 @@ import { validateCreateAnthropometry } from '@/formik/validators/validator-anthr
 import { AnthropometryFormValues } from '@/interfaces/anthroprometry.interface'
 import MenuConsult from '@/components/consult-components/menu'
 import AnalysisSidebar from '../../../_components/AnalysisSidebar'
+import { SEX_PT_BR } from '@/utils/types/sex'
 
 interface PageProps {
   params: {
@@ -119,6 +120,13 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
           onSubmit={formik.handleSubmit}
           className="h-full w-3/4 flex flex-col gap-4 mb-14"
         >
+          <div className="shadow-sm rounded-xl p-4 bg-white">
+            <p className="text-black">Paciente: {patientData?.name}</p>
+            <p className="text-black">Idade: {patientData?.age}</p>
+            <p className="text-black">
+              Gênero: {SEX_PT_BR[patientData?.gender ?? 'male']}
+            </p>
+          </div>
           <PhysicalInfoSection
             values={formik.values}
             handleChange={formik.handleChange}
