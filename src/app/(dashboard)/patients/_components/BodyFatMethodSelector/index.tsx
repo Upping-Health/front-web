@@ -1,0 +1,33 @@
+import ButtonStyled from '@/components/buttonsComponents/button'
+
+interface Props {
+  selected: string
+  onSelect: (value: string) => void
+}
+
+const METHODS = [
+  { label: 'Nenhuma', value: 'nenhuma' },
+  { label: 'Pollock 3', value: 'pollock_3' },
+  { label: 'Pollock 7', value: 'pollock_7' },
+  { label: 'Faulkner', value: 'faulkner' },
+  { label: 'Guedes', value: 'guedes' },
+  { label: 'Petroski', value: 'petroski' },
+  { label: 'Durnin', value: 'durnin' },
+]
+
+export const BodyFatMethodSelector = ({ selected, onSelect }: Props) => (
+  <div className="grid grid-cols-4 gap-2 mb-4">
+    {METHODS.map(({ label, value }) => (
+      <ButtonStyled
+        key={value}
+        type="button"
+        onClick={() => onSelect(value)}
+        styles={`!py-2 border border-primary ${
+          selected === value ? 'bg-transparent text-primary' : 'bg-primary'
+        }`}
+        textColor={selected === value ? 'text-primary' : 'text-white'}
+        title={label}
+      />
+    ))}
+  </div>
+)
