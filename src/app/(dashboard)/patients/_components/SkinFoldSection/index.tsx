@@ -3,30 +3,32 @@ import { CollapsibleSection } from '../CollapsibleSection'
 import { DynamicInputGrid } from '../DynamicInputGrid'
 
 const SKINFOLD_LABELS = [
-  { label: 'Tricipital', key: 'triceps' },
-  { label: 'Bicipital', key: 'biceps' },
-  { label: 'Subescapular', key: 'subscapular' },
-  { label: 'Axilar Média', key: 'midaxillary' },
-  { label: 'Supraespinhal', key: 'suprailiac' },
-  { label: 'Abdominal', key: 'abdominal' },
-  { label: 'Coxa', key: 'thigh' },
-  { label: 'Toráxica', key: 'chest' },
+  { label: 'Tricipital (mm)', key: 'triceps' },
+  { label: 'Bicipital (mm)', key: 'biceps' },
+  { label: 'Subescapular (mm)', key: 'subscapular' },
+  { label: 'Axilar Média (mm)', key: 'midaxillary' },
+  { label: 'Supraespinhal (mm)', key: 'supraspinatus' },
+  { label: 'Toráxica (mm)', key: 'chest' },
+  { label: 'Suprailíaca (mm)', key: 'suprailiac' },
+  { label: 'Abdominal (mm)', key: 'abdominal' },
+  { label: 'Coxa (mm)', key: 'thigh' },
+  { label: 'Panturilha (mm)', key: 'calf' },
 ]
 
 const METHOD_SKINFOLD_MAP: Record<string, string[]> = {
-  pollock_3: ['triceps', 'chest', 'thigh'],
+  pollock_3: ['chest', 'abdominal', 'thigh'],
   pollock_7: [
     'triceps',
     'subscapular',
-    'chest',
     'midaxillary',
+    'chest',
+    'suprailiac',
     'abdominal',
     'thigh',
-    'suprailiac',
   ],
   faulkner: ['triceps', 'subscapular', 'suprailiac', 'abdominal'],
-  guedes: ['triceps', 'subscapular', 'suprailiac', 'abdominal'],
-  petroski: ['triceps', 'suprailiac', 'thigh'],
+  guedes: ['triceps', 'suprailiac', 'abdominal'],
+  petroski: ['triceps', 'subscapular', 'suprailiac', 'calf'],
   durnin: ['triceps', 'biceps', 'subscapular', 'suprailiac'],
   nenhuma: [],
 }

@@ -1,34 +1,52 @@
 import { CollapsibleSection } from '../CollapsibleSection'
 import { DynamicInputGrid } from '../DynamicInputGrid'
 
-const BODY_CIRCUMFERENCE_LABELS = [
-  { label: 'Cintura', key: 'waist' },
-  { label: 'Quadril', key: 'hip' },
-  { label: 'Pescoço', key: 'neck' },
-  { label: 'Ombro', key: 'shoulder' },
-  { label: 'Peito', key: 'chest' },
-  { label: 'Abdômen', key: 'abdominal' },
-  { label: 'Braço Relaxado Direito', key: 'relaxed_right_arm' },
-  { label: 'Braço Contraído Direito', key: 'contracted_right_arm' },
-  { label: 'Antebraço Direito', key: 'right_forearm' },
-  { label: 'Coxa Proximal Direita', key: 'right_proximal_thigh' },
-  { label: 'Coxa Média Direita', key: 'right_mid_thigh' },
-  { label: 'Coxa Distal Direita', key: 'right_distal_thigh' },
-  { label: 'Panturrilha Direita', key: 'right_calf' },
-  { label: 'Braço Relaxado Esquerdo', key: 'relaxed_left_arm' },
-  { label: 'Braço Contraído Esquerdo', key: 'contracted_left_arm' },
-  { label: 'Antebraço Esquerdo', key: 'left_forearm' },
-  { label: 'Coxa Proximal Esquerda', key: 'left_proximal_thigh' },
-  { label: 'Coxa Média Esquerda', key: 'left_mid_thigh' },
-  { label: 'Coxa Distal Esquerda', key: 'left_distal_thigh' },
-  { label: 'Panturrilha Esquerda', key: 'left_calf' },
-]
-
 interface Props {
   values: any
   handleChange: (e: React.ChangeEvent<any>) => void
   handleBlur: (e: React.FocusEvent<any>) => void
 }
+
+const BODY_CIRCUMFERENCE_SECTIONS = [
+  {
+    title: 'Tronco',
+    columns: 2,
+    fields: [
+      { label: 'Pescoço (cm)', key: 'neck' },
+      { label: 'Ombro (cm)', key: 'shoulder' },
+      { label: 'Tórax (cm)', key: 'chest' },
+      { label: 'Abdômen (cm)', key: 'abdominal' },
+      { label: 'Cintura (cm)', key: 'waist' },
+      { label: 'Quadril (cm)', key: 'hip' },
+    ],
+  },
+  {
+    title: 'Membros superiores',
+    columns: 2,
+    fields: [
+      { label: 'Braço Relaxado Esquerdo (cm)', key: 'relaxed_left_arm' },
+      { label: 'Braço Relaxado Direito (cm)', key: 'relaxed_right_arm' },
+      { label: 'Braço Contraído Esquerdo (cm)', key: 'contracted_left_arm' },
+      { label: 'Braço Contraído Direito (cm)', key: 'contracted_right_arm' },
+      { label: 'Antebraço Esquerdo (cm)', key: 'left_forearm' },
+      { label: 'Antebraço Direito (cm)', key: 'right_forearm' },
+    ],
+  },
+  {
+    title: 'Membros inferiores',
+    columns: 2,
+    fields: [
+      { label: 'Coxa Proximal Esquerda (cm)', key: 'left_proximal_thigh' },
+      { label: 'Coxa Proximal Direita (cm)', key: 'right_proximal_thigh' },
+      { label: 'Coxa Média Esquerda (cm)', key: 'left_mid_thigh' },
+      { label: 'Coxa Média Direita (cm)', key: 'right_mid_thigh' },
+      { label: 'Coxa Distal Esquerda (cm)', key: 'left_distal_thigh' },
+      { label: 'Coxa Distal Direita (cm)', key: 'right_distal_thigh' },
+      { label: 'Panturrilha Esquerda (cm)', key: 'left_calf' },
+      { label: 'Panturrilha Direita (cm)', key: 'right_calf' },
+    ],
+  },
+]
 
 export const BodyCircumferenceSection = ({
   values,
@@ -36,13 +54,18 @@ export const BodyCircumferenceSection = ({
   handleBlur,
 }: Props) => (
   <CollapsibleSection title="Circunferências Corporais">
-    <DynamicInputGrid
-      values={values}
-      labels={BODY_CIRCUMFERENCE_LABELS}
-      prefix="body_circumference"
-      onChange={handleChange}
-      onBlur={handleBlur}
-      columns={4}
-    />
+    {BODY_CIRCUMFERENCE_SECTIONS.map(({ title, columns, fields }) => (
+      <div key={title} style={{ marginBottom: '2rem' }}>
+        <p className="text-black font-light mb-2">{title}</p>
+        <DynamicInputGrid
+          values={values}
+          labels={fields}
+          prefix="body_circumference"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          columns={columns}
+        />
+      </div>
+    ))}
   </CollapsibleSection>
 )

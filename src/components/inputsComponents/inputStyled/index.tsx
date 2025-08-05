@@ -56,7 +56,7 @@ const InputStyled = ({
           ${styles ?? ''}`}
       >
         {highlight && (
-          <div className="absolute left-0 top-0 bottom-0 w-2 rounded-l-md bg-primary" />
+          <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-md bg-primary" />
         )}
         <div className={`flex items-center gap-3 w-full relative`}>
           {icon}
