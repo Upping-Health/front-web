@@ -66,6 +66,7 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
         thigh: 7.0,
         chest: 4.0,
         midaxillary: 6.0,
+        calf: 0.0,
       },
       body_circumference: {
         waist: 70.0,
@@ -149,7 +150,7 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
             handleBlur={formik.handleBlur}
           />
         </form>
-        <AnalysisSidebar values={formik.values} />
+        <AnalysisSidebar values={formik.values} patient={patientData} />
       </main>
     </div>
   )

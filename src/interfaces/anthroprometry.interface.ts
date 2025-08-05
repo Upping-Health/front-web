@@ -7,6 +7,7 @@ export interface SkinFold {
   abdominal: number | null
   thigh: number | null
   chest: number | null
+  calf: number | null
 }
 
 export interface BodyCircumference {

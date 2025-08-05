@@ -13,12 +13,13 @@ import { Person, Settings } from '@mui/icons-material'
 
 export const TABS_DASH = {
   DASH: 'dash',
+  USERS: 'users',
   AGENDA: 'agenda',
   PACIENTES: 'pacientes',
+
   //CONSULTA: 'consulta',
   PLANOALIMENTAR: 'planoalimentar',
   FORMS: 'forms',
-  REGISTER: 'registers',
   SETTINGS: 'settings',
 } as const
 
@@ -48,10 +49,10 @@ export const dashboardTabs: Record<TabValue, Tab> = {
     value: TABS_DASH.DASH,
     path: '/dashboard',
   },
-  registers: {
+  users: {
     name: 'Usuários',
     icon: <Person />,
-    value: TABS_DASH.DASH,
+    value: TABS_DASH.USERS,
     path: '/users',
   },
   pacientes: {
@@ -66,24 +67,6 @@ export const dashboardTabs: Record<TabValue, Tab> = {
     value: TABS_DASH.AGENDA,
     path: '/schedule',
   },
-  // consulta: {
-  //   name: 'Consulta',
-  //   icon: <LocalHospitalIcon />,
-  //   value: TABS_DASH.CONSULTA,
-  //   path: '/consult/{id}/anthropometry',
-  //   // children: {
-  //   //   new: {
-  //   //     name: 'Iniciar',
-  //   //     icon: <AddIcon />,
-  //   //     path: '/consult/new',
-  //   //   },
-  //   //   history: {
-  //   //     name: 'Histórico',
-  //   //     icon: <HistoryIcon />,
-  //   //     path: '/consult/history',
-  //   //   },
-  //   // },
-  // },
   planoalimentar: {
     name: 'Alimentos',
     icon: <RestaurantIcon />,

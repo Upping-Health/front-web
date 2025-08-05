@@ -16,7 +16,7 @@ export default function AnalysesResults({ title, data }: AnalysesResultsProps) {
     <CollapsibleSection title={title}>
       {data?.map(({ title, value }, index) => (
         <div
-          key={'title'}
+          key={index}
           className={`flex justify-between px-2 py-2 ${
             index % 2 === 0 ? 'bg-zinc-100' : 'bg-white'
           } ${index === 0 ? 'rounded-t-lg' : ''} ${
