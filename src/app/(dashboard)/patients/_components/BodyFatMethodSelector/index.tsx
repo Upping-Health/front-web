@@ -6,13 +6,13 @@ interface Props {
 }
 
 const METHODS = [
-  { label: 'Nenhuma', value: 'nenhuma', reference: 'Nenhuma' },
-  { label: 'Pollock 3', value: 'pollock_3', reference: 'Pollock 3, 1978' },
-  { label: 'Pollock 7', value: 'pollock_7', reference: 'Pollock 7, 1978' },
-  { label: 'Faulkner', value: 'faulkner', reference: 'Faulkner, 1968' },
-  { label: 'Guedes', value: 'guedes', reference: 'Guedes, 1994' },
-  { label: 'Petroski', value: 'petroski', reference: 'Petroski, 1995' },
-  { label: 'Durnin', value: 'durnin', reference: 'Durnin & Womersley, 1974' },
+  { label: 'Nenhuma', value: 'nenhuma' },
+  { label: 'Pollock 3', value: 'pollock_3' },
+  { label: 'Pollock 7', value: 'pollock_7' },
+  { label: 'Faulkner', value: 'faulkner' },
+  { label: 'Guedes', value: 'guedes' },
+  { label: 'Petroski', value: 'petroski' },
+  { label: 'Durnin', value: 'durnin' },
 ]
 
 export const BodyFatMethodSelector = ({ selected, onSelect }: Props) => (

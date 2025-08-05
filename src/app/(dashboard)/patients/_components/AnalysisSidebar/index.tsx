@@ -9,11 +9,6 @@ import { AnthropometryFormValues } from '@/interfaces/anthroprometry.interface'
 type AnalysisSidebarProps = {
   values: AnthropometryFormValues
 }
-type AnalysisResult = {
-  id: string
-  title: string
-  value?: string | number
-}
 
 export default function AnalysisSidebar({ values }: AnalysisSidebarProps) {
   const { analysisResults, bodyComposition } = useLoadConsultResults(values)
