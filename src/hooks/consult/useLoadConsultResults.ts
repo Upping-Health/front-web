@@ -85,13 +85,21 @@ const useLoadConsultResults = (
 
     let gorduraPercent = values?.body_fat_percentage ?? 0
 
+    let bodyDensity = 'N/A'
+
     if (metodo !== 'nenhuma' && patient?.gender !== 'other') {
-      const percentualCalculado = fatCalculator.calculateBodyFatPercentage(
-        metodo,
-        patient?.gender as Gender,
-        idade,
-        dobras,
-      )
+      const { bodyDensity: densidade, fatPercentage: percentualCalculado } =
+        fatCalculator.calculateBodyFatPercentage(
+          metodo,
+          patient?.gender as Gender,
+          idade,
+          dobras,
+        )
+
+      if (densidade !== null && !isNaN(densidade)) {
+        bodyDensity = densidade.toFixed(3)
+      }
+
       if (percentualCalculado !== null && !isNaN(percentualCalculado)) {
         gorduraPercent = parseFloat(percentualCalculado.toFixed(1))
       }
@@ -139,10 +147,9 @@ const useLoadConsultResults = (
         note: gorduraInterpretation,
       },
       { title: 'Peso de gordura', value: `${pesoGordura} kg` },
-      { title: 'Peso ósseo', value: 'N/A' },
       { title: 'Massa magra', value: `${pesoMusculo} kg` },
       { title: 'Massa Livre de Gordura', value: `${massaLivreGordura} kg` },
-      { title: 'Densidade Corporal', value: 'N/A' },
+      { title: 'Densidade Corporal', value: `${bodyDensity} Kg/L` },
       { title: 'Somatório de dobras', value: `${somaDobras} mm` },
     ]
   }, [
