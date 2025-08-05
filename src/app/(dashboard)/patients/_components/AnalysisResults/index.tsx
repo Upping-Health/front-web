@@ -12,6 +12,7 @@ type AnalysesResultsProps = {
 }
 
 export default function AnalysesResults({ title, data }: AnalysesResultsProps) {
+  console.log(data)
   return (
     <CollapsibleSection title={title}>
       {data?.map(({ title, value }, index) => (
@@ -23,8 +24,10 @@ export default function AnalysesResults({ title, data }: AnalysesResultsProps) {
             index === data.length - 1 ? 'rounded-b-lg' : ''
           }`}
         >
-          <span className="text-sm italic">{title}</span>
-          <span className="font-bold text-black text-sm italic">{value}</span>
+          <span className="text-sm italic">{title ?? 'N/A'}</span>
+          <span className="font-bold text-black text-sm italic">
+            {value ?? 'N/A'}
+          </span>
         </div>
       ))}
     </CollapsibleSection>

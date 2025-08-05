@@ -8,7 +8,11 @@ class CalculateBodyFatPercentag {
     gender: Gender,
     age: number,
     skinFolds: SkinFold,
-  ): { fatPercentage: number | null; bodyDensity: number | null } {
+  ): {
+    fatPercentage: number | null
+    bodyDensity: number | null
+    foldsSum: number
+  } {
     switch (method) {
       case 'pollock_3':
         return this.calculatePollock3(gender, age, skinFolds)
@@ -23,7 +27,7 @@ class CalculateBodyFatPercentag {
       case 'faulkner':
         return this.calculateFaulkner(gender, skinFolds)
       default:
-        return { fatPercentage: null, bodyDensity: null }
+        return { fatPercentage: null, bodyDensity: null, foldsSum: 0 }
     }
   }
 
@@ -31,7 +35,7 @@ class CalculateBodyFatPercentag {
     gender: Gender,
     age: number,
     folds: SkinFold,
-  ): { fatPercentage: number; bodyDensity: number } {
+  ): { fatPercentage: number; bodyDensity: number; foldsSum: number } {
     const sum =
       gender === 'male'
         ? (folds.chest ?? 0) + (folds.abdominal ?? 0) + (folds.thigh ?? 0)
@@ -43,14 +47,14 @@ class CalculateBodyFatPercentag {
         : 1.0994921 - 0.0009929 * sum + 0.0000023 * sum * sum - 0.0001392 * age
 
     const fatPercentage = 495 / bodyDensity - 450
-    return { fatPercentage, bodyDensity }
+    return { fatPercentage, bodyDensity, foldsSum: sum }
   }
 
   private calculatePollock7(
     gender: Gender,
     age: number,
     folds: SkinFold,
-  ): { fatPercentage: number; bodyDensity: number } {
+  ): { fatPercentage: number; bodyDensity: number; foldsSum: number } {
     const sum =
       (folds.chest ?? 0) +
       (folds.abdominal ?? 0) +
@@ -66,14 +70,14 @@ class CalculateBodyFatPercentag {
         : 1.097 - 0.00046971 * sum + 0.00000056 * sum * sum - 0.00012828 * age
 
     const fatPercentage = 495 / bodyDensity - 450
-    return { fatPercentage, bodyDensity }
+    return { fatPercentage, bodyDensity, foldsSum: sum }
   }
 
   private calculatePetroski(
     gender: Gender,
     age: number,
     folds: SkinFold,
-  ): { fatPercentage: number; bodyDensity: number } {
+  ): { fatPercentage: number; bodyDensity: number; foldsSum: number } {
     const sum =
       gender === 'male'
         ? (folds.triceps ?? 0) +
@@ -94,13 +98,14 @@ class CalculateBodyFatPercentag {
         : 1.1954713 - 0.07513507 * Math.log10(sum) - 0.00041072 * age
 
     const fatPercentage = 495 / bodyDensity - 450
-    return { fatPercentage, bodyDensity }
+    return { fatPercentage, bodyDensity, foldsSum: sum }
   }
 
   private calculateGuedes(
     gender: Gender,
     folds: SkinFold,
-  ): { fatPercentage: number; bodyDensity: number } {
+  ): { fatPercentage: number; bodyDensity: number; foldsSum: number } {
+    console.log(gender, folds)
     const sum =
       gender === 'male'
         ? (folds.triceps ?? 0) +
@@ -116,14 +121,14 @@ class CalculateBodyFatPercentag {
         : 1.1665 - 0.07063 * Math.log10(sum)
 
     const fatPercentage = 495 / bodyDensity - 450
-    return { fatPercentage, bodyDensity }
+    return { fatPercentage, bodyDensity, foldsSum: sum }
   }
 
   private calculateDurnin(
     gender: Gender,
     age: number,
     folds: SkinFold,
-  ): { fatPercentage: number; bodyDensity: number } {
+  ): { fatPercentage: number; bodyDensity: number; foldsSum: number } {
     const sum =
       (folds.biceps ?? 0) +
       (folds.triceps ?? 0) +
@@ -159,13 +164,13 @@ class CalculateBodyFatPercentag {
     }
 
     const fatPercentage = 495 / bodyDensity - 450
-    return { fatPercentage, bodyDensity }
+    return { fatPercentage, bodyDensity, foldsSum: sum }
   }
 
   private calculateFaulkner(
     gender: Gender,
     folds: SkinFold,
-  ): { fatPercentage: number; bodyDensity: number } {
+  ): { fatPercentage: number; bodyDensity: number; foldsSum: number } {
     const sum =
       (folds.triceps ?? 0) +
       (folds.subscapular ?? 0) +
@@ -175,7 +180,7 @@ class CalculateBodyFatPercentag {
     const fatPercentage =
       gender === 'male' ? 0.153 * sum + 5.783 : 0.221 * sum - 2.814
 
-    return { fatPercentage, bodyDensity: 0 }
+    return { fatPercentage, bodyDensity: 0, foldsSum: sum }
   }
 }
 

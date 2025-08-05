@@ -51,7 +51,7 @@ const useLoadConsultResults = (
       { title: 'Altura', value: alturaM ? `${alturaM.toFixed(2)} m` : 'N/A' },
       { title: 'Peso', value: peso ? `${peso.toFixed(1)} kg` : 'N/A' },
       { title: 'Peso ideal', value: pesoIdeal },
-      { title: 'IMC', value: imc },
+      { title: 'IMC', value: `${imc} Kg/m²` },
       {
         title: 'Relação cintura-quadril',
         value: relCinturaQuadrilValue,
@@ -72,7 +72,7 @@ const useLoadConsultResults = (
     values.body_circumference?.waist,
     values.body_circumference?.hip,
     values.body_circumference?.relaxed_right_arm,
-    values.skin_fold?.triceps,
+    values?.skin_fold?.triceps,
     values.body_fat_percentage,
     patient?.gender,
   ])
@@ -83,18 +83,25 @@ const useLoadConsultResults = (
     const idade = patient?.age ?? 25
     const metodo = values?.body_fat_method || 'nenhuma'
 
+    console.log(patient)
     let gorduraPercent = values?.body_fat_percentage ?? 0
 
     let bodyDensity = 'N/A'
+    let foldsSum = 0
 
     if (metodo !== 'nenhuma' && patient?.gender !== 'other') {
-      const { bodyDensity: densidade, fatPercentage: percentualCalculado } =
-        fatCalculator.calculateBodyFatPercentage(
-          metodo,
-          patient?.gender as Gender,
-          idade,
-          dobras,
-        )
+      const {
+        bodyDensity: densidade,
+        fatPercentage: percentualCalculado,
+        foldsSum: dobrasSoma,
+      } = fatCalculator.calculateBodyFatPercentage(
+        metodo,
+        patient?.gender as Gender,
+        idade,
+        dobras,
+      )
+
+      foldsSum = dobrasSoma
 
       if (densidade !== null && !isNaN(densidade)) {
         bodyDensity = densidade.toFixed(3)
@@ -111,16 +118,7 @@ const useLoadConsultResults = (
     const pesoMusculo = ((musculoPercent / 100) * peso).toFixed(1)
     const massaLivreGordura = (peso - parseFloat(pesoGordura)).toFixed(1)
 
-    const somaDobras = (
-      (dobras?.triceps ?? 0) +
-      (dobras?.biceps ?? 0) +
-      (dobras?.subscapular ?? 0) +
-      (dobras?.midaxillary ?? 0) +
-      (dobras?.suprailiac ?? 0) +
-      (dobras?.abdominal ?? 0) +
-      (dobras?.thigh ?? 0) +
-      (dobras?.chest ?? 0)
-    ).toFixed(1)
+    const somaDobras = foldsSum.toFixed(1)
 
     const methodReference = METHOD_PT_BR[metodo] || 'Não informado'
 
