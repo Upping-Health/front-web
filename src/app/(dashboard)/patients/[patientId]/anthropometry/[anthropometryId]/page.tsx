@@ -106,52 +106,66 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
     },
   })
 
-  // useEffect(() => {
-  //   if (dataAnthropometry) {
-  //     formik.setValues({
-  //       evaluation_date: dataAnthropometry.evaluation_date || new Date().toISOString().split('T')[0],
-  //       weight: dataAnthropometry.weight,
-  //       height: dataAnthropometry.height,
-  //       body_fat_percentage: dataAnthropometry.body_fat_percentage,
-  //       muscle_mass_percentage: dataAnthropometry.muscle_mass_percentage,
-  //       observations: dataAnthropometry.observations,
-  //       body_fat_method: dataAnthropometry.body_fat_method,
-  //       skin_fold: {
-  //         triceps: dataAnthropometry.skin_fold?.triceps || 0,
-  //         biceps: dataAnthropometry.skin_fold?.biceps || 0,
-  //         subscapular: dataAnthropometry.skin_fold?.subscapular || 0,
-  //         suprailiac: dataAnthropometry.skin_fold?.suprailiac || 0,
-  //         abdominal: dataAnthropometry.skin_fold?.abdominal || 0,
-  //         thigh: dataAnthropometry.skin_fold?.thigh || 0,
-  //         chest: dataAnthropometry.skin_fold?.chest || 0,
-  //         midaxillary: dataAnthropometry.skin_fold?.midaxillary || 0,
-  //         calf: dataAnthropometry.skin_fold?.calf || 0,
-  //       },
-  //       body_circumference: {
-  //         waist: dataAnthropometry.body_circumference?.waist || 0,
-  //         hip: dataAnthropometry.body_circumference?.hip || 0,
-  //         neck: dataAnthropometry.body_circumference?.neck ?? null,
-  //         shoulder: dataAnthropometry.body_circumference?.shoulder ?? null,
-  //         chest: dataAnthropometry.body_circumference?.chest || 0,
-  //         abdominal: dataAnthropometry.body_circumference?.abdominal || 0,
-  //         relaxed_right_arm: dataAnthropometry.body_circumference?.relaxed_right_arm || 0,
-  //         contracted_right_arm: dataAnthropometry.body_circumference?.contracted_right_arm || 0,
-  //         right_forearm: dataAnthropometry.body_circumference?.right_forearm ?? null,
-  //         right_proximal_thigh: dataAnthropometry.body_circumference?.right_proximal_thigh ?? null,
-  //         right_mid_thigh: dataAnthropometry.body_circumference?.right_mid_thigh || 0,
-  //         right_distal_thigh: dataAnthropometry.body_circumference?.right_distal_thigh ?? null,
-  //         right_calf: dataAnthropometry.body_circumference?.right_calf || 0,
-  //         relaxed_left_arm: dataAnthropometry.body_circumference?.relaxed_left_arm || 0,
-  //         contracted_left_arm: dataAnthropometry.body_circumference?.contracted_left_arm || 0,
-  //         left_forearm: dataAnthropometry.body_circumference?.left_forearm ?? null,
-  //         left_proximal_thigh: dataAnthropometry.body_circumference?.left_proximal_thigh ?? null,
-  //         left_mid_thigh: dataAnthropometry.body_circumference?.left_mid_thigh || 0,
-  //         left_distal_thigh: dataAnthropometry.body_circumference?.left_distal_thigh ?? null,
-  //         left_calf: dataAnthropometry.body_circumference?.left_calf || 0,
-  //       },
-  //     });
-  //   }
-  // }, [dataAnthropometry]);
+  useEffect(() => {
+    if (dataAnthropometry) {
+      formik.setValues({
+        evaluation_date:
+          dataAnthropometry.evaluation_date ||
+          new Date().toISOString().split('T')[0],
+        weight: dataAnthropometry.weight,
+        height: dataAnthropometry.height,
+        body_fat_percentage: dataAnthropometry.body_fat_percentage,
+        muscle_mass_percentage: dataAnthropometry.muscle_mass_percentage,
+        observations: dataAnthropometry.observations,
+        body_fat_method: dataAnthropometry.body_fat_method,
+        skin_fold: {
+          triceps: dataAnthropometry.skin_fold?.triceps || 0,
+          biceps: dataAnthropometry.skin_fold?.biceps || 0,
+          subscapular: dataAnthropometry.skin_fold?.subscapular || 0,
+          suprailiac: dataAnthropometry.skin_fold?.suprailiac || 0,
+          abdominal: dataAnthropometry.skin_fold?.abdominal || 0,
+          thigh: dataAnthropometry.skin_fold?.thigh || 0,
+          chest: dataAnthropometry.skin_fold?.chest || 0,
+          midaxillary: dataAnthropometry.skin_fold?.midaxillary || 0,
+          calf: dataAnthropometry.skin_fold?.calf || 0,
+        },
+        body_circumference: {
+          waist: dataAnthropometry.body_circumference?.waist || 0,
+          hip: dataAnthropometry.body_circumference?.hip || 0,
+          neck: dataAnthropometry.body_circumference?.neck ?? null,
+          shoulder: dataAnthropometry.body_circumference?.shoulder ?? null,
+          chest: dataAnthropometry.body_circumference?.chest || 0,
+          abdominal: dataAnthropometry.body_circumference?.abdominal || 0,
+          relaxed_right_arm:
+            dataAnthropometry.body_circumference?.relaxed_right_arm || 0,
+          contracted_right_arm:
+            dataAnthropometry.body_circumference?.contracted_right_arm || 0,
+          right_forearm:
+            dataAnthropometry.body_circumference?.right_forearm ?? null,
+          right_proximal_thigh:
+            dataAnthropometry.body_circumference?.right_proximal_thigh ?? null,
+          right_mid_thigh:
+            dataAnthropometry.body_circumference?.right_mid_thigh || 0,
+          right_distal_thigh:
+            dataAnthropometry.body_circumference?.right_distal_thigh ?? null,
+          right_calf: dataAnthropometry.body_circumference?.right_calf || 0,
+          relaxed_left_arm:
+            dataAnthropometry.body_circumference?.relaxed_left_arm || 0,
+          contracted_left_arm:
+            dataAnthropometry.body_circumference?.contracted_left_arm || 0,
+          left_forearm:
+            dataAnthropometry.body_circumference?.left_forearm ?? null,
+          left_proximal_thigh:
+            dataAnthropometry.body_circumference?.left_proximal_thigh ?? null,
+          left_mid_thigh:
+            dataAnthropometry.body_circumference?.left_mid_thigh || 0,
+          left_distal_thigh:
+            dataAnthropometry.body_circumference?.left_distal_thigh ?? null,
+          left_calf: dataAnthropometry.body_circumference?.left_calf || 0,
+        },
+      })
+    }
+  }, [dataAnthropometry])
 
   if (loading || patientLoading) {
     return <LoadingData label="Carregando dados do paciente..." />
