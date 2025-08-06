@@ -19,6 +19,7 @@ import { AnthropometryFormValues } from '@/interfaces/anthroprometry.interface'
 import MenuConsult from '@/components/consult-components/menu'
 import AnalysisSidebar from '../../../_components/AnalysisSidebar'
 import { SEX_PT_BR } from '@/utils/types/sex'
+import { useState } from 'react'
 
 interface PageProps {
   params: {
@@ -28,6 +29,7 @@ interface PageProps {
 }
 
 const AnthropometryCreatePage = ({ params }: PageProps) => {
+  const [apiLoading, setApiLoading] = useState<boolean>()
   const {
     data: dataAnthropometry,
     loadData,
@@ -50,16 +52,16 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
 
   const formik = useFormik<AnthropometryFormValues>({
     initialValues: {
+      evaluation_date: '',
       weight: 60.7,
       height: 169,
-      evaluation_date: '',
       body_fat_percentage: 6.15,
       muscle_mass_percentage: 93.85,
       observations: '1ª Avaliação Física',
       body_fat_method: 'pollock_7',
       skin_fold: {
         triceps: 4.0,
-        biceps: null,
+        biceps: 0.0,
         subscapular: 7.0,
         suprailiac: 8.0,
         abdominal: 9.0,
@@ -150,7 +152,10 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
             handleBlur={formik.handleBlur}
           />
         </form>
-        <AnalysisSidebar values={formik.values} patient={patientData} />
+
+        <div className="w-2/4 h-fit sticky top-6">
+          <AnalysisSidebar values={formik.values} patient={patientData} />
+        </div>
       </main>
     </div>
   )
