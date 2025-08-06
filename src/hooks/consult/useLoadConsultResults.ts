@@ -21,8 +21,8 @@ const useLoadConsultResults = (
   const fatCalculator = useMemo(() => new CalculateBodyFatPercentag(), [])
 
   const analysisResults = useMemo<Results[]>(() => {
-    const alturaM = values?.height ? values.height / 100 : 0
-    const peso = values?.weight ?? 0
+    const alturaM = Number(values?.height) ? Number(values.height) / 100 : 0
+    const peso = Number(values?.weight) ?? 0
 
     const imc = alturaM > 0 ? (peso / alturaM ** 2).toFixed(1) : 'N/A'
     const pesoIdealMin = alturaM > 0 ? (18.5 * alturaM ** 2).toFixed(1) : 'N/A'
@@ -30,8 +30,8 @@ const useLoadConsultResults = (
     const pesoIdeal =
       alturaM > 0 ? `${pesoIdealMin} a ${pesoIdealMax} kg` : 'N/A'
 
-    const cintura = values?.body_circumference?.waist ?? 0
-    const quadril = values?.body_circumference?.hip ?? 1
+    const cintura = Number(values?.body_circumference?.waist) ?? 0
+    const quadril = Number(values?.body_circumference?.hip) ?? 1
     const relCinturaQuadrilValue = (cintura / quadril).toFixed(2)
 
     let rcqInterpretation = ''
@@ -43,8 +43,8 @@ const useLoadConsultResults = (
         parseFloat(relCinturaQuadrilValue) < 0.85 ? 'Normal' : 'Alto risco'
     }
 
-    const bracoRel = values?.body_circumference?.relaxed_right_arm ?? 0
-    const triceps = values?.skin_fold?.triceps ?? 0
+    const bracoRel = Number(values?.body_circumference?.relaxed_right_arm) ?? 0
+    const triceps = Number(values?.skin_fold?.triceps) ?? 0
     const cmb = (bracoRel - (3.14 * triceps) / 10).toFixed(1)
 
     return [
@@ -60,8 +60,8 @@ const useLoadConsultResults = (
       {
         title: 'Gordura Corporal',
         value:
-          values?.body_fat_percentage !== undefined
-            ? `${values.body_fat_percentage}%`
+          Number(values?.body_fat_percentage) !== undefined
+            ? `${Number(values.body_fat_percentage)}%`
             : 'N/A',
       },
       { title: 'CMB (circunferência muscular do braço)', value: `${cmb} cm` },
@@ -78,13 +78,12 @@ const useLoadConsultResults = (
   ])
 
   const bodyComposition = useMemo<Results[]>(() => {
-    const peso = values?.weight ?? 0
+    const peso = Number(values?.weight) ?? 0
     const dobras = values?.skin_fold || {}
-    const idade = patient?.age ?? 25
+    const idade = Number(patient?.age) ?? 25
     const metodo = values?.body_fat_method || 'nenhuma'
 
-    console.log(patient)
-    let gorduraPercent = values?.body_fat_percentage ?? 0
+    let gorduraPercent = Number(values?.body_fat_percentage) ?? 0
 
     let bodyDensity = 'N/A'
     let foldsSum = 0
@@ -112,7 +111,7 @@ const useLoadConsultResults = (
       }
     }
 
-    const musculoPercent = values?.muscle_mass_percentage ?? 0
+    const musculoPercent = Number(values?.muscle_mass_percentage) ?? 0
 
     const pesoGordura = ((gorduraPercent / 100) * peso).toFixed(1)
     const pesoMusculo = ((musculoPercent / 100) * peso).toFixed(1)

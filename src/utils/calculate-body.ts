@@ -3,6 +3,15 @@ import { SkinFold } from '@/interfaces/anthroprometryFormValues.interface'
 export type Gender = 'male' | 'female'
 
 class CalculateBodyFatPercentag {
+  private toNumber(value: number | string | undefined | null): number {
+    const n = Number(value)
+    return isNaN(n) ? 0 : n
+  }
+
+  private sumFolds(...values: (number | string | undefined | null)[]): number {
+    return values.reduce<number>((acc, val) => acc + this.toNumber(val), 0)
+  }
+
   calculateBodyFatPercentage(
     method: string,
     gender: Gender,
@@ -31,15 +40,11 @@ class CalculateBodyFatPercentag {
     }
   }
 
-  private calculatePollock3(
-    gender: Gender,
-    age: number,
-    folds: SkinFold,
-  ): { fatPercentage: number; bodyDensity: number; foldsSum: number } {
+  private calculatePollock3(gender: Gender, age: number, folds: SkinFold) {
     const sum =
       gender === 'male'
-        ? (folds.chest ?? 0) + (folds.abdominal ?? 0) + (folds.thigh ?? 0)
-        : (folds.triceps ?? 0) + (folds.suprailiac ?? 0) + (folds.thigh ?? 0)
+        ? this.sumFolds(folds.chest, folds.abdominal, folds.thigh)
+        : this.sumFolds(folds.triceps, folds.suprailiac, folds.thigh)
 
     const bodyDensity =
       gender === 'male'
@@ -50,19 +55,16 @@ class CalculateBodyFatPercentag {
     return { fatPercentage, bodyDensity, foldsSum: sum }
   }
 
-  private calculatePollock7(
-    gender: Gender,
-    age: number,
-    folds: SkinFold,
-  ): { fatPercentage: number; bodyDensity: number; foldsSum: number } {
-    const sum =
-      (folds.chest ?? 0) +
-      (folds.abdominal ?? 0) +
-      (folds.thigh ?? 0) +
-      (folds.triceps ?? 0) +
-      (folds.subscapular ?? 0) +
-      (folds.suprailiac ?? 0) +
-      (folds.midaxillary ?? 0)
+  private calculatePollock7(gender: Gender, age: number, folds: SkinFold) {
+    const sum = this.sumFolds(
+      folds.chest,
+      folds.abdominal,
+      folds.thigh,
+      folds.triceps,
+      folds.subscapular,
+      folds.suprailiac,
+      folds.midaxillary,
+    )
 
     const bodyDensity =
       gender === 'male'
@@ -73,21 +75,21 @@ class CalculateBodyFatPercentag {
     return { fatPercentage, bodyDensity, foldsSum: sum }
   }
 
-  private calculatePetroski(
-    gender: Gender,
-    age: number,
-    folds: SkinFold,
-  ): { fatPercentage: number; bodyDensity: number; foldsSum: number } {
+  private calculatePetroski(gender: Gender, age: number, folds: SkinFold) {
     const sum =
       gender === 'male'
-        ? (folds.triceps ?? 0) +
-          (folds.subscapular ?? 0) +
-          (folds.suprailiac ?? 0) +
-          (folds.calf ?? 0)
-        : (folds.midaxillary ?? 0) +
-          (folds.suprailiac ?? 0) +
-          (folds.calf ?? 0) +
-          (folds.thigh ?? 0)
+        ? this.sumFolds(
+            folds.triceps,
+            folds.subscapular,
+            folds.suprailiac,
+            folds.calf,
+          )
+        : this.sumFolds(
+            folds.midaxillary,
+            folds.suprailiac,
+            folds.calf,
+            folds.thigh,
+          )
 
     const bodyDensity =
       gender === 'male'
@@ -101,19 +103,11 @@ class CalculateBodyFatPercentag {
     return { fatPercentage, bodyDensity, foldsSum: sum }
   }
 
-  private calculateGuedes(
-    gender: Gender,
-    folds: SkinFold,
-  ): { fatPercentage: number; bodyDensity: number; foldsSum: number } {
-    console.log(gender, folds)
+  private calculateGuedes(gender: Gender, folds: SkinFold) {
     const sum =
       gender === 'male'
-        ? (folds.triceps ?? 0) +
-          (folds.abdominal ?? 0) +
-          (folds.suprailiac ?? 0)
-        : (folds.subscapular ?? 0) +
-          (folds.suprailiac ?? 0) +
-          (folds.thigh ?? 0)
+        ? this.sumFolds(folds.triceps, folds.abdominal, folds.suprailiac)
+        : this.sumFolds(folds.subscapular, folds.suprailiac, folds.thigh)
 
     const bodyDensity =
       gender === 'male'
@@ -124,58 +118,41 @@ class CalculateBodyFatPercentag {
     return { fatPercentage, bodyDensity, foldsSum: sum }
   }
 
-  private calculateDurnin(
-    gender: Gender,
-    age: number,
-    folds: SkinFold,
-  ): { fatPercentage: number; bodyDensity: number; foldsSum: number } {
-    const sum =
-      (folds.biceps ?? 0) +
-      (folds.triceps ?? 0) +
-      (folds.subscapular ?? 0) +
-      (folds.suprailiac ?? 0)
-
+  private calculateDurnin(gender: Gender, age: number, folds: SkinFold) {
+    const sum = this.sumFolds(
+      folds.biceps,
+      folds.triceps,
+      folds.subscapular,
+      folds.suprailiac,
+    )
     let bodyDensity: number
 
     if (gender === 'male') {
-      if (age >= 17 && age <= 19) {
-        bodyDensity = 1.162 - 0.063 * Math.log10(sum)
-      } else if (age >= 20 && age <= 29) {
-        bodyDensity = 1.1631 - 0.0632 * Math.log10(sum)
-      } else if (age >= 30 && age <= 39) {
-        bodyDensity = 1.1422 - 0.0544 * Math.log10(sum)
-      } else if (age >= 40 && age <= 49) {
-        bodyDensity = 1.162 - 0.07 * Math.log10(sum)
-      } else {
-        bodyDensity = 1.1715 - 0.0779 * Math.log10(sum)
-      }
+      if (age >= 17 && age <= 19) bodyDensity = 1.162 - 0.063 * Math.log10(sum)
+      else if (age <= 29) bodyDensity = 1.1631 - 0.0632 * Math.log10(sum)
+      else if (age <= 39) bodyDensity = 1.1422 - 0.0544 * Math.log10(sum)
+      else if (age <= 49) bodyDensity = 1.162 - 0.07 * Math.log10(sum)
+      else bodyDensity = 1.1715 - 0.0779 * Math.log10(sum)
     } else {
-      if (age >= 17 && age <= 19) {
+      if (age >= 17 && age <= 19)
         bodyDensity = 1.1549 - 0.0678 * Math.log10(sum)
-      } else if (age >= 20 && age <= 29) {
-        bodyDensity = 1.1599 - 0.0717 * Math.log10(sum)
-      } else if (age >= 30 && age <= 39) {
-        bodyDensity = 1.1423 - 0.0632 * Math.log10(sum)
-      } else if (age >= 40 && age <= 49) {
-        bodyDensity = 1.1333 - 0.0612 * Math.log10(sum)
-      } else {
-        bodyDensity = 1.1339 - 0.0645 * Math.log10(sum)
-      }
+      else if (age <= 29) bodyDensity = 1.1599 - 0.0717 * Math.log10(sum)
+      else if (age <= 39) bodyDensity = 1.1423 - 0.0632 * Math.log10(sum)
+      else if (age <= 49) bodyDensity = 1.1333 - 0.0612 * Math.log10(sum)
+      else bodyDensity = 1.1339 - 0.0645 * Math.log10(sum)
     }
 
     const fatPercentage = 495 / bodyDensity - 450
     return { fatPercentage, bodyDensity, foldsSum: sum }
   }
 
-  private calculateFaulkner(
-    gender: Gender,
-    folds: SkinFold,
-  ): { fatPercentage: number; bodyDensity: number; foldsSum: number } {
-    const sum =
-      (folds.triceps ?? 0) +
-      (folds.subscapular ?? 0) +
-      (folds.abdominal ?? 0) +
-      (folds.suprailiac ?? 0)
+  private calculateFaulkner(gender: Gender, folds: SkinFold) {
+    const sum = this.sumFolds(
+      folds.triceps,
+      folds.subscapular,
+      folds.abdominal,
+      folds.suprailiac,
+    )
 
     const fatPercentage =
       gender === 'male' ? 0.153 * sum + 5.783 : 0.221 * sum - 2.814
