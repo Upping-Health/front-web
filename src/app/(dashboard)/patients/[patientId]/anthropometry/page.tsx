@@ -1,21 +1,21 @@
 'use client'
 import MenuConsult from '@/components/consult-components/menu'
-import TopDash from '@/components/layoutComponents/topDash'
-import TableConsult from '@/components/tablesComponents/tableConsult'
-import useLoadAnthropometry from '@/hooks/nutritionists/useLoadAnthropometry'
-import useLoadPatientByUUID from '@/hooks/nutritionists/useLoadPatientById'
-import { Person, Straighten } from '@mui/icons-material'
-import { CircularProgress } from '@mui/material'
-import { notFound } from 'next/navigation'
-import PatientNotFound from '../../_components/PatientNotFound'
-import { useCallback, useContext, useState } from 'react'
-import api from '@/services/api'
-import { useRouter } from 'next/navigation'
-import clsx from 'clsx'
 import LoadingFullScreen from '@/components/layoutComponents/loadingGlobal'
+import TopDash from '@/components/layoutComponents/topDash'
+import ProfileRounded from '@/components/profileRounded'
+import TableDash from '@/components/tablesComponents/tableDash'
 import { DefaultContext } from '@/contexts/defaultContext'
+import useLoadAnthropometryByPatient from '@/hooks/nutritionists/useLoadAnthropometryByPatient'
+import useLoadPatientByUUID from '@/hooks/nutritionists/useLoadPatientById'
+import api from '@/services/api'
 import PreFeedBack from '@/utils/feedbackStatus'
 import { SEX_PT_BR } from '@/utils/types/sex'
+import { Person } from '@mui/icons-material'
+import { CircularProgress } from '@mui/material'
+import dateFormat from 'dateformat'
+import { useRouter } from 'next/navigation'
+import { useContext, useMemo, useState } from 'react'
+import PatientNotFound from '../../_components/PatientNotFound'
 
 interface PageProps {
   params: {
@@ -27,7 +27,7 @@ const AnthropometryPage = ({ params }: PageProps) => {
   const { onShowFeedBack } = useContext(DefaultContext)
   const [isNavigating, setIsNavigating] = useState(false)
 
-  const { data, loadData, loading } = useLoadAnthropometry(
+  const { data, loadData, loading } = useLoadAnthropometryByPatient(
     params.patientId,
     false,
   )
@@ -48,6 +48,38 @@ const AnthropometryPage = ({ params }: PageProps) => {
     )
   }
 
+  const columns = useMemo(
+    () => [
+      {
+        header: '#',
+        field: 'photo',
+        render: (_: any, row: any) => <ProfileRounded user={row?.patient} />,
+      },
+      {
+        header: 'Data da avaliação',
+        field: 'evaluation_date',
+        render: (value: any) => {
+          const date = new Date(value)
+          return dateFormat(date, 'dd/mm/yyyy')
+        },
+      },
+      {
+        header: 'Data da atualização',
+        field: 'updated_at',
+        render: (value: any) => {
+          const date = new Date(value)
+          return dateFormat(date, 'dd/mm/yyyy')
+        },
+      },
+      {
+        header: 'Observação',
+        field: 'observations',
+      },
+    ],
+    [],
+  )
+
+  console.log(data)
   const handleNewAnthropometry = async () => {
     setIsNavigating(true)
 
@@ -120,7 +152,6 @@ const AnthropometryPage = ({ params }: PageProps) => {
     return <PatientNotFound />
   }
 
-  console.log(data)
   return (
     <div
       className={'w-full h-full flex flex-col transition-opacity duration-300'}
@@ -137,7 +168,7 @@ const AnthropometryPage = ({ params }: PageProps) => {
         {loading ? (
           <LoadingData label="Carregando histórico de antropometria..." />
         ) : (
-          <TableConsult rowKey="id" data={[]} columns={[]} />
+          <TableDash search={false} rowKey="id" data={data} columns={columns} />
         )}
 
         <div className="h-full flex justify-end">
