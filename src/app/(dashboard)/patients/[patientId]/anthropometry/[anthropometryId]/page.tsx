@@ -232,36 +232,54 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
           onSubmit={formik.handleSubmit}
           className="h-full w-3/4 flex flex-col gap-4 mb-14"
         >
-          <div className="flex items-center justify-between shadow-sm rounded-xl p-4 bg-white">
-            <div className="flex flex-col justify-between">
-              <p className="text-black text-sm">
-                Paciente: {patientData?.name}
-              </p>
-              <p className="text-black text-sm">Idade: {patientData?.age}</p>
-              <p className="text-black text-sm">
-                Gênero: {SEX_PT_BR[patientData?.gender ?? 'male']}
-              </p>
+          <div className="flex items-center justify-between shadow-sm rounded-xl p-4 bg-white dark:bg-gray-800">
+            <div className="flex flex-col">
+              <div>
+                <span className="font-semibold text-gray-700 dark:text-gray-300">
+                  Nome:
+                </span>{' '}
+                <span className="text-gray-900 dark:text-white font-light">
+                  {patientData?.name}
+                </span>
+              </div>
+              <div>
+                <span className="font-semibold text-gray-700 dark:text-gray-300">
+                  Idade:
+                </span>{' '}
+                <span className="text-gray-900 dark:text-white font-light">
+                  {patientData?.age ?? 1} anos
+                </span>
+              </div>
+              <div>
+                <span className="font-semibold text-gray-700 dark:text-gray-300">
+                  Gênero:
+                </span>{' '}
+                <span className="text-gray-900 dark:text-white font-light">
+                  {SEX_PT_BR[patientData?.gender ?? 'male']}
+                </span>
+              </div>
             </div>
 
-            <div className="flex items-center flex-col justify-center">
+            <div className="flex flex-col items-center justify-center">
               <ButtonStyled
                 type="submit"
                 disabled={apiLoading || !formik.isValid}
-                styles={`w-[150px] ${
-                  apiLoading ? 'bg-darkGray' : 'bg-green-600'
+                styles={`w-[160px] py-2 ${
+                  apiLoading
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-green-600 hover:bg-green-700'
                 }`}
-                title={apiLoading ? 'Salvando...' : `Salvar`}
+                title={apiLoading ? 'Salvando...' : 'Salvar'}
                 icon={
                   apiLoading && (
-                    <CircularProgress
-                      style={{ width: 20, height: 20, color: '#FFFFFF' }}
-                    />
+                    <CircularProgress size={20} style={{ color: '#fff' }} />
                   )
                 }
               />
               {!apiLoading && (
-                <p className="text-xs text-gray-500 mt-1">
-                  Salvando automaticamente em {countdown}s...
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  Salvando automaticamente em{' '}
+                  <span className="font-semibold">{countdown}s</span>...
                 </p>
               )}
             </div>
