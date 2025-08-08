@@ -1,7 +1,6 @@
 import * as Yup from 'yup'
 
 export const validateCreateAnthropometry = Yup.object().shape({
-  patient_id: Yup.number().required('Selecione um paciente'),
   evaluation_date: Yup.string().required('Informe a data da avaliação'),
   weight: Yup.number().required('Informe o peso').moreThan(0, 'Peso inválido'),
   height: Yup.number()
@@ -17,7 +16,15 @@ export const validateCreateAnthropometry = Yup.object().shape({
 
   body_fat_method: Yup.string()
     .oneOf(
-      ['pollock3', 'pollock7', 'parrillo', 'yuhasz', 'petroski'],
+      [
+        'nenhuma',
+        'pollock_3',
+        'pollock_7',
+        'faulkner',
+        'guedes',
+        'petroski',
+        'durin',
+      ],
       'Método inválido',
     )
     .required('Selecione um método'),
@@ -35,7 +42,7 @@ export const validateCreateAnthropometry = Yup.object().shape({
   }),
 
   body_circumference: Yup.object().shape({
-    waist: Yup.number().nullable().min(0, 'Valor inválido'),
+    waist: Yup.number().required().min(0, 'Valor inválido'),
     hip: Yup.number().nullable().min(0, 'Valor inválido'),
     abdomen: Yup.number().nullable().min(0, 'Valor inválido'),
     right_thigh: Yup.number().nullable().min(0, 'Valor inválido'),

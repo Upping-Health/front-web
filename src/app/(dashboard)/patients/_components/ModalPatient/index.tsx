@@ -100,13 +100,14 @@ const ModalPatient = ({
         gender,
         objective,
         address,
+        status,
       } = patientSelected
       formik.setValues({
         uuid: '',
         name: name,
         document: document,
         phone,
-        status: 'ACTIVE' ? true : false,
+        status: status === 'ACTIVE' ? true : false,
         objective: objective ? objective : '',
         email,
         birth_date: birth_date,

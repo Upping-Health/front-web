@@ -19,8 +19,11 @@ import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.i
 import MenuConsult from '@/components/consult-components/menu'
 import AnalysisSidebar from '../../../_components/AnalysisSidebar'
 import { SEX_PT_BR } from '@/utils/types/sex'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState, useRef } from 'react'
 import api from '@/services/api'
+import ButtonStyled from '@/components/buttonsComponents/button'
+import { DefaultContext } from '@/contexts/defaultContext'
+import PreFeedBack from '@/utils/feedbackStatus'
 
 interface PageProps {
   params: {
@@ -30,7 +33,11 @@ interface PageProps {
 }
 
 const AnthropometryCreatePage = ({ params }: PageProps) => {
-  const [apiLoading, setApiLoading] = useState<boolean>()
+  const { onShowFeedBack } = useContext(DefaultContext)
+  const [apiLoading, setApiLoading] = useState(false)
+  const [countdown, setCountdown] = useState(60)
+  const countdownRef = useRef(60)
+
   const {
     data: dataAnthropometry,
     loadData,
@@ -50,6 +57,7 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
       </div>
     )
   }
+
   const formik = useFormik<AnthropometryFormValues>({
     initialValues: {
       evaluation_date: '',
@@ -97,11 +105,17 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
     onSubmit: async (values) => {
       try {
         setApiLoading(true)
-        api.put(`/anthropometrics/update/${params.anthropometryId}`, {
-          ...values,
-        })
+        await api.put(
+          `/anthropometrics/update/${params.anthropometryId}`,
+          values,
+        )
+        onShowFeedBack(
+          PreFeedBack.success('Antropometria realizada com sucesso'),
+        )
       } catch (error) {
-        console.error(error)
+        onShowFeedBack(PreFeedBack.error('Erro ao realizar antropometria'))
+      } finally {
+        setApiLoading(false)
       }
     },
   })
@@ -167,6 +181,37 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
     }
   }, [dataAnthropometry])
 
+  useEffect(() => {
+    countdownRef.current = countdown
+  }, [countdown])
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev === 1) {
+          saveData(formik.values, true)
+          return 60
+        }
+        return prev - 1
+      })
+    }, 1000)
+
+    return () => clearInterval(intervalId)
+  }, [formik.values])
+
+  const saveData = async (
+    values: AnthropometryFormValues,
+    ignoreFeedback?: boolean,
+  ) => {
+    try {
+      setApiLoading(true)
+      await api.put(`/anthropometrics/update/${params.anthropometryId}`, values)
+    } catch (error) {
+    } finally {
+      setApiLoading(false)
+    }
+  }
+
   if (loading || patientLoading) {
     return <LoadingData label="Carregando dados do paciente..." />
   }
@@ -179,26 +224,55 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
     <div className="w-full flex flex-col transition-opacity duration-300">
       <TopDash
         title="Avaliação antropométrica"
-        description=""
+        description="Registro e análise das medidas corporais do paciente."
         icon={Straighten}
       />
-
       <main className="flex gap-4">
         <form
           onSubmit={formik.handleSubmit}
           className="h-full w-3/4 flex flex-col gap-4 mb-14"
         >
-          <div className="shadow-sm rounded-xl p-4 bg-white">
-            <p className="text-black">Paciente: {patientData?.name}</p>
-            <p className="text-black">Idade: {patientData?.age}</p>
-            <p className="text-black">
-              Gênero: {SEX_PT_BR[patientData?.gender ?? 'male']}
-            </p>
+          <div className="flex items-center justify-between shadow-sm rounded-xl p-4 bg-white">
+            <div className="flex flex-col justify-between">
+              <p className="text-black text-sm">
+                Paciente: {patientData?.name}
+              </p>
+              <p className="text-black text-sm">Idade: {patientData?.age}</p>
+              <p className="text-black text-sm">
+                Gênero: {SEX_PT_BR[patientData?.gender ?? 'male']}
+              </p>
+            </div>
+
+            <div className="flex items-center flex-col justify-center">
+              <ButtonStyled
+                type="submit"
+                disabled={apiLoading || !formik.isValid}
+                styles={`w-[150px] ${
+                  apiLoading ? 'bg-darkGray' : 'bg-green-600'
+                }`}
+                title={apiLoading ? 'Salvando...' : `Salvar`}
+                icon={
+                  apiLoading && (
+                    <CircularProgress
+                      style={{ width: 20, height: 20, color: '#FFFFFF' }}
+                    />
+                  )
+                }
+              />
+              {!apiLoading && (
+                <p className="text-xs text-gray-500 mt-1">
+                  Salvando automaticamente em {countdown}s...
+                </p>
+              )}
+            </div>
           </div>
+
           <PhysicalInfoSection
             values={formik.values}
             handleChange={formik.handleChange}
             handleBlur={formik.handleBlur}
+            errors={formik.errors}
+            touched={formik.touched}
           />
 
           <SkinFoldSection
@@ -209,12 +283,16 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
             }
             handleChange={formik.handleChange}
             handleBlur={formik.handleBlur}
+            errors={formik.errors}
+            touched={formik.touched}
           />
 
           <BodyCircumferenceSection
             values={formik.values.body_circumference}
             handleChange={formik.handleChange}
             handleBlur={formik.handleBlur}
+            errors={formik.errors}
+            touched={formik.touched}
           />
         </form>
 

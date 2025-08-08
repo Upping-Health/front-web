@@ -1,10 +1,17 @@
+import { FormikErrors, FormikTouched } from 'formik'
 import { CollapsibleSection } from '../CollapsibleSection'
 import { DynamicInputGrid } from '../DynamicInputGrid'
+import {
+  AnthropometryFormValues,
+  BodyCircumference,
+} from '@/interfaces/anthroprometryFormValues.interface'
 
 interface Props {
   values: any
   handleChange: (e: React.ChangeEvent<any>) => void
   handleBlur: (e: React.FocusEvent<any>) => void
+  errors: FormikErrors<AnthropometryFormValues>
+  touched: FormikTouched<AnthropometryFormValues>
 }
 
 const BODY_CIRCUMFERENCE_SECTIONS = [
@@ -52,6 +59,8 @@ export const BodyCircumferenceSection = ({
   values,
   handleChange,
   handleBlur,
+  errors,
+  touched,
 }: Props) => (
   <CollapsibleSection title="Circunferências Corporais">
     {BODY_CIRCUMFERENCE_SECTIONS.map(({ title, columns, fields }) => (
@@ -64,6 +73,8 @@ export const BodyCircumferenceSection = ({
           onChange={handleChange}
           onBlur={handleBlur}
           columns={columns}
+          errors={errors}
+          touched={touched}
         />
       </div>
     ))}

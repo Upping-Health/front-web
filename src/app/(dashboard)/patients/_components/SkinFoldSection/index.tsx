@@ -1,6 +1,11 @@
+import { FormikErrors, FormikTouched } from 'formik'
 import { BodyFatMethodSelector } from '../BodyFatMethodSelector'
 import { CollapsibleSection } from '../CollapsibleSection'
 import { DynamicInputGrid } from '../DynamicInputGrid'
+import {
+  AnthropometryFormValues,
+  SkinFold,
+} from '@/interfaces/anthroprometryFormValues.interface'
 
 const SKINFOLD_LABELS = [
   { label: 'Tricipital (mm)', key: 'triceps' },
@@ -39,6 +44,8 @@ interface Props {
   selectedMethod: string
   handleChange: (e: React.ChangeEvent<any>) => void
   handleBlur: (e: React.FocusEvent<any>) => void
+  errors: FormikErrors<AnthropometryFormValues>
+  touched: FormikTouched<AnthropometryFormValues>
 }
 
 export const SkinFoldSection = ({
@@ -47,6 +54,8 @@ export const SkinFoldSection = ({
   selectedMethod,
   handleChange,
   handleBlur,
+  errors,
+  touched,
 }: Props) => {
   const activeKeys = METHOD_SKINFOLD_MAP[selectedMethod] || []
 
@@ -60,6 +69,8 @@ export const SkinFoldSection = ({
         onChange={handleChange}
         onBlur={handleBlur}
         highlightKeys={activeKeys}
+        errors={errors}
+        touched={touched}
       />
     </CollapsibleSection>
   )
