@@ -1,7 +1,7 @@
 'use client'
 
 import useLoadConsultResults from '@/hooks/consult/useLoadConsultResults'
-import { AnthropometryFormValues } from '@/interfaces/anthroprometry.interface'
+import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
 import Patient from '@/interfaces/patient.interface'
 import AnalysesResults from '../AnalysisResults'
 

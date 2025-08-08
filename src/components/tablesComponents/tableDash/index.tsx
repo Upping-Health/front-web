@@ -64,8 +64,8 @@ const TableDash: React.FC<TableProps> = ({
   }, [currentPage, filteredData])
 
   return (
-    <div className="relative flex flex-col gap-4 s:h-[70%] d:h-[90%] justify-between py-3 w-full">
-      <div>
+    <div className="relative flex flex-col gap-4 s:h-[70%] justify-between w-full">
+      <div className="h-full">
         {search && (
           <div className="flex mb-4 w-full justify-between flex-wrap gap-2">
             <InputStyled
@@ -135,9 +135,8 @@ const TableDash: React.FC<TableProps> = ({
                     <TableCell
                       key={index}
                       sx={{
-                        padding: '0.7rem 2rem',
+                        padding: '0.3rem 2rem',
                         textTransform: 'uppercase',
-                        letterSpacing: '0.1rem',
                         fontSize: '0.8rem',
                         fontWeight: 900,
                         color: colors.black,

@@ -12,7 +12,7 @@ type AnalysesResultsProps = {
 }
 
 export default function AnalysesResults({ title, data }: AnalysesResultsProps) {
-  console.log(data)
+  console.log(title)
   return (
     <CollapsibleSection title={title}>
       {data?.map(({ title, value }, index) => (

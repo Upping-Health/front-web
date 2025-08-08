@@ -33,7 +33,7 @@ export function CollapsibleSection({
       </div>
 
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <div className="mt-2">{children}</div>
+        {open && children ? <div className="mt-2">{children}</div> : null}
       </Collapse>
     </div>
   )

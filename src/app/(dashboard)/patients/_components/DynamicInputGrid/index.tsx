@@ -1,4 +1,6 @@
 import InputStyled from '@/components/inputsComponents/inputStyled'
+import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
+import { FormikErrors, FormikTouched } from 'formik'
 
 interface Props<T> {
   values: T
@@ -8,6 +10,8 @@ interface Props<T> {
   onBlur: (e: React.FocusEvent<any>) => void
   columns?: number
   highlightKeys?: string[]
+  errors: FormikErrors<AnthropometryFormValues>
+  touched: FormikTouched<AnthropometryFormValues>
 }
 
 export function DynamicInputGrid<T>({
@@ -18,6 +22,8 @@ export function DynamicInputGrid<T>({
   onBlur,
   columns = 4,
   highlightKeys = [],
+  errors,
+  touched,
 }: Props<T>) {
   return (
     <div className={`grid grid-cols-${columns} gap-4`}>
@@ -25,6 +31,8 @@ export function DynamicInputGrid<T>({
         const fullKey = `${prefix}${prefix ? '.' : ''}${String(key)}`
         const shouldHighlight = highlightKeys.includes(String(key))
 
+        const errorsFormik = (errors as Record<string, any>)?.[prefix]?.[key]
+        const touchedFormik = (touched as Record<string, any>)?.[prefix]?.[key]
         return (
           <div key={String(key)} className="flex flex-col">
             <InputStyled
@@ -36,6 +44,8 @@ export function DynamicInputGrid<T>({
               onChange={onChange}
               onBlur={onBlur}
               highlight={shouldHighlight}
+              error={errorsFormik}
+              isTouched={touchedFormik}
             />
           </div>
         )
