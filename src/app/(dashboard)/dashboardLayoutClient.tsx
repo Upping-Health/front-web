@@ -4,7 +4,7 @@ import AsideBar from '@/components/layout/asideBar'
 import FooterDash from '@/components/layout/footerDash'
 import HeaderDash from '@/components/layout/headerDash'
 import { Providers } from '@/contexts/providers/provider'
-import { colors } from '@/utils/colors/colors'
+import { colors } from '@/lib/colors/colors'
 import NextTopLoader from 'nextjs-toploader'
 
 export default function DashboardLayoutClient({

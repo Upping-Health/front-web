@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react'
 
 import TopDash from '@/components/layout/topDash'
 import Patient from '@/interfaces/patient.interface'
-import { colors } from '@/utils/colors/colors'
+import { colors } from '@/lib/colors/colors'
 import { CircularProgress } from '@mui/material'
 
 import CalendarComponent from '@/app/(dashboard)/schedule/_components/Calendar'

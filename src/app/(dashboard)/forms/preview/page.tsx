@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
-import { colors } from '@/utils/colors/colors'
+import { colors } from '@/lib/colors/colors'
 import { CircularProgress } from '@mui/material'
 import PreviewForms from '@/components/forms/previewForms'
 import TopDash from '@/components/layout/topDash'

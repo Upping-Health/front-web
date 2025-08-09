@@ -1,6 +1,6 @@
 'use client'
 import { DefaultContext } from '@/contexts/defaultContext'
-import { colors } from '@/utils/colors/colors'
+import { colors } from '@/lib/colors/colors'
 import LogoutIcon from '@mui/icons-material/Logout'
 import PersonIcon from '@mui/icons-material/Person'
 import { Avatar, Drawer, List } from '@mui/material'
@@ -10,7 +10,7 @@ import React, { useContext } from 'react'
 import SettingsIcon from '@mui/icons-material/Settings'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import PaymentsIcon from '@mui/icons-material/Payments'
-import { ROLE_PTBR } from '@/utils/types/roles'
+import { ROLE_PTBR } from '@/lib/types/roles'
 const ProfileDrawer = ({ openMenu, setOpenMenu }: any) => {
   const { user, onLogout } = useContext(DefaultContext)
   const router = useRouter()

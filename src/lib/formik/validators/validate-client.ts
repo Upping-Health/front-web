@@ -1,4 +1,4 @@
-import masks from '@/utils/masks/masks'
+import masks from '@/lib/masks/masks'
 
 export const validateClient = (values: any) => {
   const unmask = values.document.replace(/\D/g, '')

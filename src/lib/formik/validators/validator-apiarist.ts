@@ -1,4 +1,4 @@
-import masks from '@/utils/masks/masks'
+import masks from '@/lib/masks/masks'
 
 export const validateApiarist = (values: any) => {
   const unmaskCpf = values.document.replace(/\D/g, '')

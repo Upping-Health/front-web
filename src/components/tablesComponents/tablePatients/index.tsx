@@ -1,4 +1,4 @@
-import masks from '@/utils/masks/masks'
+import masks from '@/lib/masks/masks'
 import SearchIcon from '@mui/icons-material/Search'
 import React, { useMemo, useState } from 'react'
 import PaginationDash from '../paginationDash'

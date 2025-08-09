@@ -5,11 +5,11 @@ import { DefaultContext } from '@/contexts/defaultContext'
 import Patient from '@/interfaces/patient.interface'
 import api from '@/services/api'
 import apiViaCep from '@/services/apiViaCep'
-import { colors } from '@/utils/colors/colors'
-import PreFeedBack from '@/utils/feedbackStatus'
-import { formatDate } from '@/utils/format/date'
-import masks from '@/utils/masks/masks'
-import { states } from '@/utils/states'
+import { colors } from '@/lib/colors/colors'
+import PreFeedBack from '@/lib/feedbackStatus'
+import { formatDate } from '@/lib/format/date'
+import masks from '@/lib/masks/masks'
+import { states } from '@/lib/states'
 import AddLocationIcon from '@mui/icons-material/AddLocation'
 import ArticleOutlined from '@mui/icons-material/ArticleOutlined'
 import CalendarMonthOutlined from '@mui/icons-material/CalendarMonthOutlined'
@@ -22,7 +22,7 @@ import Wc from '@mui/icons-material/Wc'
 import { CircularProgress, Modal } from '@mui/material'
 import { useFormik } from 'formik'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { validatePatientSchema } from '@/formik/validators/validator-patient'
+import { validatePatientSchema } from '@/lib/formik/validators/validator-patient'
 import CustomizedSteppers from '../../../../../components/layout/stepBar'
 import ModalBase, {
   ModalContent,
@@ -330,8 +330,6 @@ const ModalPatient = ({
                     error={formik.errors.document}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.document}
-                    stylesInput="dark:bg-slate-500"
-                    stylesLabel="dark:text-white"
                   />
                   <InputStyled
                     id="name"
@@ -346,8 +344,6 @@ const ModalPatient = ({
                     error={formik.errors.name}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.name}
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
 
                   <InputStyled
@@ -363,8 +359,6 @@ const ModalPatient = ({
                     error={formik.errors.email}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.email}
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
 
                   <InputStyled
@@ -381,8 +375,6 @@ const ModalPatient = ({
                     error={formik.errors.phone}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.phone}
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
 
                   <InputStyled
@@ -399,8 +391,6 @@ const ModalPatient = ({
                     error={formik.errors.birth_date}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.birth_date}
-                    stylesInput="dark:bg-slate-500"
-                    stylesLabel="dark:text-white"
                   />
 
                   <SelectStyled
@@ -430,8 +420,6 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
 
                   <InputStyled
@@ -447,8 +435,6 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
                   <InputStyled
                     id="number"
@@ -463,8 +449,6 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
                   <InputStyled
                     id="complement"
@@ -479,8 +463,6 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
                   <InputStyled
                     id="neighborhood"
@@ -495,8 +477,6 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
                   <InputStyled
                     id="city"
@@ -511,8 +491,6 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
                   <SelectStyled
                     id="state"
@@ -562,7 +540,8 @@ const ModalPatient = ({
               />
             ) : (
               <ButtonStyled
-                type="submit"
+                type="button"
+                onClick={formik.handleSubmit}
                 styles="w-full bg-green-600"
                 title={patientSelected ? 'Atualizar' : 'Cadastrar'}
               />
@@ -570,37 +549,39 @@ const ModalPatient = ({
           </>
         )}
 
-        {!viewTwo && <></>}
+        {!viewTwo && (
+          <>
+            <ButtonStyled
+              type="button"
+              onClick={setIsClose}
+              styles="w-full"
+              bgColor="bg-red-600"
+              title="Cancelar"
+            />
 
-        <ButtonStyled
-          type="button"
-          onClick={setIsClose}
-          styles="w-full"
-          bgColor="bg-red-600"
-          title="Cancelar"
-        />
-
-        {loading ? (
-          <ButtonStyled
-            bgColor="bg-darkGray"
-            textColor="text-white"
-            type="submit"
-            styles="w-full"
-            title="Cadastrando..."
-            icon={
-              <CircularProgress
-                style={{ width: 20, height: 20, color: '#FFFFFF' }}
+            {loading ? (
+              <ButtonStyled
+                bgColor="bg-darkGray"
+                textColor="text-white"
+                type="submit"
+                styles="w-full"
+                title="Cadastrando..."
+                icon={
+                  <CircularProgress
+                    style={{ width: 20, height: 20, color: '#FFFFFF' }}
+                  />
+                }
               />
-            }
-          />
-        ) : (
-          <ButtonStyled
-            type="button"
-            styles="w-full bg-green-600"
-            title={'Próximo'}
-            disabled={!formik.isValid}
-            onClick={() => setViewTwo(true)}
-          />
+            ) : (
+              <ButtonStyled
+                type="button"
+                styles="w-full bg-green-600"
+                title={'Próximo'}
+                disabled={!formik.isValid}
+                onClick={() => setViewTwo(true)}
+              />
+            )}
+          </>
         )}
       </ModalFooter>
     </ModalBase>

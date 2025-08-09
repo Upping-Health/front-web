@@ -1,4 +1,4 @@
-import { formDescriptions, formLabels } from '@/utils/forms'
+import { formDescriptions, formLabels } from '@/lib/forms'
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday'

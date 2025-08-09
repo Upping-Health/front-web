@@ -1,4 +1,4 @@
-import { colors } from '@/utils/colors/colors'
+import { colors } from '@/lib/colors/colors'
 import SearchIcon from '@mui/icons-material/Search'
 import {
   Table as MuiTable,

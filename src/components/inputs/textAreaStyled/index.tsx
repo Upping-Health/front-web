@@ -46,7 +46,7 @@ const TextAreaStyled = ({
           placeholder={placeholder}
           onBlur={onBlur}
           className={`
-            w-full resize-none outline-none text-black font-light
+            w-full dark:bg-gray-800 dark:text-white resize-none outline-none text-black font-light
             ${disabled ? 'bg-customGray' : 'bg-white'}
             ${stylesTextArea ? stylesTextArea : ''}
           `}

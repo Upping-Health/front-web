@@ -1,5 +1,5 @@
 import * as Yup from 'yup'
-import masks from '@/utils/masks/masks'
+import masks from '@/lib/masks/masks'
 
 const isValidCpf = (cpf: string): boolean => {
   const unmasked = cpf.replace(/\D/g, '')

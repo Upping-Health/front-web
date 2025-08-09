@@ -10,14 +10,14 @@ import { DefaultContext } from '@/contexts/defaultContext'
 import useLoadUsers from '@/hooks/users/useLoadUsers'
 import Patient from '@/interfaces/patient.interface'
 import api from '@/services/api'
-import { colors } from '@/utils/colors/colors'
-import PreFeedBack from '@/utils/feedbackStatus'
-import masks from '@/utils/masks/masks'
+import { colors } from '@/lib/colors/colors'
+import PreFeedBack from '@/lib/feedbackStatus'
+import masks from '@/lib/masks/masks'
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
 import SupervisorAccountOutlinedIcon from '@mui/icons-material/SupervisorAccountOutlined'
 import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/navigation'
-import { ROLE_PTBR } from '@/utils/types/roles'
+import { ROLE_PTBR } from '@/lib/types/roles'
 
 const UsersContent = () => {
   const { user, onShowFeedBack } = useContext(DefaultContext)

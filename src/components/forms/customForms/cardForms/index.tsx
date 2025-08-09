@@ -1,6 +1,6 @@
 import React from 'react'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
-import { colors } from '@/utils/colors/colors'
+import { colors } from '@/lib/colors/colors'
 interface ICustomForm {}
 
 const CardForm = ({}: ICustomForm) => {

@@ -1,4 +1,4 @@
-import { colors } from '@/utils/colors/colors'
+import { colors } from '@/lib/colors/colors'
 import { Tooltip } from '@mui/material'
 import React from 'react'
 

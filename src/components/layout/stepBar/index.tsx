@@ -10,7 +10,7 @@ import StepLabel from '@mui/material/StepLabel'
 import Stepper from '@mui/material/Stepper'
 import { styled } from '@mui/material/styles'
 import * as React from 'react'
-import { colors } from '@/utils/colors/colors' // <-- Importa suas cores
+import { colors } from '@/lib/colors/colors' // <-- Importa suas cores
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {

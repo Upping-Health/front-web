@@ -1,5 +1,5 @@
-import { colors } from '@/utils/colors/colors'
-import { STATUS } from '@/utils/types/feedback'
+import { colors } from '@/lib/colors/colors'
+import { STATUS } from '@/lib/types/feedback'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import ErrorIcon from '@mui/icons-material/Error'
 import CloseIcon from '@mui/icons-material/Close'

@@ -56,7 +56,7 @@ const DatePickerStyled = ({
             disabled={disabled}
             className={`${disabled ? 'bg-customGray' : 'bg-white'} ${
               stylesInput ? stylesInput : ''
-            } outline-none text-black font-semibold w-full`}
+            } outline-none text-black font-semibold w-full dark:bg-gray-800 dark:text-white`}
             placeholder={placeholder}
           />
         </div>

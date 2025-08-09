@@ -2,7 +2,7 @@
 import TableDash from '@/components/tablesComponents/tableDash'
 import TopDash from '@/components/layout/topDash'
 import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
-import { colors } from '@/utils/colors/colors'
+import { colors } from '@/lib/colors/colors'
 import RestaurantOutlinedIcon from '@mui/icons-material/RestaurantOutlined'
 import { CircularProgress } from '@mui/material'
 import { useMemo } from 'react'

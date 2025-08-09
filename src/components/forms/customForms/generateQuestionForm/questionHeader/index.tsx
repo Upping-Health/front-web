@@ -5,7 +5,7 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import { ElementType } from 'react'
 import { QuestionAnswerOutlined } from '@mui/icons-material'
 import { formIcons } from '../../menu'
-import { formDescriptions, formLabels } from '@/utils/forms'
+import { formDescriptions, formLabels } from '@/lib/forms'
 
 interface Props {
   type: string

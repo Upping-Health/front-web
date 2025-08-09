@@ -50,7 +50,7 @@ const ModalBase = ({ open, onClose, children }: ModalBaseProps) => {
       }}
       className="flex justify-center items-center"
     >
-      <div className="bg-white dark:bg-slate-800 rounded-20 px-5 py-4 w-[85%] max-w-[500px] max-h-[90vh] flex flex-col gap-2">
+      <div className="bg-white dark:bg-gray-800 rounded-20 px-5 py-4 w-[85%] max-w-[500px] max-h-[90vh] flex flex-col gap-2">
         {children}
       </div>
     </Modal>

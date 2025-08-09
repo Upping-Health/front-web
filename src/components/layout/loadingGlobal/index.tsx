@@ -1,6 +1,6 @@
 'use client'
 import { CircularProgress, Modal } from '@mui/material'
-import { colors } from '@/utils/colors/colors'
+import { colors } from '@/lib/colors/colors'
 import { useEffect } from 'react'
 
 const LoadingFullScreen = ({

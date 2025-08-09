@@ -1,7 +1,7 @@
 import React from 'react'
 import { Autocomplete, TextField } from '@mui/material'
 import { useGetDarkTheme } from '@/hooks/theme/useGetDarkTheme'
-import { colors } from '@/utils/colors/colors'
+import { colors } from '@/lib/colors/colors'
 
 interface IAutocompleteStyled {
   id: string
