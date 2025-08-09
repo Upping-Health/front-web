@@ -1,9 +1,9 @@
 'use client'
 import { useCallback, useContext, useMemo, useState } from 'react'
 
-import ButtonActive from '@/components/buttonsComponents/buttonActive'
-import ButtonIconStyled from '@/components/buttonsComponents/buttonIcon'
-import TopDash from '@/components/layoutComponents/topDash'
+import ButtonActive from '@/components/buttons/buttonActive'
+import ButtonIconStyled from '@/components/buttons/buttonIcon'
+import TopDash from '@/components/layout/topDash'
 import ModalPatient from '@/app/(dashboard)/patients/_components/ModalPatient'
 import ProfileRounded from '@/components/profileRounded'
 import TableDash from '@/components/tablesComponents/tableDash'
@@ -19,7 +19,7 @@ import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined'
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
 import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/navigation'
-import ButtonStyled from '@/components/buttonsComponents/button'
+import ButtonStyled from '@/components/buttons/button'
 import Link from 'next/link'
 
 const PacientesContent = () => {

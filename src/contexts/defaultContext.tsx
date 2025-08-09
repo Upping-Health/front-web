@@ -1,6 +1,6 @@
 'use client'
 
-import LoadingFullScreen from '@/components/layoutComponents/loadingGlobal'
+import LoadingFullScreen from '@/components/layout/loadingGlobal'
 import ModalFeedBackStatus from '@/components/modals/ModalFeedback'
 import DefaultContextInterface from '@/interfaces/default.interface'
 import FeedBackStatusInterface from '@/interfaces/feedbackStatus'

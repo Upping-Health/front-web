@@ -1,8 +1,8 @@
 'use client'
 
-import AsideBar from '@/components/layoutComponents/asideBar'
-import FooterDash from '@/components/layoutComponents/footerDash'
-import HeaderDash from '@/components/layoutComponents/headerDash'
+import AsideBar from '@/components/layout/asideBar'
+import FooterDash from '@/components/layout/footerDash'
+import HeaderDash from '@/components/layout/headerDash'
 import { Providers } from '@/contexts/providers/provider'
 import { colors } from '@/utils/colors/colors'
 import NextTopLoader from 'nextjs-toploader'

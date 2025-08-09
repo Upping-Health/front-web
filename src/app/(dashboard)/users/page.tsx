@@ -2,8 +2,8 @@
 import { useCallback, useContext, useMemo, useState } from 'react'
 
 import ModalUser from '@/app/(dashboard)/users/_components/ModalUser'
-import ButtonActive from '@/components/buttonsComponents/buttonActive'
-import TopDash from '@/components/layoutComponents/topDash'
+import ButtonActive from '@/components/buttons/buttonActive'
+import TopDash from '@/components/layout/topDash'
 import ProfileRounded from '@/components/profileRounded'
 import TableDash from '@/components/tablesComponents/tableDash'
 import { DefaultContext } from '@/contexts/defaultContext'

@@ -11,10 +11,10 @@ import {
 } from '@mui/material'
 import React, { useMemo, useState } from 'react'
 import PaginationDash from '../paginationDash'
-import ButtonExport from '@/components/buttonsComponents/buttonExport'
+import ButtonExport from '@/components/buttons/buttonExport'
 import FilterTable from '../filterTable'
-import InputStyled from '@/components/inputsComponents/inputStyled'
-import NotFoundData from '@/components/layoutComponents/notFoundData'
+import InputStyled from '@/components/inputs/inputStyled'
+import NotFoundData from '@/components/layout/notFoundData'
 
 interface TableProps {
   columns: Array<{

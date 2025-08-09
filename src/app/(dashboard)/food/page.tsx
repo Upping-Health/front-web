@@ -1,6 +1,6 @@
 'use client'
 import TableDash from '@/components/tablesComponents/tableDash'
-import TopDash from '@/components/layoutComponents/topDash'
+import TopDash from '@/components/layout/topDash'
 import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import { colors } from '@/utils/colors/colors'
 import RestaurantOutlinedIcon from '@mui/icons-material/RestaurantOutlined'

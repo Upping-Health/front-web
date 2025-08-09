@@ -1,5 +1,5 @@
 'use client'
-import Logo from '@/components/layoutComponents/logo'
+import Logo from '@/components/layout/logo'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import Image from 'next/image'

@@ -2,7 +2,7 @@
 import { colors } from '@/utils/colors/colors'
 import AddIcon from '@mui/icons-material/Add'
 import Link from 'next/link'
-import ButtonStyled from '@/components/buttonsComponents/button'
+import ButtonStyled from '@/components/buttons/button'
 
 interface TopDashProps {
   title: string

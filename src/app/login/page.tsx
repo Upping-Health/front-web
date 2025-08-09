@@ -2,10 +2,10 @@
 
 import api from '@/services/api'
 import Cookies from 'js-cookie'
-import ButtonStyled from '@/components/buttonsComponents/button'
-import InputStyled from '@/components/inputsComponents/inputStyled'
-import Loading from '@/components/layoutComponents/loading'
-import Logo from '@/components/layoutComponents/logo'
+import ButtonStyled from '@/components/buttons/button'
+import InputStyled from '@/components/inputs/inputStyled'
+import Loading from '@/components/layout/loading'
+import Logo from '@/components/layout/logo'
 import { DefaultContext } from '@/contexts/defaultContext'
 import { colors } from '@/utils/colors/colors'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
@@ -114,13 +114,13 @@ export default function Login() {
               disabled={loading}
             />
 
-            <ButtonStyled
+            {/* <ButtonStyled
               type="button"
               onClick={() => router.push('/register')}
               styles="w-full"
               bgColor="bg-primary"
               title="Cadastre-se gratuitamente"
-            />
+            /> */}
           </div>
         </div>
       )}

@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
-import TopDash from '@/components/layoutComponents/topDash'
-import MenuConsult from '@/components/consult-components/menu'
+import TopDash from '@/components/layout/topDash'
+import MenuConsult from '@/components/consult/menu'
 import Person from '@mui/icons-material/Person'
 
 type User = {
