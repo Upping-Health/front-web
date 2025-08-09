@@ -16,18 +16,18 @@ export function CollapsibleSection({
   const [open, setOpen] = useState(defaultOpen)
 
   return (
-    <div className="shadow-sm rounded-xl p-4 bg-white">
+    <div className="shadow-sm rounded-xl p-4 bg-white dark:bg-gray-800">
       <div
         onClick={() => setOpen(!open)}
         className="flex items-center justify-between cursor-pointer"
       >
-        <h2 className="font-semibold text-primary">{title}</h2>
+        <h2 className="font-semibold text-primary dark:text-white">{title}</h2>
 
         <IconButton size="small">
           {open ? (
-            <ExpandLess className="text-primary" />
+            <ExpandLess className="text-primary dark:text-white" />
           ) : (
-            <ExpandMore className="text-primary" />
+            <ExpandMore className="text-primary dark:text-white" />
           )}
         </IconButton>
       </div>

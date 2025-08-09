@@ -1,6 +1,6 @@
 'use client'
 import MenuSettings from '../_components/menu'
-import TopDash from '@/components/layoutComponents/topDash'
+import TopDash from '@/components/layout/topDash'
 import { Person, Settings } from '@mui/icons-material'
 
 const SettingsContent = () => {

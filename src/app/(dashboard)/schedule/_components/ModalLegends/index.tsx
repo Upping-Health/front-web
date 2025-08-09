@@ -1,24 +1,17 @@
-import AutocompleteStyled from '@/components/inputsComponents/autoCompleteStyled'
-import ButtonStyled from '@/components/buttonsComponents/button'
-import CardProfile from '@/components/tablesComponents/cardProfile'
-import DatePickerStyled from '@/components/inputsComponents/selectDateStyled'
-import TextAreaStyled from '@/components/inputsComponents/textAreaStyled'
+import ButtonStyled from '@/components/buttons/button'
+import InputStyled from '@/components/inputs/inputStyled'
+import ModalBase, {
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+} from '@/components/modals/ModalBase'
 import { DefaultContext } from '@/contexts/defaultContext'
-import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
-import Schedule from '@/interfaces/schedule.interface'
+import PreFeedBack from '@/lib/feedbackStatus'
 import api from '@/services/api'
-import { colors } from '@/utils/colors/colors'
-import PreFeedBack from '@/utils/feedbackStatus'
-import AddIcon from '@mui/icons-material/Add'
-import DescriptionIcon from '@mui/icons-material/Description'
 import Person from '@mui/icons-material/Person'
-import { CircularProgress, Modal, Tooltip } from '@mui/material'
+import { CircularProgress, Modal } from '@mui/material'
 import { useFormik } from 'formik'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { validateAgenda } from '@/formik/validators/validate-agenda'
-import CustomizedSteppers from '../../../../../components/layoutComponents/stepBar'
-import ModalPatient from '../../../patients/_components/ModalPatient'
-import InputStyled from '@/components/inputsComponents/inputStyled'
+import { useContext, useEffect, useState } from 'react'
 
 interface ScheduleLegend {
   id: number
@@ -42,9 +35,6 @@ const ModalLegends = ({
 }: ModalParams) => {
   const { onShowFeedBack } = useContext(DefaultContext)
   const [loading, setloading] = useState(false)
-
-  const [openModal, setOpenModal] = useState(false)
-
   const onSuccess = () => {
     onShowFeedBack(PreFeedBack.success('Legenda cadastrada com sucesso!'))
     setIsClose()
@@ -119,16 +109,13 @@ const ModalLegends = ({
 
   return (
     <>
-      <Modal
-        open={open}
-        onClose={setIsClose}
-        className="flex justify-center items-center"
-      >
-        <div className="bg-white rounded-20 px-5 py-4 w-[85%] max-w-[500px] dark:bg-slate-800">
-          <p className="font-semibold text-xl text-center uppercase pb-5 dark:text-white">
-            {legendSelected ? 'Atualizar Legenda' : 'Cadastro de Legenda'}
-          </p>
+      <ModalBase open={open} onClose={setIsClose}>
+        <ModalHeader
+          title={legendSelected ? 'Atualizar Legenda' : 'Cadastro de Legenda'}
+          onClose={setIsClose}
+        />
 
+        <ModalContent>
           <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
             <div className="flex items-center w-full gap-4">
               <div className="flex-1">
@@ -143,8 +130,6 @@ const ModalLegends = ({
                   onBlur={formik.handleBlur}
                   isTouched={formik.touched.name}
                   icon={<Person className="text-black dark:text-white" />}
-                  stylesInput="dark:bg-slate-800 dark:text-white"
-                  stylesLabel="dark:text-white"
                   styles="h-[50px]"
                 />
               </div>
@@ -159,50 +144,49 @@ const ModalLegends = ({
                   error={formik.errors.color}
                   onBlur={formik.handleBlur}
                   isTouched={formik.touched.color}
-                  stylesInput="dark:bg-slate-800 dark:text-white"
-                  stylesLabel="dark:text-white"
                   styles="h-[50px]"
                 />
               </div>
             </div>
-
-            <div className="flex gap-5 pt-5">
-              <ButtonStyled
-                type="button"
-                onClick={setIsClose}
-                styles="w-full"
-                bgColor="bg-red-600"
-                title="Voltar"
-              />
-
-              {loading ? (
-                <ButtonStyled
-                  bgColor="bg-darkGray"
-                  textColor="text-white"
-                  type="submit"
-                  styles="w-full"
-                  title="Cadastrando..."
-                  icon={
-                    <CircularProgress
-                      style={{
-                        width: 20,
-                        height: 20,
-                        color: '#FFFFFF',
-                      }}
-                    />
-                  }
-                />
-              ) : (
-                <ButtonStyled
-                  type="submit"
-                  styles="w-full bg-green-600"
-                  title={legendSelected ? 'Atualizar' : 'Cadastrar'}
-                />
-              )}
-            </div>
           </form>
-        </div>
-      </Modal>
+        </ModalContent>
+
+        <ModalFooter>
+          <ButtonStyled
+            type="button"
+            onClick={setIsClose}
+            styles="w-full"
+            bgColor="bg-red-600"
+            title="Voltar"
+          />
+
+          {loading ? (
+            <ButtonStyled
+              bgColor="bg-darkGray"
+              textColor="text-white"
+              type="submit"
+              styles="w-full"
+              title="Cadastrando..."
+              icon={
+                <CircularProgress
+                  style={{
+                    width: 20,
+                    height: 20,
+                    color: '#FFFFFF',
+                  }}
+                />
+              }
+            />
+          ) : (
+            <ButtonStyled
+              type="button"
+              onClick={formik.handleSubmit}
+              styles="w-full bg-green-600"
+              title={legendSelected ? 'Atualizar' : 'Cadastrar'}
+            />
+          )}
+        </ModalFooter>
+      </ModalBase>
     </>
   )
 }

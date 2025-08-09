@@ -1,8 +1,8 @@
 'use client'
 import CardForms from '@/components/tablesComponents/tableForms'
-import TopDash from '@/components/layoutComponents/topDash'
+import TopDash from '@/components/layout/topDash'
 import useLoadForms from '@/hooks/nutritionists/useLoadForms'
-import { colors } from '@/utils/colors/colors'
+import { colors } from '@/lib/colors/colors'
 import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined'
 import { CircularProgress } from '@mui/material'
 

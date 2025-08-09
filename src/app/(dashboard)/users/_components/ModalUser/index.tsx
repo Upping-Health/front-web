@@ -1,13 +1,13 @@
-import ButtonStyled from '@/components/buttonsComponents/button'
-import InputStyled from '@/components/inputsComponents/inputStyled'
-import SelectStyled from '@/components/inputsComponents/select'
+import ButtonStyled from '@/components/buttons/button'
+import InputStyled from '@/components/inputs/inputStyled'
+import SelectStyled from '@/components/inputs/select'
 import { DefaultContext } from '@/contexts/defaultContext'
-import { validateCreateUser } from '@/formik/validators/validator-user'
+import { validateCreateUser } from '@/lib/formik/validators/validator-user'
 import { IRole } from '@/interfaces/role.interface'
 import api from '@/services/api'
-import PreFeedBack from '@/utils/feedbackStatus'
-import masks from '@/utils/masks/masks'
-import { ROLE_PTBR } from '@/utils/types/roles'
+import PreFeedBack from '@/lib/feedbackStatus'
+import masks from '@/lib/masks/masks'
+import { ROLE_PTBR } from '@/lib/types/roles'
 import ArticleOutlined from '@mui/icons-material/ArticleOutlined'
 import CalendarMonthOutlined from '@mui/icons-material/CalendarMonthOutlined'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
@@ -18,6 +18,11 @@ import Wc from '@mui/icons-material/Wc'
 import { CircularProgress, Modal } from '@mui/material'
 import { useFormik } from 'formik'
 import { useContext, useEffect, useMemo, useState } from 'react'
+import ModalBase, {
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+} from '@/components/modals/ModalBase'
 interface ModalParams {
   open: boolean
   setIsClose: () => void
@@ -151,16 +156,13 @@ const ModalUser = ({
   )
 
   return (
-    <Modal
-      open={open}
-      onClose={setIsClose}
-      className="flex justify-center items-center"
-    >
-      <div className="bg-white dark:bg-slate-800 rounded-20 px-5 py-4 w-[85%] max-w-[500px]">
-        <p className="font-semibold text-xl text-center uppercase pb-5 dark:text-white">
-          {userSelected ? 'Atualizar Usuário' : 'Cadastro de Usuário'}
-        </p>
+    <ModalBase open={open} onClose={setIsClose}>
+      <ModalHeader
+        onClose={setIsClose}
+        title={userSelected ? 'Atualizar Usuário' : 'Cadastro de Usuário'}
+      />
 
+      <ModalContent>
         <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
           {loadingData ? (
             <div className="flex items-center flex-col justify-center py-6 gap-4">
@@ -185,8 +187,6 @@ const ModalUser = ({
                   error={formik.errors.document}
                   onBlur={formik.handleBlur}
                   isTouched={formik.touched.document}
-                  stylesInput="dark:bg-slate-500"
-                  stylesLabel="dark:text-white"
                 />
                 <InputStyled
                   id="name"
@@ -248,8 +248,6 @@ const ModalUser = ({
                   error={formik.errors.birth_date}
                   onBlur={formik.handleBlur}
                   isTouched={formik.touched.birth_date}
-                  stylesInput="dark:bg-slate-500"
-                  stylesLabel="dark:text-white"
                 />
 
                 <SelectStyled
@@ -270,44 +268,45 @@ const ModalUser = ({
                   id="role"
                   options={options}
                 />
-
-                <div className="flex gap-5 pt-5">
-                  <ButtonStyled
-                    type="button"
-                    onClick={setIsClose}
-                    styles="w-full"
-                    bgColor="bg-red-600"
-                    title="Cancelar"
-                  />
-
-                  {loading ? (
-                    <ButtonStyled
-                      bgColor="bg-darkGray"
-                      textColor="text-white"
-                      type="submit"
-                      styles="w-full"
-                      title="Cadastrando..."
-                      icon={
-                        <CircularProgress
-                          style={{ width: 20, height: 20, color: '#FFFFFF' }}
-                        />
-                      }
-                    />
-                  ) : (
-                    <ButtonStyled
-                      type="submit"
-                      styles="w-full bg-green-600"
-                      title={'Cadastrar'}
-                      disabled={!formik.isValid}
-                    />
-                  )}
-                </div>
               </div>
             </>
           )}
         </form>
-      </div>
-    </Modal>
+      </ModalContent>
+
+      <ModalFooter>
+        <ButtonStyled
+          type="button"
+          onClick={setIsClose}
+          styles="w-full"
+          bgColor="bg-red-600"
+          title="Cancelar"
+        />
+
+        {loading ? (
+          <ButtonStyled
+            bgColor="bg-darkGray"
+            textColor="text-white"
+            type="submit"
+            styles="w-full"
+            title="Cadastrando..."
+            icon={
+              <CircularProgress
+                style={{ width: 20, height: 20, color: '#FFFFFF' }}
+              />
+            }
+          />
+        ) : (
+          <ButtonStyled
+            type="button"
+            onClick={formik.handleSubmit}
+            styles="w-full bg-green-600"
+            title={'Cadastrar'}
+            disabled={!formik.isValid}
+          />
+        )}
+      </ModalFooter>
+    </ModalBase>
   )
 }
 

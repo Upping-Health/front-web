@@ -1,15 +1,15 @@
-import ButtonStyled from '@/components/buttonsComponents/button'
-import InputStyled from '@/components/inputsComponents/inputStyled'
-import SelectStyled from '@/components/inputsComponents/select'
+import ButtonStyled from '@/components/buttons/button'
+import InputStyled from '@/components/inputs/inputStyled'
+import SelectStyled from '@/components/inputs/select'
 import { DefaultContext } from '@/contexts/defaultContext'
 import Patient from '@/interfaces/patient.interface'
 import api from '@/services/api'
 import apiViaCep from '@/services/apiViaCep'
-import { colors } from '@/utils/colors/colors'
-import PreFeedBack from '@/utils/feedbackStatus'
-import { formatDate } from '@/utils/format/date'
-import masks from '@/utils/masks/masks'
-import { states } from '@/utils/states'
+import { colors } from '@/lib/colors/colors'
+import PreFeedBack from '@/lib/feedbackStatus'
+import { formatDate } from '@/lib/format/date'
+import masks from '@/lib/masks/masks'
+import { states } from '@/lib/states'
 import AddLocationIcon from '@mui/icons-material/AddLocation'
 import ArticleOutlined from '@mui/icons-material/ArticleOutlined'
 import CalendarMonthOutlined from '@mui/icons-material/CalendarMonthOutlined'
@@ -22,8 +22,13 @@ import Wc from '@mui/icons-material/Wc'
 import { CircularProgress, Modal } from '@mui/material'
 import { useFormik } from 'formik'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { validatePatientSchema } from '@/formik/validators/validator-patient'
-import CustomizedSteppers from '../../../../../components/layoutComponents/stepBar'
+import { validatePatientSchema } from '@/lib/formik/validators/validator-patient'
+import CustomizedSteppers from '../../../../../components/layout/stepBar'
+import ModalBase, {
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+} from '@/components/modals/ModalBase'
 
 interface ModalParams {
   open: boolean
@@ -287,16 +292,13 @@ const ModalPatient = ({
   const steps = ['Dados Pessoais', 'Endereço (Opcional)']
 
   return (
-    <Modal
-      open={open}
-      onClose={setIsClose}
-      className="flex justify-center items-center"
-    >
-      <div className="bg-white dark:bg-slate-800 rounded-20 px-5 py-4 w-[85%] max-w-[500px]">
-        <p className="font-semibold text-xl text-center uppercase pb-5 dark:text-white">
-          {patientSelected ? 'Atualizar Paciente' : 'Cadastro de Paciente'}
-        </p>
+    <ModalBase open={open} onClose={setIsClose}>
+      <ModalHeader
+        title={patientSelected ? 'Atualizar Paciente' : 'Cadastro de Paciente'}
+        onClose={setIsClose}
+      />
 
+      <ModalContent>
         <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
           {loadingData ? (
             <div className="flex items-center flex-col justify-center py-6 gap-4">
@@ -328,8 +330,6 @@ const ModalPatient = ({
                     error={formik.errors.document}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.document}
-                    stylesInput="dark:bg-slate-500"
-                    stylesLabel="dark:text-white"
                   />
                   <InputStyled
                     id="name"
@@ -344,8 +344,6 @@ const ModalPatient = ({
                     error={formik.errors.name}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.name}
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
 
                   <InputStyled
@@ -361,8 +359,6 @@ const ModalPatient = ({
                     error={formik.errors.email}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.email}
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
 
                   <InputStyled
@@ -379,8 +375,6 @@ const ModalPatient = ({
                     error={formik.errors.phone}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.phone}
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
 
                   <InputStyled
@@ -397,8 +391,6 @@ const ModalPatient = ({
                     error={formik.errors.birth_date}
                     onBlur={formik.handleBlur}
                     isTouched={formik.touched.birth_date}
-                    stylesInput="dark:bg-slate-500"
-                    stylesLabel="dark:text-white"
                   />
 
                   <SelectStyled
@@ -410,39 +402,6 @@ const ModalPatient = ({
                     styles="dark:text-white"
                     stylesLabel="dark:text-white"
                   />
-
-                  <div className="flex gap-5 pt-5">
-                    <ButtonStyled
-                      type="button"
-                      onClick={setIsClose}
-                      styles="w-full"
-                      bgColor="bg-red-600"
-                      title="Cancelar"
-                    />
-
-                    {loading ? (
-                      <ButtonStyled
-                        bgColor="bg-darkGray"
-                        textColor="text-white"
-                        type="submit"
-                        styles="w-full"
-                        title="Cadastrando..."
-                        icon={
-                          <CircularProgress
-                            style={{ width: 20, height: 20, color: '#FFFFFF' }}
-                          />
-                        }
-                      />
-                    ) : (
-                      <ButtonStyled
-                        type="button"
-                        styles="w-full bg-green-600"
-                        title={'Próximo'}
-                        disabled={!formik.isValid}
-                        onClick={() => setViewTwo(true)}
-                      />
-                    )}
-                  </div>
                 </div>
               )}
 
@@ -461,8 +420,6 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
 
                   <InputStyled
@@ -478,8 +435,6 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
                   <InputStyled
                     id="number"
@@ -494,8 +449,6 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
                   <InputStyled
                     id="complement"
@@ -510,8 +463,6 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
                   <InputStyled
                     id="neighborhood"
@@ -526,8 +477,6 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
                   <InputStyled
                     id="city"
@@ -542,8 +491,6 @@ const ModalPatient = ({
                     icon={
                       <AddLocationIcon className="text-black dark:text-white" />
                     }
-                    stylesInput="dark:bg-slate-800 dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
                   <SelectStyled
                     id="state"
@@ -560,44 +507,84 @@ const ModalPatient = ({
                     styles="dark:text-white"
                     stylesLabel="dark:text-white"
                   />
-
-                  <div className="flex gap-5 pt-5">
-                    <ButtonStyled
-                      type="button"
-                      onClick={() => setViewTwo(false)}
-                      styles="w-full"
-                      bgColor="bg-red-600"
-                      title="Voltar"
-                    />
-
-                    {loading ? (
-                      <ButtonStyled
-                        bgColor="bg-darkGray"
-                        textColor="text-white"
-                        type="submit"
-                        styles="w-full"
-                        title="Cadastrando..."
-                        icon={
-                          <CircularProgress
-                            style={{ width: 20, height: 20, color: '#FFFFFF' }}
-                          />
-                        }
-                      />
-                    ) : (
-                      <ButtonStyled
-                        type="submit"
-                        styles="w-full bg-green-600"
-                        title={patientSelected ? 'Atualizar' : 'Cadastrar'}
-                      />
-                    )}
-                  </div>
                 </div>
               )}
             </>
           )}
         </form>
-      </div>
-    </Modal>
+      </ModalContent>
+
+      <ModalFooter>
+        {viewTwo && (
+          <>
+            <ButtonStyled
+              type="button"
+              onClick={() => setViewTwo(false)}
+              styles="w-full"
+              bgColor="bg-red-600"
+              title="Voltar"
+            />
+
+            {loading ? (
+              <ButtonStyled
+                bgColor="bg-darkGray"
+                textColor="text-white"
+                type="submit"
+                styles="w-full"
+                title="Cadastrando..."
+                icon={
+                  <CircularProgress
+                    style={{ width: 20, height: 20, color: '#FFFFFF' }}
+                  />
+                }
+              />
+            ) : (
+              <ButtonStyled
+                type="button"
+                onClick={formik.handleSubmit}
+                styles="w-full bg-green-600"
+                title={patientSelected ? 'Atualizar' : 'Cadastrar'}
+              />
+            )}
+          </>
+        )}
+
+        {!viewTwo && (
+          <>
+            <ButtonStyled
+              type="button"
+              onClick={setIsClose}
+              styles="w-full"
+              bgColor="bg-red-600"
+              title="Cancelar"
+            />
+
+            {loading ? (
+              <ButtonStyled
+                bgColor="bg-darkGray"
+                textColor="text-white"
+                type="submit"
+                styles="w-full"
+                title="Cadastrando..."
+                icon={
+                  <CircularProgress
+                    style={{ width: 20, height: 20, color: '#FFFFFF' }}
+                  />
+                }
+              />
+            ) : (
+              <ButtonStyled
+                type="button"
+                styles="w-full bg-green-600"
+                title={'Próximo'}
+                disabled={!formik.isValid}
+                onClick={() => setViewTwo(true)}
+              />
+            )}
+          </>
+        )}
+      </ModalFooter>
+    </ModalBase>
   )
 }
 

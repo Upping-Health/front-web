@@ -1,4 +1,4 @@
-import InputStyled from '@/components/inputsComponents/inputStyled'
+import InputStyled from '@/components/inputs/inputStyled'
 import { CollapsibleSection } from '../CollapsibleSection'
 
 interface Props {

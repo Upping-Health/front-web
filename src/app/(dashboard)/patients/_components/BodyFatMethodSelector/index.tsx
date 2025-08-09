@@ -1,4 +1,4 @@
-import ButtonStyled from '@/components/buttonsComponents/button'
+import ButtonStyled from '@/components/buttons/button'
 
 interface Props {
   selected: string

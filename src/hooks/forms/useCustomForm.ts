@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useContext } from 'react'
 import { DefaultContext } from '@/contexts/defaultContext'
 import api from '@/services/api'
-import PreFeedBack from '@/utils/feedbackStatus'
+import PreFeedBack from '@/lib/feedbackStatus'
 import { useRouter } from 'next/navigation'
 
 export interface IQuestions {

@@ -1,23 +1,28 @@
-import AutocompleteStyled from '@/components/inputsComponents/autoCompleteStyled'
-import ButtonStyled from '@/components/buttonsComponents/button'
+import AutocompleteStyled from '@/components/inputs/autoCompleteStyled'
+import ButtonStyled from '@/components/buttons/button'
 import CardProfile from '@/components/tablesComponents/cardProfile'
-import DatePickerStyled from '@/components/inputsComponents/selectDateStyled'
-import TextAreaStyled from '@/components/inputsComponents/textAreaStyled'
+import DatePickerStyled from '@/components/inputs/selectDateStyled'
+import TextAreaStyled from '@/components/inputs/textAreaStyled'
 import { DefaultContext } from '@/contexts/defaultContext'
 import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import Schedule from '@/interfaces/schedule.interface'
 import api from '@/services/api'
-import { colors } from '@/utils/colors/colors'
-import PreFeedBack from '@/utils/feedbackStatus'
+import { colors } from '@/lib/colors/colors'
+import PreFeedBack from '@/lib/feedbackStatus'
 import AddIcon from '@mui/icons-material/Add'
 import DescriptionIcon from '@mui/icons-material/Description'
 import Person from '@mui/icons-material/Person'
 import { CircularProgress, Modal, Tooltip } from '@mui/material'
 import { useFormik } from 'formik'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { validateAgenda } from '@/formik/validators/validate-agenda'
-import CustomizedSteppers from '../../../../../components/layoutComponents/stepBar'
+import { validateAgenda } from '@/lib/formik/validators/validate-agenda'
+import CustomizedSteppers from '../../../../../components/layout/stepBar'
 import ModalPatient from '../../../patients/_components/ModalPatient'
+import ModalBase, {
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+} from '@/components/modals/ModalBase'
 
 interface ModalParams {
   open: boolean
@@ -52,12 +57,12 @@ const ModalAgenda = ({
   }
 
   const onSuccess = () => {
-    onShowFeedBack(PreFeedBack.success('Paciente cadastrado com sucesso!'))
+    onShowFeedBack(PreFeedBack.success('Agenda cadastrada com sucesso!'))
     setIsClose()
   }
 
   const onSuccessUpdate = () => {
-    onShowFeedBack(PreFeedBack.success('Paciente atualizado com sucesso!'))
+    onShowFeedBack(PreFeedBack.success('Agenda atualizada com sucesso!'))
     setIsClose()
   }
 
@@ -161,16 +166,13 @@ const ModalAgenda = ({
   }, [formik.values])
   return (
     <>
-      <Modal
-        open={open}
-        onClose={setIsClose}
-        className="flex justify-center items-center"
-      >
-        <div className="bg-white rounded-20 px-5 py-4 w-[85%] max-w-[500px] dark:bg-slate-800">
-          <p className="font-semibold text-xl text-center uppercase pb-5 dark:text-white">
-            {scheduleSelected ? 'Atualizar Agenda' : 'Cadastro de Agenda'}
-          </p>
+      <ModalBase open={open} onClose={setIsClose}>
+        <ModalHeader
+          onClose={setIsClose}
+          title={scheduleSelected ? 'Atualizar Agenda' : 'Cadastro de Agenda'}
+        />
 
+        <ModalContent>
           <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
             {loadingData ? (
               <div className="flex items-center flex-col justify-center py-6 gap-4">
@@ -246,51 +248,6 @@ const ModalAgenda = ({
                         {formik.errors.patient}
                       </p>
                     )}
-
-                    <div className="flex gap-5 pt-5">
-                      <ButtonStyled
-                        type="button"
-                        onClick={setIsClose}
-                        styles="w-full"
-                        bgColor="bg-red-600"
-                        title="Cancelar"
-                      />
-
-                      {loading ? (
-                        <ButtonStyled
-                          bgColor="bg-darkGray"
-                          textColor="text-white"
-                          type="submit"
-                          styles="w-full"
-                          title="Cadastrando..."
-                          icon={
-                            <CircularProgress
-                              style={{
-                                width: 20,
-                                height: 20,
-                                color: '#FFFFFF',
-                              }}
-                            />
-                          }
-                        />
-                      ) : (
-                        <ButtonStyled
-                          type="button"
-                          styles="w-full bg-green-600"
-                          title={'Próximo'}
-                          disabled={!formik.values.patient}
-                          onClick={() => {
-                            if (!formik.values.patient) {
-                              formik.setErrors({
-                                patient: 'Selecione o paciente',
-                              })
-                            } else {
-                              setViewTwo(true)
-                            }
-                          }}
-                        />
-                      )}
-                    </div>
                   </div>
                 )}
 
@@ -306,7 +263,6 @@ const ModalAgenda = ({
                       onBlur={formik.handleBlur}
                       error={formik.errors.start_time}
                       isTouched={formik.touched.start_time}
-                      stylesInput="dark:bg-slate-800 dark:text-white"
                     />
 
                     <DatePickerStyled
@@ -316,7 +272,6 @@ const ModalAgenda = ({
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       error={formik.errors.end_time}
-                      stylesInput="dark:bg-slate-800 dark:text-white"
                       isTouched={formik.touched.end_time}
                     />
 
@@ -327,50 +282,101 @@ const ModalAgenda = ({
                       label="Digite uma observação"
                       placeholder="Digite uma observação (Opcional)"
                       maxLength={250}
-                      stylesTextArea="dark:bg-slate-800 dark:text-white"
                     />
-
-                    <div className="flex gap-5 pt-5">
-                      <ButtonStyled
-                        type="button"
-                        onClick={() => setViewTwo(false)}
-                        styles="w-full"
-                        bgColor="bg-red-600"
-                        title="Voltar"
-                      />
-
-                      {loading ? (
-                        <ButtonStyled
-                          bgColor="bg-darkGray"
-                          textColor="text-white"
-                          type="submit"
-                          styles="w-full"
-                          title="Cadastrando..."
-                          icon={
-                            <CircularProgress
-                              style={{
-                                width: 20,
-                                height: 20,
-                                color: '#FFFFFF',
-                              }}
-                            />
-                          }
-                        />
-                      ) : (
-                        <ButtonStyled
-                          type="submit"
-                          styles="w-full bg-green-600"
-                          title={scheduleSelected ? 'Atualizar' : 'Cadastrar'}
-                        />
-                      )}
-                    </div>
                   </div>
                 )}
               </>
             )}
           </form>
-        </div>
-      </Modal>
+        </ModalContent>
+
+        <ModalFooter>
+          {!viewTwo && (
+            <>
+              <ButtonStyled
+                type="button"
+                onClick={setIsClose}
+                styles="w-full"
+                bgColor="bg-red-600"
+                title="Cancelar"
+              />
+
+              {loading ? (
+                <ButtonStyled
+                  bgColor="bg-darkGray"
+                  textColor="text-white"
+                  type="submit"
+                  styles="w-full"
+                  title="Cadastrando..."
+                  icon={
+                    <CircularProgress
+                      style={{
+                        width: 20,
+                        height: 20,
+                        color: '#FFFFFF',
+                      }}
+                    />
+                  }
+                />
+              ) : (
+                <ButtonStyled
+                  type="button"
+                  styles="w-full bg-green-600"
+                  title={'Próximo'}
+                  disabled={!formik.values.patient}
+                  onClick={() => {
+                    if (!formik.values.patient) {
+                      formik.setErrors({
+                        patient: 'Selecione o paciente',
+                      })
+                    } else {
+                      setViewTwo(true)
+                    }
+                  }}
+                />
+              )}
+            </>
+          )}
+
+          {viewTwo && (
+            <>
+              <ButtonStyled
+                type="button"
+                onClick={() => setViewTwo(false)}
+                styles="w-full"
+                bgColor="bg-red-600"
+                title="Voltar"
+              />
+
+              {loading ? (
+                <ButtonStyled
+                  bgColor="bg-darkGray"
+                  textColor="text-white"
+                  type="submit"
+                  styles="w-full"
+                  title="Cadastrando..."
+                  icon={
+                    <CircularProgress
+                      style={{
+                        width: 20,
+                        height: 20,
+                        color: '#FFFFFF',
+                      }}
+                    />
+                  }
+                />
+              ) : (
+                <ButtonStyled
+                  type="button"
+                  onClick={formik.handleSubmit}
+                  styles="w-full bg-green-600"
+                  title={scheduleSelected ? 'Atualizar' : 'Cadastrar'}
+                />
+              )}
+            </>
+          )}
+        </ModalFooter>
+      </ModalBase>
       <ModalPatient
         open={openModal}
         setIsClose={toggleModalOpen}

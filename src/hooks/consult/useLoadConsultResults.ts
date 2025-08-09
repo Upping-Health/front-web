@@ -2,8 +2,8 @@
 
 import { useMemo } from 'react'
 import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
-import { METHOD_PT_BR } from '@/utils/types/body-method'
-import CalculateBodyFatPercentag from '@/utils/calculate-body'
+import { METHOD_PT_BR } from '@/lib/types/body-method'
+import CalculateBodyFatPercentag from '@/lib/calculate-body'
 import Patient from '@/interfaces/patient.interface'
 
 type Results = {

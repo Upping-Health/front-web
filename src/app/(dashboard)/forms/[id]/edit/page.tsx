@@ -1,7 +1,7 @@
 'use client'
-import CustomForms from '@/components/formsComponents/customForms'
+import CustomForms from '@/components/forms/customForms'
 import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
-import { colors } from '@/utils/colors/colors'
+import { colors } from '@/lib/colors/colors'
 import { CircularProgress } from '@mui/material'
 const FormsEdit = ({ params }: { params: { id: string } }) => {
   const { data, loading } = useLoadPatients(false)

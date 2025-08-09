@@ -1,6 +1,6 @@
 'use client'
 
-import ButtonStyled from '@/components/buttonsComponents/button'
+import ButtonStyled from '@/components/buttons/button'
 import ErrorIcon from '@mui/icons-material/Error'
 
 import { useRouter } from 'next/navigation'
