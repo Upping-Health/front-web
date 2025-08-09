@@ -23,8 +23,8 @@ export default function Login() {
   const [error, setError] = useState('')
   const formik = useFormik({
     initialValues: {
-      email: 'reggis@upping.com.br',
-      password: '12345678',
+      email: 'contato@upping.com.br',
+      password: 'password',
     },
     onSubmit: async (values) => {
       setloading(true)

@@ -1,29 +1,32 @@
 'use client'
 import { useCallback, useContext, useMemo, useState } from 'react'
 
-import ModalUser from '@/app/(dashboard)/users/_components/ModalUser'
 import ButtonActive from '@/components/buttons/buttonActive'
+import ButtonIconStyled from '@/components/buttons/buttonIcon'
 import TopDash from '@/components/layout/topDash'
+import ModalPatient from '@/app/(nutri)/patients/_components/ModalPatient'
 import ProfileRounded from '@/components/profileRounded'
 import TableDash from '@/components/tablesComponents/tableDash'
 import { DefaultContext } from '@/contexts/defaultContext'
-import useLoadUsers from '@/hooks/users/useLoadUsers'
+import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import Patient from '@/interfaces/patient.interface'
 import api from '@/services/api'
 import { colors } from '@/lib/colors/colors'
 import PreFeedBack from '@/lib/feedbackStatus'
 import masks from '@/lib/masks/masks'
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd'
+import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined'
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
-import SupervisorAccountOutlinedIcon from '@mui/icons-material/SupervisorAccountOutlined'
 import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/navigation'
-import { ROLE_PTBR } from '@/lib/types/roles'
+import ButtonStyled from '@/components/buttons/button'
+import Link from 'next/link'
 
-const UsersContent = () => {
+const PacientesContent = () => {
   const { user, onShowFeedBack } = useContext(DefaultContext)
   const [openModal, setOpenModal] = useState(false)
   const [dataSelected, setDataSelected] = useState<Patient | null>(null)
-  const { loadData, data, loading } = useLoadUsers(false)
+  const { loadData, data, loading } = useLoadPatients(false)
   const router = useRouter()
 
   const toggleModalOpen = useCallback(() => {
@@ -49,7 +52,7 @@ const UsersContent = () => {
     onShowFeedBack(PreFeedBack.error('Falhou ao atualizar status do paciente.'))
   }
 
-  const changeStatus = useCallback(
+  const changeStatusPatient = useCallback(
     (row: Patient) => {
       if (!user) return
       const newStatus = row.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
@@ -64,8 +67,6 @@ const UsersContent = () => {
     },
     [user],
   )
-
-  console.log(data)
 
   const columns = useMemo(
     () => [
@@ -104,33 +105,41 @@ const UsersContent = () => {
               : 'Outros',
       },
       {
-        header: 'Função',
-        field: 'role',
-        render: (value: any, row: any) => ROLE_PTBR[row?.role?.name],
-      },
-      {
         header: 'Status',
         field: 'status',
         render: (value: any, row: any) => (
           <ButtonActive
             active={row.status === 1}
-            onClick={() => changeStatus(row)}
+            onClick={() => changeStatusPatient(row)}
           />
         ),
       },
+      {
+        header: '#',
+        field: '{row}',
+        render: (_: any, row: any) => (
+          <Link
+            href={`/patients/${row.uuid}/anthropometry`}
+            className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-6 shadow-md transition-all duration-300 h-[35px] max-w-[120px]"
+          >
+            <AssignmentIndIcon style={{ fontSize: 20 }} />
+            <span>Consulta</span>
+          </Link>
+        ),
+      },
     ],
-    [toogleModalOpenWithData, changeStatus, ROLE_PTBR],
+    [toogleModalOpenWithData, changeStatusPatient],
   )
 
   return (
     <>
       <div className="w-full relative">
         <TopDash
-          title="Usuários"
-          description="Cadastre colaboradores para facilitar o controle do sistema."
-          icon={SupervisorAccountOutlinedIcon}
+          title="Pacientes"
+          description="Acompanhe e gerencie seus pacientes com facilidade."
+          icon={GroupsOutlinedIcon}
           onClick={toggleModalOpen}
-          textBtn="Novo Usuário"
+          textBtn="Novo Paciente"
           btnIcon={PersonAddAlt1Icon}
         />
 
@@ -147,14 +156,14 @@ const UsersContent = () => {
         )}
       </div>
 
-      <ModalUser
+      <ModalPatient
         open={openModal}
         setIsClose={toggleModalOpen}
         loadData={loadData}
-        userSelected={dataSelected}
+        patientSelected={dataSelected}
       />
     </>
   )
 }
 
-export default UsersContent
+export default PacientesContent

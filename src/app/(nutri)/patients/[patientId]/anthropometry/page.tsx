@@ -192,7 +192,7 @@ const AnthropometryPage = ({ params }: PageProps) => {
         )}
 
         <div className="h-full flex justify-end">
-          <MenuConsult />
+          <MenuConsult patientId={params.patientId} />
         </div>
       </div>
 
