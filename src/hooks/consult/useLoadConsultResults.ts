@@ -3,7 +3,7 @@
 import { useMemo } from 'react'
 import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
 import { METHOD_PT_BR } from '@/lib/types/body-method'
-import CalculateBodyFatPercentag from '@/lib/calculate-body'
+import CalculateBodyFatPercentag from '@/lib/calculates/calculate-body'
 import Patient from '@/interfaces/patient.interface'
 
 type Results = {
@@ -54,7 +54,7 @@ const useLoadConsultResults = (
       { title: 'IMC', value: `${imc} Kg/m²` },
       {
         title: 'Relação cintura-quadril',
-        value: relCinturaQuadrilValue,
+        value: relCinturaQuadrilValue ?? 'N/A',
         note: rcqInterpretation,
       },
       {

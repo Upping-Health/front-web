@@ -18,6 +18,7 @@ import { useContext, useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
 import ButtonStyled from '@/components/buttons/button'
 import CreateIcon from '@mui/icons-material/Create'
+import loading from '@/components/layout/loading'
 interface PageProps {
   params: {
     patientId: string
@@ -85,7 +86,7 @@ const EnergyCalculationPage = ({ params }: PageProps) => {
               icon={<CreateIcon />}
               onClick={() =>
                 router.push(
-                  `/patients/${params.patientId}/anthropometry/${row.uuid}`,
+                  `/patients/${params.patientId}/energyCalculation/${row.uuid}`,
                 )
               }
               title={'Editar'}
@@ -100,58 +101,15 @@ const EnergyCalculationPage = ({ params }: PageProps) => {
   )
 
   console.log(data)
-  const handleNewAnthropometry = async () => {
+  const handleNewEnergyCalculation = async () => {
     setIsNavigating(true)
 
     console.log(patientData)
     try {
-      const response = await api.post('/anthropometrics/store', {
-        patient_id: 3, // VER A QUESTÃO DO ID
-        evaluation_date: '2024-01-23',
-        weight: 60.7,
-        height: 169,
-        body_fat_percentage: 6.15,
-        muscle_mass_percentage: 93.85,
-        observations: '1ª Avaliação Física',
-        body_fat_method: 'pollock_7',
-        skin_fold: {
-          triceps: 4.0,
-          biceps: null,
-          subscapular: 7.0,
-          suprailiac: 8.0,
-          abdominal: 9.0,
-          thigh: 7.0,
-          chest: 4.0,
-          midaxillary: 6.0,
-        },
-        body_circumference: {
-          waist: 70.0,
-          hip: 88.0,
-          neck: null,
-          shoulder: null,
-          chest: 86.0,
-          abdominal: 73.0,
-          relaxed_right_arm: 27.5,
-          contracted_right_arm: 32.0,
-          right_forearm: null,
-          right_proximal_thigh: null,
-          right_mid_thigh: 51.0,
-          right_distal_thigh: null,
-          right_calf: 34.0,
-          relaxed_left_arm: 27.5,
-          contracted_left_arm: 32.0,
-          left_forearm: null,
-          left_proximal_thigh: null,
-          left_mid_thigh: 52.5,
-          left_distal_thigh: null,
-          left_calf: 33.0,
-        },
-      })
-
-      const uuid = response?.data?.message?.uuid
+      const uuid = 'teste'
 
       if (uuid) {
-        router.push(`/patients/${params.patientId}/anthropometry/${uuid}`)
+        router.push(`/patients/${params.patientId}/energyCalculation/${uuid}`)
       } else {
         return onShowFeedBack(
           PreFeedBack.error('Erro ao criar antroprometria.'),
@@ -180,7 +138,7 @@ const EnergyCalculationPage = ({ params }: PageProps) => {
         title={patientData?.name ?? 'Paciente'}
         description={`${Math.abs(Number(patientData?.age) || 0).toFixed(0)} anos, ${SEX_PT_BR[patientData?.gender ?? 'male']}`}
         icon={Person}
-        onClick={handleNewAnthropometry}
+        onClick={handleNewEnergyCalculation}
         textBtn="Novo Cálculo Energético"
       />
 

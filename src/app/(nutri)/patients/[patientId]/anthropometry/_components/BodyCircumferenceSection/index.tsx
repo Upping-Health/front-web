@@ -1,10 +1,10 @@
 import { FormikErrors, FormikTouched } from 'formik'
-import { CollapsibleSection } from '../CollapsibleSection'
-import { DynamicInputGrid } from '../DynamicInputGrid'
+import { CollapsibleSection } from '@/app/(nutri)/patients/_components/CollapsibleSection'
 import {
   AnthropometryFormValues,
   BodyCircumference,
 } from '@/interfaces/anthroprometryFormValues.interface'
+import { DynamicInputGrid } from '@/app/(nutri)/patients/_components/DynamicInputGrid'
 
 interface Props {
   values: any

@@ -3,17 +3,15 @@
 import useLoadConsultResults from '@/hooks/consult/useLoadConsultResults'
 import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
 import Patient from '@/interfaces/patient.interface'
-import AnalysesResults from '../AnalysisResults'
+import AnalysesResults from '../../../../_components/AnalysisResults'
+import { memo } from 'react'
 
 type AnalysisSidebarProps = {
   values: AnthropometryFormValues
   patient: Patient | null
 }
 
-export default function AnalysisSidebar({
-  values,
-  patient,
-}: AnalysisSidebarProps) {
+const AnalysisSidebar = ({ values, patient }: AnalysisSidebarProps) => {
   const { analysisResults, bodyComposition } = useLoadConsultResults(
     values,
     patient,
@@ -27,3 +25,5 @@ export default function AnalysisSidebar({
     </aside>
   )
 }
+
+export default memo(AnalysisSidebar)

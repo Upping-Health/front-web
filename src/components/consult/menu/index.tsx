@@ -6,12 +6,12 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import { usePathname } from 'next/navigation'
 export const consultTabs = {
   antropometrias: {
-    name: 'Antropometrias',
+    name: 'Antropometria',
     icon: <StraightenIcon />,
     path: 'anthropometry',
   },
   calculos: {
-    name: 'Cálculos Energéticos',
+    name: 'Cálculo Energético',
     icon: <FlashOnIcon />,
     path: 'energyCalculation',
   },

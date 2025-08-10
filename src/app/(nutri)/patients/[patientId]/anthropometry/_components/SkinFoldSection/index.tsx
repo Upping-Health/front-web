@@ -1,7 +1,7 @@
 import { FormikErrors, FormikTouched } from 'formik'
 import { BodyFatMethodSelector } from '../BodyFatMethodSelector'
-import { CollapsibleSection } from '../CollapsibleSection'
-import { DynamicInputGrid } from '../DynamicInputGrid'
+import { CollapsibleSection } from '../../../../_components/CollapsibleSection'
+import { DynamicInputGrid } from '../../../../_components/DynamicInputGrid'
 import {
   AnthropometryFormValues,
   SkinFold,

@@ -2,28 +2,24 @@
 
 import TopDash from '@/components/layout/topDash'
 import { Straighten } from '@mui/icons-material'
-import { useRouter } from 'next/navigation'
 import { useFormik } from 'formik'
-import * as Yup from 'yup'
 
-import { CollapsibleSection } from '../../../_components/CollapsibleSection'
+import { DefaultContext } from '@/contexts/defaultContext'
 import useLoadAnthropometry from '@/hooks/nutritionists/useLoadAnthropometryByUUID'
 import useLoadPatientByUUID from '@/hooks/nutritionists/useLoadPatientById'
-import PatientNotFound from '../../../_components/PatientNotFound'
-import { CircularProgress } from '@mui/material'
-import { PhysicalInfoSection } from '../../../_components/PhysicalInfoSection'
-import { SkinFoldSection } from '../../../_components/SkinFoldSection'
-import { BodyCircumferenceSection } from '../../../_components/BodyCircumferenceSection'
-import { validateCreateAnthropometry } from '@/lib/formik/validators/validator-anthroprometry'
 import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
-import MenuConsult from '@/components/consult/menu'
-import AnalysisSidebar from '../../../_components/AnalysisSidebar'
-import { SEX_PT_BR } from '@/lib/types/sex'
-import { useContext, useEffect, useState, useRef } from 'react'
-import api from '@/services/api'
-import ButtonStyled from '@/components/buttons/button'
-import { DefaultContext } from '@/contexts/defaultContext'
 import PreFeedBack from '@/lib/feedbackStatus'
+import { validateCreateAnthropometry } from '@/lib/formik/validators/validator-anthroprometry'
+import api from '@/services/api'
+import { CircularProgress } from '@mui/material'
+import { useContext, useEffect, useRef, useState } from 'react'
+import AnalysisSidebar from '../_components/AnalysisSidebar'
+import { BodyCircumferenceSection } from '../_components/BodyCircumferenceSection'
+import PatientHeader from '../../../_components/PatientHeader'
+import PatientNotFound from '../../../_components/PatientNotFound'
+import { PhysicalInfoSection } from '../_components/PhysicalInfoSection'
+import { SkinFoldSection } from '../_components/SkinFoldSection'
+import useTimer from '@/hooks/others/useTimer'
 
 interface PageProps {
   params: {
@@ -35,8 +31,10 @@ interface PageProps {
 const AnthropometryCreatePage = ({ params }: PageProps) => {
   const { onShowFeedBack } = useContext(DefaultContext)
   const [apiLoading, setApiLoading] = useState(false)
-  const [countdown, setCountdown] = useState(60)
-  const countdownRef = useRef(60)
+  const { countdown } = useTimer({
+    duration: 60,
+    onExpire: () => saveData(formik.values),
+  })
 
   const {
     data: dataAnthropometry,
@@ -181,24 +179,6 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
     }
   }, [dataAnthropometry])
 
-  useEffect(() => {
-    countdownRef.current = countdown
-  }, [countdown])
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev === 1) {
-          saveData(formik.values, true)
-          return 60
-        }
-        return prev - 1
-      })
-    }, 1000)
-
-    return () => clearInterval(intervalId)
-  }, [formik.values])
-
   const saveData = async (
     values: AnthropometryFormValues,
     ignoreFeedback?: boolean,
@@ -232,58 +212,12 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
           onSubmit={formik.handleSubmit}
           className="h-full w-3/4 flex flex-col gap-4 mb-14"
         >
-          <div className="flex items-center justify-between shadow-sm rounded-xl p-4 bg-white dark:bg-gray-800">
-            <div className="flex flex-col">
-              <div>
-                <span className="font-semibold text-gray-700 dark:text-gray-300">
-                  Nome:
-                </span>{' '}
-                <span className="text-gray-900 dark:text-white font-light">
-                  {patientData?.name}
-                </span>
-              </div>
-              <div>
-                <span className="font-semibold text-gray-700 dark:text-gray-300">
-                  Idade:
-                </span>{' '}
-                <span className="text-gray-900 dark:text-white font-light">
-                  {patientData?.age ?? 1} anos
-                </span>
-              </div>
-              <div>
-                <span className="font-semibold text-gray-700 dark:text-gray-300">
-                  Gênero:
-                </span>{' '}
-                <span className="text-gray-900 dark:text-white font-light">
-                  {SEX_PT_BR[patientData?.gender ?? 'male']}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center justify-center">
-              <ButtonStyled
-                type="submit"
-                disabled={apiLoading || !formik.isValid}
-                styles={`w-[160px] py-2 ${
-                  apiLoading
-                    ? 'bg-gray-400 cursor-not-allowed'
-                    : 'bg-green-600 hover:bg-green-700'
-                }`}
-                title={apiLoading ? 'Salvando...' : 'Salvar'}
-                icon={
-                  apiLoading && (
-                    <CircularProgress size={20} style={{ color: '#fff' }} />
-                  )
-                }
-              />
-              {!apiLoading && (
-                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                  Salvando automaticamente em{' '}
-                  <span className="font-semibold">{countdown}s</span>...
-                </p>
-              )}
-            </div>
-          </div>
+          <PatientHeader
+            formik={formik}
+            loading={apiLoading}
+            patient={patientData}
+            countdown={countdown}
+          />
 
           <PhysicalInfoSection
             values={formik.values}
