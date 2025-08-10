@@ -1,19 +1,24 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 
 interface UseTimerProps {
   duration: number
   onExpire: () => void
 }
+
 const useTimer = ({ duration, onExpire }: UseTimerProps) => {
   const [countdown, setCountdown] = useState(duration)
-  const countdownRef = useRef(duration)
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
-  useEffect(() => {
-    countdownRef.current = countdown
-  }, [countdown])
+  const clear = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+      intervalRef.current = null
+    }
+  }
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
+  const startTimer = useCallback(() => {
+    clear()
+    intervalRef.current = setInterval(() => {
       setCountdown((prev) => {
         if (prev === 1) {
           onExpire()
@@ -22,11 +27,19 @@ const useTimer = ({ duration, onExpire }: UseTimerProps) => {
         return prev - 1
       })
     }, 1000)
+  }, [duration, onExpire])
 
-    return () => clearInterval(intervalId)
-  }, [onExpire, duration])
+  const resetTimer = useCallback(() => {
+    setCountdown(duration)
+    startTimer()
+  }, [duration, startTimer])
 
-  return { countdown }
+  useEffect(() => {
+    startTimer()
+    return clear
+  }, [startTimer])
+
+  return { countdown, resetTimer }
 }
 
 export default useTimer

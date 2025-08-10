@@ -53,7 +53,7 @@ const PatientHeader = ({
             bgColor="bg-darkGray"
             textColor="text-white"
             type="submit"
-            styles="w-[150px]"
+            styles="w-[160px]"
             title="Salvando..."
             icon={
               <CircularProgress
@@ -64,17 +64,16 @@ const PatientHeader = ({
         ) : (
           <ButtonStyled
             type="submit"
-            styles="w-[150px] bg-green-600"
+            styles="w-[160px] bg-green-600"
             title={'Salvar'}
             disabled={!formik.isValid}
           />
         )}
-        {!loading && (
-          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-            Salvando automaticamente em{' '}
-            <span className="font-semibold">{countdown}s</span>...
-          </p>
-        )}
+
+        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          Salvando automaticamente em{' '}
+          <span className="font-semibold">{countdown}s</span>...
+        </p>
       </div>
     </div>
   )

@@ -15,17 +15,6 @@ export const consultTabs = {
     icon: <FlashOnIcon />,
     path: 'energyCalculation',
   },
-
-  exames: {
-    name: 'Exames',
-    icon: <StraightenIcon />,
-    path: '/',
-  },
-  config: {
-    name: 'Configurações',
-    icon: <SettingsIcon />,
-    path: '/',
-  },
 }
 
 const MenuConsult = ({ patientId }: { patientId: string }) => {

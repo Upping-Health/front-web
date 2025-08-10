@@ -1,7 +1,7 @@
 'use client'
 
 import TopDash from '@/components/layout/topDash'
-import { Straighten } from '@mui/icons-material'
+import { ArrowBack, Straighten } from '@mui/icons-material'
 import { useFormik } from 'formik'
 
 import { DefaultContext } from '@/contexts/defaultContext'
@@ -31,7 +31,7 @@ interface PageProps {
 const AnthropometryCreatePage = ({ params }: PageProps) => {
   const { onShowFeedBack } = useContext(DefaultContext)
   const [apiLoading, setApiLoading] = useState(false)
-  const { countdown } = useTimer({
+  const { countdown, resetTimer } = useTimer({
     duration: 60,
     onExpire: () => saveData(formik.values),
   })
@@ -114,6 +114,7 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
         onShowFeedBack(PreFeedBack.error('Erro ao realizar antropometria'))
       } finally {
         setApiLoading(false)
+        resetTimer()
       }
     },
   })
@@ -206,6 +207,9 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
         title="Avaliação antropométrica"
         description="Registro e análise das medidas corporais do paciente."
         icon={Straighten}
+        btnIcon={ArrowBack}
+        href={`/patients/${params.patientId}/anthropometry`}
+        textBtn="Voltar"
       />
       <main className="flex gap-4">
         <form

@@ -1,7 +1,7 @@
 'use client'
 
 import TopDash from '@/components/layout/topDash'
-import { Straighten } from '@mui/icons-material'
+import { ArrowBack, Straighten } from '@mui/icons-material'
 import { useFormik } from 'formik'
 import { DefaultContext } from '@/contexts/defaultContext'
 import useLoadAnthropometry from '@/hooks/nutritionists/useLoadAnthropometryByUUID'
@@ -203,6 +203,9 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
         title="Cálculo Energético"
         description="Registro das necessidades calóricas diárias do paciente."
         icon={FlashOnIcon}
+        btnIcon={ArrowBack}
+        href={`/patients/${params.patientId}/energyCalculation`}
+        textBtn="Voltar"
       />
       <main className="flex gap-4">
         <form
