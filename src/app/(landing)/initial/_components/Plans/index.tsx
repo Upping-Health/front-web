@@ -84,12 +84,12 @@ const Plans = () => {
               key={index}
               role="region"
               aria-labelledby={`plan-title-${index}`}
-              className={`relative rounded-lg border-0 bg-white text-black shadow-md transition-all duration-300 flex flex-col ${
+              className={`relative mb-5 rounded-lg border-0 bg-white text-black shadow-md transition-all duration-300 flex flex-col ${
                 plan.popular
                   ? 'scale-105 shadow-large ring-2 ring-primary/20'
                   : 'shadow-soft hover:shadow-medium hover:-translate-y-2'
               }`}
-              tabIndex={-1} // O foco principal fica no botão, evitar foco no card.
+              tabIndex={-1}
             >
               {plan.badge && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
