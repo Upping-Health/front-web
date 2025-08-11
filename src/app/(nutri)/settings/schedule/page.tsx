@@ -104,17 +104,17 @@ const SettingsContent = () => {
   }, [data])
 
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-full flex flex-col flex-1 min-h-0">
       <TopDash
         title="Configurações de Agenda"
         description="Gerencie seus horários e preferências de agendamento."
         icon={Settings}
       />
 
-      <div className="h-full w-full flex gap-4">
+      <div className="flex flex-1 min-h-0 w-full justify-between gap-4">
         <form
           onSubmit={formik.handleSubmit}
-          className="flex flex-col flex-1 rounded-xl bg-white shadow-sm dark:!bg-gray-800 overflow-y-auto"
+          className="flex flex-col flex-1 min-h-0 rounded-xl bg-white shadow-sm dark:!bg-gray-800"
         >
           {loadingSettings ? (
             <div className="flex items-center justify-center flex-1 flex-col gap-4">
@@ -125,9 +125,9 @@ const SettingsContent = () => {
             </div>
           ) : (
             <>
-              <div className="flex-1 p-4 flex flex-col gap-5 overflow-x-auto">
-                <div className="flex flex-col gap-4">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <div className="flex flex-col flex-1 min-h-0 gap-2 overflow-y-auto scroll-mini p-4">
+                <div className="flex flex-col gap-2">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">
                     Dias de funcionamento
                   </h3>
                   <div className="flex flex-wrap gap-4 justify-between">
@@ -148,8 +148,8 @@ const SettingsContent = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-4">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                <div className="flex flex-col gap-2">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">
                     Horário de expediente
                   </h3>
                   <div className="flex flex-row gap-4">
@@ -180,8 +180,8 @@ const SettingsContent = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-4">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                <div className="flex flex-col gap-2">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">
                     Configurações de atendimento
                   </h3>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -228,8 +228,8 @@ const SettingsContent = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-4">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                <div className="flex flex-col gap-2">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">
                     Pausa para almoço
                   </h3>
                   <div className="flex flex-row gap-4">
@@ -257,7 +257,7 @@ const SettingsContent = () => {
                 </div>
               </div>
 
-              <div className="border-t border-gray-200 dark:border-gray-700 px-6 py-3 flex justify-end">
+              <div className="border-t border-gray-200 dark:border-gray-700 mt-2 py-2 px-2 flex justify-end">
                 {loading ? (
                   <ButtonStyled
                     bgColor="bg-darkGray"
@@ -284,9 +284,7 @@ const SettingsContent = () => {
           )}
         </form>
 
-        <div className="h-full flex justify-end">
-          <MenuSettings />
-        </div>
+        <MenuSettings />
       </div>
     </div>
   )

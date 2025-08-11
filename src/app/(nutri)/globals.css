@@ -7,6 +7,24 @@
     @apply mx-auto h-screen flex overflow-hidden justify-center w-full;
   }
 
+  .scroll-mini::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .scroll-mini::-webkit-scrollbar-track {
+    background: #eeeeee;
+    border-radius: 8px;
+  }
+
+  .scroll-mini::-webkit-scrollbar-thumb {
+    background-color: #323031;
+    border-radius: 8px;
+  }
+
+  .scroll-mini::-webkit-scrollbar-thumb:hover {
+    background-color: #306169;
+  }
+
   .scroll-custom::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -23,7 +41,7 @@
   }
 
   .scroll-custom::-webkit-scrollbar-thumb:hover {
-    background-color: #4b8690;
+    background-color: #306169;
   }
 
   input[type='time']::-webkit-calendar-picker-indicator,
