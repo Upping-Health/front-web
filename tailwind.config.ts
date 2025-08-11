@@ -29,11 +29,11 @@ const config: Config = {
         xl: '8px',
         '6': '6px',
       },
-    },
-    screens: {
-      d: '1140px',
-      t: { min: '768px', max: '1139px' },
-      s: { max: '767px' },
+      screens: {
+        d: '1140px',
+        t: { min: '768px', max: '1139px' },
+        s: { max: '767px' },
+      },
     },
   },
   darkMode: 'class',

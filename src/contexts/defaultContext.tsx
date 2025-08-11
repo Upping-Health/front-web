@@ -58,7 +58,7 @@ export default function DefaultProvider({
       setUser(null)
       Cookies.remove('token')
       localStorage.removeItem('user')
-      router.push('/login')
+      // router.push('/login')
     }
 
     loadUserFromStorage()

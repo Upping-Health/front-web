@@ -184,7 +184,7 @@ const SettingsContent = () => {
                   <h3 className="font-semibold text-gray-900 dark:text-white">
                     Configurações de atendimento
                   </h3>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-2  gap-4">
                     <InputStyled
                       id="appointment_duration"
                       label="Duração (min)"
@@ -208,7 +208,7 @@ const SettingsContent = () => {
                       stylesInput="w-full dark:!bg-gray-800"
                     />
                   </div>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 items-center">
+                  <div className="grid grid-cols-2  gap-4 items-center">
                     <InputStyled
                       id="break_between_appointments"
                       label="Intervalo (min)"
