@@ -6,7 +6,7 @@ export const metadata = {
   openGraph: {
     title: 'UppingHealth - Sistema de Gestão em Saúde para Clínicas',
     description:
-      'Otimize sua clínica ou hospital com UppingHealth. Gestão completa com agendamentos, prontuários eletrônicos, faturamento e mais.',
+      'Otimize sua clínica com UppingHealth. Gestão completa com agendamentos, prontuários eletrônicos, faturamento e mais.',
     url: 'https://uppinghealth.com',
     siteName: 'UppingHealth',
     images: [
@@ -21,10 +21,9 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title:
-      'UppingHealth - Sistema de Gestão em Saúde para Clínicas e Hospitais',
+    title: 'UppingHealth - Sistema de Gestão em Saúde para Clínicas',
     description:
-      'Otimize sua clínica ou hospital com UppingHealth. Gestão completa com agendamentos, prontuários eletrônicos, faturamento e mais.',
+      'Otimize sua clínica com UppingHealth. Gestão completa com agendamentos, prontuários eletrônicos, faturamento e mais.',
     images: ['https://uppinghealth.com/imagem-preview.png'],
   },
   icons: {
