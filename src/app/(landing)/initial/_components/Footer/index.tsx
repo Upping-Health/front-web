@@ -18,7 +18,7 @@ const FooterLogoDesc = () => (
         priority
       />
     </div>
-    <p className="text-lg leading-relaxed mb-8 max-w-lg text-gray-700 dark:text-gray-300">
+    <p className="text-lg leading-relaxed mb-8 max-w-lg text-gray-700 ">
       Transforme sua prática médica com nossa plataforma completa de gestão,
       desenvolvida especialmente para profissionais de saúde modernos.
     </p>
@@ -38,9 +38,7 @@ const FooterNav = () => {
   const items = ['Início', 'Módulos', 'Preços', 'Benefícios']
   return (
     <nav aria-label="Navegação principal" className="lg:col-span-2">
-      <h3 className="font-semibold text-lg mb-6 text-gray-900 dark:text-white">
-        Navegação
-      </h3>
+      <h3 className="font-semibold text-lg mb-6 text-gray-900 ">Navegação</h3>
       <ul className="space-y-4">
         {items.map((item) => (
           <li key={item}>
@@ -66,9 +64,7 @@ const FooterSupport = () => {
   const items = ['Central de Ajuda', 'Documentação', 'Treinamentos', 'Blog']
   return (
     <nav aria-label="Suporte e ajuda" className="lg:col-span-2">
-      <h3 className="font-semibold text-lg mb-6 text-gray-900 dark:text-white">
-        Suporte
-      </h3>
+      <h3 className="font-semibold text-lg mb-6 text-gray-900">Suporte</h3>
       <ul className="space-y-4">
         {items.map((item) => (
           <li key={item}>
@@ -93,7 +89,7 @@ const FooterContact = () => (
   <section aria-labelledby="contato-title" className="lg:col-span-4">
     <h3
       id="contato-title"
-      className="font-semibold text-lg mb-6 text-gray-900 dark:text-white"
+      className="font-semibold text-lg mb-6 text-gray-900 "
     >
       Fale Conosco
     </h3>
@@ -110,8 +106,8 @@ const FooterContact = () => (
           />
         </div>
         <div>
-          <div className="text-sm text-gray-700 dark:text-gray-300">Email</div>
-          <div className="font-medium text-gray-900 dark:text-white">
+          <div className="text-sm text-gray-700">Email</div>
+          <div className="font-medium text-gray-900">
             contato@uppinghealth.com
           </div>
         </div>
@@ -129,17 +125,13 @@ const FooterContact = () => (
           />
         </div>
         <div>
-          <div className="text-sm text-gray-700 dark:text-gray-300">
-            Telefone
-          </div>
-          <div className="font-medium text-gray-900 dark:text-white">
-            (11) 9999-9999
-          </div>
+          <div className="text-sm text-gray-700 ">Telefone</div>
+          <div className="font-medium text-gray-900 ">(11) 9999-9999</div>
         </div>
       </a>
 
-      <div className="flex items-center gap-3 p-3 rounded-lg bg-white border border-border dark:bg-gray-800 dark:border-gray-700">
-        <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center dark:bg-primary/20">
+      <div className="flex items-center gap-3 p-3 rounded-lg bg-white border border-border">
+        <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center ">
           <MapPinIcon
             fontSize="small"
             className="text-primary"
@@ -147,12 +139,8 @@ const FooterContact = () => (
           />
         </div>
         <div>
-          <div className="text-sm text-gray-700 dark:text-gray-300">
-            Localização
-          </div>
-          <div className="font-medium text-gray-900 dark:text-white">
-            Belo Horizonte, MG
-          </div>
+          <div className="text-sm text-gray-700 ">Localização</div>
+          <div className="font-medium text-gray-900 ">Belo Horizonte, MG</div>
         </div>
       </div>
     </div>
@@ -162,7 +150,7 @@ const FooterContact = () => (
 const FooterBottom = () => (
   <div className="border-t border-border mt-12 py-4">
     <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
-      <p className="text-sm text-gray-600 dark:text-gray-400 select-none">
+      <p className="text-sm text-gray-600  select-none">
         &copy; 2025 UppingHealth. Todos os direitos reservados.
       </p>
       <div className="flex flex-wrap justify-center gap-8">
@@ -170,7 +158,7 @@ const FooterBottom = () => (
           <a
             key={item}
             href="#"
-            className="hover:text-primary transition-colors text-sm text-gray-600 dark:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary rounded"
+            className="hover:text-primary transition-colors text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-primary rounded"
           >
             {item}
           </a>
@@ -182,7 +170,7 @@ const FooterBottom = () => (
 
 const Footer = () => {
   return (
-    <footer className="py-10 bg-gray-50 dark:bg-gray-900">
+    <footer className="py-10 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           <FooterLogoDesc />
