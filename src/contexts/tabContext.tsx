@@ -1,5 +1,5 @@
 'use client'
-import { TABS_DASH } from '@/utils/types/tabs'
+import { TABS_DASH } from '@/lib/types/tabs'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { DefaultContext } from './defaultContext'
 import TabContextInterface from '@/interfaces/tab.interface'

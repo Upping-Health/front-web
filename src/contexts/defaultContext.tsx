@@ -1,6 +1,6 @@
 'use client'
 
-import LoadingFullScreen from '@/components/layoutComponents/loadingGlobal'
+import LoadingFullScreen from '@/components/layout/loadingGlobal'
 import ModalFeedBackStatus from '@/components/modals/ModalFeedback'
 import DefaultContextInterface from '@/interfaces/default.interface'
 import FeedBackStatusInterface from '@/interfaces/feedbackStatus'
@@ -58,7 +58,7 @@ export default function DefaultProvider({
       setUser(null)
       Cookies.remove('token')
       localStorage.removeItem('user')
-      router.push('/login')
+      // router.push('/login')
     }
 
     loadUserFromStorage()

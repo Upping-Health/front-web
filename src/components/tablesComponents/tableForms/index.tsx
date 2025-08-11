@@ -1,8 +1,8 @@
-import ButtonStyled from '@/components/buttonsComponents/button'
-import ButtonActive from '@/components/buttonsComponents/buttonActive'
-import ButtonExport from '@/components/buttonsComponents/buttonExport'
-import InputStyled from '@/components/inputsComponents/inputStyled'
-import NotFoundData from '@/components/layoutComponents/notFoundData'
+import ButtonStyled from '@/components/buttons/button'
+import ButtonActive from '@/components/buttons/buttonActive'
+import ButtonExport from '@/components/buttons/buttonExport'
+import InputStyled from '@/components/inputs/inputStyled'
+import NotFoundData from '@/components/layout/notFoundData'
 import api from '@/services/api'
 import QuizIcon from '@mui/icons-material/Quiz'
 import SearchIcon from '@mui/icons-material/Search'
@@ -53,7 +53,7 @@ const CardForms: React.FC<TableProps> = ({
   }, [currentPage, data])
 
   return (
-    <div className="relative flex flex-col gap-4 s:h-[70%] d:h-[90%] justify-between py-3 w-full">
+    <div className="relative flex flex-col gap-4 s:h-[70%] d:h-[90%] justify-between pb-3 w-full">
       <div>
         {search && (
           <div className="flex mb-4 w-full justify-between flex-wrap gap-2">

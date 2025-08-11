@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Pagination from '@mui/material/Pagination'
-import { colors } from '@/utils/colors/colors'
+import { colors } from '@/lib/colors/colors'
 
 interface PaginationDashProps {
   count: number

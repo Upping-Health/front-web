@@ -1,5 +1,5 @@
 'use client'
-import { colors } from '@/utils/colors/colors'
+import { colors } from '@/lib/colors/colors'
 import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 
