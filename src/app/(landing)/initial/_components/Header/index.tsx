@@ -1,5 +1,5 @@
+'use client'
 import Logo from '@/components/layout/logo'
-;('use client')
 import React from 'react'
 import logoImg from '@/assets/upping_light.png'
 import Image from 'next/image'
