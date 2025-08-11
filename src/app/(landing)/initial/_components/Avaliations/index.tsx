@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import StarIcon from '@mui/icons-material/Star'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import Image from 'next/image'
+import Slide from '@mui/material/Slide'
 import medico from '@/assets/medico.png'
 
 const testimonials = [
@@ -35,8 +36,7 @@ const Avaliations = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-    }, 7000) // troca a cada 7 segundos para dar mais tempo
-
+    }, 7000)
     return () => clearInterval(interval)
   }, [])
 
@@ -46,49 +46,45 @@ const Avaliations = () => {
       aria-labelledby="avaliations-title"
       className="py-10 bg-gradient-hero relative overflow-hidden"
     >
-      <div className="max-w-4xl mx-auto px-6 text-center text-white relative min-h-[220px]">
-        {testimonials.map((testimonial, i) => (
-          <div
-            key={testimonial.id}
-            className={`absolute inset-0 transition-opacity duration-[1500ms] ease-in-out ${
-              i === currentIndex
-                ? 'opacity-100 relative z-10'
-                : 'opacity-0 pointer-events-none z-0'
-            }`}
-            aria-hidden={i !== currentIndex}
-          >
-            <div
-              className="flex justify-center items-center gap-1 mb-4"
-              aria-label="Avaliação com 5 estrelas"
+      <div className="max-w-4xl mx-auto px-6 text-center text-white relative">
+        <div className="relative min-h-[260px] flex items-center justify-center overflow-hidden">
+          {testimonials.map((testimonial, i) => (
+            <Slide
+              key={testimonial.id}
+              direction="left"
+              in={i === currentIndex}
+              mountOnEnter
+              unmountOnExit
+              timeout={1000}
             >
-              {[...Array(5)].map((_, i) => (
-                <StarIcon
-                  key={i}
-                  className="h-6 w-6 text-yellow-400"
-                  aria-hidden="true"
-                />
-              ))}
-            </div>
+              <div className="absolute w-full text-center">
+                <div className="flex justify-center items-center gap-1 mb-4">
+                  {[...Array(5)].map((_, idx) => (
+                    <StarIcon key={idx} className="h-6 w-6 text-yellow-400" />
+                  ))}
+                </div>
 
-            <div className="relative w-20 h-20 mb-6 rounded-full overflow-hidden border-2 border-white/30 shadow-md mx-auto">
-              <Image
-                src={testimonial.image}
-                alt={`Foto de ${testimonial.author}`}
-                objectFit="cover"
-                loading="lazy"
-                priority={false}
-              />
-            </div>
+                <div className="relative w-20 h-20 mb-6 rounded-full overflow-hidden border-2 border-white/30 shadow-md mx-auto">
+                  <Image
+                    src={testimonial.image}
+                    alt={`Foto de ${testimonial.author}`}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                    loading="lazy"
+                  />
+                </div>
 
-            <blockquote className="text-lg sm:text-xl opacity-90 leading-relaxed">
-              "{testimonial.text}"
-            </blockquote>
+                <blockquote className="text-lg sm:text-xl opacity-90 leading-relaxed">
+                  "{testimonial.text}"
+                </blockquote>
 
-            <cite className="text-sm sm:text-base opacity-70 mt-2 block">
-              - {testimonial.author}, {testimonial.role}
-            </cite>
-          </div>
-        ))}
+                <cite className="text-sm sm:text-base opacity-70 mt-2 block">
+                  - {testimonial.author}, {testimonial.role}
+                </cite>
+              </div>
+            </Slide>
+          ))}
+        </div>
 
         <h2
           id="avaliations-title"
@@ -104,7 +100,6 @@ const Avaliations = () => {
           Junte-se a mais de 1000 profissionais que já escolheram o UppingHealth{' '}
           para gerenciar seus consultórios com excelência.
         </p>
-
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <button
             type="button"

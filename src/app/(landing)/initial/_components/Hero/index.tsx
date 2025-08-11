@@ -11,10 +11,6 @@ import { ArrowBack } from '@mui/icons-material'
 const HeroBackground = () => {
   return (
     <>
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-grid-white/10 bg-grid"
-      />
       <div aria-hidden="true" className="absolute top-20 left-10 opacity-20">
         <FavoriteBorderOutlinedIcon className="h-16 w-16 text-white animate-pulse" />
       </div>
