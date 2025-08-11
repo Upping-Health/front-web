@@ -29,6 +29,7 @@ const colors = {
   paid: '#c8e6c9',
   paidFont: '#388e3c',
   newYellow: '#F0F005',
+  gradient: `linear-gradient(135deg, #306169 0%, #4b8690 50%, #41b96f 100%)`,
 }
 
 export { colors }
