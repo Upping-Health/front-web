@@ -74,7 +74,7 @@ const HeroLanding = () => {
         </h1>
 
         <p className="text-xl md:text-2xl mb-12 text-white/90 max-w-3xl mx-auto leading-relaxed">
-          O UppingHealth revoluciona a gestão de consultórios e clínicas com
+          A UppingHealth revoluciona a gestão de consultórios e clínicas com
           módulos especializados para nutricionistas, personal trainers e outros
           profissionais da saúde.
         </p>
