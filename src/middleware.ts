@@ -6,11 +6,10 @@ export default async function middleware(request: NextRequest) {
   const signInURL = new URL('/login', request.url)
   const dashboardURL = new URL('/dashboard', request.url)
 
-  const publicPaths = ['/login', '/register', '/accountRecovery', '/initial']
+  const publicPaths = ['/login', '/register', '/accountRecovery']
   const currentPath = request.nextUrl.pathname
 
-  console.log(currentPath)
-  console.log(publicPaths.includes(currentPath))
+  if (currentPath === '/initial') return NextResponse.next()
 
   if (currentPath === '/') {
     return NextResponse.redirect(signInURL)
