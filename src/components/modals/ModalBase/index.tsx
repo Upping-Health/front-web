@@ -32,7 +32,9 @@ export const ModalHeader = ({ title, onClose }: ModalHeaderProps) => {
 }
 
 export const ModalContent = ({ children }: { children: ReactNode }) => {
-  return <div className="flex-grow overflow-auto">{children}</div>
+  return (
+    <div className="flex-grow overflow-auto scroll-mini px-2">{children}</div>
+  )
 }
 
 export const ModalFooter = ({ children }: { children: ReactNode }) => {

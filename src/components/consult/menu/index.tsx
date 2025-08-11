@@ -3,37 +3,28 @@ import FlashOnIcon from '@mui/icons-material/FlashOn'
 import Link from 'next/link'
 import React from 'react'
 import SettingsIcon from '@mui/icons-material/Settings'
-
+import { usePathname } from 'next/navigation'
 export const consultTabs = {
   antropometrias: {
-    name: 'Antropometrias',
+    name: 'Antropometria',
     icon: <StraightenIcon />,
-    path: '/antro',
+    path: 'anthropometry',
   },
   calculos: {
-    name: 'Cálculos energéticos',
+    name: 'Cálculo Energético',
     icon: <FlashOnIcon />,
-    path: '/',
-  },
-
-  exames: {
-    name: 'Exames',
-    icon: <StraightenIcon />,
-    path: '/',
-  },
-  config: {
-    name: 'Configurações',
-    icon: <SettingsIcon />,
-    path: '/',
+    path: 'energyCalculation',
   },
 }
 
-const MenuConsult = () => {
-  const currentPath = '/antro'
+const MenuConsult = ({ patientId }: { patientId: string }) => {
+  const pathname = usePathname()
+
   return (
     <aside className="flex flex-col bg-white dark:bg-gray-800 h-full w-56  rounded-xl p-2 gap-2 shadow-sm">
       {Object.entries(consultTabs).map(([key, tab]) => {
-        const isActive = currentPath === tab.path
+        const path = `/patients/${patientId}/${tab.path}`
+        const isActive = pathname === path
         return (
           <Link
             key={key}
