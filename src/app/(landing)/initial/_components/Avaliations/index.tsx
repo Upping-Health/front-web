@@ -54,7 +54,7 @@ const Avaliations = () => {
             type="button"
             aria-label="Começar teste gratuito UppingHealth"
             className="w-full sm:w-auto py-3 bg-white rounded-xl shadow-xl px-10 font-semibold flex justify-center items-center gap-2 text-primary
-              hover:scale-105 hover:shadow-primary transition-transform duration-200 ease-in-out
+              hover:scale-105 hover:shadow-primary transition-transform duration-200 eaase-in-out
               focus:outline-none focus:ring-4 focus:ring-primary focus:ring-opacity-60"
             onClick={() => {}}
           >
