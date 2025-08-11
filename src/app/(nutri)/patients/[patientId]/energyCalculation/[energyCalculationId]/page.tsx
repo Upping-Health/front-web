@@ -13,7 +13,7 @@ import { useFormik } from 'formik'
 import { useContext, useState } from 'react'
 import PatientHeader from '../../../_components/PatientHeader'
 import PatientNotFound from '../../../_components/PatientNotFound'
-import AnalysisSidebar from '../_components/AnalysisSidebar '
+import AnalysisSidebar from '../_components/AnalysisSidebar'
 
 interface PageProps {
   params: {
