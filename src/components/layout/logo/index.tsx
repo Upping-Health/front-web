@@ -13,7 +13,7 @@ const Logo = ({ minimal }: any) => {
       <Image
         src={themeDark ? logoDark : logoImg}
         alt="Logo"
-        width={minimal ? 100 : 170}
+        width={minimal ? 80 : 170}
         height={minimal ? 270 : 510}
       />
     </div>

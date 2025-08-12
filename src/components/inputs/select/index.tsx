@@ -3,7 +3,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 interface ISelectStyled {
   id: string
   label?: string
-  icon: React.ReactElement
+  icon?: React.ReactElement
   placeholder?: string
   value?: any
   onChange?: (value: any) => void
@@ -43,7 +43,7 @@ const SelectStyled = ({
         className={`${styles} border border-gray dark:border-slate-700 border-solid outline-none rounded-xl p-2 flex items-center justify-between text-black`}
       >
         <div className="flex items-center w-full relative">
-          {icon}
+          {icon && <>{icon}</>}
           <select
             name={id}
             value={value}

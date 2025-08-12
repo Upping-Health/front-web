@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import logoImg from '@/assets/upping_light.png'
 import ButtonStyled from '@/components/buttons/button'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -10,6 +11,7 @@ const navItems = ['Início', 'Módulos', 'Preços', 'Benefícios']
 
 const HeaderLanding = () => {
   const [menuOpen, setMenuOpen] = useState(false)
+  const router = useRouter()
 
   return (
     <header className="w-full bg-white shadow-md h-20 sticky top-0 left-0 z-50">
@@ -35,27 +37,44 @@ const HeaderLanding = () => {
         >
           {menuOpen ? <CloseIcon /> : <MenuIcon />}
         </button>
-        {menuOpen && (
-          <nav className="fixed top-20 left-0 w-full bg-white shadow-md flex flex-col items-center py-6 gap-6 lg:hidden z-40">
-            {navItems.map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                onClick={() => setMenuOpen(false)}
-                className="text-gray-700 hover:text-primary text-lg font-medium"
-              >
-                {item}
-              </a>
-            ))}
-          </nav>
-        )}
 
-        <div className="hidden lg:block">
+        <div
+          className={`fixed top-20 left-0 w-full bg-white shadow-md flex flex-col items-center py-6 gap-6 lg:hidden z-40 transition-all duration-300 ease-in-out ${
+            menuOpen
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 -translate-y-5 pointer-events-none'
+          }`}
+        >
+          {navItems.map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              onClick={() => setMenuOpen(false)}
+              className="text-gray-700 hover:text-primary text-lg font-medium"
+            >
+              {item}
+            </a>
+          ))}
+
           <ButtonStyled
-            title={'Acessar'}
+            title="Acessar"
             bgColor="bg-gradient-primary"
             type="button"
             styles="px-6 text-lg"
+            onClick={() => {
+              setMenuOpen(false)
+              router.push('/login')
+            }}
+          />
+        </div>
+
+        <div className="hidden lg:block">
+          <ButtonStyled
+            title="Acessar"
+            bgColor="bg-gradient-primary"
+            type="button"
+            styles="px-6 text-lg"
+            onClick={() => router.push('/login')}
           />
         </div>
       </div>
