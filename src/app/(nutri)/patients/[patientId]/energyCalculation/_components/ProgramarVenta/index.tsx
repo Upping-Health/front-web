@@ -18,16 +18,16 @@ export const ProgramarVentaSection = ({
   values,
 }: Props) => (
   <CollapsibleSection title="Programar VENTA">
-    <div className="flex flex-row gap-4 mt-4">
+    <div className="flex flex-row gap-4 mt-6">
       <div className="flex flex-col w-full">
         <RangeStyled
-          id="weight"
+          id="title"
           min={0}
-          max={200}
+          max={10}
           step={1}
-          value={values.weight || 0}
+          value={values.title || 0}
           onChange={handleChange}
-          tooltipText="Teste"
+          tooltipText={`${values.title} Kg`}
         />
         <InputStyled
           id="title"
@@ -46,11 +46,11 @@ export const ProgramarVentaSection = ({
         <RangeStyled
           id="weight"
           min={0}
-          max={200}
+          max={180}
           step={1}
           value={values.weight || 0}
           onChange={handleChange}
-          tooltipText="Teste"
+          tooltipText={`${values.weight} Dia(s)`}
         />
         <InputStyled
           id="weight"
