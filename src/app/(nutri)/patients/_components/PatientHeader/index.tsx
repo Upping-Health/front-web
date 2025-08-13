@@ -1,4 +1,5 @@
 import ButtonStyled from '@/components/buttons/button'
+import ProfileRounded from '@/components/profileRounded'
 import Patient from '@/interfaces/patient.interface'
 import { SEX_PT_BR } from '@/lib/types/sex'
 import { CircularProgress } from '@mui/material'
@@ -17,33 +18,37 @@ const PatientHeader = ({
   formik,
   countdown,
 }: PatientHeaderProps) => {
-  console.log('PatientHeader')
+  console.log(patient)
   return (
     <div className="flex items-center justify-between shadow-sm rounded-xl p-4 bg-white dark:bg-gray-800">
-      <div className="flex flex-col">
-        <div>
-          <span className="font-semibold text-gray-700 dark:text-gray-300">
-            Nome:
-          </span>{' '}
-          <span className="text-gray-900 dark:text-white font-light">
-            {patient?.name}
-          </span>
-        </div>
-        <div>
-          <span className="font-semibold text-gray-700 dark:text-gray-300">
-            Idade:
-          </span>{' '}
-          <span className="text-gray-900 dark:text-white font-light">
-            {patient?.age ?? 1} anos
-          </span>
-        </div>
-        <div>
-          <span className="font-semibold text-gray-700 dark:text-gray-300">
-            Gênero:
-          </span>{' '}
-          <span className="text-gray-900 dark:text-white font-light">
-            {SEX_PT_BR[patient?.gender ?? 'male']}
-          </span>
+      <div className="flex flex-row items-center gap-4">
+        <ProfileRounded styles="w-16 h-16 text-2xl" user={patient} />
+
+        <div className="flex flex-col">
+          <div>
+            <span className="font-semibold text-gray-700 dark:text-gray-300">
+              Nome:
+            </span>{' '}
+            <span className="text-gray-900 dark:text-white font-light">
+              {patient?.name}
+            </span>
+          </div>
+          <div>
+            <span className="font-semibold text-gray-700 dark:text-gray-300">
+              Idade:
+            </span>{' '}
+            <span className="text-gray-900 dark:text-white font-light">
+              {patient?.age ?? 1} anos
+            </span>
+          </div>
+          <div>
+            <span className="font-semibold text-gray-700 dark:text-gray-300">
+              Gênero:
+            </span>{' '}
+            <span className="text-gray-900 dark:text-white font-light">
+              {SEX_PT_BR[patient?.gender ?? 'male']}
+            </span>
+          </div>
         </div>
       </div>
 
