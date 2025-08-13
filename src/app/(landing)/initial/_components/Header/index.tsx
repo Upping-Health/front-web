@@ -18,7 +18,7 @@ const HeaderLanding = () => {
       <div className="flex items-center h-full px-6 mx-auto justify-between max-w-6xl">
         <Image src={logoImg} alt="Logo" width={60} height={51} />
 
-        <nav className="hidden lg:flex gap-8">
+        <nav className="hidden lg:flex gap-8 items-center justify-center">
           {navItems.map((item) => (
             <a
               key={item}
