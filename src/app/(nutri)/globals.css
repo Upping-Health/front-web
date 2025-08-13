@@ -58,4 +58,47 @@
     filter: invert(1) brightness(1.5);
     cursor: pointer;
   }
+
+  .range-input {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #ddd;
+    border-radius: 4px;
+    outline: none;
+  }
+
+  /* Barra (track) */
+  .range-input::-webkit-slider-runnable-track {
+    height: 6px;
+    background: #4b8690;
+    border-radius: 4px;
+  }
+  .range-input::-moz-range-track {
+    height: 6px;
+    background: #4b8690;
+    border-radius: 4px;
+  }
+
+  /* Bolinha (thumb) */
+  .range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border: 2px solid #4b8690;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -5px;
+  }
+  .range-input::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border: 2px solid #4b8690;
+    border-radius: 50%;
+    cursor: pointer;
+  }
 }

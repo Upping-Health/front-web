@@ -70,7 +70,7 @@ export const BasicInfoSection = ({
       <div className="flex flex-col w-full">
         <InputStyled
           id="body_fat_percentage"
-          label="Massa livre de gordura"
+          label="Massa livre de gordura (KG)"
           type="number"
           placeholder="Massa livre de gordura"
           value={values.fatFreedough}

@@ -16,6 +16,8 @@ import PatientNotFound from '../../../_components/PatientNotFound'
 import AnalysisSidebar from '../_components/AnalysisSidebar'
 import { BasicInfoSection } from '../_components/BasicInfoSection'
 import Formula from '../_components/Formula'
+import AdditionalMet from '../_components/AdditionalMet'
+import { ProgramarVentaSection } from '../_components/ProgramarVenta'
 
 interface PageProps {
   params: {
@@ -127,6 +129,16 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
           />
 
           <Formula />
+
+          <AdditionalMet />
+
+          <ProgramarVentaSection
+            values={formik.values}
+            errors={formik.errors}
+            handleBlur={formik.handleBlur}
+            handleChange={formik.handleChange}
+            touched={formik.touched}
+          />
         </form>
 
         {/* <div className="w-2/4 h-fit sticky top-6">

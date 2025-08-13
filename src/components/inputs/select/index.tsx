@@ -48,7 +48,7 @@ const SelectStyled = ({
             name={id}
             value={value}
             onChange={onChange}
-            className=" w-full font-semibold appearance-none outline-none bg-transparent pl-4 dark:text-white "
+            className={`w-full font-semibold appearance-none outline-none bg-transparent dark:text-white ${icon ? 'pl-4' : 'pl-1'}`}
           >
             {optionsSelect?.map((item: any) => (
               <option className="text-black" value={item.value}>
