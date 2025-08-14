@@ -96,7 +96,7 @@ const TableDash: React.FC<TableProps> = ({
   }, [currentPage, sortedData])
 
   return (
-    <div className="relative flex flex-col gap-4 h-[90%] justify-between w-full">
+    <div className="relative flex flex-col justify-between w-full">
       <div className="h-full">
         {search && (
           <div className="flex mb-4 w-full justify-between flex-wrap gap-2">
@@ -249,7 +249,7 @@ const TableDash: React.FC<TableProps> = ({
       </div>
 
       {pagination && dataToDisplay.length > 0 && (
-        <div className="flex justify-end mt-2 pr-4">
+        <div className="flex justify-end mt-2">
           <PaginationDash
             count={numberPages}
             currentPage={currentPage}
