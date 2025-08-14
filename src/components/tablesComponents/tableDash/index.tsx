@@ -20,6 +20,7 @@ import InputStyled from '@/components/inputs/inputStyled'
 import NotFoundData from '@/components/layout/notFoundData'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
 import SortIcon from '@mui/icons-material/Sort'
+import { exportTable } from '@/lib/export/export-xlsx'
 
 interface TableProps {
   columns: Array<{
@@ -126,7 +127,9 @@ const TableDash: React.FC<TableProps> = ({
                 label="Filtro"
               />
 
-              <ButtonExport onClick={() => {}} />
+              <ButtonExport
+                onClick={() => exportTable(columns, sortedData, 'dados')}
+              />
             </div>
           </div>
         )}
