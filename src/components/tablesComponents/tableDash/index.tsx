@@ -1,6 +1,9 @@
 import { colors } from '@/lib/colors/colors'
 import SearchIcon from '@mui/icons-material/Search'
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import {
+  Card,
   Table as MuiTable,
   Paper,
   TableBody,
@@ -15,6 +18,8 @@ import ButtonExport from '@/components/buttons/buttonExport'
 import FilterTable from '../filterTable'
 import InputStyled from '@/components/inputs/inputStyled'
 import NotFoundData from '@/components/layout/notFoundData'
+import SwapVertIcon from '@mui/icons-material/SwapVert'
+import SortIcon from '@mui/icons-material/Sort'
 
 interface TableProps {
   columns: Array<{
@@ -29,7 +34,7 @@ interface TableProps {
   pagination?: boolean
   itemsPerPage?: number
   search?: boolean
-  selectable?: boolean
+  defaultSort?: { field: string; direction: 'asc' | 'desc' }
 }
 
 const TableDash: React.FC<TableProps> = ({
@@ -39,12 +44,26 @@ const TableDash: React.FC<TableProps> = ({
   rowKey,
   sx,
   pagination = true,
-  itemsPerPage = 10,
+  itemsPerPage = 6,
   search = true,
-  selectable = false,
+  defaultSort,
 }) => {
   const [currentPage, setCurrentPage] = useState(1)
+  const [hoveredColumn, setHoveredColumn] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
+  const [sortConfig, setSortConfig] = useState<{
+    field: string
+    direction: 'asc' | 'desc'
+  } | null>(defaultSort || null)
+
+  const handleSort = (field: string) => {
+    setSortConfig((prev) => {
+      if (prev && prev.field === field) {
+        return { field, direction: prev.direction === 'asc' ? 'desc' : 'asc' }
+      }
+      return { field, direction: 'asc' }
+    })
+  }
 
   const filteredData = useMemo(() => {
     if (!searchTerm) return data
@@ -55,16 +74,28 @@ const TableDash: React.FC<TableProps> = ({
     )
   }, [data, columns, searchTerm])
 
-  const numberPages = Math.ceil(filteredData.length / itemsPerPage)
+  const sortedData = useMemo(() => {
+    if (!sortConfig) return filteredData
+    return [...filteredData].sort((a, b) => {
+      const aValue = a[sortConfig.field]
+      const bValue = b[sortConfig.field]
+
+      if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1
+      if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1
+      return 0
+    })
+  }, [filteredData, sortConfig])
+
+  const numberPages = Math.ceil(sortedData.length / itemsPerPage)
 
   const dataToDisplay = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage
     const endIndex = startIndex + itemsPerPage
-    return filteredData.slice(startIndex, endIndex)
-  }, [currentPage, filteredData])
+    return sortedData.slice(startIndex, endIndex)
+  }, [currentPage, sortedData])
 
   return (
-    <div className="relative flex flex-col gap-4 s:h-[70%] justify-between w-full">
+    <div className="relative flex flex-col gap-4 h-[90%] justify-between w-full">
       <div className="h-full">
         {search && (
           <div className="flex mb-4 w-full justify-between flex-wrap gap-2">
@@ -81,7 +112,7 @@ const TableDash: React.FC<TableProps> = ({
                 setSearchTerm(e.target.value)
                 setCurrentPage(1)
               }}
-              placeholder="Buscar pacientes por nome, telefone ou email..."
+              placeholder="Busca..."
             />
 
             <div className="flex gap-2">
@@ -90,18 +121,9 @@ const TableDash: React.FC<TableProps> = ({
                   { label: 'Ativo', value: 'active' },
                   { label: 'Inativo', value: 'inactive' },
                 ]}
-                onSelect={(value) => console.log(value)}
-                selected="active"
-                label="Ordenar por"
-              />
-
-              <FilterTable
-                options={[
-                  { label: 'Ativo', value: 'active' },
-                  { label: 'Inativo', value: 'inactive' },
-                ]}
                 onSelect={() => {}}
                 selected="inactive"
+                label="Filtro"
               />
 
               <ButtonExport onClick={() => {}} />
@@ -109,7 +131,7 @@ const TableDash: React.FC<TableProps> = ({
           </div>
         )}
 
-        {dataToDisplay.length === 0 ? (
+        {dataToDisplay?.length === 0 ? (
           <NotFoundData
             title="Nenhum resultado encontrado"
             description="Tente ajustar sua pesquisa ou filtros para encontrar os dados desejados."
@@ -118,34 +140,64 @@ const TableDash: React.FC<TableProps> = ({
           <TableContainer
             component={Paper}
             sx={{
+              borderRadius: '12px',
+              overflow: 'hidden',
+              boxShadow: '0 2px 12px rgba(0,0,0,0.05)',
               ...sx,
-              boxShadow:
-                '0 1px 3px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.06)',
-              borderRadius: 3,
             }}
+            className="dark:bg-gray-800 "
           >
-            <MuiTable
-              sx={{
-                tableLayout: 'auto',
-              }}
-            >
-              <TableHead className="bg-white dark:bg-gray-800 dark:border-gray-600">
-                <TableRow className="borer-none">
-                  {columns.map((col, index) => (
-                    <TableCell
-                      key={index}
-                      sx={{
-                        padding: '0.3rem 2rem',
-                        textTransform: 'uppercase',
-                        fontSize: '0.8rem',
-                        fontWeight: 900,
-                        color: colors.black,
-                      }}
-                      className="dark:text-white dark:border-slate-600"
-                    >
-                      {col.header.toUpperCase()}
-                    </TableCell>
-                  ))}
+            <MuiTable sx={{ tableLayout: 'auto' }}>
+              <TableHead
+                sx={{
+                  backgroundColor: 'rgba(0,0,0,0.02)',
+                  boxShadow: 'inset 0 -1px 0 rgba(0,0,0,0.08)',
+                }}
+                className="dark:bg-gray-800"
+              >
+                <TableRow>
+                  {columns.map((col, index) => {
+                    const isSorted = sortConfig?.field === col.field
+                    return (
+                      <TableCell
+                        key={index}
+                        onClick={() => handleSort(col.field)}
+                        onMouseEnter={() => setHoveredColumn(col.field)}
+                        onMouseLeave={() => setHoveredColumn(null)}
+                        sx={{
+                          padding: '0.75rem 1.5rem',
+                          textTransform: 'uppercase',
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
+                          letterSpacing: '0.05em',
+                          color: colors.black,
+                          cursor: 'pointer',
+                          userSelect: 'none',
+                        }}
+                        className="dark:text-gray-300"
+                      >
+                        <span
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                          }}
+                        >
+                          {col.header}
+                          {(hoveredColumn === col.field ||
+                            sortConfig?.field === col.field) &&
+                            (sortConfig?.field === col.field ? (
+                              <SortIcon fontSize="small" />
+                            ) : (
+                              <SortIcon
+                                fontSize="small"
+                                style={{ opacity: 0.4 }}
+                              />
+                            ))}
+                        </span>
+                      </TableCell>
+                    )
+                  })}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -156,10 +208,16 @@ const TableDash: React.FC<TableProps> = ({
                     onClick={() => onRowClick?.(row)}
                     sx={{
                       cursor: onRowClick ? 'pointer' : 'default',
-                      '&:nth-of-type(even)': { backgroundColor: '#f6f6f6' },
-                      '&:hover': { backgroundColor: '#f6f6f6' },
+                      transition: 'all 0.2s ease',
+                      '&:nth-of-type(even)': {
+                        backgroundColor: 'rgba(0,0,0,0.02)',
+                      },
+                      '&:hover': {
+                        backgroundColor: 'rgba(201,11,11,0.08)',
+                        transform: 'scale(1.01)',
+                      },
                     }}
-                    className="dark:bg-gray-700 hover:dark:bg-slate-700"
+                    className="dark:hover:bg-gray-600"
                   >
                     {columns.map((col, index) => {
                       const value = row[col.field]
@@ -169,11 +227,12 @@ const TableDash: React.FC<TableProps> = ({
                           sx={{
                             color: colors.black,
                             textAlign: 'left',
-                            whiteSpace: 'wrap',
-                            fontSize: '0.8rem',
-                            padding: '0.5rem 2rem',
+                            whiteSpace: 'nowrap',
+                            fontSize: '0.85rem',
+                            padding: '0.75rem 1.5rem',
+                            borderBottom: '1px solid rgba(0,0,0,0.05)',
                           }}
-                          className="dark:text-white dark:border-gray-600"
+                          className="dark:text-gray-200 dark:border-gray-700"
                         >
                           {col.render ? col.render(value, row) : value}
                         </TableCell>
