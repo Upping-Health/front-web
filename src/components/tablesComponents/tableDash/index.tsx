@@ -142,13 +142,13 @@ const TableDash: React.FC<TableProps> = ({
         ) : (
           <TableContainer
             component={Paper}
+            className="dark:bg-gray-800 overflow-x-auto"
             sx={{
               borderRadius: '12px',
-              overflow: 'hidden',
               boxShadow: '0 2px 12px rgba(0,0,0,0.05)',
+
               ...sx,
             }}
-            className="dark:bg-gray-800 "
           >
             <MuiTable sx={{ tableLayout: 'auto' }}>
               <TableHead
@@ -230,7 +230,6 @@ const TableDash: React.FC<TableProps> = ({
                           sx={{
                             color: colors.black,
                             textAlign: 'left',
-                            whiteSpace: 'nowrap',
                             fontSize: '0.85rem',
                             padding: '0.75rem 1.5rem',
                             borderBottom: '1px solid rgba(0,0,0,0.05)',
