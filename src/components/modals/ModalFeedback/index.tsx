@@ -51,7 +51,7 @@ const ModalFeedBackStatus = ({
       open={open}
       className="flex justify-center items-center backdrop-blur-sm"
     >
-      <div className="relative bg-white rounded-3xl p-6 text-center shadow-2xl max-w-sm w-full mx-4">
+      <div className="relative bg-white dark:bg-gray-800 rounded-3xl p-6 text-center shadow-2xl max-w-sm w-full mx-4">
         <button
           onClick={setIsClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
@@ -61,7 +61,9 @@ const ModalFeedBackStatus = ({
 
         <div
           className={`mx-auto flex items-center justify-center rounded-full w-32 h-32 ${
-            status === STATUS.SUCCESS ? 'bg-green-100' : 'bg-red-100'
+            status === STATUS.SUCCESS
+              ? 'bg-green-100 dark:bg-green-200'
+              : 'bg-red-100 dark:bg-red-200'
           }`}
         >
           <StatusIcon
@@ -75,7 +77,7 @@ const ModalFeedBackStatus = ({
           />
         </div>
 
-        <h1 className="font-semibold text-2xl pt-4 pb-2 text-gray-800">
+        <h1 className="font-semibold text-2xl pt-4 pb-2 text-gray-800 dark:text-white">
           {title}
         </h1>
         <p className="font-normal text-gray-600">{description}</p>

@@ -192,7 +192,7 @@ const Calendar = ({
           )}
         </div>
 
-        <div className="bg-light dark:bg-slate-800 rounded-xl w-60 flex flex-col items-start justify-between p-4">
+        <div className="bg-light dark:bg-gray-700 rounded-xl w-60 flex flex-col items-start justify-between p-4">
           <div className="w-full h-full">
             <div className="flex justify-center w-full items-center ">
               <p className="text-center text-xl dark:text-white">Legendas</p>
@@ -234,7 +234,7 @@ const Calendar = ({
               onClick={() => setOpenLegendModal(true)}
               icon={<AddIcon style={{ color: colors.white, fontSize: 24 }} />}
               type="button"
-              styles="px-4 text-sm h-12 shadow-lg dark:bg-gray-700 w-full"
+              styles="px-4 text-sm h-12 shadow-lg dark:bg-gray-800 w-full"
             />
           </div>
         </div>

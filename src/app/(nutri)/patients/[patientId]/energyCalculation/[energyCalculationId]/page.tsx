@@ -14,6 +14,10 @@ import { useContext, useState } from 'react'
 import PatientHeader from '../../../_components/PatientHeader'
 import PatientNotFound from '../../../_components/PatientNotFound'
 import AnalysisSidebar from '../_components/AnalysisSidebar'
+import { BasicInfoSection } from '../_components/BasicInfoSection'
+import Formula from '../_components/Formula'
+import AdditionalMet from '../_components/AdditionalMet'
+import { ProgramarVentaSection } from '../_components/ProgramarVenta'
 
 interface PageProps {
   params: {
@@ -48,7 +52,12 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
   }
 
   const formik = useFormik<any>({
-    initialValues: {},
+    initialValues: {
+      title: '',
+      weight: '',
+      height: '',
+      fatFreedough: '',
+    },
     //validationSchema: ,
     onSubmit: async (values) => {
       try {
@@ -102,7 +111,7 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
       <main className="flex gap-4">
         <form
           onSubmit={formik.handleSubmit}
-          className="h-full w-3/4 flex flex-col gap-4 mb-14"
+          className="h-full w-full flex flex-col gap-4 mb-14"
         >
           <PatientHeader
             formik={formik}
@@ -110,11 +119,31 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
             patient={patientData}
             countdown={countdown}
           />
+
+          <BasicInfoSection
+            values={formik.values}
+            errors={formik.errors}
+            handleBlur={formik.handleBlur}
+            handleChange={formik.handleChange}
+            touched={formik.touched}
+          />
+
+          <Formula />
+
+          <AdditionalMet />
+
+          <ProgramarVentaSection
+            values={formik.values}
+            errors={formik.errors}
+            handleBlur={formik.handleBlur}
+            handleChange={formik.handleChange}
+            touched={formik.touched}
+          />
         </form>
 
-        <div className="w-2/4 h-fit sticky top-6">
+        {/* <div className="w-2/4 h-fit sticky top-6">
           <AnalysisSidebar values={formik.values} patient={patientData} />
-        </div>
+        </div> */}
       </main>
     </div>
   )

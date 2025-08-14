@@ -11,6 +11,10 @@ export default interface Patient extends DefaultEntityType {
   gender: 'male' | 'female' | 'other'
   status: 'ACTIVE' | 'INACTIVE'
   objective?: string
+  profile: {
+    photo: string
+  }
+  photo: string
   address: {
     street: string
     number: string

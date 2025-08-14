@@ -74,6 +74,7 @@ const PacientesContent = () => {
         header: 'Foto',
         field: 'photo',
         render: (_: any, row: any) => <ProfileRounded user={row?.patient} />,
+        noExport: true,
       },
       {
         header: 'Nome',
@@ -113,6 +114,7 @@ const PacientesContent = () => {
             onClick={() => changeStatusPatient(row)}
           />
         ),
+        noExport: true,
       },
       {
         header: '#',
@@ -126,6 +128,7 @@ const PacientesContent = () => {
             <span>Consulta</span>
           </Link>
         ),
+        noExport: true,
       },
     ],
     [toogleModalOpenWithData, changeStatusPatient],

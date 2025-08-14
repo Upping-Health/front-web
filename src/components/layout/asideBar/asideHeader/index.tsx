@@ -20,13 +20,13 @@ const AsideHeader = ({ isCollapsed, setIsCollapsed }: IAsideHeaderParams) => {
     <div>
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute right-0 top-4 bg-primary text-white rounded-l-xl flex justify-center items-center"
+        className="absolute cursor-pointer right-0 top-4 bg-primary text-white rounded-l-xl flex justify-center items-center"
       >
         {isCollapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
       </button>
 
       <div
-        className={`flex justify-center mb-6 ${isCollapsed ? 'mt-10' : 'mt-6'}`}
+        className={`flex justify-center mb-6 ${isCollapsed ? 'mt-10' : 'mt-4'}`}
       >
         <Logo minimal />
       </div>
