@@ -157,8 +157,10 @@ const AnthropometryPage = ({ params }: PageProps) => {
           PreFeedBack.error('Erro ao criar antroprometria.'),
         )
       }
-    } catch (error) {
-      return onShowFeedBack(PreFeedBack.error('Erro ao criar antroprometria.'))
+    } catch (error: any) {
+      const message =
+        error?.response?.message || 'Erro ao criar antroprometria.'
+      return onShowFeedBack(PreFeedBack.error(message))
     } finally {
       setIsNavigating(false)
     }

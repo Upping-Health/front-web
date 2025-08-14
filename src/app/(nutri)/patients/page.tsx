@@ -49,7 +49,9 @@ const PacientesContent = () => {
   }
 
   const onErrorUpdate = (e: any) => {
-    onShowFeedBack(PreFeedBack.error('Falhou ao atualizar status do paciente.'))
+    const message =
+      e?.response?.message || 'Falhou ao atualizar status do paciente.'
+    onShowFeedBack(PreFeedBack.error(message))
   }
 
   const changeStatusPatient = useCallback(
@@ -155,7 +157,15 @@ const PacientesContent = () => {
             </div>
           </>
         ) : (
-          <TableDash columns={columns} data={data} rowKey="id" />
+          <TableDash
+            columns={columns}
+            data={data}
+            rowKey="id"
+            defaultSort={{
+              field: 'name',
+              direction: 'asc',
+            }}
+          />
         )}
       </div>
 

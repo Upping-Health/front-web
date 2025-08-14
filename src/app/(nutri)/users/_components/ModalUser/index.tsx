@@ -59,15 +59,13 @@ const ModalUser = ({
   }, [open])
 
   const onError = (e: any) => {
-    const errorMessage =
-      e?.response?.data?.message || 'Falhou ao cadastrar usuário.'
+    const errorMessage = e?.response?.message || 'Falhou ao cadastrar usuário.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
     console.log('[ERROR API users/new-user]', errorMessage)
   }
 
   const onErrorUpdate = (e: any) => {
-    const errorMessage =
-      e?.response?.data?.error || 'Falhou ao atualizar usuário.'
+    const errorMessage = e?.response?.message || 'Falhou ao atualizar usuário.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
     console.log('[ERROR API /patient]', errorMessage)
   }

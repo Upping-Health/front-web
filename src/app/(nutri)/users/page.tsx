@@ -46,7 +46,9 @@ const UsersContent = () => {
   }
 
   const onErrorUpdate = (e: any) => {
-    onShowFeedBack(PreFeedBack.error('Falhou ao atualizar status do paciente.'))
+    const errorMessage =
+      e?.response?.message || 'Falhou ao atualizar status do paciente.'
+    onShowFeedBack(PreFeedBack.error(errorMessage))
   }
 
   const changeStatus = useCallback(

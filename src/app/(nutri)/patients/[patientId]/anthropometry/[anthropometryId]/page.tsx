@@ -110,8 +110,10 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
         onShowFeedBack(
           PreFeedBack.success('Antropometria realizada com sucesso'),
         )
-      } catch (error) {
-        onShowFeedBack(PreFeedBack.error('Erro ao realizar antropometria'))
+      } catch (error: any) {
+        const message =
+          error?.response?.message || 'Erro ao criar antroprometria.'
+        return onShowFeedBack(PreFeedBack.error(message))
       } finally {
         setApiLoading(false)
         resetTimer()

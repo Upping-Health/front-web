@@ -217,7 +217,6 @@ const TableDash: React.FC<TableProps> = ({
                       },
                       '&:hover': {
                         backgroundColor: 'rgba(201,11,11,0.08)',
-                        transform: 'scale(1.01)',
                       },
                     }}
                     className="dark:hover:bg-gray-600"

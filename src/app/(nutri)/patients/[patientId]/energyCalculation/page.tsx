@@ -112,11 +112,13 @@ const EnergyCalculationPage = ({ params }: PageProps) => {
         router.push(`/patients/${params.patientId}/energyCalculation/${uuid}`)
       } else {
         return onShowFeedBack(
-          PreFeedBack.error('Erro ao criar antroprometria.'),
+          PreFeedBack.error('Erro ao criar cálculo energético.'),
         )
       }
-    } catch (error) {
-      return onShowFeedBack(PreFeedBack.error('Erro ao criar antroprometria.'))
+    } catch (error: any) {
+      const message =
+        error?.response?.message || 'Erro ao criar cálculo energético.'
+      return onShowFeedBack(PreFeedBack.error(message))
     } finally {
       setIsNavigating(false)
     }
