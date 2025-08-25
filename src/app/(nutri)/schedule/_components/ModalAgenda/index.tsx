@@ -1,6 +1,6 @@
 import AutocompleteStyled from '@/components/inputs/autoCompleteStyled'
 import ButtonStyled from '@/components/buttons/button'
-import CardProfile from '@/components/tablesComponents/cardProfile'
+import CardProfile from '@/components/tables/cardProfile'
 import DatePickerStyled from '@/components/inputs/selectDateStyled'
 import TextAreaStyled from '@/components/inputs/textAreaStyled'
 import { DefaultContext } from '@/contexts/defaultContext'

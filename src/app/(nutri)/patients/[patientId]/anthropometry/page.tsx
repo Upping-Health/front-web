@@ -3,14 +3,14 @@ import MenuConsult from '@/components/consult/menu'
 import LoadingFullScreen from '@/components/layout/loadingGlobal'
 import TopDash from '@/components/layout/topDash'
 import ProfileRounded from '@/components/profileRounded'
-import TableDash from '@/components/tablesComponents/tableDash'
+import TableDash from '@/components/tables/tableDash'
 import { DefaultContext } from '@/contexts/defaultContext'
 import useLoadAnthropometryByPatient from '@/hooks/nutritionists/useLoadAnthropometryByPatient'
 import useLoadPatientByUUID from '@/hooks/nutritionists/useLoadPatientById'
 import api from '@/services/api'
 import PreFeedBack from '@/lib/feedbackStatus'
 import { SEX_PT_BR } from '@/lib/types/sex'
-import { Person, PersonPinCircle } from '@mui/icons-material'
+import { Create, Person, PersonPinCircle } from '@mui/icons-material'
 import { CircularProgress } from '@mui/material'
 import dateFormat from 'dateformat'
 import { useRouter } from 'next/navigation'
@@ -18,6 +18,7 @@ import { useContext, useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
 import ButtonStyled from '@/components/buttons/button'
 import CreateIcon from '@mui/icons-material/Create'
+import { HeaderButton } from '@/components/layout/headerDash'
 interface PageProps {
   params: {
     patientId: string
@@ -81,17 +82,15 @@ const AnthropometryPage = ({ params }: PageProps) => {
         field: '{row}',
         render: (_: any, row: any) => {
           return (
-            <ButtonStyled
-              icon={<CreateIcon />}
+            <HeaderButton
               onClick={() =>
                 router.push(
                   `/patients/${params.patientId}/anthropometry/${row.uuid}`,
                 )
               }
-              title={'Editar'}
-              type="button"
-              styles="bg-black h-[35px] px-3 text-sm shadow-md dark:bg-white dark:text-black"
-            />
+            >
+              <CreateIcon className="text-gray-600 text-lg dark:text-white" />
+            </HeaderButton>
           )
         },
       },

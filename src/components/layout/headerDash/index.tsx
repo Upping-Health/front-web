@@ -12,7 +12,7 @@ interface HeaderButtonProps {
   children: ReactNode
 }
 
-const HeaderButton = ({ onClick, children }: HeaderButtonProps) => {
+export const HeaderButton = ({ onClick, children }: HeaderButtonProps) => {
   return (
     <button
       onClick={onClick}

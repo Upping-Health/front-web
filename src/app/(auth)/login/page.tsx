@@ -1,60 +1,31 @@
 'use client'
 
-import api from '@/services/api'
-import Cookies from 'js-cookie'
-import ButtonStyled from '@/components/buttons/button'
-import InputStyled from '@/components/inputs/inputStyled'
-import Loading from '@/components/layout/loading'
-import Logo from '@/components/layout/logo'
-import { DefaultContext } from '@/contexts/defaultContext'
-import { colors } from '@/lib/colors/colors'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import { useFormik } from 'formik'
-import { useRouter } from 'next/navigation'
-import { useContext, useState } from 'react'
+import { useLogin } from '@/hooks/users/useLogin'
+import InputStyled from '@/components/inputs/inputStyled'
+import ButtonStyled from '@/components/buttons/button'
+import Loading from '@/components/layout/loading'
+import MailOutlineIcon from '@mui/icons-material/MailOutline'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import { colors } from '@/lib/colors/colors'
 import Image from 'next/image'
 import logoImg from '@/assets/upping_light.png'
+import { useRouter } from 'next/navigation'
 
 export default function Login() {
-  const { setuser } = useContext(DefaultContext)
+  const { login, loading, error, setError } = useLogin()
   const router = useRouter()
-  const [loading, setloading] = useState(false)
-  const [error, setError] = useState('')
+
   const formik = useFormik({
     initialValues: {
       email: 'contato@upping.com.br',
       password: 'password',
     },
     onSubmit: async (values) => {
-      setloading(true)
-      setError('')
-      try {
-        const response = await api.post('/login', {
-          email: values.email,
-          password: values?.password,
-        })
-
-        if (response.status === 200) {
-          const { data } = response?.data
-
-          if (data) {
-            Cookies.set('token', data.access_token, { expires: 365 })
-            localStorage.setItem('user', JSON.stringify(data.user))
-            setuser(data.user as any)
-            router.push('/dashboard')
-          }
-        } else {
-          setError('Credenciais inválidas, tente novamente.')
-        }
-      } catch (e) {
-        console.log(e)
-        setError('Credenciais inválidas, tente novamente.')
-      } finally {
-        setloading(false)
-      }
+      await login(values)
     },
   })
+
   return (
     <form
       onSubmit={formik.handleSubmit}
@@ -67,31 +38,36 @@ export default function Login() {
             <Image src={logoImg} alt="Logo" width={170} height={170} />
           </div>
 
-          <div className="flex flex-col">
-            <div className="flex flex-col gap-5">
-              <InputStyled
-                id="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                label="E-mail"
-                type="text"
-                placeholder="exemplo@gmail.com"
-                icon={<MailOutlineIcon style={{ color: colors.primary }} />}
-                styles="dark:!border-gray"
-                stylesInput="dark:bg-white dark:!text-black"
-              />
-              <InputStyled
-                id="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                label="Senha"
-                type="password"
-                placeholder="***********"
-                icon={<LockOutlinedIcon style={{ color: colors.primary }} />}
-                styles="dark:!border-gray"
-                stylesInput="dark:bg-white dark:!text-black"
-              />
-            </div>
+          <div className="flex flex-col gap-5">
+            <InputStyled
+              id="email"
+              value={formik.values.email}
+              onChange={(e) => {
+                formik.handleChange(e)
+                if (error) setError('')
+              }}
+              label="E-mail"
+              type="text"
+              placeholder="exemplo@gmail.com"
+              icon={<MailOutlineIcon style={{ color: colors.primary }} />}
+              styles="dark:!border-gray"
+              stylesInput="dark:bg-white dark:!text-black"
+            />
+            <InputStyled
+              id="password"
+              value={formik.values.password}
+              onChange={(e) => {
+                formik.handleChange(e)
+                if (error) setError('')
+              }}
+              label="Senha"
+              type="password"
+              placeholder="***********"
+              icon={<LockOutlinedIcon style={{ color: colors.primary }} />}
+              styles="dark:!border-gray"
+              stylesInput="dark:bg-white dark:!text-black"
+            />
+
             {error && (
               <p className="text-center text-red-600 font-light text-sm">
                 {error}
@@ -105,23 +81,14 @@ export default function Login() {
               Esqueci minha senha
             </button>
           </div>
-          <div className="flex flex-col gap-4 ">
-            <ButtonStyled
-              type="submit"
-              styles="w-full"
-              title="Entrar"
-              textColor="text-white"
-              disabled={loading}
-            />
 
-            {/* <ButtonStyled
-              type="button"
-              onClick={() => router.push('/register')}
-              styles="w-full"
-              bgColor="bg-primary"
-              title="Cadastre-se gratuitamente"
-            /> */}
-          </div>
+          <ButtonStyled
+            type="submit"
+            styles="w-full"
+            title="Entrar"
+            textColor="text-white"
+            disabled={loading}
+          />
         </div>
       )}
     </form>
