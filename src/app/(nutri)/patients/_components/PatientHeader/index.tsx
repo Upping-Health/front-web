@@ -18,7 +18,6 @@ const PatientHeader = ({
   formik,
   countdown,
 }: PatientHeaderProps) => {
-  console.log(patient)
   return (
     <div className="flex items-center justify-between shadow-sm rounded-xl p-4 bg-white dark:bg-gray-800">
       <div className="flex flex-row items-center gap-4">

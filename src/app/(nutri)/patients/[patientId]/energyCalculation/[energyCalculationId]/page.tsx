@@ -13,11 +13,11 @@ import { useFormik } from 'formik'
 import { useContext, useState } from 'react'
 import PatientHeader from '../../../_components/PatientHeader'
 import PatientNotFound from '../../../_components/PatientNotFound'
-import AnalysisSidebar from '../_components/AnalysisSidebar'
+import AdditionalMet from '../_components/AdditionalMet'
 import { BasicInfoSection } from '../_components/BasicInfoSection'
 import Formula from '../_components/Formula'
-import AdditionalMet from '../_components/AdditionalMet'
 import { ProgramarVentaSection } from '../_components/ProgramarVenta'
+import { EnergyCalculation } from '@/interfaces/energyCalculation.interface'
 
 interface PageProps {
   params: {
@@ -51,12 +51,23 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
     )
   }
 
-  const formik = useFormik<any>({
+  const formik = useFormik<Partial<EnergyCalculation>>({
     initialValues: {
-      title: '',
-      weight: '',
-      height: '',
-      fatFreedough: '',
+      formula: 'harris_benedict_1919',
+      lbm: 0,
+      weight: 0,
+      height: 0,
+      gender: 'male',
+      activity_factor: 0,
+      injury_factor: 0,
+      met_adjustment: 0,
+      met_time: 0,
+      met_factor: 0,
+      body_fat: 0,
+      pregnant: false,
+      pregnancy_weeks: 0,
+      target_weight: 0,
+      target_days: 0,
     },
     //validationSchema: ,
     onSubmit: async (values) => {
@@ -130,7 +141,13 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
             touched={formik.touched}
           />
 
-          <Formula />
+          <Formula
+            values={formik.values}
+            errors={formik.errors}
+            handleBlur={formik.handleBlur}
+            handleChange={formik.handleChange}
+            touched={formik.touched}
+          />
 
           <AdditionalMet />
 

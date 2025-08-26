@@ -6,10 +6,11 @@ import TopDash from '@/components/layout/topDash'
 import ProfileRounded from '@/components/profileRounded'
 import TableDash from '@/components/tables/tableDash'
 import { DefaultContext } from '@/contexts/defaultContext'
-import useLoadAnthropometryByPatient from '@/hooks/nutritionists/useLoadAnthropometryByPatient'
+import useLoadEnergyCalculationByPatient from '@/hooks/nutritionists/energyCalculation/useLoadEnergyByPatient'
 import useLoadPatientByUUID from '@/hooks/nutritionists/useLoadPatientById'
 import PreFeedBack from '@/lib/feedbackStatus'
 import { SEX_PT_BR } from '@/lib/types/sex'
+import api from '@/services/api'
 import { Person } from '@mui/icons-material'
 import CreateIcon from '@mui/icons-material/Create'
 import { CircularProgress } from '@mui/material'
@@ -17,7 +18,6 @@ import dateFormat from 'dateformat'
 import { useRouter } from 'next/navigation'
 import { useContext, useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
-import api from '@/services/api'
 interface PageProps {
   params: {
     patientId: string
@@ -28,7 +28,7 @@ const EnergyCalculationPage = ({ params }: PageProps) => {
   const { onShowFeedBack } = useContext(DefaultContext)
   const [isNavigating, setIsNavigating] = useState(false)
 
-  const { data, loadData, loading } = useLoadAnthropometryByPatient(
+  const { data, loadData, loading } = useLoadEnergyCalculationByPatient(
     params.patientId,
     false,
   )
@@ -102,35 +102,37 @@ const EnergyCalculationPage = ({ params }: PageProps) => {
     setIsNavigating(true)
 
     console.log(patientData)
-    try {
-      const response = await api.post('/energycalculations/store', {
-        formula: 'harris_benedict_1984',
-        weight: 63,
-        height: 169,
-        age: 30,
-        gender: 'male',
-        activity_factor: 1.9,
-        injury_factor: 1.3,
-        met_adjustment: 189,
-        met_time: 30,
-        met_factor: 2.0,
-      })
+    router.push(`/patients/${params.patientId}/energyCalculation/uuid`)
 
-      const uuid = response?.data?.message?.uuid
-      if (uuid) {
-        router.push(`/patients/${params.patientId}/energyCalculation/${uuid}`)
-      } else {
-        return onShowFeedBack(
-          PreFeedBack.error('Erro ao criar cálculo energético.'),
-        )
-      }
-    } catch (error: any) {
-      const message =
-        error?.response?.message || 'Erro ao criar cálculo energético.'
-      return onShowFeedBack(PreFeedBack.error(message))
-    } finally {
-      setIsNavigating(false)
-    }
+    // try {
+    //   const response = await api.post('/energycalculations/store', {
+    //     formula: 'harris_benedict_1984',
+    //     weight: 63,
+    //     height: 169,
+    //     age: 30,
+    //     gender: 'male',
+    //     activity_factor: 1.9,
+    //     injury_factor: 1.3,
+    //     met_adjustment: 189,
+    //     met_time: 30,
+    //     met_factor: 2.0,
+    //   })
+
+    //   const uuid = response?.data?.message?.uuid
+    //   if (uuid) {
+    //     router.push(`/patients/${params.patientId}/energyCalculation/${uuid}`)
+    //   } else {
+    //     return onShowFeedBack(
+    //       PreFeedBack.error('Erro ao criar cálculo energético.'),
+    //     )
+    //   }
+    // } catch (error: any) {
+    //   const message =
+    //     error?.response?.message || 'Erro ao criar cálculo energético.'
+    //   return onShowFeedBack(PreFeedBack.error(message))
+    // } finally {
+    //   setIsNavigating(false)
+    // }
   }
 
   if (patientLoading) {
