@@ -5,7 +5,7 @@ import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.i
 import { EnergyCalculation } from '@/interfaces/energyCalculation.interface'
 
 interface Props {
-  values: EnergyCalculation
+  values: Partial<EnergyCalculation>
   handleChange: (e: React.ChangeEvent<any>) => void
   handleBlur: (e: React.FocusEvent<any>) => void
   errors: FormikErrors<EnergyCalculation>

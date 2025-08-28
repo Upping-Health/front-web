@@ -43,6 +43,23 @@ const Formula = ({
     { text: 'Manual GET', value: 'manual_get' },
   ]
 
+  const activityFactors = [
+    { text: 'Sedentário (1.2)', value: 1.2 },
+    { text: 'Leve (1.375)', value: 1.375 },
+    { text: 'Moderado (1.55)', value: 1.55 },
+    { text: 'Ativo (1.725)', value: 1.725 },
+    { text: 'Atleta (1.9+)', value: 1.9 },
+  ]
+
+  const injuryFactors = [
+    { text: 'Nenhum (1.0)', value: 1.0 },
+    { text: 'Cirurgia leve (1.1)', value: 1.1 },
+    { text: 'Cirurgia maior (1.2–1.3)', value: 1.25 },
+    { text: 'Infecção/sepse (1.2–1.5)', value: 1.35 },
+    { text: 'Trauma grave (1.35–1.5)', value: 1.45 },
+    { text: 'Queimado (até 2.0)', value: 2.0 },
+  ]
+
   return (
     <CollapsibleSection title="Fórmula">
       <div className="flex gap-4 w-full">
@@ -60,21 +77,25 @@ const Formula = ({
 
         <div className="flex-1 min-w-0">
           <SelectStyled
-            id="formula2"
-            label="Fórmula atividade"
-            options={formulas}
-            placeholder="Selecione a fórmula"
+            id="activityFactor"
+            label="Fator de Atividade"
+            options={activityFactors}
+            placeholder="Selecione o fator"
             styles="w-full"
+            value={values.activity_factor}
+            onChange={handleChange}
           />
         </div>
 
         <div className="flex-1 min-w-0">
           <SelectStyled
-            id="formula3"
-            label="Fator Injúria"
-            options={formulas}
-            placeholder="Selecione a fórmula"
+            id="injuryFactor"
+            label="Fator de Injúria"
+            options={injuryFactors}
+            placeholder="Selecione o fator"
             styles="w-full"
+            value={values.injury_factor}
+            onChange={handleChange}
           />
         </div>
       </div>

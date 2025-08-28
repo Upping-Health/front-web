@@ -68,6 +68,12 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
       pregnancy_weeks: 0,
       target_weight: 0,
       target_days: 0,
+      additionalMet: [
+        {
+          met_factor: '',
+          met_time: '',
+        },
+      ],
     },
     //validationSchema: ,
     onSubmit: async (values) => {
@@ -149,7 +155,13 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
             touched={formik.touched}
           />
 
-          <AdditionalMet />
+          <AdditionalMet
+            values={formik.values}
+            errors={formik.errors}
+            handleBlur={formik.handleBlur}
+            setFieldValue={formik.setFieldValue}
+            touched={formik.touched}
+          />
 
           <ProgramarVentaSection
             values={formik.values}

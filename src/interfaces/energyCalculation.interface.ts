@@ -38,4 +38,5 @@ export interface EnergyCalculation {
   pregnancy_weeks?: number
   target_weight?: number
   target_days?: number
+  additionalMet?: { met_factor: string; met_time: string }[]
 }
