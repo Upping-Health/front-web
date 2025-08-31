@@ -125,7 +125,7 @@ const ModalUser = ({
         phone: masks.unmask(values.phone),
         name: values.name,
         email: values.email,
-        gender: values.gender as 'male' | 'female' | 'other',
+        gender: values.gender as 'male' | 'female',
         role_id: Number(values.role),
         birth_date: values.birth_date,
         password: 'password',

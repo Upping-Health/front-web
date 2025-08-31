@@ -34,5 +34,5 @@ export const validatePatientSchema = Yup.object().shape({
   birth_date: Yup.string().required('Este campo é necessário'),
   gender: Yup.string()
     .required('Este campo é necessário')
-    .oneOf(['male', 'female', 'other'], 'Opção inválida'),
+    .oneOf(['male', 'female'], 'Opção inválida'),
 })

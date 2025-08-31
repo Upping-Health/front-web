@@ -162,7 +162,7 @@ const ModalPatient = ({
         name: values.name,
         patient_id: values?.uuid ?? null,
         email: values.email,
-        gender: values.gender as 'male' | 'female' | 'other',
+        gender: values.gender as 'male' | 'female',
         birth_date: convertDMYtoISO(values.birth_date),
         address: {
           city: values.city,

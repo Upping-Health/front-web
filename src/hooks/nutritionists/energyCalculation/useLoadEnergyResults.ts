@@ -26,6 +26,7 @@ const useLoadEnergyCalculationResults = (
     const result = energyCalculatonService.calculate({
       ...values,
       age: patient?.age ?? 0,
+      gender: patient?.gender ?? 'male',
     })
 
     return [
