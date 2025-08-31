@@ -14,7 +14,7 @@ type Results = {
 
 type Gender = 'male' | 'female'
 
-const useLoadConsultResults = (
+const useLoadAnthropometryResults = (
   values: AnthropometryFormValues,
   patient: Patient | null,
 ) => {
@@ -170,4 +170,4 @@ const useLoadConsultResults = (
   return { analysisResults, bodyComposition }
 }
 
-export default useLoadConsultResults
+export default useLoadAnthropometryResults

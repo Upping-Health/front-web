@@ -24,7 +24,7 @@ export const ProgramarVentaSection = ({
       <div className="flex flex-col w-full">
         <RangeStyled
           id="target_weight"
-          min={0}
+          min={-10}
           max={10}
           step={1}
           value={Number(values.target_weight)}
@@ -33,9 +33,9 @@ export const ProgramarVentaSection = ({
         />
         <InputStyled
           id="weight"
-          label="Ajuste ganho/perda de peso"
           type="number"
           placeholder=""
+          label="Ajuste ganho/perda de peso (KG)"
           value={values.target_weight}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -56,9 +56,9 @@ export const ProgramarVentaSection = ({
         />
         <InputStyled
           id="target_days"
-          label="Em quantos dias"
           type="number"
-          placeholder="Peso em kg"
+          placeholder=""
+          label="Em quantos dias"
           value={values.target_days}
           onChange={handleChange}
           onBlur={handleBlur}

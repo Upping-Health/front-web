@@ -18,6 +18,7 @@ import { BasicInfoSection } from '../_components/BasicInfoSection'
 import Formula from '../_components/Formula'
 import { ProgramarVentaSection } from '../_components/ProgramarVenta'
 import { EnergyCalculation } from '@/interfaces/energyCalculation.interface'
+import AnalysisSidebar from '../_components/AnalysisSidebar'
 
 interface PageProps {
   params: {
@@ -80,7 +81,7 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
       try {
         setApiLoading(true)
         await api.put(
-          `/anthropometrics/update/${params.energyCalculationId}`,
+          `/energycalculations/update/${params.energyCalculationId}`,
           values,
         )
         onShowFeedBack(
@@ -172,9 +173,9 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
           />
         </form>
 
-        {/* <div className="w-2/4 h-fit sticky top-6">
+        <div className="w-2/4 h-fit sticky top-6">
           <AnalysisSidebar values={formik.values} patient={patientData} />
-        </div> */}
+        </div>
       </main>
     </div>
   )
