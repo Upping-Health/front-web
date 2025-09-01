@@ -61,9 +61,6 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
       gender: 'male',
       activity_factor: 0,
       injury_factor: 0,
-      met_adjustment: 0,
-      met_time: 0,
-      met_factor: 0,
       body_fat: 0,
       pregnant: false,
       pregnancy_weeks: 0,
@@ -71,8 +68,8 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
       target_days: 0,
       additionalMet: [
         {
-          met_factor: '',
-          met_time: '',
+          met_factor: 0,
+          met_time: 0,
         },
       ],
     },

@@ -30,13 +30,14 @@ export interface EnergyCalculation {
   gender: 'male' | 'female'
   activity_factor: number
   injury_factor?: number
-  met_adjustment?: number
-  met_time?: number
-  met_factor?: number
   body_fat?: number
   pregnant?: boolean
   pregnancy_weeks?: number
   target_weight?: number
   target_days?: number
-  additionalMet?: { met_factor: string; met_time: string }[]
+  additionalMet?: {
+    met_factor: number
+    met_time: number
+    met_adjustment?: number
+  }[]
 }
