@@ -27,7 +27,7 @@ export const validateCreateUser = Yup.object().shape({
     .email('E-mail inválido'),
   birth_date: Yup.string().required('Este campo é necessário'),
   gender: Yup.string()
-    .oneOf(['male', 'female', 'other'])
+    .oneOf(['male', 'female'])
     .required('Selecione um gênero'),
   role: Yup.string().required('Selecione uma função'),
 })

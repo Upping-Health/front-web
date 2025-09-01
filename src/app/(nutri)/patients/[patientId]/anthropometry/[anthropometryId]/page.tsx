@@ -5,21 +5,21 @@ import { ArrowBack, Straighten } from '@mui/icons-material'
 import { useFormik } from 'formik'
 
 import { DefaultContext } from '@/contexts/defaultContext'
-import useLoadAnthropometry from '@/hooks/nutritionists/useLoadAnthropometryByUUID'
+import useLoadAnthropometry from '@/hooks/nutritionists/anthropometry/useLoadAnthropometryByUUID'
 import useLoadPatientByUUID from '@/hooks/nutritionists/useLoadPatientById'
+import useTimer from '@/hooks/others/useTimer'
 import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
 import PreFeedBack from '@/lib/feedbackStatus'
 import { validateCreateAnthropometry } from '@/lib/formik/validators/validator-anthroprometry'
 import api from '@/services/api'
 import { CircularProgress } from '@mui/material'
-import { useContext, useEffect, useRef, useState } from 'react'
-import AnalysisSidebar from '../_components/AnalysisSidebar'
-import { BodyCircumferenceSection } from '../_components/BodyCircumferenceSection'
+import { useContext, useEffect, useState } from 'react'
 import PatientHeader from '../../../_components/PatientHeader'
 import PatientNotFound from '../../../_components/PatientNotFound'
+import AnalysisSidebar from '../_components/AnalysisSidebar'
+import { BodyCircumferenceSection } from '../_components/BodyCircumferenceSection'
 import { PhysicalInfoSection } from '../_components/PhysicalInfoSection'
 import { SkinFoldSection } from '../_components/SkinFoldSection'
-import useTimer from '@/hooks/others/useTimer'
 
 interface PageProps {
   params: {
@@ -110,8 +110,10 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
         onShowFeedBack(
           PreFeedBack.success('Antropometria realizada com sucesso'),
         )
-      } catch (error) {
-        onShowFeedBack(PreFeedBack.error('Erro ao realizar antropometria'))
+      } catch (error: any) {
+        const message =
+          error?.response?.message || 'Erro ao criar antroprometria.'
+        return onShowFeedBack(PreFeedBack.error(message))
       } finally {
         setApiLoading(false)
         resetTimer()

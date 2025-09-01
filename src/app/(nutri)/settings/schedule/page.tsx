@@ -39,7 +39,7 @@ const SettingsContent = () => {
 
   const onError = (e: any) => {
     const errorMessage =
-      e?.response?.data?.message || 'Falhou ao cadastrar configurações.'
+      e?.response?.message || 'Falhou ao cadastrar configurações.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
     console.log('[ERROR API /clients/setting/store]', errorMessage)
   }

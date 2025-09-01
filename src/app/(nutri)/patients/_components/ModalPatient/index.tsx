@@ -59,15 +59,13 @@ const ModalPatient = ({
   }
 
   const onError = (e: any) => {
-    const errorMessage =
-      e?.response?.data?.error || 'Falhou ao cadastrar paciente.'
+    const errorMessage = e?.response?.message || 'Falhou ao cadastrar paciente.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
     console.log('[ERROR API /patient]', errorMessage)
   }
 
   const onErrorUpdate = (e: any) => {
-    const errorMessage =
-      e?.response?.data?.error || 'Falhou ao atualizar paciente.'
+    const errorMessage = e?.response?.message || 'Falhou ao atualizar paciente.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
     console.log('[ERROR API /patient]', errorMessage)
   }
@@ -164,7 +162,7 @@ const ModalPatient = ({
         name: values.name,
         patient_id: values?.uuid ?? null,
         email: values.email,
-        gender: values.gender as 'male' | 'female' | 'other',
+        gender: values.gender as 'male' | 'female',
         birth_date: convertDMYtoISO(values.birth_date),
         address: {
           city: values.city,

@@ -46,15 +46,13 @@ const ModalLegends = ({
   }
 
   const onError = (e: any) => {
-    const errorMessage =
-      e?.response?.data?.error || 'Falhou ao cadastrar legenda.'
+    const errorMessage = e?.response?.message || 'Falhou ao cadastrar legenda.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
     console.log('[ERROR API /calendars/label]', errorMessage)
   }
 
   const onErrorUpdate = (e: any) => {
-    const errorMessage =
-      e?.response?.data?.error || 'Falhou ao atualizar legenda.'
+    const errorMessage = e?.response?.message || 'Falhou ao atualizar legenda.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
     console.log('[ERROR API /calendars/label]', errorMessage)
   }

@@ -14,7 +14,7 @@ type Results = {
 
 type Gender = 'male' | 'female'
 
-const useLoadConsultResults = (
+const useLoadAnthropometryResults = (
   values: AnthropometryFormValues,
   patient: Patient | null,
 ) => {
@@ -88,7 +88,7 @@ const useLoadConsultResults = (
     let bodyDensity = 'N/A'
     let foldsSum = 0
 
-    if (metodo !== 'nenhuma' && patient?.gender !== 'other') {
+    if (metodo !== 'nenhuma') {
       const {
         bodyDensity: densidade,
         fatPercentage: percentualCalculado,
@@ -170,4 +170,4 @@ const useLoadConsultResults = (
   return { analysisResults, bodyComposition }
 }
 
-export default useLoadConsultResults
+export default useLoadAnthropometryResults

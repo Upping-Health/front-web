@@ -59,15 +59,13 @@ const ModalUser = ({
   }, [open])
 
   const onError = (e: any) => {
-    const errorMessage =
-      e?.response?.data?.message || 'Falhou ao cadastrar usuário.'
+    const errorMessage = e?.response?.message || 'Falhou ao cadastrar usuário.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
     console.log('[ERROR API users/new-user]', errorMessage)
   }
 
   const onErrorUpdate = (e: any) => {
-    const errorMessage =
-      e?.response?.data?.error || 'Falhou ao atualizar usuário.'
+    const errorMessage = e?.response?.message || 'Falhou ao atualizar usuário.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
     console.log('[ERROR API /patient]', errorMessage)
   }
@@ -127,7 +125,7 @@ const ModalUser = ({
         phone: masks.unmask(values.phone),
         name: values.name,
         email: values.email,
-        gender: values.gender as 'male' | 'female' | 'other',
+        gender: values.gender as 'male' | 'female',
         role_id: Number(values.role),
         birth_date: values.birth_date,
         password: 'password',

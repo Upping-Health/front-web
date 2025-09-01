@@ -1,5 +1,5 @@
 'use client'
-import CardDash from '@/components/tablesComponents/cardDash'
+import CardDash from '@/components/tables/cardDash'
 import TopDash from '@/components/layout/topDash'
 import useLoadDashboardPatients from '@/hooks/dashboard/useLoadDashboardPatients'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
