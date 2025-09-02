@@ -49,6 +49,8 @@ const AnthropometryPage = ({ params }: PageProps) => {
     )
   }
 
+  console.log(data)
+
   const columns = useMemo(
     () => [
       {
@@ -68,8 +70,10 @@ const AnthropometryPage = ({ params }: PageProps) => {
         header: 'Data da atualização',
         field: 'updated_at',
         render: (value: any) => {
+          if (!value) return ''
+
           const date = new Date(value)
-          return dateFormat(date, 'dd/mm/yyyy')
+          return dateFormat(date, 'dd/MM/yyyy')
         },
       },
       {

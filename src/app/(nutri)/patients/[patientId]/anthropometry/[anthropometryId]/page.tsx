@@ -121,8 +121,11 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
     },
   })
 
+  console.log(formik.values)
+
   useEffect(() => {
     if (dataAnthropometry) {
+      console.log(dataAnthropometry)
       formik.setValues({
         evaluation_date:
           dataAnthropometry.evaluation_date ||
