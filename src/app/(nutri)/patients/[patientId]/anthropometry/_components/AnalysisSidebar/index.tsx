@@ -1,6 +1,6 @@
 'use client'
 
-import useLoadConsultResults from '@/hooks/consult/useLoadConsultResults'
+import useLoadAnthropometryResults from '@/hooks/nutritionists/anthropometry/useLoadAnthropometryResults'
 import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
 import Patient from '@/interfaces/patient.interface'
 import AnalysesResults from '../../../../_components/AnalysisResults'
@@ -12,7 +12,7 @@ type AnalysisSidebarProps = {
 }
 
 const AnalysisSidebar = ({ values, patient }: AnalysisSidebarProps) => {
-  const { analysisResults, bodyComposition } = useLoadConsultResults(
+  const { analysisResults, bodyComposition } = useLoadAnthropometryResults(
     values,
     patient,
   )

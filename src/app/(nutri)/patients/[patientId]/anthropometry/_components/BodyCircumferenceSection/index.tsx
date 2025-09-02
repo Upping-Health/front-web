@@ -65,7 +65,7 @@ export const BodyCircumferenceSection = ({
   <CollapsibleSection title="Circunferências Corporais">
     {BODY_CIRCUMFERENCE_SECTIONS.map(({ title, columns, fields }) => (
       <div key={title} style={{ marginBottom: '2rem' }}>
-        <p className="text-black font-light mb-2">{title}</p>
+        <p className="text-black font-light mb-2 dark:text-white">{title}</p>
         <DynamicInputGrid
           values={values}
           labels={fields}

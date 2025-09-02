@@ -81,7 +81,6 @@ const ModalPatient = ({
         phone: '',
         email: '',
         birth_date: '',
-        objective: '',
         gender: 'male',
         status: false,
         street: '',
@@ -101,7 +100,6 @@ const ModalPatient = ({
         email,
         birth_date,
         gender,
-        objective,
         address,
         status,
       } = patientSelected
@@ -111,7 +109,7 @@ const ModalPatient = ({
         document: document,
         phone,
         status: status === 'ACTIVE' ? true : false,
-        objective: objective ? objective : '',
+
         email,
         birth_date: birth_date,
         gender,
@@ -144,7 +142,6 @@ const ModalPatient = ({
       status: false,
       birth_date: '',
       gender: 'male',
-      objective: '',
       street: '',
       number: '',
       complement: '',

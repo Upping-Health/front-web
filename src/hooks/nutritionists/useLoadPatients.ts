@@ -12,7 +12,39 @@ const useLoadPatients = (hidden: boolean) => {
     try {
       setloading(true)
       const res = await api.get(`/patients`)
-      setdata(res?.data?.data)
+
+      const patients: Patient[] = res?.data?.data?.map((item: any) => {
+        const p = item.patient
+
+        return {
+          uuid: p.uuid,
+          name: p.name,
+          email: p.email,
+          document: p.profile?.document ?? '',
+          phone: p.profile?.phone ?? '',
+          birth_date: p.profile?.birth_date ?? '',
+          gender:
+            p.profile?.gender === 'male' || p.profile?.gender === 'female'
+              ? p.profile.gender
+              : 'male',
+          status: p.status,
+          age: null,
+          profile: {
+            photo: p.profile?.photo ?? '',
+          },
+          address: {
+            street: p.profile?.street ?? '',
+            number: p.profile?.number ?? '',
+            complement: p.profile?.complement,
+            neighborhood: p.profile?.neighborhood ?? '',
+            city: p.profile?.city ?? '',
+            state: p.profile?.state ?? '',
+            zipCode: p.profile?.zip_code ?? '',
+            // country: p.profile?.country ?? ""
+          },
+        }
+      })
+      setdata(patients)
     } catch (error: any) {
       console.error('[ERROR API] /patients/', error?.response?.data)
     } finally {

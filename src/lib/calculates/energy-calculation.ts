@@ -155,7 +155,7 @@ export class EnergyCalculationService {
   ): AdditionalAdjustmentsResult {
     const adjustments = {
       venta: 0, // ESSE VALOR NAO EXISTE NO BODY
-      met: data.met_adjustment ?? 0,
+      met: 0,
       pregnant: this.calculatePregnantAdjustment(data),
       energy_disposition: this.calculateEnergyDisposition(data),
     } as const
@@ -188,21 +188,22 @@ export class EnergyCalculationService {
   }
 
   private calculateEnergyDisposition(data: Partial<EnergyCalculation>): number {
-    if (!data.nutritional_status) return 0
-    switch (
-      data.nutritional_status // ESSE VALOR NAO EXISTE NO BODY
-    ) {
-      case 'underweight':
-        return 200
-      case 'normal':
-        return 0
-      case 'overweight':
-        return -200
-      case 'obese':
-        return -400
-      default:
-        return 0
-    }
+    // if (!data.nutritional_status) return 0
+    return 0
+    // switch (
+    //   data.nutritional_status // ESSE VALOR NAO EXISTE NO BODY
+    // ) {
+    //   case 'underweight':
+    //     return 200
+    //   case 'normal':
+    //     return 0
+    //   case 'overweight':
+    //     return -200
+    //   case 'obese':
+    //     return -400
+    //   default:
+    //     return 0
+    // }
   }
 
   private harrisBenedict1919(d: Partial<EnergyCalculation>): number {
@@ -305,499 +306,501 @@ export class EnergyCalculationService {
   }
 
   private eer2023Adult(d: Partial<EnergyCalculation>): number {
-    const hM = (d?.height ?? 0) / 100
-    const L = d.activity_level ?? 1 // ESSE VALOR NAO EXISTE
-    if (d.gender === 'male') {
-      switch (L) {
-        case 1:
-          return (
-            753.07 - 10.83 * (d?.age ?? 0) + 6.5 * hM + 14.1 * (d?.weight ?? 0)
-          )
-        case 2:
-          return (
-            581.47 - 10.83 * (d?.age ?? 0) + 8.3 * hM + 14.94 * (d?.weight ?? 0)
-          )
-        case 3:
-          return (
-            1004.82 -
-            10.83 * (d?.age ?? 0) +
-            6.52 * hM +
-            15.91 * (d?.weight ?? 0)
-          )
-        case 4:
-          return (
-            -517.88 -
-            10.83 * (d?.age ?? 0) +
-            15.61 * hM +
-            19.11 * (d?.weight ?? 0)
-          )
-        default:
-          return 0
-      }
-    }
-    // female
-    switch (L) {
-      case 1:
-        return (
-          584.9 - 7.01 * (d?.age ?? 0) + 5.72 * hM + 11.71 * (d?.weight ?? 0)
-        )
-      case 2:
-        return (
-          575.77 - 7.01 * (d?.age ?? 0) + 6.6 * hM + 12.14 * (d?.weight ?? 0)
-        )
-      case 3:
-        return (
-          710.25 - 7.01 * (d?.age ?? 0) + 6.54 * hM + 12.34 * (d?.weight ?? 0)
-        )
-      case 4:
-        return (
-          511.83 - 7.01 * (d?.age ?? 0) + 9.07 * hM + 12.56 * (d?.weight ?? 0)
-        )
-      default:
-        return 0
-    }
+    return 0
+    // const hM = (d?.height ?? 0) / 100
+    // const L = d.activity_level ?? 1 // ESSE VALOR NAO EXISTE
+    // if (d.gender === 'male') {
+    //   switch (L) {
+    //     case 1:
+    //       return (
+    //         753.07 - 10.83 * (d?.age ?? 0) + 6.5 * hM + 14.1 * (d?.weight ?? 0)
+    //       )
+    //     case 2:
+    //       return (
+    //         581.47 - 10.83 * (d?.age ?? 0) + 8.3 * hM + 14.94 * (d?.weight ?? 0)
+    //       )
+    //     case 3:
+    //       return (
+    //         1004.82 -
+    //         10.83 * (d?.age ?? 0) +
+    //         6.52 * hM +
+    //         15.91 * (d?.weight ?? 0)
+    //       )
+    //     case 4:
+    //       return (
+    //         -517.88 -
+    //         10.83 * (d?.age ?? 0) +
+    //         15.61 * hM +
+    //         19.11 * (d?.weight ?? 0)
+    //       )
+    //     default:
+    //       return 0
+    //   }
+    // }
+    // // female
+    // switch (L) {
+    //   case 1:
+    //     return (
+    //       584.9 - 7.01 * (d?.age ?? 0) + 5.72 * hM + 11.71 * (d?.weight ?? 0)
+    //     )
+    //   case 2:
+    //     return (
+    //       575.77 - 7.01 * (d?.age ?? 0) + 6.6 * hM + 12.14 * (d?.weight ?? 0)
+    //     )
+    //   case 3:
+    //     return (
+    //       710.25 - 7.01 * (d?.age ?? 0) + 6.54 * hM + 12.34 * (d?.weight ?? 0)
+    //     )
+    //   case 4:
+    //     return (
+    //       511.83 - 7.01 * (d?.age ?? 0) + 9.07 * hM + 12.56 * (d?.weight ?? 0)
+    //     )
+    //   default:
+    //     return 0
+    // }
   }
 
   private eer2023Child(d: Partial<EnergyCalculation>): number {
-    const ageMonths = (d?.age ?? 0 ?? 0) * 12
-    const hM = (d?.height ?? 0) / 100
-    const L = d?.activity_level ?? 1
+    // const ageMonths = (d?.age ?? 0 ?? 0) * 12
+    // const hM = (d?.height ?? 0) / 100
+    // const L = d?.activity_level ?? 1
 
-    if (ageMonths >= 0 && ageMonths <= 2.99) {
-      if (d.gender === 'male') {
-        return (
-          -716.45 -
-          1.0 * (d?.age ?? 0) +
-          17.82 * hM +
-          15.06 * (d?.weight ?? 0) +
-          200
-        )
-      }
-      return (
-        -69.15 +
-        80.0 * (d?.age ?? 0) +
-        2.65 * hM +
-        54.15 * (d?.weight ?? 0) +
-        180
-      )
-    }
+    // if (ageMonths >= 0 && ageMonths <= 2.99) {
+    //   if (d.gender === 'male') {
+    //     return (
+    //       -716.45 -
+    //       1.0 * (d?.age ?? 0) +
+    //       17.82 * hM +
+    //       15.06 * (d?.weight ?? 0) +
+    //       200
+    //     )
+    //   }
+    //   return (
+    //     -69.15 +
+    //     80.0 * (d?.age ?? 0) +
+    //     2.65 * hM +
+    //     54.15 * (d?.weight ?? 0) +
+    //     180
+    //   )
+    // }
 
-    if (ageMonths >= 3 && ageMonths <= 5.99) {
-      if (d.gender === 'male') {
-        return (
-          -716.45 -
-          1.0 * (d?.age ?? 0) +
-          17.82 * hM +
-          15.06 * (d?.weight ?? 0) +
-          50
-        )
-      }
-      return (
-        -69.15 +
-        80.0 * (d?.age ?? 0) +
-        2.65 * hM +
-        54.15 * (d?.weight ?? 0) +
-        60
-      )
-    }
+    // if (ageMonths >= 3 && ageMonths <= 5.99) {
+    //   if (d.gender === 'male') {
+    //     return (
+    //       -716.45 -
+    //       1.0 * (d?.age ?? 0) +
+    //       17.82 * hM +
+    //       15.06 * (d?.weight ?? 0) +
+    //       50
+    //     )
+    //   }
+    //   return (
+    //     -69.15 +
+    //     80.0 * (d?.age ?? 0) +
+    //     2.65 * hM +
+    //     54.15 * (d?.weight ?? 0) +
+    //     60
+    //   )
+    // }
 
-    if (ageMonths >= 6 && ageMonths <= 35.99) {
-      if (d.gender === 'male') {
-        return (
-          -716.45 -
-          1.0 * (d?.age ?? 0) +
-          17.82 * hM +
-          15.06 * (d?.weight ?? 0) +
-          20
-        )
-      }
-      return (
-        -69.15 +
-        80.0 * (d?.age ?? 0) +
-        2.65 * hM +
-        54.15 * (d?.weight ?? 0) +
-        this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
-      )
-    }
+    // if (ageMonths >= 6 && ageMonths <= 35.99) {
+    //   if (d.gender === 'male') {
+    //     return (
+    //       -716.45 -
+    //       1.0 * (d?.age ?? 0) +
+    //       17.82 * hM +
+    //       15.06 * (d?.weight ?? 0) +
+    //       20
+    //     )
+    //   }
+    //   return (
+    //     -69.15 +
+    //     80.0 * (d?.age ?? 0) +
+    //     2.65 * hM +
+    //     54.15 * (d?.weight ?? 0) +
+    //     this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
+    //   )
+    // }
 
-    if ((d?.age ?? 0) >= 3 && (d?.age ?? 0) <= 13.99) {
-      if (d.gender === 'male') {
-        switch (L) {
-          case 1:
-            return (
-              -447.51 +
-              3.68 * (d?.age ?? 0) +
-              13.01 * hM +
-              13.15 * (d?.weight ?? 0) +
-              this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
-            )
-          case 2:
-            return (
-              19.12 +
-              3.68 * (d?.age ?? 0) +
-              8.62 * hM +
-              20.28 * (d?.weight ?? 0) +
-              this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
-            )
-          case 3:
-            return (
-              -388.19 +
-              3.68 * (d?.age ?? 0) +
-              12.66 * hM +
-              20.46 * (d?.weight ?? 0) +
-              this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
-            )
-          case 4:
-            return (
-              -671.75 +
-              3.68 * (d?.age ?? 0) +
-              15.38 * hM +
-              23.25 * (d?.weight ?? 0) +
-              this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
-            )
-          default:
-            return 0
-        }
-      }
-      // female
-      switch (L) {
-        case 1:
-          return (
-            55.59 -
-            22.25 * (d?.age ?? 0) +
-            8.43 * hM +
-            17.07 * (d?.weight ?? 0) +
-            this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
-          )
-        case 2:
-          return (
-            -297.54 -
-            22.25 * (d?.age ?? 0) +
-            12.77 * hM +
-            14.73 * (d?.weight ?? 0) +
-            this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
-          )
-        case 3:
-          return (
-            -189.55 -
-            22.25 * (d?.age ?? 0) +
-            11.74 * hM +
-            18.34 * (d?.weight ?? 0) +
-            this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
-          )
-        case 4:
-          return (
-            -709.59 -
-            22.25 * (d?.age ?? 0) +
-            18.22 * hM +
-            14.25 * (d?.weight ?? 0) +
-            this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
-          )
-        default:
-          return 0
-      }
-    }
+    // if ((d?.age ?? 0) >= 3 && (d?.age ?? 0) <= 13.99) {
+    //   if (d.gender === 'male') {
+    //     switch (L) {
+    //       case 1:
+    //         return (
+    //           -447.51 +
+    //           3.68 * (d?.age ?? 0) +
+    //           13.01 * hM +
+    //           13.15 * (d?.weight ?? 0) +
+    //           this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
+    //         )
+    //       case 2:
+    //         return (
+    //           19.12 +
+    //           3.68 * (d?.age ?? 0) +
+    //           8.62 * hM +
+    //           20.28 * (d?.weight ?? 0) +
+    //           this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
+    //         )
+    //       case 3:
+    //         return (
+    //           -388.19 +
+    //           3.68 * (d?.age ?? 0) +
+    //           12.66 * hM +
+    //           20.46 * (d?.weight ?? 0) +
+    //           this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
+    //         )
+    //       case 4:
+    //         return (
+    //           -671.75 +
+    //           3.68 * (d?.age ?? 0) +
+    //           15.38 * hM +
+    //           23.25 * (d?.weight ?? 0) +
+    //           this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
+    //         )
+    //       default:
+    //         return 0
+    //     }
+    //   }
+    //   // female
+    //   switch (L) {
+    //     case 1:
+    //       return (
+    //         55.59 -
+    //         22.25 * (d?.age ?? 0) +
+    //         8.43 * hM +
+    //         17.07 * (d?.weight ?? 0) +
+    //         this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
+    //       )
+    //     case 2:
+    //       return (
+    //         -297.54 -
+    //         22.25 * (d?.age ?? 0) +
+    //         12.77 * hM +
+    //         14.73 * (d?.weight ?? 0) +
+    //         this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
+    //       )
+    //     case 3:
+    //       return (
+    //         -189.55 -
+    //         22.25 * (d?.age ?? 0) +
+    //         11.74 * hM +
+    //         18.34 * (d?.weight ?? 0) +
+    //         this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
+    //       )
+    //     case 4:
+    //       return (
+    //         -709.59 -
+    //         22.25 * (d?.age ?? 0) +
+    //         18.22 * hM +
+    //         14.25 * (d?.weight ?? 0) +
+    //         this.defineEnergyCost(d?.age ?? 0, d.gender, ageMonths)
+    //       )
+    //     default:
+    //       return 0
+    //   }
+    // }
 
-    if ((d?.age ?? 0) >= 14 && (d?.age ?? 0) <= 18.99) {
-      const adjustment = 20
-      if (d.gender === 'male') {
-        switch (L) {
-          case 1:
-            return (
-              -447.51 +
-              3.68 * (d?.age ?? 0) +
-              13.01 * hM +
-              13.15 * (d?.weight ?? 0) +
-              adjustment
-            )
-          case 2:
-            return (
-              19.12 +
-              3.68 * (d?.age ?? 0) +
-              8.62 * hM +
-              20.28 * (d?.weight ?? 0) +
-              adjustment
-            )
-          case 3:
-            return (
-              -388.19 +
-              3.68 * (d?.age ?? 0) +
-              12.66 * hM +
-              20.46 * (d?.weight ?? 0) +
-              adjustment
-            )
-          case 4:
-            return (
-              -671.75 +
-              3.68 * (d?.age ?? 0) +
-              15.38 * hM +
-              23.25 * (d?.weight ?? 0) +
-              adjustment
-            )
-          default:
-            return 0
-        }
-      }
-      // female
-      switch (L) {
-        case 1:
-          return (
-            55.59 -
-            22.25 * (d?.age ?? 0) +
-            8.43 * hM +
-            17.07 * (d?.weight ?? 0) +
-            adjustment
-          )
-        case 2:
-          return (
-            -297.54 -
-            22.25 * (d?.age ?? 0) +
-            12.77 * hM +
-            14.73 * (d?.weight ?? 0) +
-            adjustment
-          )
-        case 3:
-          return (
-            -189.55 -
-            22.25 * (d?.age ?? 0) +
-            11.74 * hM +
-            18.34 * (d?.weight ?? 0) +
-            adjustment
-          )
-        case 4:
-          return (
-            -709.59 -
-            22.25 * (d?.age ?? 0) +
-            18.22 * hM +
-            14.25 * (d?.weight ?? 0) +
-            adjustment
-          )
-        default:
-          return 0
-      }
-    }
+    // if ((d?.age ?? 0) >= 14 && (d?.age ?? 0) <= 18.99) {
+    //   const adjustment = 20
+    //   if (d.gender === 'male') {
+    //     switch (L) {
+    //       case 1:
+    //         return (
+    //           -447.51 +
+    //           3.68 * (d?.age ?? 0) +
+    //           13.01 * hM +
+    //           13.15 * (d?.weight ?? 0) +
+    //           adjustment
+    //         )
+    //       case 2:
+    //         return (
+    //           19.12 +
+    //           3.68 * (d?.age ?? 0) +
+    //           8.62 * hM +
+    //           20.28 * (d?.weight ?? 0) +
+    //           adjustment
+    //         )
+    //       case 3:
+    //         return (
+    //           -388.19 +
+    //           3.68 * (d?.age ?? 0) +
+    //           12.66 * hM +
+    //           20.46 * (d?.weight ?? 0) +
+    //           adjustment
+    //         )
+    //       case 4:
+    //         return (
+    //           -671.75 +
+    //           3.68 * (d?.age ?? 0) +
+    //           15.38 * hM +
+    //           23.25 * (d?.weight ?? 0) +
+    //           adjustment
+    //         )
+    //       default:
+    //         return 0
+    //     }
+    //   }
+    //   // female
+    //   switch (L) {
+    //     case 1:
+    //       return (
+    //         55.59 -
+    //         22.25 * (d?.age ?? 0) +
+    //         8.43 * hM +
+    //         17.07 * (d?.weight ?? 0) +
+    //         adjustment
+    //       )
+    //     case 2:
+    //       return (
+    //         -297.54 -
+    //         22.25 * (d?.age ?? 0) +
+    //         12.77 * hM +
+    //         14.73 * (d?.weight ?? 0) +
+    //         adjustment
+    //       )
+    //     case 3:
+    //       return (
+    //         -189.55 -
+    //         22.25 * (d?.age ?? 0) +
+    //         11.74 * hM +
+    //         18.34 * (d?.weight ?? 0) +
+    //         adjustment
+    //       )
+    //     case 4:
+    //       return (
+    //         -709.59 -
+    //         22.25 * (d?.age ?? 0) +
+    //         18.22 * hM +
+    //         14.25 * (d?.weight ?? 0) +
+    //         adjustment
+    //       )
+    //     default:
+    //       return 0
+    //   }
+    // }
 
     return 0
   }
 
   private eer2023Pregnant(d: Partial<EnergyCalculation>): number {
-    if (!d.pregnancy_weeks || d.pregnancy_weeks <= 13) return 0 // sem ajuste no 1º trimestre
-    const hM = (d?.height ?? 0) / 100
-    const L = d?.activity_level ?? 1
-    const energyDisposition = this.defineEnergyDisposition(
-      d.nutritional_status ?? 'normal',
-    )
+    return 0
+    // if (!d.pregnancy_weeks || d.pregnancy_weeks <= 13) return 0 // sem ajuste no 1º trimestre
+    // const hM = (d?.height ?? 0) / 100
+    // const L = d?.activity_level ?? 1
+    // const energyDisposition = this.defineEnergyDisposition(
+    //   d.nutritional_status ?? 'normal',
+    // )
 
-    switch (L) {
-      case 1:
-        return (
-          1131.2 -
-          2.04 * (d?.age ?? 0) +
-          0.34 * hM +
-          12.15 * (d?.weight ?? 0) +
-          9.16 * d.pregnancy_weeks +
-          energyDisposition
-        )
-      case 2:
-        return (
-          693.35 -
-          2.04 * (d?.age ?? 0) +
-          5.73 * hM +
-          10.2 * (d?.weight ?? 0) +
-          9.16 * d.pregnancy_weeks +
-          energyDisposition
-        )
-      case 3:
-        return (
-          -223.84 -
-          2.04 * (d?.age ?? 0) +
-          13.23 * hM +
-          8.15 * (d?.weight ?? 0) +
-          9.16 * d.pregnancy_weeks +
-          energyDisposition
-        )
-      case 4:
-        return (
-          -779.72 -
-          2.04 * (d?.age ?? 0) +
-          18.45 * hM +
-          8.73 * (d?.weight ?? 0) +
-          9.16 * d.pregnancy_weeks +
-          energyDisposition
-        )
-      default:
-        return 0
-    }
+    // switch (L) {
+    //   case 1:
+    //     return (
+    //       1131.2 -
+    //       2.04 * (d?.age ?? 0) +
+    //       0.34 * hM +
+    //       12.15 * (d?.weight ?? 0) +
+    //       9.16 * d.pregnancy_weeks +
+    //       energyDisposition
+    //     )
+    //   case 2:
+    //     return (
+    //       693.35 -
+    //       2.04 * (d?.age ?? 0) +
+    //       5.73 * hM +
+    //       10.2 * (d?.weight ?? 0) +
+    //       9.16 * d.pregnancy_weeks +
+    //       energyDisposition
+    //     )
+    //   case 3:
+    //     return (
+    //       -223.84 -
+    //       2.04 * (d?.age ?? 0) +
+    //       13.23 * hM +
+    //       8.15 * (d?.weight ?? 0) +
+    //       9.16 * d.pregnancy_weeks +
+    //       energyDisposition
+    //     )
+    //   case 4:
+    //     return (
+    //       -779.72 -
+    //       2.04 * (d?.age ?? 0) +
+    //       18.45 * hM +
+    //       8.73 * (d?.weight ?? 0) +
+    //       9.16 * d.pregnancy_weeks +
+    //       energyDisposition
+    //     )
+    //   default:
+    //     return 0
+    // }
   }
 
   private eer2023Lactating(d: Partial<EnergyCalculation>): number {
-    if (!d.delivery_date) return 0
-    const delivery = this.parseDMY(d.delivery_date) // ESSE VLAOR NAO EXISTE
-    if (!delivery) return 0
+    // if (!d.delivery_date) return 0
+    // const delivery = this.parseDMY(d.delivery_date) // ESSE VLAOR NAO EXISTE
+    // if (!delivery) return 0
 
-    const months = this.monthsSince(delivery)
-    if (months > 12) return 0
+    // const months = this.monthsSince(delivery)
+    // if (months > 12) return 0
 
-    const hM = (d?.height ?? 0) / 100
-    const L = d.activity_level ?? 1
+    // const hM = (d?.height ?? 0) / 100
+    // const L = d.activity_level ?? 1
 
-    if (months >= 0 && months <= 6) {
-      const adjustment = 540 - 140 * (d.injury_factor ?? 1)
-      if ((d?.age ?? 0) >= 19) {
-        switch (L) {
-          case 1:
-            return (
-              584.9 -
-              7.01 * (d?.age ?? 0) +
-              5.72 * hM +
-              11.71 * (d?.weight ?? 0) +
-              adjustment
-            )
-          case 2:
-            return (
-              575.77 -
-              7.01 * (d?.age ?? 0) +
-              6.6 * hM +
-              12.14 * (d?.weight ?? 0) +
-              adjustment
-            )
-          case 3:
-            return (
-              710.25 -
-              7.01 * (d?.age ?? 0) +
-              6.54 * hM +
-              12.34 * (d?.weight ?? 0) +
-              adjustment
-            )
-          case 4:
-            return (
-              511.83 -
-              7.01 * (d?.age ?? 0) +
-              9.07 * hM +
-              12.56 * (d?.weight ?? 0) +
-              adjustment
-            )
-          default:
-            return 0
-        }
-      }
-      // < 19 anos
-      switch (L) {
-        case 1:
-          return (
-            55.59 -
-            22.25 * (d?.age ?? 0) +
-            8.43 * hM +
-            17.07 * (d?.weight ?? 0) +
-            adjustment
-          )
-        case 2:
-          return (
-            -297.54 -
-            22.25 * (d?.age ?? 0) +
-            12.77 * hM +
-            14.73 * (d?.weight ?? 0) +
-            adjustment
-          )
-        case 3:
-          return (
-            -189.55 -
-            22.25 * (d?.age ?? 0) +
-            11.74 * hM +
-            18.34 * (d?.weight ?? 0) +
-            adjustment
-          )
-        case 4:
-          return (
-            -709.59 -
-            22.25 * (d?.age ?? 0) +
-            18.22 * hM +
-            14.25 * (d?.weight ?? 0) +
-            adjustment
-          )
-        default:
-          return 0
-      }
-    }
+    // if (months >= 0 && months <= 6) {
+    //   const adjustment = 540 - 140 * (d.injury_factor ?? 1)
+    //   if ((d?.age ?? 0) >= 19) {
+    //     switch (L) {
+    //       case 1:
+    //         return (
+    //           584.9 -
+    //           7.01 * (d?.age ?? 0) +
+    //           5.72 * hM +
+    //           11.71 * (d?.weight ?? 0) +
+    //           adjustment
+    //         )
+    //       case 2:
+    //         return (
+    //           575.77 -
+    //           7.01 * (d?.age ?? 0) +
+    //           6.6 * hM +
+    //           12.14 * (d?.weight ?? 0) +
+    //           adjustment
+    //         )
+    //       case 3:
+    //         return (
+    //           710.25 -
+    //           7.01 * (d?.age ?? 0) +
+    //           6.54 * hM +
+    //           12.34 * (d?.weight ?? 0) +
+    //           adjustment
+    //         )
+    //       case 4:
+    //         return (
+    //           511.83 -
+    //           7.01 * (d?.age ?? 0) +
+    //           9.07 * hM +
+    //           12.56 * (d?.weight ?? 0) +
+    //           adjustment
+    //         )
+    //       default:
+    //         return 0
+    //     }
+    //   }
+    //   // < 19 anos
+    //   switch (L) {
+    //     case 1:
+    //       return (
+    //         55.59 -
+    //         22.25 * (d?.age ?? 0) +
+    //         8.43 * hM +
+    //         17.07 * (d?.weight ?? 0) +
+    //         adjustment
+    //       )
+    //     case 2:
+    //       return (
+    //         -297.54 -
+    //         22.25 * (d?.age ?? 0) +
+    //         12.77 * hM +
+    //         14.73 * (d?.weight ?? 0) +
+    //         adjustment
+    //       )
+    //     case 3:
+    //       return (
+    //         -189.55 -
+    //         22.25 * (d?.age ?? 0) +
+    //         11.74 * hM +
+    //         18.34 * (d?.weight ?? 0) +
+    //         adjustment
+    //       )
+    //     case 4:
+    //       return (
+    //         -709.59 -
+    //         22.25 * (d?.age ?? 0) +
+    //         18.22 * hM +
+    //         14.25 * (d?.weight ?? 0) +
+    //         adjustment
+    //       )
+    //     default:
+    //       return 0
+    //   }
+    // }
 
-    if (months >= 7 && months <= 12) {
-      const adjustment = 380 * (d.injury_factor ?? 1)
-      if ((d?.age ?? 0) >= 19) {
-        switch (L) {
-          case 1:
-            return (
-              584.9 -
-              7.01 * (d?.age ?? 0) +
-              5.72 * hM +
-              11.71 * (d?.weight ?? 0) +
-              adjustment
-            )
-          case 2:
-            return (
-              575.77 -
-              7.01 * (d?.age ?? 0) +
-              6.6 * hM +
-              12.14 * (d?.weight ?? 0) +
-              adjustment
-            )
-          case 3:
-            return (
-              710.25 -
-              7.01 * (d?.age ?? 0) +
-              6.54 * hM +
-              12.34 * (d?.weight ?? 0) +
-              adjustment
-            )
-          case 4:
-            return (
-              511.83 -
-              7.01 * (d?.age ?? 0) +
-              9.07 * hM +
-              12.56 * (d?.weight ?? 0) +
-              adjustment
-            )
-          default:
-            return 0
-        }
-      }
-      // < 19 anos
-      switch (L) {
-        case 1:
-          return (
-            55.59 -
-            22.25 * (d?.age ?? 0) +
-            8.43 * hM +
-            17.07 * (d?.weight ?? 0) +
-            adjustment
-          )
-        case 2:
-          return (
-            -297.54 -
-            22.25 * (d?.age ?? 0) +
-            12.77 * hM +
-            14.73 * (d?.weight ?? 0) +
-            adjustment
-          )
-        case 3:
-          return (
-            -189.55 -
-            22.25 * (d?.age ?? 0) +
-            11.74 * hM +
-            18.34 * (d?.weight ?? 0) +
-            adjustment
-          )
-        case 4:
-          return (
-            -709.59 -
-            22.25 * (d?.age ?? 0) +
-            18.22 * hM +
-            14.25 * (d?.weight ?? 0) +
-            adjustment
-          )
-        default:
-          return 0
-      }
-    }
+    // if (months >= 7 && months <= 12) {
+    //   const adjustment = 380 * (d.injury_factor ?? 1)
+    //   if ((d?.age ?? 0) >= 19) {
+    //     switch (L) {
+    //       case 1:
+    //         return (
+    //           584.9 -
+    //           7.01 * (d?.age ?? 0) +
+    //           5.72 * hM +
+    //           11.71 * (d?.weight ?? 0) +
+    //           adjustment
+    //         )
+    //       case 2:
+    //         return (
+    //           575.77 -
+    //           7.01 * (d?.age ?? 0) +
+    //           6.6 * hM +
+    //           12.14 * (d?.weight ?? 0) +
+    //           adjustment
+    //         )
+    //       case 3:
+    //         return (
+    //           710.25 -
+    //           7.01 * (d?.age ?? 0) +
+    //           6.54 * hM +
+    //           12.34 * (d?.weight ?? 0) +
+    //           adjustment
+    //         )
+    //       case 4:
+    //         return (
+    //           511.83 -
+    //           7.01 * (d?.age ?? 0) +
+    //           9.07 * hM +
+    //           12.56 * (d?.weight ?? 0) +
+    //           adjustment
+    //         )
+    //       default:
+    //         return 0
+    //     }
+    //   }
+    //   // < 19 anos
+    //   switch (L) {
+    //     case 1:
+    //       return (
+    //         55.59 -
+    //         22.25 * (d?.age ?? 0) +
+    //         8.43 * hM +
+    //         17.07 * (d?.weight ?? 0) +
+    //         adjustment
+    //       )
+    //     case 2:
+    //       return (
+    //         -297.54 -
+    //         22.25 * (d?.age ?? 0) +
+    //         12.77 * hM +
+    //         14.73 * (d?.weight ?? 0) +
+    //         adjustment
+    //       )
+    //     case 3:
+    //       return (
+    //         -189.55 -
+    //         22.25 * (d?.age ?? 0) +
+    //         11.74 * hM +
+    //         18.34 * (d?.weight ?? 0) +
+    //         adjustment
+    //       )
+    //     case 4:
+    //       return (
+    //         -709.59 -
+    //         22.25 * (d?.age ?? 0) +
+    //         18.22 * hM +
+    //         14.25 * (d?.weight ?? 0) +
+    //         adjustment
+    //       )
+    //     default:
+    //       return 0
+    //   }
+    // }
 
     return 0
   }
