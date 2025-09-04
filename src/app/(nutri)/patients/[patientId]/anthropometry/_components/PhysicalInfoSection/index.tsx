@@ -71,7 +71,7 @@ export const PhysicalInfoSection = ({
       </div>
 
       {/* Gordura e Massa Muscular */}
-      <div className="flex gap-4">
+      {/* <div className="flex gap-4">
         <div className="flex flex-col w-full">
           <InputStyled
             id="body_fat_percentage"
@@ -98,7 +98,7 @@ export const PhysicalInfoSection = ({
             isTouched={touched.muscle_mass_percentage}
           />
         </div>
-      </div>
+      </div> */}
 
       {/* Observações */}
       <div className="flex flex-col w-full">

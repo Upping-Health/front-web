@@ -30,9 +30,11 @@ const useLoadAnthropometryResults = (
     const pesoIdeal =
       alturaM > 0 ? `${pesoIdealMin} a ${pesoIdealMax} kg` : 'N/A'
 
-    const cintura = Number(values?.body_circumference?.waist) ?? 0
-    const quadril = Number(values?.body_circumference?.hip) ?? 1
-    const relCinturaQuadrilValue = (cintura / quadril).toFixed(2)
+    const cintura = Number(values?.body_circumference?.waist) || 0
+    const quadril = Number(values?.body_circumference?.hip) || 0
+
+    const relCinturaQuadrilValue =
+      quadril > 0 ? (cintura / quadril).toFixed(2) : '0.00'
 
     let rcqInterpretation = ''
     if (patient?.gender === 'male') {
@@ -57,13 +59,13 @@ const useLoadAnthropometryResults = (
         value: relCinturaQuadrilValue ?? 'N/A',
         note: rcqInterpretation,
       },
-      {
-        title: 'Gordura Corporal',
-        value:
-          Number(values?.body_fat_percentage) !== undefined
-            ? `${Number(values.body_fat_percentage)}%`
-            : 'N/A',
-      },
+      // {
+      //   title: 'Gordura Corporal',
+      //   value:
+      //     Number(values?.body_fat_percentage) !== undefined
+      //       ? `${Number(values.body_fat_percentage)}%`
+      //       : 'N/A',
+      // },
       { title: 'CMB (circunferência muscular do braço)', value: `${cmb} cm` },
     ]
   }, [
@@ -99,7 +101,6 @@ const useLoadAnthropometryResults = (
         idade,
         dobras,
       )
-
       foldsSum = dobrasSoma
 
       if (densidade !== null && !isNaN(densidade)) {
@@ -110,11 +111,7 @@ const useLoadAnthropometryResults = (
         gorduraPercent = parseFloat(percentualCalculado.toFixed(1))
       }
     }
-
-    const musculoPercent = Number(values?.muscle_mass_percentage) ?? 0
-
     const pesoGordura = ((gorduraPercent / 100) * peso).toFixed(1)
-    const pesoMusculo = ((musculoPercent / 100) * peso).toFixed(1)
     const massaLivreGordura = (peso - parseFloat(pesoGordura)).toFixed(1)
 
     const somaDobras = foldsSum.toFixed(1)
@@ -144,7 +141,6 @@ const useLoadAnthropometryResults = (
         note: gorduraInterpretation,
       },
       { title: 'Peso de gordura', value: `${pesoGordura} kg` },
-      { title: 'Massa magra', value: `${pesoMusculo} kg` },
       { title: 'Massa Livre de Gordura', value: `${massaLivreGordura} kg` },
       { title: 'Densidade Corporal', value: `${bodyDensity} Kg/L` },
       { title: 'Somatório de dobras', value: `${somaDobras} mm` },

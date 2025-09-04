@@ -104,10 +104,63 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
     onSubmit: async (values) => {
       try {
         setApiLoading(true)
-        await api.put(
-          `/anthropometrics/update/${params.anthropometryId}`,
-          values,
-        )
+        const [day, month, year] = values.evaluation_date.split('/').map(Number)
+
+        const evaluation_date = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+        await api.put(`/anthropometrics/update/${params.anthropometryId}`, {
+          patient_id: Number(3),
+          evaluation_date,
+          weight: Number(values?.weight) || 0,
+          height: Number(values?.height) || 0,
+          body_fat_percentage: Number(values?.body_fat_percentage) || 0,
+          muscle_mass_percentage: Number(values?.muscle_mass_percentage) || 0,
+          observations: values?.observations ?? '',
+          body_fat_method: values?.body_fat_method ?? '',
+          skin_fold: {
+            triceps: Number(values?.skin_fold?.triceps) || 0,
+            biceps: Number(values?.skin_fold?.biceps) || 0,
+            subscapular: Number(values?.skin_fold?.subscapular) || 0,
+            suprailiac: Number(values?.skin_fold?.suprailiac) || 0,
+            abdominal: Number(values?.skin_fold?.abdominal) || 0,
+            thigh: Number(values?.skin_fold?.thigh) || 0,
+            chest: Number(values?.skin_fold?.chest) || 0,
+            midaxillary: Number(values?.skin_fold?.midaxillary) || 0,
+            calf: Number(values?.skin_fold?.calf) || 0,
+          },
+          body_circumference: {
+            waist: Number(values?.body_circumference?.waist) || 0,
+            hip: Number(values?.body_circumference?.hip) || 0,
+            neck: Number(values?.body_circumference?.neck) || 0,
+            shoulder: Number(values?.body_circumference?.shoulder) || 0,
+            chest: Number(values?.body_circumference?.chest) || 0,
+            abdominal: Number(values?.body_circumference?.abdominal) || 0,
+            relaxed_right_arm:
+              Number(values?.body_circumference?.relaxed_right_arm) || 0,
+            contracted_right_arm:
+              Number(values?.body_circumference?.contracted_right_arm) || 0,
+            right_forearm:
+              Number(values?.body_circumference?.right_forearm) || 0,
+            right_proximal_thigh:
+              Number(values?.body_circumference?.right_proximal_thigh) || 0,
+            right_mid_thigh:
+              Number(values?.body_circumference?.right_mid_thigh) || 0,
+            right_distal_thigh:
+              Number(values?.body_circumference?.right_distal_thigh) || 0,
+            right_calf: Number(values?.body_circumference?.right_calf) || 0,
+            relaxed_left_arm:
+              Number(values?.body_circumference?.relaxed_left_arm) || 0,
+            contracted_left_arm:
+              Number(values?.body_circumference?.contracted_left_arm) || 0,
+            left_forearm: Number(values?.body_circumference?.left_forearm) || 0,
+            left_proximal_thigh:
+              Number(values?.body_circumference?.left_proximal_thigh) || 0,
+            left_mid_thigh:
+              Number(values?.body_circumference?.left_mid_thigh) || 0,
+            left_distal_thigh:
+              Number(values?.body_circumference?.left_distal_thigh) || 0,
+            left_calf: Number(values?.body_circumference?.left_calf) || 0,
+          },
+        })
         onShowFeedBack(
           PreFeedBack.success('Antropometria realizada com sucesso'),
         )
@@ -186,7 +239,64 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
   const saveData = async (values: AnthropometryFormValues) => {
     try {
       setApiLoading(true)
-      await api.put(`/anthropometrics/update/${params.anthropometryId}`, values)
+      const [day, month, year] = values.evaluation_date.split('/').map(Number)
+      const date = new Date(year, month - 1, day)
+      const isoDate = date.toISOString()
+
+      const evaluation_date = isoDate.split('T')[0]
+      await api.put(`/anthropometrics/update/${params.anthropometryId}`, {
+        patient_id: Number(3),
+        evaluation_date,
+        weight: Number(values?.weight) || 0,
+        height: Number(values?.height) || 0,
+        body_fat_percentage: Number(values?.body_fat_percentage) || 0,
+        muscle_mass_percentage: Number(values?.muscle_mass_percentage) || 0,
+        observations: values?.observations ?? '',
+        body_fat_method: values?.body_fat_method ?? '',
+        skin_fold: {
+          triceps: Number(values?.skin_fold?.triceps) || 0,
+          biceps: Number(values?.skin_fold?.biceps) || 0,
+          subscapular: Number(values?.skin_fold?.subscapular) || 0,
+          suprailiac: Number(values?.skin_fold?.suprailiac) || 0,
+          abdominal: Number(values?.skin_fold?.abdominal) || 0,
+          thigh: Number(values?.skin_fold?.thigh) || 0,
+          chest: Number(values?.skin_fold?.chest) || 0,
+          midaxillary: Number(values?.skin_fold?.midaxillary) || 0,
+          calf: Number(values?.skin_fold?.calf) || 0,
+        },
+        body_circumference: {
+          waist: Number(values?.body_circumference?.waist) || 0,
+          hip: Number(values?.body_circumference?.hip) || 0,
+          neck: Number(values?.body_circumference?.neck) || 0,
+          shoulder: Number(values?.body_circumference?.shoulder) || 0,
+          chest: Number(values?.body_circumference?.chest) || 0,
+          abdominal: Number(values?.body_circumference?.abdominal) || 0,
+          relaxed_right_arm:
+            Number(values?.body_circumference?.relaxed_right_arm) || 0,
+          contracted_right_arm:
+            Number(values?.body_circumference?.contracted_right_arm) || 0,
+          right_forearm: Number(values?.body_circumference?.right_forearm) || 0,
+          right_proximal_thigh:
+            Number(values?.body_circumference?.right_proximal_thigh) || 0,
+          right_mid_thigh:
+            Number(values?.body_circumference?.right_mid_thigh) || 0,
+          right_distal_thigh:
+            Number(values?.body_circumference?.right_distal_thigh) || 0,
+          right_calf: Number(values?.body_circumference?.right_calf) || 0,
+          relaxed_left_arm:
+            Number(values?.body_circumference?.relaxed_left_arm) || 0,
+          contracted_left_arm:
+            Number(values?.body_circumference?.contracted_left_arm) || 0,
+          left_forearm: Number(values?.body_circumference?.left_forearm) || 0,
+          left_proximal_thigh:
+            Number(values?.body_circumference?.left_proximal_thigh) || 0,
+          left_mid_thigh:
+            Number(values?.body_circumference?.left_mid_thigh) || 0,
+          left_distal_thigh:
+            Number(values?.body_circumference?.left_distal_thigh) || 0,
+          left_calf: Number(values?.body_circumference?.left_calf) || 0,
+        },
+      })
     } catch (error) {
     } finally {
       setApiLoading(false)

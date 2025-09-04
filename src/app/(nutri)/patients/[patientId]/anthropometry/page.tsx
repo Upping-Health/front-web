@@ -108,7 +108,7 @@ const AnthropometryPage = ({ params }: PageProps) => {
     console.log(patientData)
     try {
       const response = await api.post('/anthropometrics/store', {
-        patient_id: patientData?.uuid,
+        patient_id: 3,
         evaluation_date: '2024-01-23',
         weight: 60.7,
         height: 169,
