@@ -23,7 +23,7 @@ const ProfileRounded = ({ user, width, height, styles }: ICardProfile) => {
     >
       {user?.photo ? (
         <Image
-          src={user.photo}
+          src={user?.photo}
           alt="Foto de perfil"
           width={width ?? 96}
           height={height ?? 96}

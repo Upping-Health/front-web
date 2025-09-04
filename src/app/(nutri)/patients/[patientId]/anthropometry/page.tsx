@@ -1,23 +1,23 @@
 'use client'
 import MenuConsult from '@/components/consult/menu'
+import { HeaderButton } from '@/components/layout/headerDash'
 import LoadingFullScreen from '@/components/layout/loadingGlobal'
 import TopDash from '@/components/layout/topDash'
 import ProfileRounded from '@/components/profileRounded'
-import TableDash from '@/components/tablesComponents/tableDash'
+import TableDash from '@/components/tables/tableDash'
 import { DefaultContext } from '@/contexts/defaultContext'
-import useLoadAnthropometryByPatient from '@/hooks/nutritionists/useLoadAnthropometryByPatient'
+import useLoadAnthropometryByPatient from '@/hooks/nutritionists/anthropometry/useLoadAnthropometryByPatient'
 import useLoadPatientByUUID from '@/hooks/nutritionists/useLoadPatientById'
-import api from '@/services/api'
 import PreFeedBack from '@/lib/feedbackStatus'
 import { SEX_PT_BR } from '@/lib/types/sex'
-import { Person, PersonPinCircle } from '@mui/icons-material'
+import api from '@/services/api'
+import { Person } from '@mui/icons-material'
+import CreateIcon from '@mui/icons-material/Create'
 import { CircularProgress } from '@mui/material'
 import dateFormat from 'dateformat'
 import { useRouter } from 'next/navigation'
 import { useContext, useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
-import ButtonStyled from '@/components/buttons/button'
-import CreateIcon from '@mui/icons-material/Create'
 interface PageProps {
   params: {
     patientId: string
@@ -49,6 +49,8 @@ const AnthropometryPage = ({ params }: PageProps) => {
     )
   }
 
+  console.log(data)
+
   const columns = useMemo(
     () => [
       {
@@ -68,8 +70,10 @@ const AnthropometryPage = ({ params }: PageProps) => {
         header: 'Data da atualização',
         field: 'updated_at',
         render: (value: any) => {
+          if (!value) return ''
+
           const date = new Date(value)
-          return dateFormat(date, 'dd/mm/yyyy')
+          return dateFormat(date, 'dd/MM/yyyy')
         },
       },
       {
@@ -81,17 +85,15 @@ const AnthropometryPage = ({ params }: PageProps) => {
         field: '{row}',
         render: (_: any, row: any) => {
           return (
-            <ButtonStyled
-              icon={<CreateIcon />}
+            <HeaderButton
               onClick={() =>
                 router.push(
                   `/patients/${params.patientId}/anthropometry/${row.uuid}`,
                 )
               }
-              title={'Editar'}
-              type="button"
-              styles="bg-black h-[35px] px-3 text-sm shadow-md dark:bg-white dark:text-black"
-            />
+            >
+              <CreateIcon className="text-gray-600 text-lg dark:text-white" />
+            </HeaderButton>
           )
         },
       },
@@ -106,7 +108,7 @@ const AnthropometryPage = ({ params }: PageProps) => {
     console.log(patientData)
     try {
       const response = await api.post('/anthropometrics/store', {
-        patient_id: 3, // VER A QUESTÃO DO ID
+        patient_id: 3,
         evaluation_date: '2024-01-23',
         weight: 60.7,
         height: 169,
@@ -157,8 +159,10 @@ const AnthropometryPage = ({ params }: PageProps) => {
           PreFeedBack.error('Erro ao criar antroprometria.'),
         )
       }
-    } catch (error) {
-      return onShowFeedBack(PreFeedBack.error('Erro ao criar antroprometria.'))
+    } catch (error: any) {
+      const message =
+        error?.response?.message || 'Erro ao criar antroprometria.'
+      return onShowFeedBack(PreFeedBack.error(message))
     } finally {
       setIsNavigating(false)
     }

@@ -1,5 +1,5 @@
 'use client'
-import CardForms from '@/components/tablesComponents/tableForms'
+import CardForms from '@/components/tables/tableForms'
 import TopDash from '@/components/layout/topDash'
 import useLoadForms from '@/hooks/nutritionists/useLoadForms'
 import { colors } from '@/lib/colors/colors'

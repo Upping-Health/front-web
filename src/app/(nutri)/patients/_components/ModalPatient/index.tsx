@@ -59,15 +59,13 @@ const ModalPatient = ({
   }
 
   const onError = (e: any) => {
-    const errorMessage =
-      e?.response?.data?.error || 'Falhou ao cadastrar paciente.'
+    const errorMessage = e?.response?.message || 'Falhou ao cadastrar paciente.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
     console.log('[ERROR API /patient]', errorMessage)
   }
 
   const onErrorUpdate = (e: any) => {
-    const errorMessage =
-      e?.response?.data?.error || 'Falhou ao atualizar paciente.'
+    const errorMessage = e?.response?.message || 'Falhou ao atualizar paciente.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
     console.log('[ERROR API /patient]', errorMessage)
   }
@@ -83,7 +81,6 @@ const ModalPatient = ({
         phone: '',
         email: '',
         birth_date: '',
-        objective: '',
         gender: 'male',
         status: false,
         street: '',
@@ -103,7 +100,6 @@ const ModalPatient = ({
         email,
         birth_date,
         gender,
-        objective,
         address,
         status,
       } = patientSelected
@@ -113,7 +109,7 @@ const ModalPatient = ({
         document: document,
         phone,
         status: status === 'ACTIVE' ? true : false,
-        objective: objective ? objective : '',
+
         email,
         birth_date: birth_date,
         gender,
@@ -146,7 +142,6 @@ const ModalPatient = ({
       status: false,
       birth_date: '',
       gender: 'male',
-      objective: '',
       street: '',
       number: '',
       complement: '',
@@ -164,7 +159,7 @@ const ModalPatient = ({
         name: values.name,
         patient_id: values?.uuid ?? null,
         email: values.email,
-        gender: values.gender as 'male' | 'female' | 'other',
+        gender: values.gender as 'male' | 'female',
         birth_date: convertDMYtoISO(values.birth_date),
         address: {
           city: values.city,

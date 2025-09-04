@@ -1,6 +1,6 @@
 import AutocompleteStyled from '@/components/inputs/autoCompleteStyled'
 import ButtonStyled from '@/components/buttons/button'
-import CardProfile from '@/components/tablesComponents/cardProfile'
+import CardProfile from '@/components/tables/cardProfile'
 import DatePickerStyled from '@/components/inputs/selectDateStyled'
 import TextAreaStyled from '@/components/inputs/textAreaStyled'
 import { DefaultContext } from '@/contexts/defaultContext'
@@ -67,15 +67,13 @@ const ModalAgenda = ({
   }
 
   const onError = (e: any) => {
-    const errorMessage =
-      e?.response?.data?.error || 'Falhou ao cadastrar paciente.'
+    const errorMessage = e?.response?.message || 'Falhou ao cadastrar paciente.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
     console.log('[ERROR API /patient]', errorMessage)
   }
 
   const onErrorUpdate = (e: any) => {
-    const errorMessage =
-      e?.response?.data?.error || 'Falhou ao atualizar paciente.'
+    const errorMessage = e?.response?.message || 'Falhou ao atualizar paciente.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
     console.log('[ERROR API /patient]', errorMessage)
   }

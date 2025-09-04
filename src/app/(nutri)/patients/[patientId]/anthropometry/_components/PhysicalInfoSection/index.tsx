@@ -1,21 +1,17 @@
-import InputStyled from '@/components/inputs/inputStyled'
 import { CollapsibleSection } from '@/app/(nutri)/patients/_components/CollapsibleSection'
-import { FormikErrors, FormikTouched } from 'formik'
+import InputStyled from '@/components/inputs/inputStyled'
 import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
+import { formatDateToBR } from '@/lib/format/date'
+import masks from '@/lib/masks/masks'
+import { FormikErrors, FormikTouched } from 'formik'
 
 interface Props {
-  values: {
-    evaluation_date: string
-    weight: number
-    height: number
-    body_fat_percentage: number
-    muscle_mass_percentage: number
-    observations: string
-  }
+  values: Partial<AnthropometryFormValues>
   handleChange: (e: React.ChangeEvent<any>) => void
   handleBlur: (e: React.FocusEvent<any>) => void
   errors: FormikErrors<AnthropometryFormValues>
   touched: FormikTouched<AnthropometryFormValues>
+  setFieldValue: any
 }
 
 export const PhysicalInfoSection = ({
@@ -24,6 +20,7 @@ export const PhysicalInfoSection = ({
   handleBlur,
   errors,
   touched,
+  setFieldValue,
 }: Props) => (
   <CollapsibleSection title="Informações Físicas">
     <div className="flex flex-col gap-4">
@@ -31,15 +28,19 @@ export const PhysicalInfoSection = ({
         <InputStyled
           id="evaluation_date"
           label="Data da avaliação"
-          type="date"
-          placeholder="Observações"
-          value={values.evaluation_date}
-          onChange={handleChange}
+          type="text"
+          placeholder="dd/mm/yyyy"
+          value={formatDateToBR(values?.evaluation_date ?? '')}
+          onChange={(e) => {
+            setFieldValue('evaluation_date', masks.dateMask(e.target.value))
+          }}
           onBlur={handleBlur}
           error={errors.evaluation_date}
           isTouched={touched.evaluation_date}
+          maxLength={10}
         />
       </div>
+
       <div className="flex gap-4">
         <div className="flex flex-col w-full">
           <InputStyled
@@ -63,13 +64,14 @@ export const PhysicalInfoSection = ({
             value={values.height}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.weight}
-            isTouched={touched.weight}
+            error={errors.height}
+            isTouched={touched.height}
           />
         </div>
       </div>
 
-      <div className="flex gap-4">
+      {/* Gordura e Massa Muscular */}
+      {/* <div className="flex gap-4">
         <div className="flex flex-col w-full">
           <InputStyled
             id="body_fat_percentage"
@@ -96,8 +98,9 @@ export const PhysicalInfoSection = ({
             isTouched={touched.muscle_mass_percentage}
           />
         </div>
-      </div>
+      </div> */}
 
+      {/* Observações */}
       <div className="flex flex-col w-full">
         <InputStyled
           id="observations"

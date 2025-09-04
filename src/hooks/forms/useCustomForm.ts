@@ -262,7 +262,7 @@ export const useCustomForm = (id?: string) => {
       router.push('/forms/list')
     } catch (e: any) {
       const errorMessage =
-        e?.response?.data?.error || 'Falhou ao cadastrar formulário.'
+        e?.response?.message || 'Falhou ao cadastrar formulário.'
       onShowFeedBack(PreFeedBack.error(errorMessage))
       console.error('[ERROR API /forms/store]', errorMessage)
     } finally {
@@ -296,7 +296,7 @@ export const useCustomForm = (id?: string) => {
       router.push('/forms/list')
     } catch (e: any) {
       const errorMessage =
-        e?.response?.data?.error || 'Falhou ao atualizar formulário.'
+        e?.response?.message || 'Falhou ao atualizar formulário.'
       onShowFeedBack(PreFeedBack.error(errorMessage))
       console.error('[ERROR API /forms/update]', errorMessage)
     } finally {

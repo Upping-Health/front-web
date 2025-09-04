@@ -5,7 +5,7 @@ import ModalUser from '@/app/(nutri)/users/_components/ModalUser'
 import ButtonActive from '@/components/buttons/buttonActive'
 import TopDash from '@/components/layout/topDash'
 import ProfileRounded from '@/components/profileRounded'
-import TableDash from '@/components/tablesComponents/tableDash'
+import TableDash from '@/components/tables/tableDash'
 import { DefaultContext } from '@/contexts/defaultContext'
 import useLoadUsers from '@/hooks/users/useLoadUsers'
 import Patient from '@/interfaces/patient.interface'
@@ -46,7 +46,9 @@ const UsersContent = () => {
   }
 
   const onErrorUpdate = (e: any) => {
-    onShowFeedBack(PreFeedBack.error('Falhou ao atualizar status do paciente.'))
+    const errorMessage =
+      e?.response?.message || 'Falhou ao atualizar status do paciente.'
+    onShowFeedBack(PreFeedBack.error(errorMessage))
   }
 
   const changeStatus = useCallback(

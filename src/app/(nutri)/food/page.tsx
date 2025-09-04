@@ -1,5 +1,5 @@
 'use client'
-import TableDash from '@/components/tablesComponents/tableDash'
+import TableDash from '@/components/tables/tableDash'
 import TopDash from '@/components/layout/topDash'
 import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import { colors } from '@/lib/colors/colors'

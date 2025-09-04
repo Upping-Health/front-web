@@ -1,26 +1,24 @@
 'use client'
 import { useCallback, useContext, useMemo, useState } from 'react'
 
-import ButtonActive from '@/components/buttons/buttonActive'
-import ButtonIconStyled from '@/components/buttons/buttonIcon'
-import TopDash from '@/components/layout/topDash'
 import ModalPatient from '@/app/(nutri)/patients/_components/ModalPatient'
+import ButtonActive from '@/components/buttons/buttonActive'
+import TopDash from '@/components/layout/topDash'
 import ProfileRounded from '@/components/profileRounded'
-import TableDash from '@/components/tablesComponents/tableDash'
+import TableDash from '@/components/tables/tableDash'
 import { DefaultContext } from '@/contexts/defaultContext'
 import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import Patient from '@/interfaces/patient.interface'
-import api from '@/services/api'
 import { colors } from '@/lib/colors/colors'
 import PreFeedBack from '@/lib/feedbackStatus'
 import masks from '@/lib/masks/masks'
+import api from '@/services/api'
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd'
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined'
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
 import { CircularProgress } from '@mui/material'
-import { useRouter } from 'next/navigation'
-import ButtonStyled from '@/components/buttons/button'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const PacientesContent = () => {
   const { user, onShowFeedBack } = useContext(DefaultContext)
@@ -49,7 +47,9 @@ const PacientesContent = () => {
   }
 
   const onErrorUpdate = (e: any) => {
-    onShowFeedBack(PreFeedBack.error('Falhou ao atualizar status do paciente.'))
+    const message =
+      e?.response?.message || 'Falhou ao atualizar status do paciente.'
+    onShowFeedBack(PreFeedBack.error(message))
   }
 
   const changeStatusPatient = useCallback(
@@ -155,7 +155,15 @@ const PacientesContent = () => {
             </div>
           </>
         ) : (
-          <TableDash columns={columns} data={data} rowKey="id" />
+          <TableDash
+            columns={columns}
+            data={data}
+            rowKey="id"
+            defaultSort={{
+              field: 'name',
+              direction: 'asc',
+            }}
+          />
         )}
       </div>
 

@@ -13,11 +13,12 @@ import { useFormik } from 'formik'
 import { useContext, useState } from 'react'
 import PatientHeader from '../../../_components/PatientHeader'
 import PatientNotFound from '../../../_components/PatientNotFound'
-import AnalysisSidebar from '../_components/AnalysisSidebar'
+import AdditionalMet from '../_components/AdditionalMet'
 import { BasicInfoSection } from '../_components/BasicInfoSection'
 import Formula from '../_components/Formula'
-import AdditionalMet from '../_components/AdditionalMet'
 import { ProgramarVentaSection } from '../_components/ProgramarVenta'
+import { EnergyCalculation } from '@/interfaces/energyCalculation.interface'
+import AnalysisSidebar from '../_components/AnalysisSidebar'
 
 interface PageProps {
   params: {
@@ -51,26 +52,64 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
     )
   }
 
-  const formik = useFormik<any>({
+  const formik = useFormik<Partial<EnergyCalculation>>({
     initialValues: {
-      title: '',
-      weight: '',
-      height: '',
-      fatFreedough: '',
+      formula: 'harris_benedict_1919',
+      lbm: 0,
+      weight: 0,
+      height: 0,
+      gender: 'male',
+      activity_factor: 0,
+      injury_factor: 0,
+      body_fat: 0,
+      pregnant: false,
+      pregnancy_weeks: 0,
+      target_weight: 0,
+      target_days: 0,
+      additionalMet: [
+        {
+          met_factor: 0,
+          met_time: 0,
+        },
+      ],
     },
     //validationSchema: ,
     onSubmit: async (values) => {
       try {
         setApiLoading(true)
         await api.put(
-          `/anthropometrics/update/${params.energyCalculationId}`,
-          values,
+          `/energycalculations/update/${params.energyCalculationId}`,
+          {
+            formula: values.formula,
+            weight: values.weight,
+            height: values.height,
+            age: values.age,
+            gender: values.gender,
+            activity_factor: values.activity_factor,
+            //activity_level: values.activity_level,
+            injury_factor: values.injury_factor,
+            lbm: values.lbm,
+            body_fat: values.body_fat,
+            //met: values.met,
+            //venta_adjustment: values.venta_adjustment,
+            pregnant: values.pregnant,
+            pregnancy_weeks: values.pregnancy_weeks,
+            //delivery_date: values.delivery_date,
+            //nutritional_status: values.nutritional_status,
+            //age_months: values.age_months,
+            target_weight: values.target_weight,
+            target_days: values.target_days,
+            //manual_bmr: values.manual_bmr,
+            //manual_get: values.manual_get,
+          },
         )
         onShowFeedBack(
           PreFeedBack.success('Antropometria realizada com sucesso'),
         )
-      } catch (error) {
-        onShowFeedBack(PreFeedBack.error('Erro ao realizar antropometria'))
+      } catch (error: any) {
+        const message =
+          error?.response?.message || 'Erro ao criar cálculo energético.'
+        onShowFeedBack(PreFeedBack.error(message))
       } finally {
         setApiLoading(false)
       }
@@ -128,9 +167,21 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
             touched={formik.touched}
           />
 
-          <Formula />
+          <Formula
+            values={formik.values}
+            errors={formik.errors}
+            handleBlur={formik.handleBlur}
+            handleChange={formik.handleChange}
+            touched={formik.touched}
+          />
 
-          <AdditionalMet />
+          <AdditionalMet
+            values={formik.values}
+            errors={formik.errors}
+            handleBlur={formik.handleBlur}
+            setFieldValue={formik.setFieldValue}
+            touched={formik.touched}
+          />
 
           <ProgramarVentaSection
             values={formik.values}
@@ -139,10 +190,10 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
             handleChange={formik.handleChange}
             touched={formik.touched}
           />
-        </form>
-
-        {/* <div className="w-2/4 h-fit sticky top-6">
           <AnalysisSidebar values={formik.values} patient={patientData} />
+        </form>
+        {/* 
+        <div className="w-2/4 h-fit sticky top-6">
         </div> */}
       </main>
     </div>
