@@ -14,6 +14,7 @@ const useLoadAnthropometryByUUID = (uuid: string, hidden: boolean) => {
       setloading(true)
       const res = await api.get(`/anthropometrics/show/${uuid}`)
       setdata(res?.data?.data)
+      console.log(res?.data?.data)
     } catch (error: any) {
       console.error('[ERROR API] /patients/', error?.response?.data)
     } finally {

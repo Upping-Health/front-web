@@ -21,9 +21,9 @@ const ProfileRounded = ({ user, width, height, styles }: ICardProfile) => {
     <div
       className={`w-10 h-10 rounded-full bg-black flex items-center justify-center font-medium text-white dark:bg-gray dark:text-black overflow-hidden ${styles ?? ''}`}
     >
-      {user?.profile?.photo ? (
+      {user?.photo ? (
         <Image
-          src={user?.profile?.photo}
+          src={user?.photo}
           alt="Foto de perfil"
           width={width ?? 96}
           height={height ?? 96}

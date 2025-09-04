@@ -1,6 +1,11 @@
 import { CollapsibleSection } from '@/app/(nutri)/patients/_components/CollapsibleSection'
 import SelectStyled from '@/components/inputs/select'
 import { EnergyCalculation } from '@/interfaces/energyCalculation.interface'
+import {
+  activityFactorsByFormula,
+  energyCalculationFormulas,
+  injuryFactors,
+} from '@/lib/energyCalculation/formulas-energyCalculation'
 import { FormikErrors, FormikTouched } from 'formik'
 import React from 'react'
 
@@ -19,46 +24,9 @@ const Formula = ({
   errors,
   touched,
 }: Props) => {
-  const formulas = [
-    { text: 'Harris-Benedict 1919', value: 'harris_benedict_1919' },
-    { text: 'Harris-Benedict 1984', value: 'harris_benedict_1984' },
-    { text: 'FAO/WHO', value: 'fao_who' },
-    { text: 'Mifflin', value: 'mifflin' },
-    { text: 'Katch-McArdle', value: 'katch_mcardle' },
-    { text: 'Cunningham', value: 'cunningham' },
-    { text: 'Mifflin Obesidade', value: 'mifflin_obesity' },
-    { text: 'Mifflin Sobrepeso', value: 'mifflin_overweight' },
-    { text: 'Henry-Rees', value: 'henry_rees' },
-    { text: 'Tinsley Peso', value: 'tinsley_weight' },
-    { text: 'Tinsley LBM', value: 'tinsley_lbm' },
-    { text: 'EER 2005', value: 'eer_2005' },
-    { text: 'EER 2023 Adulto', value: 'eer_2023_adult' },
-    { text: 'EER 2023 Criança', value: 'eer_2023_child' },
-    { text: 'EER 2023 Gestante', value: 'eer_2023_pregnant' },
-    { text: 'EER 2023 Lactante', value: 'eer_2023_lactating' },
-    { text: 'EER IOM Criança', value: 'eer_iom_child' },
-    { text: 'FAO/WHO Criança', value: 'fao_who_child' },
-    { text: 'Ministério da Saúde Gestante', value: 'ministry_health_pregnant' },
-    { text: 'Manual BMR', value: 'manual_bmr' },
-    { text: 'Manual GET', value: 'manual_get' },
-  ]
-
-  const activityFactors = [
-    { text: 'Sedentário (1.2)', value: 1.2 },
-    { text: 'Leve (1.375)', value: 1.375 },
-    { text: 'Moderado (1.55)', value: 1.55 },
-    { text: 'Ativo (1.725)', value: 1.725 },
-    { text: 'Atleta (1.9+)', value: 1.9 },
-  ]
-
-  const injuryFactors = [
-    { text: 'Nenhum (1.0)', value: 1.0 },
-    { text: 'Cirurgia leve (1.1)', value: 1.1 },
-    { text: 'Cirurgia maior (1.2–1.3)', value: 1.25 },
-    { text: 'Infecção/sepse (1.2–1.5)', value: 1.35 },
-    { text: 'Trauma grave (1.35–1.5)', value: 1.45 },
-    { text: 'Queimado (até 2.0)', value: 2.0 },
-  ]
+  function getActivityOptions(formula: string) {
+    return activityFactorsByFormula[formula] ?? []
+  }
 
   return (
     <CollapsibleSection title="Fórmula">
@@ -67,7 +35,7 @@ const Formula = ({
           <SelectStyled
             id="formula"
             label="Fórmula teórica"
-            options={formulas}
+            options={energyCalculationFormulas}
             placeholder="Selecione a fórmula"
             styles="w-full"
             value={values.formula}
@@ -77,9 +45,11 @@ const Formula = ({
 
         <div className="flex-1 min-w-0">
           <SelectStyled
-            id="activityFactor"
+            id="activity_factor"
             label="Fator de Atividade"
-            options={activityFactors}
+            options={getActivityOptions(
+              values.formula ?? 'harris_benedict_1919',
+            )}
             placeholder="Selecione o fator"
             styles="w-full"
             value={values.activity_factor}
@@ -89,7 +59,7 @@ const Formula = ({
 
         <div className="flex-1 min-w-0">
           <SelectStyled
-            id="injuryFactor"
+            id="injury_factor"
             label="Fator de Injúria"
             options={injuryFactors}
             placeholder="Selecione o fator"

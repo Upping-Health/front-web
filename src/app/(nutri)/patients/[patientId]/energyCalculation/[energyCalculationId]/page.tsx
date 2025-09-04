@@ -79,7 +79,29 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
         setApiLoading(true)
         await api.put(
           `/energycalculations/update/${params.energyCalculationId}`,
-          values,
+          {
+            formula: values.formula,
+            weight: values.weight,
+            height: values.height,
+            age: values.age,
+            gender: values.gender,
+            activity_factor: values.activity_factor,
+            //activity_level: values.activity_level,
+            injury_factor: values.injury_factor,
+            lbm: values.lbm,
+            body_fat: values.body_fat,
+            //met: values.met,
+            //venta_adjustment: values.venta_adjustment,
+            pregnant: values.pregnant,
+            pregnancy_weeks: values.pregnancy_weeks,
+            //delivery_date: values.delivery_date,
+            //nutritional_status: values.nutritional_status,
+            //age_months: values.age_months,
+            target_weight: values.target_weight,
+            target_days: values.target_days,
+            //manual_bmr: values.manual_bmr,
+            //manual_get: values.manual_get,
+          },
         )
         onShowFeedBack(
           PreFeedBack.success('Antropometria realizada com sucesso'),
@@ -168,11 +190,11 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
             handleChange={formik.handleChange}
             touched={formik.touched}
           />
-        </form>
-
-        <div className="w-2/4 h-fit sticky top-6">
           <AnalysisSidebar values={formik.values} patient={patientData} />
-        </div>
+        </form>
+        {/* 
+        <div className="w-2/4 h-fit sticky top-6">
+        </div> */}
       </main>
     </div>
   )

@@ -16,14 +16,10 @@ const AnalysisEnergyCalculatonSidebar = ({
   patient,
 }: AnalysisSidebarProps) => {
   const { results } = useLoadEnergyCalculationResults(values, patient)
-  console.log(results)
 
   return (
     <aside className="flex flex-col gap-4">
       <AnalysesResults data={results} title="Análises e Resultados" />
-      {/* <AnalysesResults data={analysisResults} title="Análises e resultados" />
-
-      <AnalysesResults data={bodyComposition} title="Composição corporal" /> */}
     </aside>
   )
 }

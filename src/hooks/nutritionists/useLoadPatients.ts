@@ -20,26 +20,25 @@ const useLoadPatients = (hidden: boolean) => {
           uuid: p.uuid,
           name: p.name,
           email: p.email,
-          document: p.profile?.document ?? '',
-          phone: p.profile?.phone ?? '',
-          birth_date: p.profile?.birth_date ?? '',
+          document: p.profile?.document ?? null,
+          phone: p.profile?.phone ?? null,
+          birth_date: p.profile?.birth_date ?? null,
           gender:
             p.profile?.gender === 'male' || p.profile?.gender === 'female'
               ? p.profile.gender
               : 'male',
           status: p.status,
-          age: null,
-          profile: {
-            photo: p.profile?.photo ?? '',
-          },
+          age: p.profile?.age ?? 0,
+          photo: p.profile?.photo ?? null,
+
           address: {
-            street: p.profile?.street ?? '',
-            number: p.profile?.number ?? '',
-            complement: p.profile?.complement,
-            neighborhood: p.profile?.neighborhood ?? '',
-            city: p.profile?.city ?? '',
-            state: p.profile?.state ?? '',
-            zipCode: p.profile?.zip_code ?? '',
+            street: p.profile?.street ?? null,
+            number: p.profile?.number ?? null,
+            complement: p.profile?.complement ?? null,
+            neighborhood: p.profile?.neighborhood ?? null,
+            city: p.profile?.city ?? null,
+            state: p.profile?.state ?? null,
+            zipCode: p.profile?.zip_code ?? null,
             // country: p.profile?.country ?? ""
           },
         }
