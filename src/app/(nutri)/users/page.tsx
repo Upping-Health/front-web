@@ -18,13 +18,13 @@ import SupervisorAccountOutlinedIcon from '@mui/icons-material/SupervisorAccount
 import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { ROLE_PTBR } from '@/lib/types/roles'
+import User from '@/interfaces/user.interface'
 
 const UsersContent = () => {
   const { user, onShowFeedBack } = useContext(DefaultContext)
   const [openModal, setOpenModal] = useState(false)
-  const [dataSelected, setDataSelected] = useState<Patient | null>(null)
+  const [dataSelected, setDataSelected] = useState<User | null>(null)
   const { loadData, data, loading } = useLoadUsers(false)
-  const router = useRouter()
 
   const toggleModalOpen = useCallback(() => {
     setOpenModal(!openModal)
@@ -32,7 +32,7 @@ const UsersContent = () => {
   }, [openModal])
 
   const toogleModalOpenWithData = useCallback(
-    (row: Patient) => {
+    (row: User) => {
       setDataSelected(row)
       setOpenModal(true)
     },
@@ -56,7 +56,7 @@ const UsersContent = () => {
       if (!user) return
       const newStatus = row.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
       api
-        .put(`/patient/status/${user.id}/${row.id}?status=${newStatus}`)
+        .put(`/patient/status/${user.uuid}/${row.uuid}?status=${newStatus}`)
         .then(() => {
           row.status = newStatus
           data.slice()
@@ -67,14 +67,12 @@ const UsersContent = () => {
     [user],
   )
 
-  console.log(data)
-
   const columns = useMemo(
     () => [
       {
         header: 'Foto',
         field: 'photo',
-        render: (_: any, row: any) => <ProfileRounded user={row?.patient} />,
+        render: (_: any, row: any) => <ProfileRounded user={row} />,
       },
       {
         header: 'Nome',
@@ -88,12 +86,12 @@ const UsersContent = () => {
         header: 'CPF',
         field: 'document',
         render: (value: any, row: any) =>
-          masks.cpfMask(value ?? '000000000000'),
+          value ? masks.cpfMask(value) : 'N/A',
       },
       {
         header: 'Telefone',
         field: 'phone',
-        render: (value: any) => masks.phoneMask(value ?? '00000000000'),
+        render: (value: any) => (value ? masks.phoneMask(value) : 'N/A'),
       },
       {
         header: 'Gênero',
@@ -103,12 +101,12 @@ const UsersContent = () => {
             ? 'Masculino'
             : value === 'female'
               ? 'Feminino'
-              : 'Outros',
+              : 'N/A',
       },
       {
         header: 'Função',
         field: 'role',
-        render: (value: any, row: any) => ROLE_PTBR[row?.role?.name],
+        render: (value: any, row: any) => ROLE_PTBR[row?.role],
       },
       {
         header: 'Status',

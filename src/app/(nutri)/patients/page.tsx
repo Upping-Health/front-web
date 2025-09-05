@@ -57,7 +57,7 @@ const PacientesContent = () => {
       if (!user) return
       const newStatus = row.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
       api
-        .put(`/patient/status/${user.id}/${row.id}?status=${newStatus}`)
+        .put(`/patient/status/${user.uuid}/${row.uuid}?status=${newStatus}`)
         .then(() => {
           row.status = newStatus
           data.slice()
@@ -73,7 +73,7 @@ const PacientesContent = () => {
       {
         header: 'Foto',
         field: 'photo',
-        render: (_: any, row: any) => <ProfileRounded user={row?.patient} />,
+        render: (_: any, row: any) => <ProfileRounded user={row} />,
         noExport: true,
       },
       {
@@ -88,12 +88,13 @@ const PacientesContent = () => {
         header: 'CPF',
         field: 'document',
         render: (value: any, row: any) =>
-          masks.cpfMask(value ?? '000000000000'),
+          value ? masks.cpfMask(value) : 'N/A',
       },
       {
         header: 'Telefone',
         field: 'phone',
-        render: (value: any) => masks.phoneMask(value ?? '00000000000'),
+        render: (value: any) =>
+          value ? masks.phoneMask(value ?? '00000000000') : 'N/A',
       },
       {
         header: 'Gênero',
@@ -103,7 +104,7 @@ const PacientesContent = () => {
             ? 'Masculino'
             : value === 'female'
               ? 'Feminino'
-              : 'Outros',
+              : 'N/A',
       },
       {
         header: 'Status',
