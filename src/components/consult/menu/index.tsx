@@ -4,6 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { usePathname } from 'next/navigation'
+import AssignmentIcon from '@mui/icons-material/Assignment'
 export const consultTabs = {
   antropometrias: {
     name: 'Antropometria',
@@ -14,6 +15,11 @@ export const consultTabs = {
     name: 'Cálculo Energético',
     icon: <FlashOnIcon />,
     path: 'energyCalculation',
+  },
+  anamnesis: {
+    name: 'Anamnese',
+    icon: <AssignmentIcon />,
+    path: 'anamnesis',
   },
 }
 

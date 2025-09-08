@@ -19,6 +19,7 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
 import { CircularProgress } from '@mui/material'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import Loading from '@/components/layout/loading'
 
 const PacientesContent = () => {
   const { user, onShowFeedBack } = useContext(DefaultContext)
@@ -56,14 +57,14 @@ const PacientesContent = () => {
     (row: Patient) => {
       if (!user) return
       const newStatus = row.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
-      api
-        .put(`/patient/status/${user.uuid}/${row.uuid}?status=${newStatus}`)
-        .then(() => {
-          row.status = newStatus
-          data.slice()
-          onSuccessUpdate()
-        })
-        .catch((e: any) => onErrorUpdate(e))
+      // api
+      //   .put(`/patient/status/${user.uuid}/${row.uuid}?status=${newStatus}`)
+      //   .then(() => {
+      //     row.status = newStatus
+      //     data.slice()
+      //     onSuccessUpdate()
+      //   })
+      //   .catch((e: any) => onErrorUpdate(e))
     },
     [user],
   )
@@ -149,11 +150,7 @@ const PacientesContent = () => {
 
         {loading ? (
           <>
-            <div className="flex h-3/4 justify-center w-full items-center">
-              <CircularProgress
-                style={{ width: 80, height: 80, color: colors.primary }}
-              />
-            </div>
+            <Loading text="Carregando pacientes..." className="!h-3/4" />
           </>
         ) : (
           <TableDash

@@ -19,6 +19,7 @@ import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { ROLE_PTBR } from '@/lib/types/roles'
 import User from '@/interfaces/user.interface'
+import Loading from '@/components/layout/loading'
 
 const UsersContent = () => {
   const { user, onShowFeedBack } = useContext(DefaultContext)
@@ -55,14 +56,14 @@ const UsersContent = () => {
     (row: Patient) => {
       if (!user) return
       const newStatus = row.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
-      api
-        .put(`/patient/status/${user.uuid}/${row.uuid}?status=${newStatus}`)
-        .then(() => {
-          row.status = newStatus
-          data.slice()
-          onSuccessUpdate()
-        })
-        .catch((e: any) => onErrorUpdate(e))
+      // api
+      //   .put(`/patient/status/${user.uuid}/${row.uuid}?status=${newStatus}`)
+      //   .then(() => {
+      //     row.status = newStatus
+      //     data.slice()
+      //     onSuccessUpdate()
+      //   })
+      //   .catch((e: any) => onErrorUpdate(e))
     },
     [user],
   )
@@ -136,11 +137,7 @@ const UsersContent = () => {
 
         {loading ? (
           <>
-            <div className="flex h-3/4 justify-center w-full items-center">
-              <CircularProgress
-                style={{ width: 80, height: 80, color: colors.primary }}
-              />
-            </div>
+            <Loading text="Carregando usuários..." className="!h-3/4" />
           </>
         ) : (
           <TableDash columns={columns} data={data} rowKey="id" />
