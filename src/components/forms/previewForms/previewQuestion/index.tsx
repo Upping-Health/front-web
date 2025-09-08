@@ -1,5 +1,4 @@
 import PreviewByType from '../previewByType'
-import PreviewTextOrNumber from '../previewByType'
 import PreviewCheckbox from '../previewCheckbox'
 import PreviewRadio from '../previewRadio'
 import PreviewSelect from '../previewSelect'
@@ -13,8 +12,21 @@ interface IQuestion {
   required: boolean
 }
 
-const PreviewQuestion = ({ question }: { question: IQuestion }) => {
-  const optionsSex = [{ value: 'ANAMNESE', label: 'Anamnese' }]
+interface PreviewQuestionProps {
+  question: IQuestion
+  mode?: 'preview' | 'answer'
+  onChange?: (value: any) => void
+  value?: any
+}
+
+const PreviewQuestion = ({
+  question,
+  value,
+  mode = 'preview',
+  onChange,
+}: PreviewQuestionProps) => {
+  const readOnly = mode === 'preview'
+
   return (
     <div className="rounded-xl bg-white p-4 shadow mb-3 dark:bg-slate-700 dark:border-slate-600">
       <p className="font-bold text-black dark:text-white text-lg mb-3">
@@ -24,9 +36,9 @@ const PreviewQuestion = ({ question }: { question: IQuestion }) => {
 
       {question.type === 'text' && (
         <PreviewByType
-          id={question.type}
-          value=""
-          onChange={(e) => {}}
+          id={question.label}
+          value={value ?? ''}
+          onChange={(e) => !readOnly && onChange?.(e.target.value)}
           placeholder="Escreva sua resposta"
           type="text"
         />
@@ -34,53 +46,62 @@ const PreviewQuestion = ({ question }: { question: IQuestion }) => {
 
       {question.type === 'number' && (
         <PreviewByType
-          id={question.type}
-          value=""
-          onChange={(e) => {}}
-          placeholder="Escreva sua resposta"
+          id={question.label}
+          value={value ?? ''}
+          onChange={(e) => !readOnly && onChange?.(e.target.value)}
+          placeholder="Digite um número"
           type="number"
         />
       )}
 
       {question.type === 'date' && (
         <PreviewByType
-          id={question.type}
-          value=""
-          onChange={(e) => {}}
-          placeholder="Escreva sua resposta"
+          id={question.label}
+          value={value ?? ''}
+          onChange={(e) => !readOnly && onChange?.(e.target.value)}
           type="date"
         />
       )}
 
       {question.type === 'file' && (
         <PreviewByType
-          id={question.type}
-          value=""
-          onChange={(e) => {}}
-          placeholder="Escreva sua resposta"
+          id={question.label}
+          value={value ?? ''}
+          onChange={(e) => !readOnly && onChange?.(e.target.files?.[0])}
           type="file"
         />
       )}
 
-      {question.type === 'checkbox' && <PreviewCheckbox question={question} />}
+      {question.type === 'checkbox' && (
+        <PreviewCheckbox
+          question={question}
+          value={value}
+          onChange={!readOnly ? onChange : undefined}
+        />
+      )}
 
-      {question.type === 'radio' && <PreviewRadio question={question} />}
+      {question.type === 'radio' && (
+        <PreviewRadio
+          question={question}
+          value={value}
+          onChange={!readOnly ? onChange : undefined}
+        />
+      )}
 
       {question.type === 'textarea' && (
         <PreviewTextArea
-          id={question.type}
-          value=""
-          onChange={(e) => {}}
-          placeholder="Escreva sua respsota"
+          id={question.label}
+          value={value ?? ''}
+          onChange={(e) => !readOnly && onChange?.(e.target.value)}
+          placeholder="Escreva sua resposta"
         />
       )}
 
       {question.type === 'select' && (
         <PreviewSelect
-          id={question.type}
-          value=""
-          onChange={() => {}}
-          options={question.options ?? []}
+          question={question}
+          value={value ?? ''}
+          onChange={!readOnly ? (val) => onChange?.(val) : undefined}
         />
       )}
     </div>

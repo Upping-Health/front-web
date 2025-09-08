@@ -5,20 +5,16 @@ import LoadingFullScreen from '@/components/layout/loadingGlobal'
 import TopDash from '@/components/layout/topDash'
 import ProfileRounded from '@/components/profileRounded'
 import TableDash from '@/components/tables/tableDash'
-import { DefaultContext } from '@/contexts/defaultContext'
-import useLoadAnthropometryByPatient from '@/hooks/nutritionists/anthropometry/useLoadAnthropometryByPatient'
 import useLoadPatientByUUID from '@/hooks/nutritionists/useLoadPatientById'
-import PreFeedBack from '@/lib/feedbackStatus'
+import useLoadSubmissionByPatient from '@/hooks/nutritionists/useLoadSubmissionByPatient'
 import { SEX_PT_BR } from '@/lib/types/sex'
-import api from '@/services/api'
 import { Person } from '@mui/icons-material'
 import CreateIcon from '@mui/icons-material/Create'
 import { CircularProgress } from '@mui/material'
 import dateFormat from 'dateformat'
 import { useRouter } from 'next/navigation'
-import { useContext, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
-import useLoadSubmissionByPatient from '@/hooks/nutritionists/useLoadSubmissionByPatient'
 interface PageProps {
   params: {
     patientId: string
@@ -117,7 +113,9 @@ const AnamnesisPage = ({ params }: PageProps) => {
         title={patientData?.name ?? 'Paciente'}
         description={`${Math.abs(Number(patientData?.age) || 0).toFixed(0)} anos, ${SEX_PT_BR[patientData?.gender ?? 'male']}`}
         icon={Person}
-        onClick={() => {}}
+        onClick={() =>
+          router.push(`/patients/${params.patientId}/anamnesis/${'123'}`)
+        }
         textBtn="Nova Anamnese"
       />
 
