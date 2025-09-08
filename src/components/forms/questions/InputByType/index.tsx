@@ -7,7 +7,7 @@ interface Props {
   type?: string
 }
 
-const PreviewByType = ({
+const InputByType = ({
   label,
   placeholder,
   onChange,
@@ -30,4 +30,4 @@ const PreviewByType = ({
   </div>
 )
 
-export default PreviewByType
+export default InputByType

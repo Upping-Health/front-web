@@ -116,7 +116,7 @@ const CardForms: React.FC<TableProps> = ({
                 >
                   <div className="flex flex-row items-center justify-between">
                     <div className="flex gap-2 items-center">
-                      <div className="bg-green h-12 w-12 rounded-xl flex justify-center items-center">
+                      <div className="bg-green h-10 w-10 rounded-xl flex justify-center items-center">
                         <QuizIcon className="text-white" />
                       </div>
                       <div>

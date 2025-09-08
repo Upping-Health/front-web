@@ -22,7 +22,7 @@ interface PageProps {
   }
 }
 
-const AnamnesisPage = ({ params }: PageProps) => {
+const DocumentsPage = ({ params }: PageProps) => {
   const [isNavigating, setIsNavigating] = useState(false)
 
   const {
@@ -148,7 +148,7 @@ const AnamnesisPage = ({ params }: PageProps) => {
         description={`${Math.abs(Number(patientData?.age) || 0).toFixed(0)} anos, ${SEX_PT_BR[patientData?.gender ?? 'male']}`}
         icon={Person}
         onClick={onSaveAnamnese}
-        textBtn="Nova Anamnese"
+        textBtn="Novo Documento"
       />
 
       <div className="h-full w-full flex gap-4">
@@ -168,4 +168,4 @@ const AnamnesisPage = ({ params }: PageProps) => {
   )
 }
 
-export default AnamnesisPage
+export default DocumentsPage

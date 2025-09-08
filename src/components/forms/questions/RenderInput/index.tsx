@@ -1,8 +1,8 @@
-import PreviewByType from '../previewByType'
-import PreviewCheckbox from '../previewCheckbox'
-import PreviewRadio from '../previewRadio'
-import PreviewSelect from '../previewSelect'
-import PreviewTextArea from '../previewTextArea'
+import InputByType from '../InputByType'
+import InputCheckbox from '../InputCheckbox'
+import InputRadio from '../InputRadio'
+import InputSelect from '../InputSelect'
+import InputTextArea from '../InputTextArea'
 
 interface IQuestion {
   label: string
@@ -19,7 +19,7 @@ interface PreviewQuestionProps {
   value?: any
 }
 
-const PreviewQuestion = ({
+const RenderInput = ({
   question,
   value,
   mode = 'preview',
@@ -35,7 +35,7 @@ const PreviewQuestion = ({
       </p>
 
       {question.type === 'text' && (
-        <PreviewByType
+        <InputByType
           id={question.label}
           value={value ?? ''}
           onChange={(e) => !readOnly && onChange?.(e.target.value)}
@@ -45,7 +45,7 @@ const PreviewQuestion = ({
       )}
 
       {question.type === 'number' && (
-        <PreviewByType
+        <InputByType
           id={question.label}
           value={value ?? ''}
           onChange={(e) => !readOnly && onChange?.(e.target.value)}
@@ -55,7 +55,7 @@ const PreviewQuestion = ({
       )}
 
       {question.type === 'date' && (
-        <PreviewByType
+        <InputByType
           id={question.label}
           value={value ?? ''}
           onChange={(e) => !readOnly && onChange?.(e.target.value)}
@@ -64,7 +64,7 @@ const PreviewQuestion = ({
       )}
 
       {question.type === 'file' && (
-        <PreviewByType
+        <InputByType
           id={question.label}
           value={value ?? ''}
           onChange={(e) => !readOnly && onChange?.(e.target.files?.[0])}
@@ -73,7 +73,7 @@ const PreviewQuestion = ({
       )}
 
       {question.type === 'checkbox' && (
-        <PreviewCheckbox
+        <InputCheckbox
           question={question}
           value={value}
           onChange={!readOnly ? onChange : undefined}
@@ -81,7 +81,7 @@ const PreviewQuestion = ({
       )}
 
       {question.type === 'radio' && (
-        <PreviewRadio
+        <InputRadio
           question={question}
           value={value}
           onChange={!readOnly ? onChange : undefined}
@@ -89,7 +89,7 @@ const PreviewQuestion = ({
       )}
 
       {question.type === 'textarea' && (
-        <PreviewTextArea
+        <InputTextArea
           id={question.label}
           value={value ?? ''}
           onChange={(e) => !readOnly && onChange?.(e.target.value)}
@@ -98,7 +98,7 @@ const PreviewQuestion = ({
       )}
 
       {question.type === 'select' && (
-        <PreviewSelect
+        <InputSelect
           question={question}
           value={value ?? ''}
           onChange={!readOnly ? (val) => onChange?.(val) : undefined}
@@ -108,4 +108,4 @@ const PreviewQuestion = ({
   )
 }
 
-export default PreviewQuestion
+export default RenderInput

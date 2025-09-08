@@ -18,7 +18,7 @@ interface PreviewRadioProps {
   disabled?: boolean
 }
 
-const PreviewRadio = ({
+const InputRadio = ({
   question,
   value = null,
   onChange,
@@ -58,4 +58,4 @@ const PreviewRadio = ({
   )
 }
 
-export default PreviewRadio
+export default InputRadio

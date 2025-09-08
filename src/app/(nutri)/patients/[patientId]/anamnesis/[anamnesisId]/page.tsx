@@ -1,7 +1,7 @@
 'use client'
 
 import TopDash from '@/components/layout/topDash'
-import { ArrowBack, Straighten } from '@mui/icons-material'
+import { ArrowBack } from '@mui/icons-material'
 import { useFormik } from 'formik'
 
 import { DefaultContext } from '@/contexts/defaultContext'
@@ -11,13 +11,11 @@ import useTimer from '@/hooks/others/useTimer'
 import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
 import PreFeedBack from '@/lib/feedbackStatus'
 import { formatDateToBR } from '@/lib/format/date'
-import { validateCreateAnthropometry } from '@/lib/formik/validators/validator-anthroprometry'
-import api from '@/services/api'
+import AssignmentIcon from '@mui/icons-material/Assignment'
 import { CircularProgress } from '@mui/material'
 import { useContext, useEffect, useState } from 'react'
 import PatientHeader from '../../../_components/PatientHeader'
 import PatientNotFound from '../../../_components/PatientNotFound'
-import AssignmentIcon from '@mui/icons-material/Assignment'
 
 interface PageProps {
   params: {

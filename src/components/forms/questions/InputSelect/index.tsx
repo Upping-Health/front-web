@@ -19,7 +19,7 @@ interface PreviewSelectProps {
   placeholder?: string
 }
 
-const PreviewSelect = ({
+const InputSelect = ({
   question,
   value = '',
   onChange,
@@ -62,4 +62,4 @@ const PreviewSelect = ({
   )
 }
 
-export default PreviewSelect
+export default InputSelect

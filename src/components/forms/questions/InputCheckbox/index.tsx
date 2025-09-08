@@ -19,7 +19,7 @@ interface PreviewCheckboxProps {
   disabled?: boolean
 }
 
-const PreviewCheckbox = ({
+const InputCheckbox = ({
   question,
   value = [],
   onChange,
@@ -65,4 +65,4 @@ const PreviewCheckbox = ({
   )
 }
 
-export default PreviewCheckbox
+export default InputCheckbox

@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import PreviewTypeText from './previewQuestion'
+import PreviewTypeText from './RenderInput'
+import RenderInput from './RenderInput'
 
 interface IQuestion {
   label: string
@@ -32,7 +33,7 @@ const Questions = ({ formData }: { formData: IFormPreview }) => {
         </p>
       </div>
       {formData?.field?.map((field, index) => (
-        <PreviewTypeText
+        <RenderInput
           key={index}
           question={field}
           value={answers[index] ?? ''}

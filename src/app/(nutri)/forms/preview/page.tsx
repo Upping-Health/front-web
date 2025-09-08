@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react'
 import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import { colors } from '@/lib/colors/colors'
 import { CircularProgress } from '@mui/material'
-import PreviewForms from '@/components/forms/previewForms'
+import PreviewForms from '@/components/forms/questions'
 import TopDash from '@/components/layout/topDash'
 import { useRouter } from 'next/navigation'
 
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswerOutlined'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import Loading from '@/components/layout/loading'
-import Questions from '@/components/forms/previewForms'
+import Questions from '@/components/forms/questions'
 interface IQuestion {
   label: string
   type: string
