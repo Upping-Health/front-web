@@ -29,7 +29,7 @@ export default function Login() {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="w-screen h-screen flex justify-center items-center bg-gray-100"
+      className="w-screen h-screen flex justify-center items-center bg-gradient-hero"
     >
       {loading && <Loading text="Autenticando..." />}
       {!loading && (
@@ -38,7 +38,7 @@ export default function Login() {
             <Image src={logoImg} alt="Logo" width={170} height={170} />
           </div>
 
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col">
             <InputStyled
               id="email"
               value={formik.values.email}
@@ -50,7 +50,7 @@ export default function Login() {
               type="text"
               placeholder="exemplo@gmail.com"
               icon={<MailOutlineIcon style={{ color: colors.primary }} />}
-              styles="dark:!border-gray"
+              styles="dark:!border-gray mb-5"
               stylesInput="dark:bg-white dark:!text-black"
             />
             <InputStyled
@@ -85,6 +85,7 @@ export default function Login() {
           <ButtonStyled
             type="submit"
             styles="w-full"
+            bgColor="bg-green-600"
             title="Entrar"
             textColor="text-white"
             disabled={loading}

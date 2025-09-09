@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
 import api from '@/services/api'
+import ModalAddDocument from './_components/ModalAddDocument'
 interface PageProps {
   params: {
     patientId: string
@@ -24,6 +25,7 @@ interface PageProps {
 
 const DocumentsPage = ({ params }: PageProps) => {
   const [isNavigating, setIsNavigating] = useState(false)
+  const [openAddDocument, setOpenAddDocument] = useState(false)
 
   const {
     data: patientData,
@@ -37,8 +39,6 @@ const DocumentsPage = ({ params }: PageProps) => {
     false,
   )
 
-  const router = useRouter()
-
   const LoadingData = ({ label }: { label: string }) => {
     return (
       <div className="flex items-center flex-col justify-center py-6 gap-4 w-full">
@@ -51,47 +51,11 @@ const DocumentsPage = ({ params }: PageProps) => {
   const columns = useMemo(
     () => [
       {
-        header: '#',
-        field: 'photo',
-        render: (_: any, row: any) => <ProfileRounded user={row?.patient} />,
-      },
-      {
-        header: 'Data da avaliação',
+        header: 'Data do upload',
         field: 'evaluation_date',
         render: (value: any) => {
           const date = new Date(value)
           return dateFormat(date, 'dd/mm/yyyy')
-        },
-      },
-      {
-        header: 'Data da atualização',
-        field: 'updated_at',
-        render: (value: any) => {
-          if (!value) return ''
-
-          const date = new Date(value)
-          return dateFormat(date, 'dd/MM/yyyy')
-        },
-      },
-      {
-        header: 'Observação',
-        field: 'observations',
-      },
-      {
-        header: '#',
-        field: '{row}',
-        render: (_: any, row: any) => {
-          return (
-            <HeaderButton
-              onClick={() =>
-                router.push(
-                  `/patients/${params.patientId}/anthropometry/${row.uuid}`,
-                )
-              }
-            >
-              <CreateIcon className="text-gray-600 text-lg dark:text-white" />
-            </HeaderButton>
-          )
         },
       },
     ],
@@ -106,65 +70,50 @@ const DocumentsPage = ({ params }: PageProps) => {
     return <PatientNotFound />
   }
 
-  const onSaveAnamnese = async () => {
-    const get_form_response = await api.get('forms/type/anamnese')
-    const form = get_form_response?.data?.data
-
-    const defaultValues: Record<string, any> = {
-      text: '',
-      number: 0,
-      checkbox: [],
-      radio: '',
-      textarea: '',
-      range: 0,
-      select: '',
-      date: '',
-    }
-
-    const forms = form.fields.map((field: any) => ({
-      field_id: field.uuid,
-      value: null,
-    }))
-
-    const create_form_response = await api.post(
-      `forms/submission/store/${form.uuid}`,
-      {
-        client_id: 1,
-        patient_id: 1,
-        answers: forms,
-        submit: false,
-      },
-    )
-
-    console.log(create_form_response)
+  const onCreateDocument = () => {
+    setOpenAddDocument(true)
   }
 
   return (
-    <div
-      className={'w-full h-full flex flex-col transition-opacity duration-300'}
-    >
-      <TopDash
-        title={patientData?.name ?? 'Paciente'}
-        description={`${Math.abs(Number(patientData?.age) || 0).toFixed(0)} anos, ${SEX_PT_BR[patientData?.gender ?? 'male']}`}
-        icon={Person}
-        onClick={onSaveAnamnese}
-        textBtn="Novo Documento"
-      />
+    <>
+      <div
+        className={
+          'w-full h-full flex flex-col transition-opacity duration-300'
+        }
+      >
+        <TopDash
+          title={patientData?.name ?? 'Paciente'}
+          description={`${Math.abs(Number(patientData?.age) || 0).toFixed(0)} anos, ${SEX_PT_BR[patientData?.gender ?? 'male']}`}
+          icon={Person}
+          onClick={onCreateDocument}
+          textBtn="Novo Documento"
+        />
 
-      <div className="h-full w-full flex gap-4">
-        {loading ? (
-          <LoadingData label="Carregando histórico de antropometria..." />
-        ) : (
-          <TableDash search={false} rowKey="id" data={data} columns={columns} />
-        )}
+        <div className="h-full w-full flex gap-4">
+          {loading ? (
+            <LoadingData label="Carregando histórico de antropometria..." />
+          ) : (
+            <TableDash
+              search={false}
+              rowKey="id"
+              data={data}
+              columns={columns}
+            />
+          )}
 
-        <div className="h-full flex justify-end">
-          <MenuConsult patientId={params.patientId} />
+          <div className="h-full flex justify-end">
+            <MenuConsult patientId={params.patientId} />
+          </div>
         </div>
+
+        <LoadingFullScreen open={isNavigating} labelLoading="Navegando..." />
       </div>
 
-      <LoadingFullScreen open={isNavigating} labelLoading="Navegando..." />
-    </div>
+      <ModalAddDocument
+        open={openAddDocument}
+        setIsClose={() => setOpenAddDocument(false)}
+      />
+    </>
   )
 }
 
