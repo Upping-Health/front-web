@@ -15,14 +15,22 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import DeleteIcon from '@mui/icons-material/Delete'
 import InputStyled from '@/components/inputs/inputStyled'
 import { Description } from '@mui/icons-material'
+import api from '@/services/api'
+import Patient from '@/interfaces/patient.interface'
 
 interface ModalParams {
   open: boolean
   setIsClose: () => void
+  patient: Patient | null
   loadData?: () => Promise<void>
 }
 
-const ModalAddDocument = ({ open, setIsClose, loadData }: ModalParams) => {
+const ModalAddDocument = ({
+  open,
+  setIsClose,
+  patient,
+  loadData,
+}: ModalParams) => {
   const { onShowFeedBack } = useContext(DefaultContext)
   const [loading, setLoading] = useState(false)
 
@@ -49,10 +57,18 @@ const ModalAddDocument = ({ open, setIsClose, loadData }: ModalParams) => {
     },
     onSubmit: async (values) => {
       try {
+        if (!values.file) return
         setLoading(true)
-
         const formData = new FormData()
-        if (values.file) formData.append('file', values.file)
+        formData.append('file', values.file)
+        formData.append('type', 'file')
+        console.log(values.file)
+
+        await api.post(`/users/${patient?.uuid}/attachments`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
 
         onSuccess()
       } catch (error) {
@@ -62,13 +78,20 @@ const ModalAddDocument = ({ open, setIsClose, loadData }: ModalParams) => {
       }
     },
   })
-
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {},
     multiple: false,
     onDrop: (acceptedFiles: any) => {
       if (acceptedFiles && acceptedFiles.length > 0) {
-        formik.setFieldValue('file', acceptedFiles[0])
+        const file = acceptedFiles[0]
+        if (file.size > 10 * 1024 * 1024) {
+          onShowFeedBack(
+            PreFeedBack.error('O arquivo não pode ultrapassar 10MB.'),
+          )
+          return
+        }
+
+        formik.setFieldValue('file', file)
       }
     },
   })
@@ -87,7 +110,7 @@ const ModalAddDocument = ({ open, setIsClose, loadData }: ModalParams) => {
             id="name"
             onChange={formik.handleChange}
             value={formik.values.name}
-            label="Nome"
+            label="Nome de referência"
             type="text"
             placeholder="Exemplo"
             icon={<Description className="text-black dark:text-white" />}
@@ -99,7 +122,7 @@ const ModalAddDocument = ({ open, setIsClose, loadData }: ModalParams) => {
           <div
             {...getRootProps()}
             className={`border-2 relative border-dashed rounded-md p-6 text-center cursor-pointer transition-all
-              ${isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 bg-gray-50 dark:bg-gray-700'}
+              ${isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 bg-gray-50 dark:bg-gray-800 dark:border-slate-700'}
             `}
           >
             <input {...getInputProps()} />
@@ -116,7 +139,8 @@ const ModalAddDocument = ({ open, setIsClose, loadData }: ModalParams) => {
                   />
                 </div>
                 <div className="text-xs text-gray-500">
-                  Tamanho: {formik.values.file.size / 1024} KB
+                  Tamanho:{' '}
+                  {(formik.values.file.size / (1024 * 1024)).toFixed(2)} MB
                 </div>
               </div>
             ) : (
@@ -127,7 +151,7 @@ const ModalAddDocument = ({ open, setIsClose, loadData }: ModalParams) => {
                     ? 'Solte o arquivo aqui...'
                     : 'Arraste e solte o arquivo aqui ou clique para selecionar'}
                 </p>
-                <p className="text-xs text-gray-500">Tamanho máximo: 25MB</p>
+                <p className="text-xs text-gray-500">Tamanho máximo: 10MB</p>
               </div>
             )}
           </div>
