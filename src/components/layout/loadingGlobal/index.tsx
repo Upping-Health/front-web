@@ -13,7 +13,7 @@ const LoadingFullScreen = ({
   return (
     <Modal
       open={open}
-      className="flex justify-center items-center backdrop-blur-md outline-none"
+      className="flex justify-center items-center backdrop-blur-sm outline-none"
     >
       <div className="flex flex-col justify-center items-center">
         <CircularProgress size={100} style={{ color: colors.white }} />
