@@ -10,9 +10,6 @@ const LoadingFullScreen = ({
   open: boolean
   labelLoading: string | null
 }) => {
-  useEffect(() => {
-    console.log(open, 'OPEN')
-  }, [open])
   return (
     <Modal
       open={open}

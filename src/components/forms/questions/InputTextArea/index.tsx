@@ -6,7 +6,7 @@ interface Props {
   value: string
 }
 
-const PreviewTextArea = ({ placeholder, onChange, id, value }: Props) => (
+const InputTextArea = ({ placeholder, onChange, id, value }: Props) => (
   <textarea
     id={id}
     value={value}
@@ -17,4 +17,4 @@ const PreviewTextArea = ({ placeholder, onChange, id, value }: Props) => (
   />
 )
 
-export default PreviewTextArea
+export default InputTextArea

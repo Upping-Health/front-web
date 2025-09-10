@@ -1,35 +1,30 @@
-'use client'
 import { DefaultContext } from '@/contexts/defaultContext'
-import DashboardPatients from '@/interfaces/dashPatients.interface'
+import Documents from '@/interfaces/documents.interface'
+import api from '@/services/api'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
-const useLoadDashboardPatients = (hidden: boolean) => {
+const useLoadDocumentsByPatient = (uuid: string, hidden: boolean) => {
   const { user } = useContext(DefaultContext)
-  const [data, setdata] = useState<DashboardPatients>({
-    totalPatients: 0,
-    totalPatientsActive: 0,
-    totalPatientsInactive: 0,
-  })
+  const [data, setdata] = useState<Documents[]>([])
   const [loading, setloading] = useState<boolean>(true)
 
   const loadData = useCallback(async () => {
     try {
       setloading(true)
-
-      // const res = await api.get(`/dashboard/patients/${user?.id}`)
-      // setdata(res?.data?.data)
+      const res = await api.get(`/users/${uuid}/attachments`)
+      setdata(res?.data?.data)
     } catch (error: any) {
       console.error('[ERROR API] /patients/', error?.response?.data)
     } finally {
       setloading(false)
     }
-  }, [user])
+  }, [])
 
   useEffect(() => {
-    if (!hidden) loadData()
-  }, [loadData, hidden])
+    if (!hidden && uuid) loadData()
+  }, [loadData, hidden, uuid])
 
   return { loading, data, loadData }
 }
 
-export default useLoadDashboardPatients
+export default useLoadDocumentsByPatient

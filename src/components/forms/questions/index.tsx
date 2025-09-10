@@ -1,4 +1,6 @@
-import PreviewTypeText from './previewQuestion'
+import { useState } from 'react'
+import PreviewTypeText from './RenderInput'
+import RenderInput from './RenderInput'
 
 interface IQuestion {
   label: string
@@ -13,7 +15,13 @@ interface IFormPreview {
   field: IQuestion[]
 }
 
-const PreviewForms = ({ formData }: { formData: IFormPreview }) => {
+const Questions = ({ formData }: { formData: IFormPreview }) => {
+  const [answers, setAnswers] = useState<Record<number, any>>({})
+
+  const handleAnswerChange = (index: number, value: any) => {
+    setAnswers((prev) => ({ ...prev, [index]: value }))
+  }
+
   return (
     <div className="flex flex-col gap-2">
       <div className="mb-5">
@@ -25,10 +33,15 @@ const PreviewForms = ({ formData }: { formData: IFormPreview }) => {
         </p>
       </div>
       {formData?.field?.map((field, index) => (
-        <PreviewTypeText key={index} question={field} />
+        <RenderInput
+          key={index}
+          question={field}
+          value={answers[index] ?? ''}
+          onChange={(val: any) => handleAnswerChange(index, val)}
+        />
       ))}
     </div>
   )
 }
 
-export default PreviewForms
+export default Questions

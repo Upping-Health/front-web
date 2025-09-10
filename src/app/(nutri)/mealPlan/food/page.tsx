@@ -56,7 +56,7 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
         </>
       ) : (
         <>
-          <TableDash columns={columns} data={data} rowKey="id" />
+          <TableDash columns={columns} data={[]} rowKey="id" />
         </>
       )}
 

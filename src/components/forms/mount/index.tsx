@@ -42,7 +42,7 @@ const CustomForms = ({ id }: { id?: string }) => {
 
   return (
     <div className="flex flex-col h-full items-center">
-      <div className="flex flex-col gap-4 w-full max-w-5xl">
+      <div className="flex flex-col w-full h-full mb-14">
         <TopDash
           title="Criar formulário"
           onClick={() => router.back()}
@@ -51,33 +51,36 @@ const CustomForms = ({ id }: { id?: string }) => {
           btnIcon={ArrowBackIcon}
           textBtn="Voltar"
         />
-        <HeaderFormMenu
-          id={id}
-          title={title}
-          setTitle={onChangeTitle}
-          description={description}
-          setDescription={onChangeDescription}
-          onVisibleForms={onVisibleForms}
-          onSaveForms={onSaveForms}
-          onUpdateForm={onUpdateForm}
-          onClearForm={onClearForm}
-          setTypeForm={setTypeForm}
-          typeForm={typeForm}
-        />
 
-        <CustomFormMenu onPushQuestions={onPushQuestions} />
-
-        {questions.length > 0 ? (
-          <QuestionList
-            questions={questions}
-            onEditQuestionLabel={onEditQuestionLabel}
-            onRemoveQuestion={onRemoveQuestion}
-            onDuplicateQuestion={onDuplicateQuestion}
-            dragHandlers={dragHandlers}
+        <div className="flex flex-col gap-4">
+          <HeaderFormMenu
+            id={id}
+            title={title}
+            setTitle={onChangeTitle}
+            description={description}
+            setDescription={onChangeDescription}
+            onVisibleForms={onVisibleForms}
+            onSaveForms={onSaveForms}
+            onUpdateForm={onUpdateForm}
+            onClearForm={onClearForm}
+            setTypeForm={setTypeForm}
+            typeForm={typeForm}
           />
-        ) : (
-          <CardForm />
-        )}
+
+          <CustomFormMenu onPushQuestions={onPushQuestions} />
+
+          {questions.length > 0 ? (
+            <QuestionList
+              questions={questions}
+              onEditQuestionLabel={onEditQuestionLabel}
+              onRemoveQuestion={onRemoveQuestion}
+              onDuplicateQuestion={onDuplicateQuestion}
+              dragHandlers={dragHandlers}
+            />
+          ) : (
+            <CardForm />
+          )}
+        </div>
       </div>
     </div>
   )

@@ -2,7 +2,7 @@
 
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
-import { useState } from 'react'
+import { useCallback } from 'react'
 
 interface IQuestion {
   label: string
@@ -12,27 +12,43 @@ interface IQuestion {
   required: boolean
 }
 
-const PreviewCheckbox = ({ question }: { question: IQuestion }) => {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([])
+interface PreviewCheckboxProps {
+  question: IQuestion
+  value: string[]
+  onChange?: (value: string[]) => void
+  disabled?: boolean
+}
 
-  const toggleOption = (option: string) => {
-    setSelectedOptions((prev) =>
-      prev.includes(option)
-        ? prev.filter((item) => item !== option)
-        : [...prev, option],
-    )
-  }
+const InputCheckbox = ({
+  question,
+  value = [],
+  onChange,
+  disabled = false,
+}: PreviewCheckboxProps) => {
+  const toggleOption = useCallback(
+    (option: string) => {
+      if (!onChange) return
+      const newValue = value.includes(option)
+        ? value.filter((item) => item !== option)
+        : [...value, option]
+      onChange(newValue)
+    },
+    [value, onChange],
+  )
 
   return (
     <div className="flex flex-col gap-2">
       {question.options?.map((option, index) => {
-        const isChecked = selectedOptions.includes(option)
+        const isChecked = value.includes(option)
         return (
           <button
             key={index}
             type="button"
+            disabled={disabled}
             onClick={() => toggleOption(option)}
-            className="flex items-center gap-2 mt-1 rounded-full"
+            className={`flex items-center gap-2 mt-1 rounded-full ${
+              disabled ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
           >
             {isChecked ? (
               <CheckBoxIcon className="text-terciary dark:text-white text-3xl" />
@@ -49,4 +65,4 @@ const PreviewCheckbox = ({ question }: { question: IQuestion }) => {
   )
 }
 
-export default PreviewCheckbox
+export default InputCheckbox

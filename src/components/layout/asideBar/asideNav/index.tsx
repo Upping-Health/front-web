@@ -51,7 +51,7 @@ const AsideNavSubItem = ({
     <Link
       key={subtab.path}
       href={subtab.path}
-      className={`group flex items-center justify-between px-4 py-2 rounded-xl transition-all duration-300 w-full ${
+      className={`group flex items-center justify-between px-2 py-2 rounded-xl transition-all duration-300 w-full ${
         isCollapsed ? 'justify-center' : ''
       } ${isSubActive ? 'bg-primary text-white' : 'text-primary hover:text-white dark:text-white hover:bg-primary'}`}
     >

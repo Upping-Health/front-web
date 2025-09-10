@@ -1,14 +1,10 @@
 import DefaultEntityType from './default'
 
 export default interface User extends DefaultEntityType {
-  document: string
-  name: string
-  phone: string
   email: string
+  name: string
+  status: number
   role: {
-    id: number
     name: string
   }
-  password: string
-  active: boolean
 }

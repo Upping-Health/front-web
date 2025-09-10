@@ -19,6 +19,7 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
 import { CircularProgress } from '@mui/material'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import Loading from '@/components/layout/loading'
 
 const PacientesContent = () => {
   const { user, onShowFeedBack } = useContext(DefaultContext)
@@ -56,14 +57,14 @@ const PacientesContent = () => {
     (row: Patient) => {
       if (!user) return
       const newStatus = row.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
-      api
-        .put(`/patient/status/${user.id}/${row.id}?status=${newStatus}`)
-        .then(() => {
-          row.status = newStatus
-          data.slice()
-          onSuccessUpdate()
-        })
-        .catch((e: any) => onErrorUpdate(e))
+      // api
+      //   .put(`/patient/status/${user.uuid}/${row.uuid}?status=${newStatus}`)
+      //   .then(() => {
+      //     row.status = newStatus
+      //     data.slice()
+      //     onSuccessUpdate()
+      //   })
+      //   .catch((e: any) => onErrorUpdate(e))
     },
     [user],
   )
@@ -73,7 +74,7 @@ const PacientesContent = () => {
       {
         header: 'Foto',
         field: 'photo',
-        render: (_: any, row: any) => <ProfileRounded user={row?.patient} />,
+        render: (_: any, row: any) => <ProfileRounded user={row} />,
         noExport: true,
       },
       {
@@ -88,12 +89,13 @@ const PacientesContent = () => {
         header: 'CPF',
         field: 'document',
         render: (value: any, row: any) =>
-          masks.cpfMask(value ?? '000000000000'),
+          value ? masks.cpfMask(value) : 'N/A',
       },
       {
         header: 'Telefone',
         field: 'phone',
-        render: (value: any) => masks.phoneMask(value ?? '00000000000'),
+        render: (value: any) =>
+          value ? masks.phoneMask(value ?? '00000000000') : 'N/A',
       },
       {
         header: 'Gênero',
@@ -103,7 +105,7 @@ const PacientesContent = () => {
             ? 'Masculino'
             : value === 'female'
               ? 'Feminino'
-              : 'Outros',
+              : 'N/A',
       },
       {
         header: 'Status',
@@ -148,11 +150,7 @@ const PacientesContent = () => {
 
         {loading ? (
           <>
-            <div className="flex h-3/4 justify-center w-full items-center">
-              <CircularProgress
-                style={{ width: 80, height: 80, color: colors.primary }}
-              />
-            </div>
+            <Loading text="Carregando pacientes..." className="!h-3/4" />
           </>
         ) : (
           <TableDash

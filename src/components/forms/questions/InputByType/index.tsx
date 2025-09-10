@@ -7,7 +7,7 @@ interface Props {
   type?: string
 }
 
-const PreviewByType = ({
+const InputByType = ({
   label,
   placeholder,
   onChange,
@@ -15,7 +15,7 @@ const PreviewByType = ({
   value,
   type,
 }: Props) => (
-  <div className="flex flex-col w-[40%]">
+  <div className="flex flex-col">
     {label && (
       <label className="mb-1 text-darkGray dark:text-white">{label}</label>
     )}
@@ -30,4 +30,4 @@ const PreviewByType = ({
   </div>
 )
 
-export default PreviewByType
+export default InputByType
