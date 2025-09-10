@@ -4,4 +4,7 @@ export default interface User extends DefaultEntityType {
   email: string
   name: string
   status: number
+  role: {
+    name: string
+  }
 }

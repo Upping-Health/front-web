@@ -8,7 +8,7 @@ import { useContext } from 'react'
 
 const AsideFooter = ({ isCollapsed }: { isCollapsed: boolean }) => {
   const router = useRouter()
-  const { user, setloadingGlobal, setLabelLoading } = useContext(DefaultContext)
+  const { user } = useContext(DefaultContext)
   return (
     <div>
       <div className="flex items-center gap-3">
