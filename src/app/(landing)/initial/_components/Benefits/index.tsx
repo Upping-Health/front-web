@@ -2,40 +2,43 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import SecurityIcon from '@mui/icons-material/Security'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions'
+import AssessmentIcon from '@mui/icons-material/Assessment'
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
+
+const benefits = [
+  {
+    icon: IntegrationInstructionsIcon,
+    title: 'Integração Completa',
+    description:
+      'Conecte agendamentos, prontuários, relatórios e financeiro em um só lugar, eliminando retrabalho.',
+  },
+  {
+    icon: AccessTimeIcon,
+    title: 'Atendimento Sem Faltas',
+    description:
+      'Envio automático de lembretes por WhatsApp, SMS ou e-mail para reduzir ausências de pacientes.',
+  },
+  {
+    icon: AssessmentIcon,
+    title: 'Prontuário Inteligente',
+    description:
+      'Histórico clínico centralizado com prescrições digitais, anexos e evolução do paciente.',
+  },
+  {
+    icon: CheckCircleIcon,
+    title: 'Fácil de Usar',
+    description:
+      'Interface intuitiva que você aprende em minutos, sem complicações.',
+  },
+]
 
 const Benefits = () => {
-  const benefits = [
-    {
-      icon: AccessTimeIcon,
-      title: 'Economize Tempo',
-      description:
-        'Automatize tarefas repetitivas e foque no que realmente importa: seus pacientes.',
-    },
-    {
-      icon: SecurityIcon,
-      title: 'Segurança Total',
-      description:
-        'Dados protegidos com criptografia de ponta e conformidade com a LGPD.',
-    },
-    {
-      icon: TrendingUpIcon,
-      title: 'Aumente sua Receita',
-      description:
-        'Otimize sua agenda, reduza faltas e melhore a experiência dos pacientes.',
-    },
-    {
-      icon: CheckCircleIcon,
-      title: 'Fácil de Usar',
-      description:
-        'Interface intuitiva que você aprende em minutos, sem complicações.',
-    },
-  ]
-
   return (
-    <section id="benefits" className="py-10 bg-white">
+    <section id="beneficios" className="py-10 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Por que escolher o UppingHealth?
           </h2>
           <p className="text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed">
@@ -61,7 +64,7 @@ const Benefits = () => {
                     aria-hidden="true"
                   />
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
+                <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors">
                   {benefit.title}
                 </h3>
                 <p className="text-zinc-400 leading-relaxed">

@@ -11,6 +11,7 @@ import LockOutlined from '@mui/icons-material/LockOutlined'
 import { useFormik } from 'formik'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useContext, useState } from 'react'
+import { colors } from '@/lib/colors/colors'
 
 export default function AccountRecovery() {
   const router = useRouter()
@@ -46,7 +47,7 @@ export default function AccountRecovery() {
       onSubmit={formik.handleSubmit}
       className="bg-white s:w-screen t:w-3/6 d:w-2/6 mx-auto flex flex-col justify-center p-4 h-screen relative"
     >
-      {loading && <Loading text="Enviando e-mail..." />}
+      {loading && <Loading text="Enviando e-mail..." color={colors.white} />}
 
       {!loading && (
         <>
@@ -57,7 +58,6 @@ export default function AccountRecovery() {
             />
           </button>
 
-          {/* Wrapper flexível */}
           <div className="flex flex-col h-full justify-center">
             <div className="flex flex-col flex-1 justify-center">
               <div className="py-5">

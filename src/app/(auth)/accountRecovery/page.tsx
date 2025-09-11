@@ -33,8 +33,8 @@ export default function AccountRecovery() {
     },
   })
   return (
-    <main className="w-screen h-screen flex justify-center items-center bg-gradient-hero">
-      {loading && <Loading text="Enviando e-mail..." />}
+    <main className="w-screen h-screen flex justify-center items-center bg-gradient-primary">
+      {loading && <Loading text="Enviando e-mail..." color={colors.white} />}
       {!loading && (
         <>
           <form
