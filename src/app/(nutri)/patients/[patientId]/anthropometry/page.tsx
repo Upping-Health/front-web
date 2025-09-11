@@ -16,8 +16,13 @@ import CreateIcon from '@mui/icons-material/Create'
 import { CircularProgress } from '@mui/material'
 import dateFormat from 'dateformat'
 import { useRouter } from 'next/navigation'
-import { useContext, useMemo, useState } from 'react'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
+import DeleteIcon from '@mui/icons-material/Delete'
+import ModalConfirmation from '@/components/modals/ModalConfirmation'
+import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
+import Loading from '@/components/layout/loading'
+
 interface PageProps {
   params: {
     patientId: string
@@ -27,6 +32,9 @@ interface PageProps {
 const AnthropometryPage = ({ params }: PageProps) => {
   const { onShowFeedBack } = useContext(DefaultContext)
   const [isNavigating, setIsNavigating] = useState(false)
+  const [openConfirm, setOpenConfirm] = useState(false)
+  const [documentToDelete, setDocumentToDelete] =
+    useState<AnthropometryFormValues | null>(null)
 
   const { data, loadData, loading } = useLoadAnthropometryByPatient(
     params.patientId,
@@ -40,23 +48,34 @@ const AnthropometryPage = ({ params }: PageProps) => {
 
   const router = useRouter()
 
-  const LoadingData = ({ label }: { label: string }) => {
-    return (
-      <div className="flex items-center flex-col justify-center py-6 gap-4 w-full">
-        <CircularProgress className="dark:text-white text-primary text-2xl" />
-        <p className="text-primary font-semibold dark:text-white">{label}</p>
-      </div>
-    )
-  }
+  const onDeleteAnthropometry = useCallback(
+    async (document: AnthropometryFormValues) => {
+      try {
+        await api.delete(`anthropometrics/delete/${document.uuid}`)
+        loadData()
+        onShowFeedBack(
+          PreFeedBack.success('Antropometria excluída com sucesso!'),
+        )
+      } catch (error: any) {
+        const message =
+          error?.response?.message || 'Erro ao excluir antropometria.'
+        onShowFeedBack(PreFeedBack.error(message))
+      }
+    },
+    [patientData, loadData, onShowFeedBack],
+  )
 
-  console.log(data)
+  const handleDeleteClick = (doc: AnthropometryFormValues) => {
+    setDocumentToDelete(doc)
+    setOpenConfirm(true)
+  }
 
   const columns = useMemo(
     () => [
       {
         header: '#',
         field: 'photo',
-        render: (_: any, row: any) => <ProfileRounded user={row?.patient} />,
+        render: (_: any, row: any) => <ProfileRounded user={patientData} />,
       },
       {
         header: 'Data da avaliação',
@@ -85,23 +104,28 @@ const AnthropometryPage = ({ params }: PageProps) => {
         field: '{row}',
         render: (_: any, row: any) => {
           return (
-            <HeaderButton
-              onClick={() =>
-                router.push(
-                  `/patients/${params.patientId}/anthropometry/${row.uuid}`,
-                )
-              }
-            >
-              <CreateIcon className="text-gray-600 text-lg dark:text-white" />
-            </HeaderButton>
+            <div className="flex gap-2">
+              <HeaderButton
+                onClick={() =>
+                  router.push(
+                    `/patients/${params.patientId}/anthropometry/${row.uuid}`,
+                  )
+                }
+              >
+                <CreateIcon className="text-gray-600 text-lg dark:text-white" />
+              </HeaderButton>
+
+              <HeaderButton onClick={() => handleDeleteClick(row)}>
+                <DeleteIcon className="text-red text-xl" />
+              </HeaderButton>
+            </div>
           )
         },
       },
     ],
-    [],
+    [patientData],
   )
 
-  console.log(data)
   const handleNewAnthropometry = async () => {
     setIsNavigating(true)
 
@@ -169,7 +193,9 @@ const AnthropometryPage = ({ params }: PageProps) => {
   }
 
   if (patientLoading) {
-    return <LoadingData label="Carregando dados do paciente..." />
+    return (
+      <Loading text="Carregando dados do paciente..." className="!h-full" />
+    )
   }
 
   if (!patientLoading && !patientData) {
@@ -177,31 +203,55 @@ const AnthropometryPage = ({ params }: PageProps) => {
   }
 
   return (
-    <div
-      className={'w-full h-full flex flex-col transition-opacity duration-300'}
-    >
-      <TopDash
-        title={patientData?.name ?? 'Paciente'}
-        description={`${Math.abs(Number(patientData?.age) || 0).toFixed(0)} anos, ${SEX_PT_BR[patientData?.gender ?? 'male']}`}
-        icon={Person}
-        onClick={handleNewAnthropometry}
-        textBtn="Nova antropmetria"
-      />
+    <>
+      <div
+        className={
+          'w-full h-full flex flex-col transition-opacity duration-300'
+        }
+      >
+        <TopDash
+          title={patientData?.name ?? 'Paciente'}
+          description={`${Math.abs(Number(patientData?.age) || 0).toFixed(0)} anos, ${SEX_PT_BR[patientData?.gender ?? 'male']}`}
+          icon={Person}
+          onClick={handleNewAnthropometry}
+          textBtn="Nova antropometria"
+        />
 
-      <div className="h-full w-full flex gap-4">
-        {loading ? (
-          <LoadingData label="Carregando histórico de antropometria..." />
-        ) : (
-          <TableDash search={false} rowKey="id" data={data} columns={columns} />
-        )}
+        <div className="h-full w-full flex gap-4">
+          {loading ? (
+            <Loading
+              text="Carregando histórico de antropometria..."
+              className="!h-full w-full"
+            />
+          ) : (
+            <TableDash
+              search={false}
+              rowKey="id"
+              data={data}
+              columns={columns}
+            />
+          )}
 
-        <div className="h-full flex justify-end">
-          <MenuConsult patientId={params.patientId} />
+          <div className="h-full flex justify-end">
+            <MenuConsult patientId={params.patientId} />
+          </div>
         </div>
+
+        <LoadingFullScreen
+          open={isNavigating}
+          labelLoading="Criando antropometria..."
+        />
       </div>
 
-      <LoadingFullScreen open={isNavigating} labelLoading="Navegando..." />
-    </div>
+      <ModalConfirmation
+        open={openConfirm}
+        setIsClose={() => setOpenConfirm(false)}
+        onConfirm={async () => {
+          if (!documentToDelete) return
+          await onDeleteAnthropometry(documentToDelete)
+        }}
+      />
+    </>
   )
 }
 

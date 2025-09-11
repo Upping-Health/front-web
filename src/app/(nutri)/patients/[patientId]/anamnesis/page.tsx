@@ -13,9 +13,12 @@ import CreateIcon from '@mui/icons-material/Create'
 import { CircularProgress } from '@mui/material'
 import dateFormat from 'dateformat'
 import { useRouter } from 'next/navigation'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
 import api from '@/services/api'
+import { DefaultContext } from '@/contexts/defaultContext'
+import PreFeedBack from '@/lib/feedbackStatus'
+import Loading from '@/components/layout/loading'
 interface PageProps {
   params: {
     patientId: string
@@ -23,6 +26,8 @@ interface PageProps {
 }
 
 const AnamnesisPage = ({ params }: PageProps) => {
+  const router = useRouter()
+  const { onShowFeedBack } = useContext(DefaultContext)
   const [isNavigating, setIsNavigating] = useState(false)
 
   const {
@@ -36,17 +41,6 @@ const AnamnesisPage = ({ params }: PageProps) => {
     '',
     false,
   )
-
-  const router = useRouter()
-
-  const LoadingData = ({ label }: { label: string }) => {
-    return (
-      <div className="flex items-center flex-col justify-center py-6 gap-4 w-full">
-        <CircularProgress className="dark:text-white text-primary text-2xl" />
-        <p className="text-primary font-semibold dark:text-white">{label}</p>
-      </div>
-    )
-  }
 
   const columns = useMemo(
     () => [
@@ -99,7 +93,9 @@ const AnamnesisPage = ({ params }: PageProps) => {
   )
 
   if (patientLoading) {
-    return <LoadingData label="Carregando dados do paciente..." />
+    return (
+      <Loading text="Carregando dados do paciente..." className="!h-full" />
+    )
   }
 
   if (!patientLoading && !patientData) {
@@ -107,36 +103,31 @@ const AnamnesisPage = ({ params }: PageProps) => {
   }
 
   const onSaveAnamnese = async () => {
-    const get_form_response = await api.get('forms/type/anamnese')
-    const form = get_form_response?.data?.data
+    setIsNavigating(true)
+    try {
+      const get_form_response = await api.get('forms/type/anamnese')
+      const form = get_form_response?.data?.data
 
-    const defaultValues: Record<string, any> = {
-      text: '',
-      number: 0,
-      checkbox: [],
-      radio: '',
-      textarea: '',
-      range: 0,
-      select: '',
-      date: '',
+      const forms = form.fields.map((field: any) => ({
+        field_id: field.uuid,
+        value: null,
+      }))
+
+      const create_form_response = await api.post(
+        `forms/submission/store/${form.uuid}`,
+        {
+          client_id: 1,
+          patient_id: 1,
+          answers: forms,
+          submit: false,
+        },
+      )
+      console.log(create_form_response)
+    } catch (error) {
+      return onShowFeedBack(PreFeedBack.error('Erro ao criar anamnese.'))
+    } finally {
+      setIsNavigating(false)
     }
-
-    const forms = form.fields.map((field: any) => ({
-      field_id: field.uuid,
-      value: null,
-    }))
-
-    const create_form_response = await api.post(
-      `forms/submission/store/${form.uuid}`,
-      {
-        client_id: 1,
-        patient_id: 1,
-        answers: forms,
-        submit: false,
-      },
-    )
-
-    console.log(create_form_response)
   }
 
   return (
@@ -153,7 +144,10 @@ const AnamnesisPage = ({ params }: PageProps) => {
 
       <div className="h-full w-full flex gap-4">
         {loading ? (
-          <LoadingData label="Carregando histórico de antropometria..." />
+          <Loading
+            text="Carregando histórico de antropometria..."
+            className="!h-full w-full"
+          />
         ) : (
           <TableDash search={false} rowKey="id" data={data} columns={columns} />
         )}
@@ -163,7 +157,10 @@ const AnamnesisPage = ({ params }: PageProps) => {
         </div>
       </div>
 
-      <LoadingFullScreen open={isNavigating} labelLoading="Navegando..." />
+      <LoadingFullScreen
+        open={isNavigating}
+        labelLoading="Criando anamnese..."
+      />
     </div>
   )
 }

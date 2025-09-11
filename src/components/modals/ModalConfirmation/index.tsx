@@ -50,7 +50,7 @@ const ModalConfirmation = ({ open, setIsClose, onConfirm }: ModalParams) => {
           type="button"
           onClick={handleConfirm}
           styles="w-full bg-green-600"
-          title={loading ? 'Enviando...' : 'Confirmar'}
+          title={loading ? 'Deletando...' : 'Confirmar'}
           icon={
             loading && (
               <CircularProgress

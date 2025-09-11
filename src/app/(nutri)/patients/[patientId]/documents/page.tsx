@@ -37,14 +37,6 @@ const DocumentsPage = ({ params }: PageProps) => {
   const [documentToDelete, setDocumentToDelete] = useState<Documents | null>(
     null,
   )
-  const LoadingData = ({ label }: { label: string }) => {
-    return (
-      <div className="flex items-center flex-col justify-center py-6 gap-4 w-full">
-        <CircularProgress className="dark:text-white text-primary text-2xl" />
-        <p className="text-primary font-semibold dark:text-white">{label}</p>
-      </div>
-    )
-  }
 
   const {
     data: patientData,
@@ -113,7 +105,9 @@ const DocumentsPage = ({ params }: PageProps) => {
   )
 
   if (patientLoading)
-    return <LoadingData label="Carregando dados do paciente..." />
+    return (
+      <Loading text="Carregando dados do paciente..." className="!h-full" />
+    )
   if (!patientLoading && !patientData) return <PatientNotFound />
 
   return (
@@ -129,7 +123,10 @@ const DocumentsPage = ({ params }: PageProps) => {
 
         <div className="h-full w-full flex gap-4">
           {loading ? (
-            <LoadingData label="Carregando histórico de antropometria..." />
+            <Loading
+              text="Carregando histórico de antropometria..."
+              className="!h-full w-full"
+            />
           ) : (
             <TableDash
               search={false}
