@@ -47,6 +47,7 @@ const AnamneseCreatePage = ({ params }: PageProps) => {
 
   const { data: dataAnamnesis, loading } = useLoadAnamnesisByUUID(
     params.anamnesisId,
+    'anamnesis',
     false,
   )
   const { data: patientData, loading: patientLoading } = useLoadPatientByUUID(

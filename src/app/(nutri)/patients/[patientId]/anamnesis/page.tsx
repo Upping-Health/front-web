@@ -105,7 +105,7 @@ const AnamnesisPage = ({ params }: PageProps) => {
   const onSaveAnamnese = async () => {
     setIsNavigating(true)
     try {
-      const get_form_response = await api.get('forms/type/anamnese')
+      const get_form_response = await api.get('forms/type/anamnesis')
       const form = get_form_response?.data?.data
 
       const forms = form.fields.map((field: any) => ({

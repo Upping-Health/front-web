@@ -53,37 +53,38 @@ const EnergyCalculationPage = ({ params }: PageProps) => {
     setIsNavigating(true)
 
     console.log(patientData)
-    router.push(`/patients/${params.patientId}/energyCalculation/uuid`)
+    // router.push(`/patients/${params.patientId}/energyCalculation/uuid`)
 
-    // try {
-    //   const response = await api.post('/energycalculations/store', {
-    //     formula: 'harris_benedict_1984',
-    //     weight: 63,
-    //     height: 169,
-    //     age: 30,
-    //     gender: 'male',
-    //     activity_factor: 1.9,
-    //     injury_factor: 1.3,
-    //     met_adjustment: 189,
-    //     met_time: 30,
-    //     met_factor: 2.0,
-    //   })
+    try {
+      const response = await api.post('/energycalculations/store', {
+        formula: 'harris_benedict_1984',
+        weight: 63,
+        height: 169,
+        age: 30,
+        gender: 'male',
+        activity_factor: 1.9,
+        injury_factor: 1.3,
+        met_adjustment: 189,
+        met_time: 30,
+        met_factor: 2.0,
+        patient_id: params.patientId,
+      })
 
-    //   const uuid = response?.data?.message?.uuid
-    //   if (uuid) {
-    //     router.push(`/patients/${params.patientId}/energyCalculation/${uuid}`)
-    //   } else {
-    //     return onShowFeedBack(
-    //       PreFeedBack.error('Erro ao criar cálculo energético.'),
-    //     )
-    //   }
-    // } catch (error: any) {
-    //   const message =
-    //     error?.response?.message || 'Erro ao criar cálculo energético.'
-    //   return onShowFeedBack(PreFeedBack.error(message))
-    // } finally {
-    //   setIsNavigating(false)
-    // }
+      const uuid = response?.data?.message?.uuid
+      if (uuid) {
+        router.push(`/patients/${params.patientId}/energyCalculation/${uuid}`)
+      } else {
+        return onShowFeedBack(
+          PreFeedBack.error('Erro ao criar cálculo energético.'),
+        )
+      }
+    } catch (error: any) {
+      const message =
+        error?.response?.message || 'Erro ao criar cálculo energético.'
+      return onShowFeedBack(PreFeedBack.error(message))
+    } finally {
+      setIsNavigating(false)
+    }
   }
 
   const handleDeleteClick = (doc: EnergyCalculation) => {
