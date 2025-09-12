@@ -6,7 +6,6 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
 interface IQuestion {
   label: string
   type: string
-  description: string
   options?: string[]
   required: boolean
 }

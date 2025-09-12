@@ -14,11 +14,16 @@ import Loading from '@/components/layout/loading'
 import Questions from '@/components/forms/questions'
 interface IQuestion {
   label: string
-  type: string
-  typeLabel: string
-  icon: any
-  description: string
-  descriptionLabel: string
+  type:
+    | 'number'
+    | 'text'
+    | 'textarea'
+    | 'select'
+    | 'checkbox'
+    | 'radio'
+    | 'range'
+    | 'file'
+    | 'date'
   options?: string[]
   required: boolean
 }
@@ -48,7 +53,7 @@ const FormsPreview = ({ params }: { params: { id: string } }) => {
   return (
     <div className="w-full relative">
       {loading ? (
-        <Loading text="Montando formulário..." />
+        <Loading text="Montando formulário..." className="!h-full" />
       ) : formData ? (
         <div className="flex flex-col">
           <TopDash

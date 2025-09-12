@@ -6,8 +6,16 @@ import InputTextArea from '../InputTextArea'
 
 interface IQuestion {
   label: string
-  type: string
-  description: string
+  type:
+    | 'number'
+    | 'text'
+    | 'textarea'
+    | 'select'
+    | 'checkbox'
+    | 'radio'
+    | 'range'
+    | 'file'
+    | 'date'
   options?: string[]
   required: boolean
 }

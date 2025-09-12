@@ -1,7 +1,7 @@
 'use client'
 
-import CheckBoxIcon from '@mui/icons-material/CheckBox'
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
+import { RadioButtonChecked } from '@mui/icons-material'
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
 
 interface SingleCheckboxProps {
   id?: string
@@ -10,12 +10,7 @@ interface SingleCheckboxProps {
   onChange: (checked: boolean) => void
 }
 
-const SingleCheckbox = ({
-  id,
-  label,
-  checked,
-  onChange,
-}: SingleCheckboxProps) => {
+const RadioStyled = ({ id, label, checked, onChange }: SingleCheckboxProps) => {
   return (
     <button
       id={id}
@@ -24,13 +19,13 @@ const SingleCheckbox = ({
       className="flex items-center gap-2 rounded-full"
     >
       {checked ? (
-        <CheckBoxIcon className="text-terciary dark:text-white text-3xl" />
+        <RadioButtonChecked className="text-terciary dark:text-white text-3xl" />
       ) : (
-        <CheckBoxOutlineBlankIcon className="text-gray-400 dark:text-white text-3xl" />
+        <RadioButtonUncheckedIcon className="text-gray-400 dark:text-white text-3xl" />
       )}
       <span className="font-light text-black dark:text-white">{label}</span>
     </button>
   )
 }
 
-export default SingleCheckbox
+export default RadioStyled

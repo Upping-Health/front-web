@@ -43,6 +43,7 @@ export interface Field {
     | 'radio'
     | 'range'
     | 'file'
+    | 'date'
   order: number
   required: 0 | 1
   options: Options | string[] | null

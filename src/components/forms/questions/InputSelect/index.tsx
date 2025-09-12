@@ -6,7 +6,6 @@ import { useMemo } from 'react'
 interface IQuestion {
   label: string
   type: string
-  description: string
   options?: string[]
   required: boolean
 }

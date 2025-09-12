@@ -36,7 +36,7 @@ const CustomForms = ({ id }: { id?: string }) => {
 
   const dragHandlers = useDragAndDrop(questions, setQuestions)
 
-  if (loading) return <Loading text={labelLoading} />
+  if (loading) return <Loading text={labelLoading} className="!h-full" />
 
   const router = useRouter()
 
