@@ -1,4 +1,5 @@
 export interface EnergyCalculation {
+  uuid?: string
   formula:
     | 'harris_benedict_1919'
     | 'harris_benedict_1984'

@@ -34,6 +34,7 @@ export interface BodyCircumference {
 }
 
 export interface AnthropometryFormValues {
+  uuid?: string
   evaluation_date: string
   weight: number | null
   height: number | null

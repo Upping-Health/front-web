@@ -1,5 +1,5 @@
 'use client'
-import CustomForms from '@/components/forms/customForms'
+import CustomForms from '@/components/forms/mount'
 import { useRouter } from 'next/navigation'
 const FormsCreate = ({ params }: { params: { id: string } }) => {
   const router = useRouter()

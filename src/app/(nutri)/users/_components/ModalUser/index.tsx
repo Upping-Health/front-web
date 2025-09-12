@@ -148,8 +148,13 @@ const ModalUser = ({
     },
   })
 
+  console.log(roles)
+
   const options = useMemo(
-    () => roles.map((e) => ({ value: e.id, text: ROLE_PTBR[e.name] })),
+    () =>
+      roles
+        .filter((p) => p.name)
+        .map((e) => ({ value: e.id, text: ROLE_PTBR[e.name] })),
     [roles, ROLE_PTBR],
   )
 

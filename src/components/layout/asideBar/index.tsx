@@ -10,7 +10,7 @@ const AsideBar = () => {
 
   return (
     <aside
-      className={`flex relative flex-shrink-0 flex-col justify-between h-full bg-white dark:bg-gray-800 dark:border-gray-700 border-gray border-r p-5 shadow-lg transition-all duration-300 ${
+      className={`flex relative flex-shrink-0 flex-col justify-between h-full bg-white dark:bg-gray-800 dark:border-gray-700 border-gray border-r px-3 py-4 shadow-lg transition-all duration-300 ${
         isCollapsed ? 'w-20' : 'w-60'
       }`}
     >

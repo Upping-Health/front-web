@@ -21,6 +21,7 @@ import { BodyCircumferenceSection } from '../_components/BodyCircumferenceSectio
 import { PhysicalInfoSection } from '../_components/PhysicalInfoSection'
 import { SkinFoldSection } from '../_components/SkinFoldSection'
 import { formatDateToBR } from '@/lib/format/date'
+import Loading from '@/components/layout/loading'
 
 interface PageProps {
   params: {
@@ -47,15 +48,6 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
     loadData: patientLoadData,
     loading: patientLoading,
   } = useLoadPatientByUUID(params.patientId)
-
-  const LoadingData = ({ label }: { label: string }) => {
-    return (
-      <div className="flex items-center flex-col justify-center py-6 gap-4 w-full">
-        <CircularProgress className="dark:text-white text-primary text-2xl" />
-        <p className="text-primary font-semibold dark:text-white">{label}</p>
-      </div>
-    )
-  }
 
   const formik = useFormik<AnthropometryFormValues>({
     initialValues: {
@@ -304,7 +296,9 @@ const AnthropometryCreatePage = ({ params }: PageProps) => {
   }
 
   if (loading || patientLoading) {
-    return <LoadingData label="Carregando dados do paciente..." />
+    return (
+      <Loading text="Carregando dados do paciente..." className="!h-full" />
+    )
   }
 
   if (!patientLoading && !patientData) {

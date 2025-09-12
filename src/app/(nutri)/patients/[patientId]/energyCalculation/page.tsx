@@ -16,8 +16,13 @@ import CreateIcon from '@mui/icons-material/Create'
 import { CircularProgress } from '@mui/material'
 import dateFormat from 'dateformat'
 import { useRouter } from 'next/navigation'
-import { useContext, useMemo, useState } from 'react'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
+import { EnergyCalculation } from '@/interfaces/energyCalculation.interface'
+import ModalConfirmation from '@/components/modals/ModalConfirmation'
+import DeleteIcon from '@mui/icons-material/Delete'
+import Loading from '@/components/layout/loading'
+
 interface PageProps {
   params: {
     patientId: string
@@ -27,6 +32,10 @@ interface PageProps {
 const EnergyCalculationPage = ({ params }: PageProps) => {
   const { onShowFeedBack } = useContext(DefaultContext)
   const [isNavigating, setIsNavigating] = useState(false)
+
+  const [openConfirm, setOpenConfirm] = useState(false)
+  const [documentToDelete, setDocumentToDelete] =
+    useState<EnergyCalculation | null>(null)
 
   const { data, loadData, loading } = useLoadEnergyCalculationByPatient(
     params.patientId,
@@ -40,64 +49,6 @@ const EnergyCalculationPage = ({ params }: PageProps) => {
 
   const router = useRouter()
 
-  const LoadingData = ({ label }: { label: string }) => {
-    return (
-      <div className="flex items-center flex-col justify-center py-6 gap-4 w-full">
-        <CircularProgress className="dark:text-white text-primary text-2xl" />
-        <p className="text-primary font-semibold dark:text-white">{label}</p>
-      </div>
-    )
-  }
-
-  const columns = useMemo(
-    () => [
-      {
-        header: '#',
-        field: 'photo',
-        render: (_: any, row: any) => <ProfileRounded user={row?.patient} />,
-      },
-      {
-        header: 'Data da avaliação',
-        field: 'evaluation_date',
-        render: (value: any) => {
-          const date = new Date(value)
-          return dateFormat(date, 'dd/mm/yyyy')
-        },
-      },
-      {
-        header: 'Data da atualização',
-        field: 'updated_at',
-        render: (value: any) => {
-          const date = new Date(value)
-          return dateFormat(date, 'dd/mm/yyyy')
-        },
-      },
-      {
-        header: 'Observação',
-        field: 'observations',
-      },
-      {
-        header: '#',
-        field: '{row}',
-        render: (_: any, row: any) => {
-          return (
-            <HeaderButton
-              onClick={() =>
-                router.push(
-                  `/patients/${params.patientId}/energyCalculation/${row.uuid}`,
-                )
-              }
-            >
-              <CreateIcon className="text-gray-600 text-lg dark:text-white" />
-            </HeaderButton>
-          )
-        },
-      },
-    ],
-    [],
-  )
-
-  console.log(data)
   const handleNewEnergyCalculation = async () => {
     setIsNavigating(true)
 
@@ -135,8 +86,86 @@ const EnergyCalculationPage = ({ params }: PageProps) => {
     // }
   }
 
+  const handleDeleteClick = (doc: EnergyCalculation) => {
+    setDocumentToDelete(doc)
+    setOpenConfirm(true)
+  }
+
+  const onDeleteEnergyCalculation = useCallback(
+    async (document: EnergyCalculation) => {
+      try {
+        await api.delete(`energycalculations/destroy/${document.uuid}`)
+        loadData()
+        onShowFeedBack(
+          PreFeedBack.success('Cálculo energético excluído com sucesso!'),
+        )
+      } catch (error: any) {
+        const message =
+          error?.response?.message || 'Erro ao excluir Cálculo energético.'
+        onShowFeedBack(PreFeedBack.error(message))
+      }
+    },
+    [patientData, loadData, onShowFeedBack],
+  )
+
+  const columns = useMemo(
+    () => [
+      {
+        header: '#',
+        field: 'photo',
+        render: (_: any, row: any) => <ProfileRounded user={patientData} />,
+      },
+      {
+        header: 'Data da avaliação',
+        field: 'evaluation_date',
+        render: (value: any) => {
+          const date = new Date(value)
+          return dateFormat(date, 'dd/mm/yyyy')
+        },
+      },
+      {
+        header: 'Data da atualização',
+        field: 'updated_at',
+        render: (value: any) => {
+          const date = new Date(value)
+          return dateFormat(date, 'dd/mm/yyyy')
+        },
+      },
+      {
+        header: 'Observação',
+        field: 'observations',
+      },
+      {
+        header: '#',
+        field: '{row}',
+        render: (_: any, row: any) => {
+          return (
+            <div className="flex gap-2">
+              <HeaderButton
+                onClick={() =>
+                  router.push(
+                    `/patients/${params.patientId}/energyCalculation/${row.uuid}`,
+                  )
+                }
+              >
+                <CreateIcon className="text-gray-600 text-lg dark:text-white" />
+              </HeaderButton>
+
+              <HeaderButton onClick={() => handleDeleteClick(row)}>
+                <DeleteIcon className="text-red text-xl" />
+              </HeaderButton>
+            </div>
+          )
+        },
+      },
+    ],
+    [patientData, handleDeleteClick],
+  )
+
   if (patientLoading) {
-    return <LoadingData label="Carregando dados do paciente..." />
+    return (
+      <Loading text="Carregando dados do paciente..." className="!h-full" />
+    )
   }
 
   if (!patientLoading && !patientData) {
@@ -144,31 +173,55 @@ const EnergyCalculationPage = ({ params }: PageProps) => {
   }
 
   return (
-    <div
-      className={'w-full h-full flex flex-col transition-opacity duration-300'}
-    >
-      <TopDash
-        title={patientData?.name ?? 'Paciente'}
-        description={`${Math.abs(Number(patientData?.age) || 0).toFixed(0)} anos, ${SEX_PT_BR[patientData?.gender ?? 'male']}`}
-        icon={Person}
-        onClick={handleNewEnergyCalculation}
-        textBtn="Novo Cálculo Energético"
-      />
+    <>
+      <div
+        className={
+          'w-full h-full flex flex-col transition-opacity duration-300'
+        }
+      >
+        <TopDash
+          title={patientData?.name ?? 'Paciente'}
+          description={`${Math.abs(Number(patientData?.age) || 0).toFixed(0)} anos, ${SEX_PT_BR[patientData?.gender ?? 'male']}`}
+          icon={Person}
+          onClick={handleNewEnergyCalculation}
+          textBtn="Novo Cálculo Energético"
+        />
 
-      <div className="h-full w-full flex gap-4">
-        {loading ? (
-          <LoadingData label="Carregando histórico de cálculos energéticos..." />
-        ) : (
-          <TableDash search={false} rowKey="id" data={data} columns={columns} />
-        )}
+        <div className="h-full w-full flex gap-4">
+          {loading ? (
+            <Loading
+              text="Carregando histórico de cálculos energéticos..."
+              className="!h-full w-full"
+            />
+          ) : (
+            <TableDash
+              search={false}
+              rowKey="id"
+              data={data}
+              columns={columns}
+            />
+          )}
 
-        <div className="h-full flex justify-end">
-          <MenuConsult patientId={params.patientId} />
+          <div className="h-full flex justify-end">
+            <MenuConsult patientId={params.patientId} />
+          </div>
         </div>
+
+        <LoadingFullScreen
+          open={isNavigating}
+          labelLoading="Criando cálculo energético..."
+        />
       </div>
 
-      <LoadingFullScreen open={isNavigating} labelLoading="Navegando..." />
-    </div>
+      <ModalConfirmation
+        open={openConfirm}
+        setIsClose={() => setOpenConfirm(false)}
+        onConfirm={async () => {
+          if (!documentToDelete) return
+          await onDeleteEnergyCalculation(documentToDelete)
+        }}
+      />
+    </>
   )
 }
 

@@ -62,7 +62,7 @@ const HeroStats = () => {
 const HeroLanding = () => {
   return (
     <section
-      id="home"
+      id="inicio"
       className="relative flex items-center justify-center bg-gradient-hero overflow-hidden pt-10"
     >
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">

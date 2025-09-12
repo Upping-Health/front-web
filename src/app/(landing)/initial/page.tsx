@@ -37,16 +37,21 @@ import Benefits from './_components/Benefits'
 import Plans from './_components/Plans'
 import Avaliations from './_components/Avaliations'
 import Footer from './_components/Footer'
+import FloatingButtons from './_components/FloatinButtons'
+import Modules from './_components/Modules'
 
 export default function Initial() {
   return (
-    <main className="font-sans">
+    <main className="font-sans relative">
       <HeaderLanding />
       <HeroLanding />
+      <Modules />
       <Benefits />
       <Plans />
       <Avaliations />
       <Footer />
+
+      <FloatingButtons />
     </main>
   )
 }

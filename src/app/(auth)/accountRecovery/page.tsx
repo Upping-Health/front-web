@@ -7,6 +7,7 @@ import api from '@/services/api'
 import { colors } from '@/lib/colors/colors'
 import PreFeedBack from '@/lib/feedbackStatus'
 import MailOutlineIcon from '@mui/icons-material/MailOutline'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
 import { useContext, useState } from 'react'
@@ -32,20 +33,29 @@ export default function AccountRecovery() {
     },
   })
   return (
-    <main className="w-screen h-screen flex justify-center items-center">
-      {loading && <Loading text="Enviando e-mail..." />}
+    <main className="w-screen h-screen flex justify-center items-center bg-gradient-primary">
+      {loading && <Loading text="Enviando e-mail..." color={colors.white} />}
       {!loading && (
         <>
           <form
             onSubmit={formik.handleSubmit}
-            className="w-[500px] s:w-[90%]  flex flex-col justify-evenly p-6 bg-white shadow-lg rounded-xl gap-6"
+            className="relative w-[500px] s:w-[90%] flex flex-col justify-evenly p-6 bg-white shadow-lg rounded-xl gap-6"
           >
+            <button
+              type="button"
+              onClick={() => router.back()}
+              className="absolute top-4 left-4 py-2 flex items-center gap-2 text-primary hover:text-black"
+            >
+              <ArrowBackIcon fontSize="small" />
+              <span className="text-sm font-semibold">Voltar</span>
+            </button>
+
             <div className="flex flex-col h-full justify-evenly">
               <div className="py-5">
-                <h1 className="text-center text-primary font-bold text-2xl">
+                <h1 className="text-center text-black font-bold text-2xl">
                   Recuperação de senha
                 </h1>
-                <p className="text-center mt-4">
+                <p className="text-center mt-4 text-gray-500">
                   Identifique-se para receber um e-mail <br />
                   com as instruções e o link para criar uma nova senha.
                 </p>
@@ -58,14 +68,19 @@ export default function AccountRecovery() {
                     type="text"
                     placeholder="exemplo@gmail.com"
                     icon={<MailOutlineIcon style={{ color: colors.primary }} />}
-                    styles="dark:border-gray"
+                    styles="dark:!border-gray"
                     stylesInput="dark:bg-white dark:!text-black"
                   />
                 </div>
               </div>
               <div>
                 <div className="mt-10">
-                  <ButtonStyled type="submit" styles="w-full" title="Enviar" />
+                  <ButtonStyled
+                    type="submit"
+                    styles="w-full"
+                    title="Enviar"
+                    bgColor="bg-green-600"
+                  />
                 </div>
               </div>
             </div>

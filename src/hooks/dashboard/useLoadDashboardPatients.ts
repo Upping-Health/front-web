@@ -15,7 +15,7 @@ const useLoadDashboardPatients = (hidden: boolean) => {
   const loadData = useCallback(async () => {
     try {
       setloading(true)
-      if (isNaN(Number(user?.id))) return
+
       // const res = await api.get(`/dashboard/patients/${user?.id}`)
       // setdata(res?.data?.data)
     } catch (error: any) {

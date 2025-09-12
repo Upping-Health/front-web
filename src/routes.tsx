@@ -8,16 +8,16 @@ import MenuBookIcon from '@mui/icons-material/MenuBook'
 import RestaurantIcon from '@mui/icons-material/Restaurant'
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer'
 import ChecklistIcon from '@mui/icons-material/Checklist'
+import SoupKitchenIcon from '@mui/icons-material/SoupKitchen'
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz'
 import { JSX } from 'react'
 import { Person, Settings } from '@mui/icons-material'
-
+import InventoryIcon from '@mui/icons-material/Inventory'
 export const TABS_DASH = {
   DASH: 'dash',
   USERS: 'users',
   AGENDA: 'agenda',
   PACIENTES: 'pacientes',
-
-  //CONSULTA: 'consulta',
   PLANOALIMENTAR: 'planoalimentar',
   FORMS: 'forms',
   SETTINGS: 'settings',
@@ -68,10 +68,17 @@ export const dashboardTabs: Record<TabValue, Tab> = {
     path: '/schedule',
   },
   planoalimentar: {
-    name: 'Alimentos',
-    icon: <RestaurantIcon />,
+    name: 'Plano Alimentar',
+    icon: <InventoryIcon />,
     value: TABS_DASH.PLANOALIMENTAR,
-    path: '/food',
+    path: '/mealPlan',
+    children: {
+      foods: {
+        name: 'Alimentos',
+        icon: <RestaurantIcon />,
+        path: '/mealPlan/food',
+      },
+    },
   },
   forms: {
     name: 'Formulários',
@@ -85,15 +92,4 @@ export const dashboardTabs: Record<TabValue, Tab> = {
     value: TABS_DASH.SETTINGS,
     path: '/settings/general',
   },
-}
-
-export const PATH_NAMES_PT_BR: Record<string, string> = {
-  '/dashboard': 'Dashboard',
-  '/schedule': 'Agenda',
-  '/patients': 'Pacientes',
-  '/consult': 'Consulta',
-  '/consult/new': 'Iniciar Consulta',
-  '/consult/history': 'Histórico',
-  '/food': 'Alimentos',
-  '/forms/list': 'Formulários',
 }

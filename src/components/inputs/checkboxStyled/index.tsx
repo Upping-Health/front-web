@@ -4,17 +4,24 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox'
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 
 interface SingleCheckboxProps {
+  id?: string
   label: string
   checked: boolean
   onChange: (checked: boolean) => void
 }
 
-const SingleCheckbox = ({ label, checked, onChange }: SingleCheckboxProps) => {
+const SingleCheckbox = ({
+  id,
+  label,
+  checked,
+  onChange,
+}: SingleCheckboxProps) => {
   return (
     <button
+      id={id}
       type="button"
       onClick={() => onChange(!checked)}
-      className="flex items-center gap-2 mt-1 rounded-full"
+      className="flex items-center gap-2 rounded-full"
     >
       {checked ? (
         <CheckBoxIcon className="text-terciary dark:text-white text-3xl" />

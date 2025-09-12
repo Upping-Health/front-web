@@ -7,11 +7,30 @@ import ButtonStyled from '@/components/buttons/button'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
 
-const navItems = ['Início', 'Módulos', 'Preços', 'Benefícios']
+const navItems = [
+  { text: 'Início', id: 'inicio' },
+  { text: 'Módulos', id: 'modulos' },
+  { text: 'Benefícios', id: 'beneficios' },
+  { text: 'Planos', id: 'planos' },
+]
 
 const HeaderLanding = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const router = useRouter()
+
+  const scrollToId = (id: string) => {
+    const element = document.getElementById(id)
+    if (element) {
+      const headerOffset = 80 // altura do header h-20
+      const elementPosition = element.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      })
+    }
+  }
 
   return (
     <header className="w-full bg-white shadow-md h-20 sticky top-0 left-0 z-50">
@@ -21,11 +40,15 @@ const HeaderLanding = () => {
         <nav className="hidden lg:flex gap-8 items-center justify-center">
           {navItems.map((item) => (
             <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
+              key={item.id}
+              href={`#${item.id}`}
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToId(item.id)
+              }}
               className="flex items-center gap-1 text-gray-700 hover:text-primary transition-colors duration-200 group font-medium text-lg"
             >
-              {item}
+              {item.text}
             </a>
           ))}
         </nav>
@@ -47,12 +70,16 @@ const HeaderLanding = () => {
         >
           {navItems.map((item) => (
             <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              onClick={() => setMenuOpen(false)}
+              key={item.id}
+              href={`#${item.id}`}
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToId(item.id)
+                setMenuOpen(false)
+              }}
               className="text-gray-700 hover:text-primary text-lg font-medium"
             >
-              {item}
+              {item.text}
             </a>
           ))}
 
