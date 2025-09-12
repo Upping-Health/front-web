@@ -140,7 +140,6 @@ export const FieldRender = ({ field, answer, formik }: FieldRenderProps) => {
                 ? value.filter((v: string) => v !== opt.value)
                 : [...(value || []), opt.value]
               handleChange(newVal)
-              formik.setFieldTouched(field.uuid, true)
             }}
           />
         ))}
@@ -173,7 +172,6 @@ export const FieldRender = ({ field, answer, formik }: FieldRenderProps) => {
             checked={value === opt.value}
             onChange={() => {
               handleChange(opt.value)
-              formik.setFieldTouched(field.uuid, true)
             }}
           />
         ))}

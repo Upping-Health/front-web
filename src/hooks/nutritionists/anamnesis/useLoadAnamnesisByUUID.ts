@@ -11,7 +11,7 @@ const useLoadAnamnesisByUUID = (uuid: string, hidden: boolean) => {
   const loadData = useCallback(async () => {
     try {
       setloading(true)
-      const res = await api.get(`forms/submission/show/${uuid}`)
+      const res = await api.get(`forms/submission/${uuid}`)
       setdata(res?.data?.data)
       console.log(res?.data?.data)
     } catch (error: any) {
