@@ -15,7 +15,7 @@ const QuestionOptions = ({
   onAddOption,
 }: Props) => (
   <div className="flex flex-col w-full gap-2 mt-3">
-    <label className="text-darkGray dark:text-white">Opções</label>
+    <label className="text-gray-400  dark:text-white">Opções</label>
     {options.map((option, i) => (
       <div key={i} className="flex items-center gap-2">
         <QuestionInput

@@ -20,6 +20,7 @@ import PatientNotFound from '../../../_components/PatientNotFound'
 import { FieldRender } from '../_components/FieldRender'
 
 import AssignmentIcon from '@mui/icons-material/Assignment'
+import { createValidationSchemaFromAnswers } from '@/lib/formik/validators/validator-dinamic-form'
 
 interface PageProps {
   params: {
@@ -83,8 +84,14 @@ const AnamneseCreatePage = ({ params }: PageProps) => {
     return vals
   }, [dataAnamnesis])
 
+  const validationSchema = useMemo(
+    () => createValidationSchemaFromAnswers(dataAnamnesis?.answers ?? []),
+    [dataAnamnesis?.answers],
+  )
+
   const formik = useFormik({
     initialValues,
+    validationSchema,
     onSubmit: async (values) => {
       try {
         setApiLoading(true)
@@ -110,6 +117,7 @@ const AnamneseCreatePage = ({ params }: PageProps) => {
     return <PatientNotFound />
   }
 
+  console.log(formik.errors)
   return (
     <div className="w-full flex flex-col transition-opacity duration-300">
       <TopDash

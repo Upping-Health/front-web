@@ -1,13 +1,10 @@
 import SingleCheckbox from '@/components/inputs/checkboxStyled'
 import InputStyled from '@/components/inputs/inputStyled'
 import RadioStyled from '@/components/inputs/radioStyled'
+import { RangeStyled } from '@/components/inputs/rangeStyled'
 import SelectStyled from '@/components/inputs/select'
+import TextAreaStyled from '@/components/inputs/textAreaStyled'
 import { Answer, Field } from '@/interfaces/form-response.interface'
-
-interface FieldRendererProps {
-  field: Field
-  answer: Answer
-}
 
 const getResponseAnswerByType = (
   type:
@@ -38,12 +35,14 @@ interface FieldRenderProps {
 }
 
 export const FieldRender = ({ field, answer, formik }: FieldRenderProps) => {
+  const error = formik.errors[field.uuid]
+  const touched = formik.touched[field.uuid]
+
   const value =
     formik.values[field.uuid] ??
     getResponseAnswerByType(field.type as any, answer)
 
   const handleChange = (val: any) => {
-    console.log(val)
     formik.setFieldValue(field.uuid, val)
   }
 
@@ -55,6 +54,35 @@ export const FieldRender = ({ field, answer, formik }: FieldRenderProps) => {
         value={value}
         type={field.type}
         onChange={(e) => handleChange(e.target.value)}
+        min={
+          field.options && 'min' in field.options
+            ? field.options.min
+            : undefined
+        }
+        max={
+          field.options && 'max' in field.options
+            ? field.options.max
+            : undefined
+        }
+        required={field.required === 1}
+        error={error}
+        isTouched={touched}
+        onBlur={() => formik.setFieldTouched(field.uuid, true)}
+      />
+    )
+  }
+
+  if (field.type === 'textarea') {
+    return (
+      <TextAreaStyled
+        id={field.uuid}
+        label={field.label}
+        value={value}
+        onChange={(e) => handleChange(e.target.value)}
+        required={field.required === 1}
+        error={error}
+        isTouched={touched}
+        onBlur={() => formik.setFieldTouched(field.uuid, true)}
       />
     )
   }
@@ -66,13 +94,23 @@ export const FieldRender = ({ field, answer, formik }: FieldRenderProps) => {
         : (field.options as { text: string; value: string }[]) ?? []
 
     return (
-      <SelectStyled
-        id={field.uuid}
-        label={field.label}
-        value={value}
-        options={options}
-        onChange={(e) => handleChange(e?.target?.value)}
-      />
+      <>
+        <SelectStyled
+          id={field.uuid}
+          label={field.label}
+          value={value}
+          options={options}
+          onChange={(e) => handleChange(e?.target?.value)}
+          required={field.required === 1}
+          onBlur={() => formik.setFieldTouched(field.uuid, true)}
+        />
+
+        {error && touched && (
+          <p className="font-light text-red text-sm pt-1 text-center">
+            {error}
+          </p>
+        )}
+      </>
     )
   }
 
@@ -84,7 +122,13 @@ export const FieldRender = ({ field, answer, formik }: FieldRenderProps) => {
 
     return (
       <div className="flex flex-col gap-2">
-        <label className="mb-1 text-darkGray text-sm">{field.label}</label>
+        <label
+          className={`mb-1 text-gray-400  text-sm flex items-center gap-1`}
+        >
+          {field.label}
+          {field.required && <span className="text-red">*</span>}
+        </label>
+
         {options.map((opt, idx) => (
           <SingleCheckbox
             key={idx}
@@ -96,9 +140,15 @@ export const FieldRender = ({ field, answer, formik }: FieldRenderProps) => {
                 ? value.filter((v: string) => v !== opt.value)
                 : [...(value || []), opt.value]
               handleChange(newVal)
+              formik.setFieldTouched(field.uuid, true)
             }}
           />
         ))}
+        {error && touched && (
+          <p className="font-light text-red text-sm pt-1 text-center">
+            {error}
+          </p>
+        )}
       </div>
     )
   }
@@ -111,17 +161,69 @@ export const FieldRender = ({ field, answer, formik }: FieldRenderProps) => {
 
     return (
       <div className="flex flex-col gap-2">
-        <label className="mb-1 text-darkGray text-sm">{field.label}</label>
+        <label className={`text-gray-400  text-sm flex items-center gap-1`}>
+          {field.label}
+          {field.required && <span className="text-red">*</span>}
+        </label>
         {options.map((opt, idx) => (
           <RadioStyled
             key={idx}
             id={`${field.uuid}-${idx}`}
             label={opt.text}
             checked={value === opt.value}
-            onChange={() => handleChange(opt.value)}
+            onChange={() => {
+              handleChange(opt.value)
+              formik.setFieldTouched(field.uuid, true)
+            }}
           />
         ))}
+        {error && touched && (
+          <p className="font-light text-red text-sm pt-1 text-center">
+            {error}
+          </p>
+        )}
       </div>
+    )
+  }
+
+  if (field.type === 'range') {
+    return (
+      <>
+        <label
+          className={`mb-3 text-gray-400  text-sm flex items-center gap-1`}
+        >
+          {field.label}
+          {field.required && <span className="text-red">*</span>}
+        </label>
+
+        <RangeStyled
+          id={field.uuid}
+          value={value}
+          onChange={(e) => handleChange(e?.target?.value)}
+          min={
+            field.options && 'min' in field.options
+              ? field.options.min
+              : undefined
+          }
+          max={
+            field.options && 'max' in field.options
+              ? field.options.max
+              : undefined
+          }
+          step={
+            field.options && 'step' in field.options
+              ? field.options.step
+              : undefined
+          }
+          tooltipText={`${value}`}
+        />
+
+        {error && touched && (
+          <p className="font-light text-red text-sm pt-1 text-center">
+            {error}
+          </p>
+        )}
+      </>
     )
   }
 

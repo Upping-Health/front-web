@@ -1,8 +1,10 @@
 import React from 'react'
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 
 interface IInputStyled {
   maxLength?: number
+  min?: number
+  max?: number
+  step?: number
   disabled?: boolean
   id: string
   label?: string
@@ -14,16 +16,19 @@ interface IInputStyled {
   stylesContainer?: string
   styles?: string
   stylesInput?: string
-  edit?: boolean
   error?: string
   onBlur?: any
   isTouched?: boolean
   stylesLabel?: string
   highlight?: boolean
+  required?: boolean
 }
 
 const InputStyled = ({
   maxLength,
+  min,
+  max,
+  step,
   disabled,
   label,
   type,
@@ -34,19 +39,23 @@ const InputStyled = ({
   id,
   styles,
   stylesInput,
-  edit,
   error,
   onBlur,
   isTouched,
   stylesContainer,
   stylesLabel,
   highlight,
+  required,
 }: IInputStyled) => {
   return (
     <div className={`${stylesContainer ?? ''} flex flex-col`}>
       {label && (
-        <label className={`mb-1 text-darkGray text-sm ${stylesLabel ?? ''}`}>
+        <label
+          htmlFor={id}
+          className={`mb-1 text-gray-400 text-sm flex items-center gap-1 ${stylesLabel ?? ''}`}
+        >
           {label}
+          {required && <span className="text-red">*</span>}
         </label>
       )}
       <div
@@ -62,6 +71,9 @@ const InputStyled = ({
           {icon}
           <input
             maxLength={maxLength}
+            min={min}
+            max={max}
+            step={step}
             disabled={disabled}
             id={id}
             value={value}
@@ -69,6 +81,7 @@ const InputStyled = ({
             type={type}
             placeholder={placeholder}
             onBlur={onBlur}
+            required={required}
             className={`dark:bg-gray-800 outline-none text-black dark:text-white w-full pl-1 ${stylesInput ?? ''}`}
           />
         </div>

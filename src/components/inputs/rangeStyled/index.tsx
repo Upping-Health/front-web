@@ -2,18 +2,18 @@ import { useState } from 'react'
 
 interface RangeWithTooltipProps {
   id: string
-  min: number
-  max: number
+  min?: number
+  max?: number
   step?: number
   value: number
-  tooltipText: string
+  tooltipText?: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export const RangeStyled = ({
   id,
-  min,
-  max,
+  min = 0,
+  max = 100,
   step = 1,
   value,
   onChange,
@@ -24,22 +24,24 @@ export const RangeStyled = ({
 
   return (
     <div className="relative w-full">
-      <div
-        className="absolute -top-7 transform -translate-x-1/2 text-white text-sm font-medium px-3 py-1 rounded-lg bg-primary shadow-md whitespace-nowrap"
-        style={{ left: `${clampedPercent}%` }}
-      >
-        {tooltipText}
-
+      {tooltipText && (
         <div
-          className="
-      absolute left-1/2 transform -translate-x-1/2 top-full
-      w-0 h-0
-      [border-left:6px_solid_transparent]
-      [border-right:6px_solid_transparent]
-      [border-top:6px_solid_#4b8690]
-    "
-        />
-      </div>
+          className="absolute -top-7 transform -translate-x-1/2 text-white text-sm font-medium px-3 py-1 rounded-lg bg-primary shadow-md whitespace-nowrap"
+          style={{ left: `${clampedPercent}%` }}
+        >
+          {tooltipText}
+
+          <div
+            className="
+              absolute left-1/2 transform -translate-x-1/2 top-full
+              w-0 h-0
+              [border-left:6px_solid_transparent]
+              [border-right:6px_solid_transparent]
+              [border-top:6px_solid_#4b8690]
+            "
+          />
+        </div>
+      )}
 
       <input
         type="range"

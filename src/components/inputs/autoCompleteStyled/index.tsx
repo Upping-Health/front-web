@@ -45,7 +45,7 @@ const AutocompleteStyled = ({
       className={` w-[90%] ${stylesGlobal ?? ''} flex flex-col dark:text-white`}
     >
       {label && (
-        <label className={`${stylesLabel} 'mb-1 text-darkGray text-sm'`}>
+        <label className={`${stylesLabel} 'mb-1 text-gray-400  text-sm'`}>
           {label}
         </label>
       )}

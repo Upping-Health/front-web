@@ -17,7 +17,7 @@ const InputByType = ({
 }: Props) => (
   <div className="flex flex-col">
     {label && (
-      <label className="mb-1 text-darkGray dark:text-white">{label}</label>
+      <label className="mb-1 text-gray-400  dark:text-white">{label}</label>
     )}
     <input
       id={id}

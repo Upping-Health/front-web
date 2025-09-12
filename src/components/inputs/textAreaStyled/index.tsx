@@ -13,6 +13,7 @@ interface ITextAreaStyled {
   error?: string
   onBlur?: any
   isTouched?: boolean
+  required?: boolean
 }
 
 const TextAreaStyled = ({
@@ -28,11 +29,18 @@ const TextAreaStyled = ({
   error,
   onBlur,
   isTouched,
+  required,
 }: ITextAreaStyled) => {
   return (
     <div className="flex flex-col w-full">
       {label && (
-        <label className="mb-1 text-darkGray dark:text-white">{label}</label>
+        <label
+          htmlFor={id}
+          className={`mb-1 text-gray-400  text-sm flex items-center gap-1`}
+        >
+          {label}
+          {required && <span className="text-red">*</span>}
+        </label>
       )}
       <div
         className={`${styles ? styles : ''} border border-gray rounded-xl p-2 ${disabled ? 'bg-customGray' : ''}`}

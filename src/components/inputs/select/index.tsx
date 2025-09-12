@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+
 interface ISelectStyled {
   id: string
   label?: string
@@ -7,20 +8,25 @@ interface ISelectStyled {
   placeholder?: string
   value?: any
   onChange?: (value: any) => void
+  onBlur?: (e: React.FocusEvent<HTMLSelectElement>) => void
   styles?: string
   options?: any
   stylesInput?: string
   stylesLabel?: string
+  required?: boolean
 }
+
 const SelectStyled = ({
   label,
   icon,
   value,
   onChange,
+  onBlur,
   id,
   styles,
   options,
   stylesLabel,
+  required,
 }: ISelectStyled) => {
   const optionsSex = [
     { value: 'male', text: 'Masculino' },
@@ -34,8 +40,12 @@ const SelectStyled = ({
   return (
     <div className="flex flex-col ">
       {label && (
-        <label className={`${stylesLabel} mb-1 text-darkGray text-sm`}>
+        <label
+          htmlFor={id}
+          className={`mb-1 text-gray-400  text-sm flex items-center gap-1 ${stylesLabel ?? ''}`}
+        >
           {label}
+          {required && <span className="text-red">*</span>}
         </label>
       )}
       <div
@@ -47,10 +57,15 @@ const SelectStyled = ({
             name={id}
             value={value}
             onChange={onChange}
+            onBlur={onBlur}
             className={`w-full font-semibold appearance-none outline-none bg-transparent dark:text-white ${icon ? 'pl-4' : 'pl-1'}`}
           >
             {optionsSelect?.map((item: any) => (
-              <option className="text-black" value={item.value}>
+              <option
+                className="text-black"
+                value={item.value}
+                key={item.value}
+              >
                 {item.text}
               </option>
             ))}
