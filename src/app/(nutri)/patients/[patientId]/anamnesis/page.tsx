@@ -122,7 +122,12 @@ const AnamnesisPage = ({ params }: PageProps) => {
           submit: false,
         },
       )
-      console.log(create_form_response)
+      const uuid = create_form_response?.data?.data?.uuid
+      if (uuid) {
+        router.push(`/patients/${params.patientId}/anamnesis/${uuid}`)
+      } else {
+        return onShowFeedBack(PreFeedBack.error('Erro ao criar anamnese.'))
+      }
     } catch (error) {
       return onShowFeedBack(PreFeedBack.error('Erro ao criar anamnese.'))
     } finally {
