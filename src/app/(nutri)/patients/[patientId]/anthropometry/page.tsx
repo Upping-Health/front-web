@@ -129,48 +129,54 @@ const AnthropometryPage = ({ params }: PageProps) => {
   const handleNewAnthropometry = async () => {
     setIsNavigating(true)
 
-    console.log(patientData)
+    const today = new Date()
+    const year = String(today.getFullYear())
+    const month = String(today.getMonth() + 1).padStart(2, '0')
+    const day = String(today.getDate()).padStart(2, '0')
+
+    const formattedDate = `${year}-${month}-${day}`
+
     try {
       const response = await api.post('/anthropometrics/store', {
         patient_id: params.patientId,
-        evaluation_date: '2024-01-23',
-        weight: 60.7,
-        height: 169,
-        body_fat_percentage: 6.15,
-        muscle_mass_percentage: 93.85,
-        observations: '1ª Avaliação Física',
+        evaluation_date: formattedDate,
+        weight: 0,
+        height: 0,
+        body_fat_percentage: null,
+        muscle_mass_percentage: null,
+        observations: '',
         body_fat_method: 'pollock_7',
         skin_fold: {
-          triceps: 4.0,
+          triceps: null,
           biceps: null,
-          subscapular: 7.0,
-          suprailiac: 8.0,
-          abdominal: 9.0,
-          thigh: 7.0,
-          chest: 4.0,
-          midaxillary: 6.0,
+          subscapular: null,
+          suprailiac: null,
+          abdominal: null,
+          thigh: null,
+          chest: null,
+          midaxillary: null,
         },
         body_circumference: {
-          waist: 70.0,
-          hip: 88.0,
+          waist: null,
+          hip: null,
           neck: null,
           shoulder: null,
-          chest: 86.0,
-          abdominal: 73.0,
-          relaxed_right_arm: 27.5,
-          contracted_right_arm: 32.0,
+          chest: null,
+          abdominal: null,
+          relaxed_right_arm: null,
+          contracted_right_arm: null,
           right_forearm: null,
           right_proximal_thigh: null,
-          right_mid_thigh: 51.0,
+          right_mid_thigh: null,
           right_distal_thigh: null,
-          right_calf: 34.0,
-          relaxed_left_arm: 27.5,
-          contracted_left_arm: 32.0,
+          right_calf: null,
+          relaxed_left_arm: null,
+          contracted_left_arm: null,
           left_forearm: null,
           left_proximal_thigh: null,
-          left_mid_thigh: 52.5,
+          left_mid_thigh: null,
           left_distal_thigh: null,
-          left_calf: 33.0,
+          left_calf: null,
         },
       })
 

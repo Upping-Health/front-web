@@ -6,7 +6,6 @@ import { useFormik } from 'formik'
 import { useContext, useMemo, useState } from 'react'
 
 import { DefaultContext } from '@/contexts/defaultContext'
-import useLoadAnamnesisByUUID from '@/hooks/nutritionists/anamnesis/useLoadAnamnesisByUUID'
 import useLoadPatientByUUID from '@/hooks/nutritionists/useLoadPatientById'
 import useTimer from '@/hooks/others/useTimer'
 
@@ -18,9 +17,10 @@ import { CollapsibleSection } from '../../../_components/CollapsibleSection'
 import PatientHeader from '../../../_components/PatientHeader'
 import PatientNotFound from '../../../_components/PatientNotFound'
 import { FieldRender } from '../_components/FieldRender'
-
-import AssignmentIcon from '@mui/icons-material/Assignment'
+import useLoadSubmissionByUUID from '@/hooks/forms/useLoadSubmissionByUUID'
 import { createValidationSchemaFromAnswers } from '@/lib/formik/validators/validator-dinamic-form'
+import AssignmentIcon from '@mui/icons-material/Assignment'
+import api from '@/services/api'
 
 interface PageProps {
   params: {
@@ -32,9 +32,18 @@ interface PageProps {
 const AnamneseCreatePage = ({ params }: PageProps) => {
   const { onShowFeedBack } = useContext(DefaultContext)
   const [apiLoading, setApiLoading] = useState(false)
-  const saveData = async (values: any) => {
+  const saveData = async (values: any, isAutomatic: boolean = false) => {
+    const answers = Object.entries(values).map(([key, value]) => ({
+      field_id: key,
+      value,
+    }))
     try {
       setApiLoading(true)
+      await api.put(`/forms/submissions/update/${params.anamnesisId}`, {
+        status: isAutomatic ? 'draft' : 'submitted',
+        answers,
+        reason: '',
+      })
     } finally {
       setApiLoading(false)
     }
@@ -42,12 +51,11 @@ const AnamneseCreatePage = ({ params }: PageProps) => {
 
   const { countdown, resetTimer } = useTimer({
     duration: 60,
-    onExpire: () => saveData(formik.values),
+    onExpire: () => saveData(formik.values, true),
   })
 
-  const { data: dataAnamnesis, loading } = useLoadAnamnesisByUUID(
+  const { data: dataAnamnesis, loading } = useLoadSubmissionByUUID(
     params.anamnesisId,
-    'anamnesis',
     false,
   )
   const { data: patientData, loading: patientLoading } = useLoadPatientByUUID(
@@ -118,7 +126,6 @@ const AnamneseCreatePage = ({ params }: PageProps) => {
     return <PatientNotFound />
   }
 
-  console.log(formik.errors)
   return (
     <div className="w-full flex flex-col transition-opacity duration-300">
       <TopDash

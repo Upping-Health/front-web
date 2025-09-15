@@ -23,10 +23,7 @@ const useLoadPatients = (hidden: boolean) => {
           document: p.profile?.document ?? null,
           phone: p.profile?.phone ?? null,
           birth_date: p.profile?.birth_date ?? null,
-          gender:
-            p.profile?.gender === 'male' || p.profile?.gender === 'female'
-              ? p.profile.gender
-              : 'male',
+          gender: p.profile?.gender ?? null,
           status: p.status,
           age: p.profile?.age ?? 0,
           photo: p.profile?.photo ?? null,

@@ -120,7 +120,7 @@ const CardForms: React.FC<TableProps> = ({
                         <QuizIcon className="text-white" />
                       </div>
                       <div>
-                        <p className="font-bold text-black dark:text-white">
+                        <p className="font-semibold text-black dark:text-white">
                           {data?.title}
                         </p>
                         <p className="font-extralight text-black dark:text-white text-sm">

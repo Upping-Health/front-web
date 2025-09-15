@@ -58,8 +58,8 @@ const EnergyCalculationPage = ({ params }: PageProps) => {
     try {
       const response = await api.post('/energycalculations/store', {
         formula: 'harris_benedict_1984',
-        weight: 63,
-        height: 169,
+        weight: 0,
+        height: 0,
         age: 30,
         gender: 'male',
         activity_factor: 1.9,
