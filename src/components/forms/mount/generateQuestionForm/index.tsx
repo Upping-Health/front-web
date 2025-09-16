@@ -24,7 +24,7 @@ const GenerateQuestionForm = ({
   onDuplicateQuestion,
   onEditLabel,
 }: Props) => (
-  <div className="rounded-xl bg-white p-4 shadow mb-3 dark:bg-slate-700 dark:border-slate-600">
+  <div className="rounded-xl bg-white p-4 shadow dark:bg-gray-800 dark:border-gray-700">
     <QuestionHeader
       type={question.type}
       onRemove={onRemoveQuestion}

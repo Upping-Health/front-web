@@ -5,6 +5,7 @@ import useLoadForms from '@/hooks/nutritionists/useLoadForms'
 import { colors } from '@/lib/colors/colors'
 import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined'
 import { CircularProgress } from '@mui/material'
+import Loading from '@/components/layout/loading'
 
 const FormsList = ({ params }: { params: { id: string } }) => {
   const { data, loading } = useLoadForms(false)
@@ -21,11 +22,7 @@ const FormsList = ({ params }: { params: { id: string } }) => {
 
       {loading ? (
         <>
-          <div className="flex h-3/4 justify-center w-full items-center">
-            <CircularProgress
-              style={{ width: 80, height: 80, color: colors.primary }}
-            />
-          </div>
+          <Loading text="Carregando formulários..." className="!h-3/4" />
         </>
       ) : (
         <CardForms data={data} />

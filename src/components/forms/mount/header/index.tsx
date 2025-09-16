@@ -32,7 +32,7 @@ const HeaderFormMenu = ({
   typeForm,
   setTypeForm,
 }: ICustomFormMenu) => {
-  const optionsSex = [{ value: 'ANAMNESE', label: 'Anamnese' }]
+  const optionsTypeForms = [{ value: 'anamnesis', label: 'Anamnese' }]
   return (
     <div className="flex flex-col gap-2">
       <div className="flex justify-between ">
@@ -75,7 +75,7 @@ const HeaderFormMenu = ({
           id={'id'}
           value={typeForm}
           onChange={(e) => setTypeForm(e.target.value)}
-          options={optionsSex}
+          options={optionsTypeForms}
           placeholder="Tipo do formulário"
         />
         <ButtonHeader

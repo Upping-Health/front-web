@@ -70,7 +70,7 @@ const CardForms: React.FC<TableProps> = ({
                 setSearchTerm(e.target.value)
                 setCurrentPage(1)
               }}
-              placeholder="Buscar pacientes por nome, telefone ou email..."
+              placeholder="Busca..."
             />
 
             <div className="flex gap-2">
@@ -79,21 +79,10 @@ const CardForms: React.FC<TableProps> = ({
                   { label: 'Ativo', value: 'active' },
                   { label: 'Inativo', value: 'inactive' },
                 ]}
-                onSelect={(value) => console.log(value)}
-                selected="active"
-                label="Ordenar por"
-              />
-
-              <FilterTable
-                options={[
-                  { label: 'Ativo', value: 'active' },
-                  { label: 'Inativo', value: 'inactive' },
-                ]}
                 onSelect={() => {}}
                 selected="inactive"
+                label="Filtro"
               />
-
-              <ButtonExport onClick={() => {}} />
             </div>
           </div>
         )}
@@ -112,7 +101,7 @@ const CardForms: React.FC<TableProps> = ({
               return (
                 <div
                   key={index}
-                  className="bg-white p-3 rounded-xl shadow w-full dark:bg-slate-600 dark:border-slate-500"
+                  className="bg-white p-3 rounded-xl shadow w-full dark:bg-gray-800 dark:border-gray-700"
                 >
                   <div className="flex flex-row items-center justify-between">
                     <div className="flex gap-2 items-center">
@@ -123,8 +112,8 @@ const CardForms: React.FC<TableProps> = ({
                         <p className="font-semibold text-black dark:text-white">
                           {data?.title}
                         </p>
-                        <p className="font-extralight text-black dark:text-white text-sm">
-                          {data?.type_name}
+                        <p className="font-extralight text-black dark:text-white text-xs">
+                          {data?.description}
                         </p>
                       </div>
                     </div>
