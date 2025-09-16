@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 import React, { useCallback, useMemo, useState } from 'react'
 import FilterTable from '../filterTable'
 import PaginationDash from '../paginationDash'
+import EditIcon from '@mui/icons-material/Edit'
 
 interface TableProps {
   data: any[]
@@ -137,6 +138,7 @@ const CardForms: React.FC<TableProps> = ({
                         onClick={() => router.push(`/forms/${data.uuid}/edit`)}
                         title={'Editar'}
                         type="button"
+                        icon={<EditIcon className="text-base" />}
                         styles="bg-black h-[35px] px-3 text-sm shadow-md dark:bg-white dark:text-black"
                       />
                     </div>

@@ -107,10 +107,10 @@ const ModalLegends = ({
 
   return (
     <>
-      <ModalBase open={open} onClose={setIsClose}>
+      <ModalBase open={open} onClose={loading ? undefined : setIsClose}>
         <ModalHeader
           title={legendSelected ? 'Atualizar Legenda' : 'Cadastro de Legenda'}
-          onClose={setIsClose}
+          onClose={loading ? undefined : setIsClose}
         />
 
         <ModalContent>
@@ -152,7 +152,7 @@ const ModalLegends = ({
         <ModalFooter>
           <ButtonStyled
             type="button"
-            onClick={setIsClose}
+            onClick={loading ? undefined : setIsClose}
             styles="w-full"
             bgColor="bg-red-600"
             title="Voltar"

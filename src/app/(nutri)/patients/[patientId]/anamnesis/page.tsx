@@ -20,6 +20,7 @@ import { useCallback, useContext, useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
 import ButtonActive from '@/components/buttons/buttonActive'
 import ModalConfirmation from '@/components/modals/ModalConfirmation'
+import { LinkButton } from '@/components/buttons/linkButton'
 interface PageProps {
   params: {
     patientId: string
@@ -120,15 +121,11 @@ const AnamnesisPage = ({ params }: PageProps) => {
         render: (_: any, row: any) => {
           return (
             <div className="flex gap-2">
-              <HeaderButton
-                onClick={() =>
-                  router.push(
-                    `/patients/${params.patientId}/energyCalculation/${row.uuid}`,
-                  )
-                }
+              <LinkButton
+                href={`/patients/${params.patientId}/anamnesis/${row.uuid}`}
               >
                 <CreateIcon className="text-gray-600 text-lg dark:text-white" />
-              </HeaderButton>
+              </LinkButton>
 
               <HeaderButton onClick={() => handleDeleteClick(row)}>
                 <Delete className="text-red text-xl" />

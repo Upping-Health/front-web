@@ -22,6 +22,7 @@ import { EnergyCalculation } from '@/interfaces/energyCalculation.interface'
 import ModalConfirmation from '@/components/modals/ModalConfirmation'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Loading from '@/components/layout/loading'
+import { LinkButton } from '@/components/buttons/linkButton'
 
 interface PageProps {
   params: {
@@ -142,15 +143,11 @@ const EnergyCalculationPage = ({ params }: PageProps) => {
         render: (_: any, row: any) => {
           return (
             <div className="flex gap-2">
-              <HeaderButton
-                onClick={() =>
-                  router.push(
-                    `/patients/${params.patientId}/energyCalculation/${row.uuid}`,
-                  )
-                }
+              <LinkButton
+                href={`/patients/${params.patientId}/energyCalculation/${row.uuid}`}
               >
                 <CreateIcon className="text-gray-600 text-lg dark:text-white" />
-              </HeaderButton>
+              </LinkButton>
 
               <HeaderButton onClick={() => handleDeleteClick(row)}>
                 <DeleteIcon className="text-red text-xl" />

@@ -3,9 +3,11 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import Schedule from '@/interfaces/schedule.interface'
 import api from '@/services/api'
 
-interface ScheduleLabel {
+export interface ScheduleLabel {
   name: string
   color: string
+  uuid: string
+  is_active: number
 }
 
 const useLoadScheduleLabels = (hidden: boolean) => {

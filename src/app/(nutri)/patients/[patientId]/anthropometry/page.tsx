@@ -22,6 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import ModalConfirmation from '@/components/modals/ModalConfirmation'
 import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
 import Loading from '@/components/layout/loading'
+import { LinkButton } from '@/components/buttons/linkButton'
 
 interface PageProps {
   params: {
@@ -105,15 +106,11 @@ const AnthropometryPage = ({ params }: PageProps) => {
         render: (_: any, row: any) => {
           return (
             <div className="flex gap-2">
-              <HeaderButton
-                onClick={() =>
-                  router.push(
-                    `/patients/${params.patientId}/anthropometry/${row.uuid}`,
-                  )
-                }
+              <LinkButton
+                href={`/patients/${params.patientId}/anthropometry/${row.uuid}`}
               >
                 <CreateIcon className="text-gray-600 text-lg dark:text-white" />
-              </HeaderButton>
+              </LinkButton>
 
               <HeaderButton onClick={() => handleDeleteClick(row)}>
                 <DeleteIcon className="text-red text-xl" />
@@ -123,7 +120,7 @@ const AnthropometryPage = ({ params }: PageProps) => {
         },
       },
     ],
-    [patientData],
+    [patientData, handleDeleteClick],
   )
 
   const handleNewAnthropometry = async () => {

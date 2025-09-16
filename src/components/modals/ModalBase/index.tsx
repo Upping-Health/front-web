@@ -4,18 +4,18 @@ import { ReactNode } from 'react'
 
 interface ModalBaseProps {
   open: boolean
-  onClose: () => void
+  onClose?: () => void
   children: ReactNode
 }
 
 interface ModalHeaderProps {
   title?: string
-  onClose: () => void
+  onClose?: () => void
 }
 
 export const ModalHeader = ({ title, onClose }: ModalHeaderProps) => {
   return (
-    <div className="flex justify-between items-center pb-4">
+    <div className="flex justify-between items-center pb-4 px-2">
       <h2 className="font-semibold text-xl text-center uppercase dark:text-white">
         {title}
       </h2>
@@ -38,7 +38,7 @@ export const ModalContent = ({ children }: { children: ReactNode }) => {
 }
 
 export const ModalFooter = ({ children }: { children: ReactNode }) => {
-  return <div className="pt-5 flex gap-5 justify-end">{children}</div>
+  return <div className="pt-5 flex gap-5 justify-end px-2">{children}</div>
 }
 
 const ModalBase = ({ open, onClose, children }: ModalBaseProps) => {
@@ -47,12 +47,12 @@ const ModalBase = ({ open, onClose, children }: ModalBaseProps) => {
       open={open}
       onClose={(event, reason) => {
         if (reason !== 'backdropClick' && reason !== 'escapeKeyDown') {
-          onClose()
+          if (onClose) onClose()
         }
       }}
       className="flex justify-center items-center"
     >
-      <div className="bg-white dark:bg-gray-800 rounded-20 px-5 py-4 w-[85%] max-w-[500px] max-h-[90vh] flex flex-col gap-2">
+      <div className="bg-white dark:bg-gray-800 rounded-20 px-2 py-4 w-[85%] max-w-[500px] max-h-[90vh] flex flex-col gap-2">
         {children}
       </div>
     </Modal>
