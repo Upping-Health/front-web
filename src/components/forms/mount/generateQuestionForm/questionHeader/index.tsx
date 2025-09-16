@@ -1,11 +1,8 @@
-import React from 'react'
-import DeleteIcon from '@mui/icons-material/Delete'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
-import { ElementType } from 'react'
-import { QuestionAnswerOutlined } from '@mui/icons-material'
-import { formIcons } from '../../menu'
 import { formDescriptions, formLabels } from '@/lib/forms'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import DeleteIcon from '@mui/icons-material/Delete'
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
+import { formIcons } from '../../menu'
 
 interface Props {
   type: string
@@ -21,12 +18,12 @@ const QuestionHeader = ({ type, onRemove, onDuplicate }: Props) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex gap-2 items-center">
-        <div className="bg-green h-14 w-14 rounded-xl flex justify-center items-center">
+        <div className="bg-green h-12 w-12 rounded-xl flex justify-center items-center">
           <Icon className="text-white" />
         </div>
         <div>
           <p className="font-bold text-black dark:text-white">{label}</p>
-          <p className="font-extralight text-black dark:text-white max-w-[400px]">
+          <p className="font-extralight text-black dark:text-white max-w-[500px] text-sm">
             {description}
           </p>
         </div>

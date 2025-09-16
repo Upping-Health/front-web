@@ -1,3 +1,4 @@
+import { ScheduleLabel } from '@/hooks/nutritionists/useLoadScheduleLabels'
 import DefaultEntityType from './default'
 
 export default interface Schedule extends DefaultEntityType {
@@ -9,9 +10,9 @@ export default interface Schedule extends DefaultEntityType {
   end_time: string
   status: number
   professional_id: number
-
   patient?: {
     name: string
     uuid: string
   }
+  label: ScheduleLabel
 }

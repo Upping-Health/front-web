@@ -3,7 +3,7 @@ import { FormResponse } from '@/interfaces/form-response.interface'
 import api from '@/services/api'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
-const useLoadAnamnesisByUUID = (uuid: string, hidden: boolean) => {
+const useLoadSubmissionByUUID = (uuid: string, hidden: boolean) => {
   const { user } = useContext(DefaultContext)
   const [data, setdata] = useState<FormResponse | null>(null)
   const [loading, setloading] = useState<boolean>(true)
@@ -11,15 +11,15 @@ const useLoadAnamnesisByUUID = (uuid: string, hidden: boolean) => {
   const loadData = useCallback(async () => {
     try {
       setloading(true)
-      const res = await api.get(`forms/submission/${uuid}`)
+      const res = await api.get(`forms/submissions/${uuid}`)
       setdata(res?.data?.data)
       console.log(res?.data?.data)
     } catch (error: any) {
-      console.error('[ERROR API] forms/submission/show/', error?.response?.data)
+      console.error('[ERROR API] forms/submissions/', error?.response?.data)
     } finally {
       setloading(false)
     }
-  }, [user])
+  }, [user, uuid])
 
   useEffect(() => {
     if (!hidden && uuid) loadData()
@@ -28,4 +28,4 @@ const useLoadAnamnesisByUUID = (uuid: string, hidden: boolean) => {
   return { loading, data, loadData }
 }
 
-export default useLoadAnamnesisByUUID
+export default useLoadSubmissionByUUID

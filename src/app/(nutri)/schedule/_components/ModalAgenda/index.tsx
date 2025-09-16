@@ -1,29 +1,31 @@
-import AutocompleteStyled from '@/components/inputs/autoCompleteStyled'
 import ButtonStyled from '@/components/buttons/button'
-import CardProfile from '@/components/tables/cardProfile'
+import AutocompleteStyled from '@/components/inputs/autoCompleteStyled'
+import SelectStyled from '@/components/inputs/select'
 import DatePickerStyled from '@/components/inputs/selectDateStyled'
 import TextAreaStyled from '@/components/inputs/textAreaStyled'
-import { DefaultContext } from '@/contexts/defaultContext'
-import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
-import Schedule from '@/interfaces/schedule.interface'
-import api from '@/services/api'
-import { colors } from '@/lib/colors/colors'
-import PreFeedBack from '@/lib/feedbackStatus'
-import AddIcon from '@mui/icons-material/Add'
-import DescriptionIcon from '@mui/icons-material/Description'
-import Person from '@mui/icons-material/Person'
-import { CircularProgress, Modal, Tooltip } from '@mui/material'
-import { useFormik } from 'formik'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { validateAgenda } from '@/lib/formik/validators/validate-agenda'
-import CustomizedSteppers from '../../../../../components/layout/stepBar'
-import ModalPatient from '../../../patients/_components/ModalPatient'
 import ModalBase, {
   ModalContent,
   ModalFooter,
   ModalHeader,
 } from '@/components/modals/ModalBase'
-
+import CardProfile from '@/components/tables/cardProfile'
+import { DefaultContext } from '@/contexts/defaultContext'
+import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
+import useLoadScheduleLabels from '@/hooks/nutritionists/useLoadScheduleLabels'
+import Schedule from '@/interfaces/schedule.interface'
+import { colors } from '@/lib/colors/colors'
+import PreFeedBack from '@/lib/feedbackStatus'
+import { validateAgenda } from '@/lib/formik/validators/validate-agenda'
+import api from '@/services/api'
+import AddIcon from '@mui/icons-material/Add'
+import BookmarksIcon from '@mui/icons-material/Bookmarks'
+import DescriptionIcon from '@mui/icons-material/Description'
+import Person from '@mui/icons-material/Person'
+import { CircularProgress, Tooltip } from '@mui/material'
+import { useFormik } from 'formik'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import CustomizedSteppers from '../../../../../components/layout/stepBar'
+import ModalPatient from '../../../patients/_components/ModalPatient'
 interface ModalParams {
   open: boolean
   setIsClose: () => void
@@ -42,11 +44,16 @@ const ModalAgenda = ({
   const [loading, setloading] = useState(false)
   const { data, loadData, loading: loadingData } = useLoadPatients(!open)
   const [openModal, setOpenModal] = useState(false)
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const {
+    data: dataLabels,
+    loadData: loadLabels,
+    loading: loadingLabels,
+  } = useLoadScheduleLabels(!open)
+
+  console.log(dataLabels)
 
   function convertUTCtoLocalISO(dateString: string): string {
     const date = new Date(dateString)
-
     const year = date.getFullYear()
     const month = String(date.getMonth() + 1).padStart(2, '0')
     const day = String(date.getDate()).padStart(2, '0')
@@ -67,13 +74,13 @@ const ModalAgenda = ({
   }
 
   const onError = (e: any) => {
-    const errorMessage = e?.response?.message || 'Falhou ao cadastrar paciente.'
+    const errorMessage = e?.response?.message || 'Falhou ao cadastrar agenda.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
     console.log('[ERROR API /patient]', errorMessage)
   }
 
   const onErrorUpdate = (e: any) => {
-    const errorMessage = e?.response?.message || 'Falhou ao atualizar paciente.'
+    const errorMessage = e?.response?.message || 'Falhou ao atualizar agendda.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
     console.log('[ERROR API /patient]', errorMessage)
   }
@@ -90,6 +97,7 @@ const ModalAgenda = ({
     if (!open) return formik.resetForm()
     if (!scheduleSelected) {
       formik.setValues({
+        label: '',
         patient: '',
         observation: '',
         start_time: '',
@@ -97,8 +105,10 @@ const ModalAgenda = ({
       })
     }
     if (scheduleSelected) {
-      const { patient, observation, start_time, end_time } = scheduleSelected
+      const { patient, observation, start_time, end_time, label } =
+        scheduleSelected
       formik.setValues({
+        label: label.uuid?.toString() ?? '',
         patient: patient?.uuid?.toString() ?? '',
         observation: observation ?? '',
         start_time: convertUTCtoLocalISO(start_time),
@@ -110,6 +120,7 @@ const ModalAgenda = ({
   const formik = useFormik({
     initialValues: {
       patient: '',
+      label: '',
       observation: '',
       start_time: '',
       end_time: '',
@@ -119,7 +130,7 @@ const ModalAgenda = ({
       setloading(true)
 
       const data = {
-        label_id: 1,
+        label_id: 2,
         patient_id: values.patient,
         observation: values.observation,
         start_time: formatDateTime(values.start_time),
@@ -159,14 +170,21 @@ const ModalAgenda = ({
       ) || null
     )
   }, [data, formik.values.patient])
-  useEffect(() => {
-    console.log(patientSearch)
-  }, [formik.values])
+
+  const labelSearch = useMemo(() => {
+    return (
+      dataLabels.find(
+        (option) =>
+          option?.uuid?.toString() === formik.values?.patient?.toString(),
+      ) || null
+    )
+  }, [data, formik.values.patient])
+
   return (
     <>
-      <ModalBase open={open} onClose={setIsClose}>
+      <ModalBase open={open} onClose={loading ? undefined : setIsClose}>
         <ModalHeader
-          onClose={setIsClose}
+          onClose={loading ? undefined : setIsClose}
           title={scheduleSelected ? 'Atualizar Agenda' : 'Cadastro de Agenda'}
         />
 
@@ -253,6 +271,28 @@ const ModalAgenda = ({
                   <div className="flex flex-col gap-2 pt-4">
                     <CardProfile user={patientSearch} />
 
+                    <SelectStyled
+                      id="label"
+                      label="Legenda"
+                      icon={
+                        <BookmarksIcon className="dark:text-white text-black" />
+                      }
+                      placeholder="Selecione a legenda"
+                      value={labelSearch}
+                      options={dataLabels.map((d: any) => ({
+                        value: d.uuid,
+                        text: d.name,
+                      }))}
+                      onChange={(event: any) => {
+                        console.log(event)
+                        formik.setFieldValue(
+                          'label',
+                          event?.target?.value || '',
+                        )
+                      }}
+                      stylesLabel="dark:text-white"
+                    />
+
                     <DatePickerStyled
                       id="start_time"
                       label="Ínicio da consulta"
@@ -293,7 +333,7 @@ const ModalAgenda = ({
             <>
               <ButtonStyled
                 type="button"
-                onClick={setIsClose}
+                onClick={loading ? undefined : setIsClose}
                 styles="w-full"
                 bgColor="bg-red-600"
                 title="Cancelar"

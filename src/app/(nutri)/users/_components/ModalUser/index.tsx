@@ -85,16 +85,7 @@ const ModalUser = ({
       })
     }
     if (userSelected) {
-      const {
-        name,
-        document,
-        phone,
-        email,
-        birth_date,
-        gender,
-        objective,
-        address,
-      } = userSelected
+      const { name, document, phone, email, birth_date, gender } = userSelected
       formik.setValues({
         document: document,
         name: name,
@@ -148,20 +139,18 @@ const ModalUser = ({
     },
   })
 
-  console.log(roles)
-
   const options = useMemo(
     () =>
       roles
-        .filter((p) => p.name)
+        .filter((p) => p.name !== 'PACIENTE')
         .map((e) => ({ value: e.id, text: ROLE_PTBR[e.name] })),
     [roles, ROLE_PTBR],
   )
 
   return (
-    <ModalBase open={open} onClose={setIsClose}>
+    <ModalBase open={open}>
       <ModalHeader
-        onClose={setIsClose}
+        onClose={loading ? undefined : setIsClose}
         title={userSelected ? 'Atualizar Usuário' : 'Cadastro de Usuário'}
       />
 
@@ -280,7 +269,7 @@ const ModalUser = ({
       <ModalFooter>
         <ButtonStyled
           type="button"
-          onClick={setIsClose}
+          onClick={loading ? undefined : setIsClose}
           styles="w-full"
           bgColor="bg-red-600"
           title="Cancelar"

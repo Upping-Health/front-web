@@ -1,8 +1,6 @@
-import { DefaultContext } from '@/contexts/defaultContext'
-import Patient from '@/interfaces/patient.interface'
 import Schedule from '@/interfaces/schedule.interface'
 import api from '@/services/api'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 const useLoadForms = (hidden: boolean) => {
   const [data, setdata] = useState<Schedule[]>([])

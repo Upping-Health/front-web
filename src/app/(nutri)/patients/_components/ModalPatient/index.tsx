@@ -287,10 +287,10 @@ const ModalPatient = ({
   const steps = ['Dados Pessoais', 'Endereço (Opcional)']
 
   return (
-    <ModalBase open={open} onClose={setIsClose}>
+    <ModalBase open={open} onClose={loading ? undefined : setIsClose}>
       <ModalHeader
         title={patientSelected ? 'Atualizar Paciente' : 'Cadastro de Paciente'}
-        onClose={setIsClose}
+        onClose={loading ? undefined : setIsClose}
       />
 
       <ModalContent>
@@ -548,7 +548,7 @@ const ModalPatient = ({
           <>
             <ButtonStyled
               type="button"
-              onClick={setIsClose}
+              onClick={loading ? undefined : setIsClose}
               styles="w-full"
               bgColor="bg-red-600"
               title="Cancelar"

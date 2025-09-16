@@ -25,10 +25,10 @@ const ButtonActive = ({
         text-black
         h-[35px]
         px-3
-        w-[65px]
-        rounded-[6px]
+        w-16
+        rounded-6
         shadow-md
-        font-medium
+        font-semibold
         flex
         justify-center
         items-center
@@ -36,7 +36,7 @@ const ButtonActive = ({
         hover:font-bold
         transition
         duration-300
-        text-[12.8px]
+        text-xs
         ${active ? 'bg-paid' : 'bg-unpaid'}
       `}
     >
@@ -46,9 +46,7 @@ const ButtonActive = ({
           className={`${active ? 'text-paidFont' : 'text-unpaidFont'}`}
         />
       ) : (
-        <p
-          className={`${active ? 'text-paidFont' : 'text-unpaidFont'} font-[600]`}
-        >
+        <p className={`${active ? 'text-paidFont' : 'text-unpaidFont'}`}>
           {active ? 'Ativo' : 'Inativo'}
         </p>
       )}
