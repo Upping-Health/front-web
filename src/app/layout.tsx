@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import NextTopLoader from 'nextjs-toploader'
 import { colors } from '@/lib/colors/colors'
+import { QueryClient } from '@tanstack/react-query'
 
 const inter = Inter({ subsets: ['latin'] })
 

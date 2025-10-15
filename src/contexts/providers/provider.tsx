@@ -1,13 +1,17 @@
 'use client'
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import DefaultProvider from '../defaultContext'
-import { SessionProvider } from 'next-auth/react'
 import { TabProvider } from '../tabContext'
+
+const queryClient = new QueryClient()
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <DefaultProvider>
-      <TabProvider>{children}</TabProvider>
-    </DefaultProvider>
+    <QueryClientProvider client={queryClient}>
+      <DefaultProvider>
+        <TabProvider>{children}</TabProvider>
+      </DefaultProvider>
+    </QueryClientProvider>
   )
 }

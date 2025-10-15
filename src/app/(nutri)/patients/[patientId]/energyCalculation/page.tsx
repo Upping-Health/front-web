@@ -59,8 +59,8 @@ const EnergyCalculationPage = ({ params }: PageProps) => {
     try {
       const response = await api.post('/energycalculations/store', {
         formula: 'harris_benedict_1984',
-        weight: 0,
-        height: 0,
+        weight: 1,
+        height: 50,
         age: 30,
         gender: 'male',
         activity_factor: 1.9,
@@ -71,7 +71,9 @@ const EnergyCalculationPage = ({ params }: PageProps) => {
         patient_id: params.patientId,
       })
 
-      const uuid = response?.data?.message?.uuid
+      const uuid = response?.data?.data?.calculation?.uuid
+
+      console.log(response?.data)
       if (uuid) {
         router.push(`/patients/${params.patientId}/energyCalculation/${uuid}`)
       } else {
