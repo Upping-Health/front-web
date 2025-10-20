@@ -5,10 +5,17 @@ import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
 import { colors } from '@/lib/colors/colors'
 import RestaurantOutlinedIcon from '@mui/icons-material/RestaurantOutlined'
 import { CircularProgress } from '@mui/material'
-import { useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
+import ModalFood from './_components/ModalFood'
+import useLoadFoods from '@/hooks/foods/useLoadFoods'
 
 const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
-  const { data, loading } = useLoadPatients(false)
+  const { data, loadData, loading } = useLoadFoods(true)
+  const [openModal, setopenModal] = useState<boolean>(false)
+
+  const handleOpenModal = useCallback(() => {
+    setopenModal(true)
+  }, [])
 
   const columns = useMemo(
     () => [
@@ -37,36 +44,37 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
   )
 
   return (
-    <div className="w-full relative h-full">
-      <TopDash
-        title="Alimentos"
-        description="Acompanhe e gerencie seus pacientes com facilidade."
-        icon={RestaurantOutlinedIcon}
-        textBtn={'Novo Alimento'}
-        onClick={() => {}}
+    <>
+      <div className="w-full relative h-full">
+        <TopDash
+          title="Alimentos"
+          description="Acompanhe e gerencie seus pacientes com facilidade."
+          icon={RestaurantOutlinedIcon}
+          textBtn={'Novo Alimento'}
+          onClick={handleOpenModal}
+        />
+
+        {loading ? (
+          <>
+            <div className="flex h-3/4 justify-center w-full items-center">
+              <CircularProgress
+                style={{ width: 80, height: 80, color: colors.primary }}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <TableDash columns={columns} data={[]} rowKey="id" />
+          </>
+        )}
+      </div>
+      <ModalFood
+        open={openModal}
+        loadNewData={loadData}
+        setIsClose={() => {}}
+        dataSelected={null}
       />
-
-      {loading ? (
-        <>
-          <div className="flex h-3/4 justify-center w-full items-center">
-            <CircularProgress
-              style={{ width: 80, height: 80, color: colors.primary }}
-            />
-          </div>
-        </>
-      ) : (
-        <>
-          <TableDash columns={columns} data={[]} rowKey="id" />
-        </>
-      )}
-
-      {/* <ModalSelectPatient
-        open={openSelectPatient}
-        setIsClose={() => setOpenSelectPatient(false)}
-        patientId={patientId}
-        setPatientId={setPatientId}
-      /> */}
-    </div>
+    </>
   )
 }
 
