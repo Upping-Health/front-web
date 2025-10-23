@@ -71,7 +71,7 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
       <ModalFood
         open={openModal}
         loadNewData={loadData}
-        setIsClose={() => {}}
+        setIsClose={() => setopenModal(false)}
         dataSelected={null}
       />
     </>

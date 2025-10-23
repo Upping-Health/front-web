@@ -1,5 +1,3 @@
-import BusinessIcon from '@mui/icons-material/Business'
-import StoreIcon from '@mui/icons-material/Store'
 import Stack from '@mui/material/Stack'
 import Step from '@mui/material/Step'
 import StepConnector, {
@@ -10,7 +8,7 @@ import StepLabel from '@mui/material/StepLabel'
 import Stepper from '@mui/material/Stepper'
 import { styled } from '@mui/material/styles'
 import * as React from 'react'
-import { colors } from '@/lib/colors/colors' // <-- Importa suas cores
+import { colors } from '@/lib/colors/colors'
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -43,8 +41,8 @@ const ColorlibStepIconRoot = styled('div')<{
   backgroundColor: '#6D6D6D',
   zIndex: 1,
   color: '#fff',
-  width: 50,
-  height: 50,
+  width: 40,
+  height: 40,
   display: 'flex',
   borderRadius: '50%',
   justifyContent: 'center',
@@ -70,18 +68,17 @@ const ColorlibStepIconRoot = styled('div')<{
 }))
 
 function ColorlibStepIcon(
-  props: StepIconProps & {
-    icons: { [index: string]: React.ReactElement<any> }
-  },
+  props: StepIconProps & { icons: React.ReactElement[] },
 ) {
-  const { active, completed, className, icons } = props
+  const { active, completed, className, icon, icons } = props
+  const stepIndex = Number(icon) - 1
 
   return (
     <ColorlibStepIconRoot
       ownerState={{ completed, active }}
       className={className}
     >
-      {icons[String(props.icon)]}
+      {icons[stepIndex]}
     </ColorlibStepIconRoot>
   )
 }
@@ -89,29 +86,34 @@ function ColorlibStepIcon(
 export default function CustomizedSteppers({
   steps,
   activeTab,
-  iconStep1,
-  iconStep2,
-}: any) {
-  const icons = {
-    1: iconStep1,
-    2: iconStep2,
-  }
+}: {
+  steps: { label: string; icon: React.ReactElement }[]
+  activeTab: number
+}) {
+  const icons = steps.map((s) => s.icon)
 
   return (
-    <Stack>
+    <Stack sx={{ width: '100%' }}>
       <Stepper
         alternativeLabel
         activeStep={activeTab}
         connector={<ColorlibConnector />}
+        sx={{
+          width: '100%',
+          justifyContent: 'space-between',
+          '& .MuiStep-root': {
+            flex: 1,
+          },
+        }}
       >
-        {steps.map((label: any) => (
-          <Step key={label}>
+        {steps.map((step, index) => (
+          <Step key={index}>
             <StepLabel
               StepIconComponent={(props) => (
                 <ColorlibStepIcon {...props} icons={icons} />
               )}
             >
-              <p className="font-bold text-base dark:text-white">{label}</p>
+              <p className="font-bold text-sm dark:text-white">{step.label}</p>
             </StepLabel>
           </Step>
         ))}

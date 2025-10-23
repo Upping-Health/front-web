@@ -51,7 +51,7 @@ const useLoadPatients = (hidden: boolean) => {
   return {
     loading: query.isLoading || query.isFetching,
     data: query.data || [],
-    loadData: query.refetch,
+    loadData: fetchPatients,
   }
 }
 

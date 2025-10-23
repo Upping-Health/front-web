@@ -16,7 +16,7 @@ interface ModalHeaderProps {
 export const ModalHeader = ({ title, onClose }: ModalHeaderProps) => {
   return (
     <div className="flex justify-between items-center pb-4 px-2">
-      <h2 className="font-semibold text-xl text-center uppercase dark:text-white">
+      <h2 className="font-semibold text-base text-center uppercase dark:text-white">
         {title}
       </h2>
       <button

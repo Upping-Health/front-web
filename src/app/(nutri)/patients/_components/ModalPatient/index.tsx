@@ -29,6 +29,7 @@ import ModalBase, {
   ModalFooter,
   ModalHeader,
 } from '@/components/modals/ModalBase'
+import { icon } from 'leaflet'
 
 interface ModalParams {
   open: boolean
@@ -284,7 +285,17 @@ const ModalPatient = ({
   useEffect(() => {
     autoCompletePatientData(formik.values.document)
   }, [formik.values.document])
-  const steps = ['Dados Pessoais', 'Endereço (Opcional)']
+
+  const steps = [
+    {
+      label: 'Dados Pessoais',
+      icon: <Person />,
+    },
+    {
+      label: 'Endereço (Opcional)',
+      icon: <HomeIcon />,
+    },
+  ]
 
   return (
     <ModalBase open={open} onClose={loading ? undefined : setIsClose}>
@@ -304,12 +315,7 @@ const ModalPatient = ({
             </div>
           ) : (
             <>
-              <CustomizedSteppers
-                steps={steps}
-                activeTab={viewTwo ? 1 : 0}
-                iconStep1={<Person />}
-                iconStep2={<HomeIcon />}
-              />
+              <CustomizedSteppers steps={steps} activeTab={viewTwo ? 1 : 0} />
               {!viewTwo && (
                 <div className="flex flex-col gap-2">
                   <InputStyled

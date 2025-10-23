@@ -52,7 +52,7 @@ const InputStyled = ({
       {label && (
         <label
           htmlFor={id}
-          className={`mb-1 text-gray-400 text-sm flex items-center gap-1 ${stylesLabel ?? ''}`}
+          className={`mb-1 text-black dark:text-gray-300 text-sm flex items-center gap-1 ${stylesLabel ?? ''}`}
         >
           {label}
           {required && <span className="text-red">*</span>}
@@ -60,7 +60,7 @@ const InputStyled = ({
       )}
       <div
         className={`bg-none relative border border-solid outline-none rounded-xl p-2 flex items-center justify-between
-          border-gray dark:border-slate-700
+          border-gray-300 dark:border-slate-700
           ${disabled ? 'bg-customGray' : ''}
           ${styles ?? ''}`}
       >

@@ -6,7 +6,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 const useLoadFoods = (hidden: boolean) => {
   const { user } = useContext(DefaultContext)
   const [data, setdata] = useState<Documents[]>([])
-  const [loading, setloading] = useState<boolean>(true)
+  const [loading, setloading] = useState<boolean>(false)
 
   const loadData = useCallback(async () => {
     try {
