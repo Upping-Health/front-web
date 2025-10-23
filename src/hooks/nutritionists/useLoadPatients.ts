@@ -4,7 +4,7 @@ import { DefaultContext } from '@/contexts/defaultContext'
 import Patient from '@/interfaces/patient.interface'
 import api from '@/services/api'
 
-const fetchPatients = async (): Promise<Patient[]> => {
+const fetchPatients = async () => {
   const res = await api.get('/patients')
   return res?.data?.data?.map((item: any) => {
     const p = item.patient
