@@ -24,7 +24,7 @@ const CardsGroup = () => {
           <CardValues
             className="bg-red-400"
             icon={<RestoreIcon />}
-            title="Desespesas/reembolsos"
+            title="Despesas/reembolsos"
             value={371 * 100}
             isMoney
             percent={-50}
@@ -49,6 +49,7 @@ const CardsGroup = () => {
             title="Total de Transações"
             value={8}
             isMoney={false}
+            percent={-2}
           />
         </div>
       </div>
