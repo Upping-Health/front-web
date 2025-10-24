@@ -39,8 +39,6 @@ interface ModalParams {
   loadNewData: () => Promise<void>
 }
 
-// ========== COMPONENTES DE STEP (fora do modal) ==========
-
 const StepBasicInfo = ({ formik }: any) => (
   <div className="flex flex-col gap-3">
     <InputStyled
@@ -110,15 +108,9 @@ const StepNutrients = ({ formik }: any) => (
   </div>
 )
 
-const StepIngredients = () => (
-  <div className="flex flex-col gap-3">{/* Conteúdo futuro */}</div>
-)
+const StepIngredients = () => <div className="flex flex-col gap-3"></div>
 
-const StepInstructions = () => (
-  <div className="flex flex-col gap-3">{/* Conteúdo futuro */}</div>
-)
-
-// ===========================================================
+const StepInstructions = () => <div className="flex flex-col gap-3"></div>
 
 const ModalFood = ({
   open,
