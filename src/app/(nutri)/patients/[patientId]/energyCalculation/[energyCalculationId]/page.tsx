@@ -55,17 +55,17 @@ const EnergyCalculationCreatePage = ({ params }: PageProps) => {
   const formik = useFormik<Partial<EnergyCalculation>>({
     initialValues: {
       formula: 'harris_benedict_1919',
-      lbm: 0,
-      weight: 0,
-      height: 0,
+      lbm: 10,
+      weight: 1,
+      height: 50,
       gender: 'male',
-      activity_factor: 0,
-      injury_factor: 0,
-      body_fat: 0,
+      activity_factor: 10,
+      injury_factor: 10,
+      body_fat: 10,
       pregnant: false,
-      pregnancy_weeks: 0,
-      target_weight: 0,
-      target_days: 0,
+      pregnancy_weeks: 10,
+      target_weight: 10,
+      target_days: 10,
       additionalMet: [
         {
           met_factor: 0,

@@ -1,29 +1,31 @@
+import { useQuery } from '@tanstack/react-query'
 import Schedule from '@/interfaces/schedule.interface'
 import api from '@/services/api'
-import { useCallback, useEffect, useState } from 'react'
+
+const fetchForms = async (): Promise<Schedule[]> => {
+  const res = await api.get('/forms')
+  return res?.data?.data ?? []
+}
 
 const useLoadForms = (hidden: boolean) => {
-  const [data, setdata] = useState<Schedule[]>([])
-  const [loading, setloading] = useState<boolean>(true)
+  const query = useQuery<Schedule[]>({
+    queryKey: ['forms'],
+    queryFn: fetchForms,
+    enabled: !hidden,
+    staleTime: 1000 * 60 * 2,
+    retry: 1,
+    meta: {
+      onError: (error: any) => {
+        console.error('[ERROR API] /forms/', error?.response?.data || error)
+      },
+    },
+  })
 
-  const loadData = useCallback(async () => {
-    try {
-      setloading(true)
-      const res = await api.get(`/forms`)
-      setdata(res?.data?.data ?? [])
-      console.log(res)
-    } catch (error: any) {
-      console.error('[ERROR API] /forms/', error?.response?.data)
-    } finally {
-      setloading(false)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!hidden) loadData()
-  }, [loadData, hidden])
-
-  return { loading, data, loadData }
+  return {
+    loading: query.isLoading || query.isFetching,
+    data: query.data || [],
+    loadData: query.refetch,
+  }
 }
 
 export default useLoadForms

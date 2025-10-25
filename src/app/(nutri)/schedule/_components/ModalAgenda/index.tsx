@@ -160,7 +160,10 @@ const ModalAgenda = ({
     setOpenModal(!openModal)
   }, [openModal])
 
-  const steps = ['Selecione o paciente', 'Dados da Consulta']
+  const steps = [
+    { label: 'Selecione o paciente', icon: <Person /> },
+    { label: 'Dados da Consulta', icon: <DescriptionIcon /> },
+  ]
 
   const patientSearch = useMemo(() => {
     return (
@@ -199,12 +202,7 @@ const ModalAgenda = ({
               </div>
             ) : (
               <>
-                <CustomizedSteppers
-                  steps={steps}
-                  activeTab={viewTwo ? 1 : 0}
-                  iconStep1={<Person />}
-                  iconStep2={<DescriptionIcon />}
-                />
+                <CustomizedSteppers steps={steps} activeTab={viewTwo ? 1 : 0} />
                 {!viewTwo && (
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center w-full gap-4">

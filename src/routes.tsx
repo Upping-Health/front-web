@@ -10,10 +10,12 @@ import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer'
 import ChecklistIcon from '@mui/icons-material/Checklist'
 import SoupKitchenIcon from '@mui/icons-material/SoupKitchen'
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz'
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import { JSX } from 'react'
 import { Person, Settings } from '@mui/icons-material'
 import InventoryIcon from '@mui/icons-material/Inventory'
 export const TABS_DASH = {
+  FINANCIAL: 'financial',
   DASH: 'dash',
   USERS: 'users',
   AGENDA: 'agenda',
@@ -43,6 +45,12 @@ export interface Tab {
 }
 
 export const dashboardTabs: Record<TabValue, Tab> = {
+  financial: {
+    name: 'Financeiro',
+    icon: <AccountBalanceIcon />,
+    value: TABS_DASH.FINANCIAL,
+    path: '/financial',
+  },
   dash: {
     name: 'Dashboard',
     icon: <DashboardIcon />,
