@@ -46,6 +46,7 @@ const CardForms: React.FC<TableProps> = ({
 
   const numberPages = Math.ceil(data.length / itemsPerPage)
 
+  console.log()
   const dataToDisplay = useMemo(() => {
     if (!data) return []
     const startIndex = (currentPage - 1) * itemsPerPage
