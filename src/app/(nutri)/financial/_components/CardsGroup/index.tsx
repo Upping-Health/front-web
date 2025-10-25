@@ -9,7 +9,7 @@ const CardsGroup = () => {
   return (
     <div className="grid grid-cols-1 gap-4 mt-6">
       <div className="flex flex-wrap gap-4 w-full">
-        <div className="flex-1 min-w-[250px]">
+        <div className="flex-1 min-w-[300px]">
           <CardValues
             className="bg-blue-500"
             icon={<AttachMoneyIcon />}
@@ -20,7 +20,7 @@ const CardsGroup = () => {
           />
         </div>
 
-        <div className="flex-1 min-w-[250px]">
+        <div className="flex-1 min-w-[300px]">
           <CardValues
             className="bg-red-400"
             icon={<RestoreIcon />}
@@ -31,7 +31,7 @@ const CardsGroup = () => {
           />
         </div>
 
-        <div className="flex-1 min-w-[250px]">
+        <div className="flex-1 min-w-[300px]">
           <CardValues
             className="bg-green-400"
             icon={<AttachMoneyIcon />}
@@ -42,7 +42,7 @@ const CardsGroup = () => {
           />
         </div>
 
-        <div className="flex-1 min-w-[250px]">
+        <div className="flex-1 min-w-[300px]">
           <CardValues
             className="bg-orange-400"
             icon={<TimelineIcon />}

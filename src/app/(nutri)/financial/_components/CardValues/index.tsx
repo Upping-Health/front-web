@@ -70,7 +70,7 @@ const CardValues = ({
 
   return (
     <div
-      className={`flex items-center justify-between p-4 rounded-xl shadow-md bg-white dark:bg-gray-700 hover:scale-105 transition-transform duration-300`}
+      className={`flex items-center justify-between p-2 rounded-xl shadow-md bg-white dark:bg-gray-700 hover:scale-105 transition-transform duration-300 relative`}
     >
       <div className="flex items-center">
         <div
@@ -99,7 +99,7 @@ const CardValues = ({
 
       {percent !== undefined && (
         <motion.div
-          className={`flex items-center font-medium ${
+          className={`flex items-center absolute font-medium top-2 right-2 ${
             isPositive ? 'text-green-600' : 'text-red-500'
           }`}
           initial={{ opacity: 0, y: 5 }}
