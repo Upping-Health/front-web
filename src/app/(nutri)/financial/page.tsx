@@ -9,6 +9,7 @@ import RevenueDistribuition from './_components/RevenueDistribuition'
 import MonthlyTrend from './_components/MonthlyTrend'
 import RevenueGrowth from './_components/RevenueGrowth'
 import TransactionsType from './_components/TransactionsType'
+import RecentActivities from './_components/RecentActivities'
 
 const FinancialContent = () => {
   const data = [
@@ -46,6 +47,12 @@ const FinancialContent = () => {
           <TransactionsType />
         </div>
       </div>
+
+      <div className="">
+        <RecentActivities />
+      </div>
+
+      <div className="h-14" />
     </div>
   )
 }
