@@ -1,11 +1,10 @@
 'use client'
-import MovingIcon from '@mui/icons-material/Moving'
+import PaidIcon from '@mui/icons-material/Paid'
 import {
   PieChart,
   pieArcClasses,
   pieArcLabelClasses,
 } from '@mui/x-charts/PieChart'
-import PaidIcon from '@mui/icons-material/Paid'
 const TransactionsType = () => {
   const data = [
     { id: 0, value: 10, label: 'Assinaturas', color: '#3b82f6' },
