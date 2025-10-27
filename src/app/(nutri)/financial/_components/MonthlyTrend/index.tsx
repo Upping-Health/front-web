@@ -10,10 +10,10 @@ const MonthlyTrend = () => {
   const despesas = [0, 2000, 5000, 9700]
 
   return (
-    <div className="mt-6 bg-white shadow-md rounded-xl p-4 w-full h-[370px]">
+    <div className="mt-6 bg-white shadow-md rounded-xl p-4 w-full h-[420px] dark:bg-gray-700">
       <div className="flex items-center gap-2 pb-4">
-        <CalendarMonthIcon />
-        <div className="text-gray-800 text-lg font-semibold">
+        <CalendarMonthIcon className="dark:text-white" />
+        <div className="text-gray-800 text-lg font-semibold dark:text-white">
           Tendência Mensal
         </div>
       </div>
@@ -26,16 +26,28 @@ const MonthlyTrend = () => {
         ]}
         yAxis={[
           {
-            valueFormatter: (value) => `R$ ${value / 100}`,
+            valueFormatter: (value: any) => `R$ ${value / 100}`,
           },
         ]}
         height={300}
-        margin={{
-          left: 60,
-        }}
         sx={{
           '.MuiLineElement-root': { strokeWidth: 3 },
           '.MuiChartsLegend-root': { mt: 2 },
+          '.dark & .MuiChartsLegend-label': {
+            color: '#FFFFFF',
+          },
+          '.dark & .MuiChartsAxis-tickLabel tspan': {
+            fill: '#FFFFFF !important',
+          },
+          '.dark & .MuiChartsAxis-label tspan': {
+            fill: '#FFFFFF !important',
+          },
+          '.dark & .MuiChartsAxis-line': {
+            stroke: '#FFFFFF !important',
+          },
+          '.dark & .MuiChartsAxis-tick': {
+            stroke: '#FFFFFF !important',
+          },
         }}
       />
     </div>
