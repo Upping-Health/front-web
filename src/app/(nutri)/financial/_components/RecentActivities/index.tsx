@@ -7,15 +7,15 @@ const RecentActivities = () => {
   const Card = ({ title, observation, date, value }: any) => {
     const isPositive = value !== undefined && value >= 0
     return (
-      <div className="flex justify-between border-b-gray-100 border-b-2 pb-1">
+      <div className="flex justify-between border-b-gray-100 dark:border-b-gray-600 border-b-2 pb-1">
         <div>
-          <p className="font-bold">{title}</p>
-          <p className="font-extralight">{observation}</p>
-          <p className="font-extralight">{date}</p>
+          <p className="font-bold  dark:text-white">{title}</p>
+          <p className="font-extralight  dark:text-white">{observation}</p>
+          <p className="font-extralight  dark:text-white">{date}</p>
         </div>
 
         <p
-          className={`flex items-center font-medium ${
+          className={`flex items-center font-bold ${
             isPositive ? 'text-green-600' : 'text-red-500'
           }`}
         >
@@ -26,10 +26,10 @@ const RecentActivities = () => {
   }
 
   return (
-    <div className="mt-6 bg-white shadow-md rounded-xl p-4 w-full h-[370px]">
+    <div className="mt-6 bg-white shadow-md rounded-xl p-4 w-full h-[370px] dark:bg-gray-700">
       <div className="flex items-center gap-2 pb-2">
-        <History />
-        <div className="text-gray-800 text-lg font-semibold">
+        <History className="dark:text-white" />
+        <div className="text-gray-800 text-lg font-semibold dark:text-white">
           Atividades recentes
         </div>
       </div>

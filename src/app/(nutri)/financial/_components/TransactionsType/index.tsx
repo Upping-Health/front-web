@@ -14,14 +14,15 @@ const TransactionsType = () => {
   ]
 
   return (
-    <div className="mt-6 bg-white shadow-md rounded-xl p-4 w-full h-[370px]">
+    <div className="mt-6 bg-white shadow-md rounded-xl p-4 w-full h-[420px] dark:bg-gray-700">
       <div className="flex items-center gap-2 pb-2">
-        <PaidIcon />
-        <div className="text-gray-800 text-lg font-semibold">
+        <PaidIcon className="dark:text-white" />
+        <div className="text-gray-800 text-lg font-semibold dark:text-white">
           Tipos de transação
         </div>
       </div>
       <PieChart
+        className="text-white"
         series={[
           {
             innerRadius: 0,
@@ -31,21 +32,22 @@ const TransactionsType = () => {
           },
         ]}
         height={300}
-        margin={{ top: 20, bottom: 40, left: 50 }}
         slotProps={{
           legend: {
-            position: { vertical: 'bottom', horizontal: 'middle' },
-            direction: 'row',
-            itemGap: 10,
-            padding: {
-              top: 20,
-            },
+            position: { vertical: 'bottom', horizontal: 'center' },
+            direction: 'horizontal',
           },
         }}
         sx={{
+          [`& .${pieArcClasses.root}`]: {
+            stroke: 'none',
+          },
           [`& .${pieArcLabelClasses.root}`]: {
             fill: 'white',
             fontSize: 14,
+          },
+          '.dark & .MuiChartsLegend-label': {
+            color: '#FFFFFF',
           },
         }}
       />

@@ -1,6 +1,10 @@
 'use client'
 import MovingIcon from '@mui/icons-material/Moving'
-import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart'
+import {
+  PieChart,
+  pieArcClasses,
+  pieArcLabelClasses,
+} from '@mui/x-charts/PieChart'
 
 const RevenueDistribuition = () => {
   const data = [
@@ -10,10 +14,10 @@ const RevenueDistribuition = () => {
   ]
 
   return (
-    <div className="mt-6 bg-white shadow-md rounded-xl p-4 w-full h-[370px]">
+    <div className="mt-6 bg-white shadow-md rounded-xl p-4 w-full h-[420px] dark:bg-gray-700">
       <div className="flex items-center gap-2 pb-2">
-        <MovingIcon />
-        <div className="text-gray-800 text-lg font-semibold">
+        <MovingIcon className="dark:text-white" />
+        <div className="text-gray-800 text-lg font-semibold dark:text-white">
           Distribuição de Receita
         </div>
       </div>
@@ -29,23 +33,29 @@ const RevenueDistribuition = () => {
           },
         ]}
         height={300}
-        margin={{ top: 20, bottom: 40, left: 50 }}
         slotProps={{
           legend: {
-            position: { vertical: 'bottom', horizontal: 'middle' },
-            direction: 'row',
-            itemGap: 10,
-            padding: {
-              top: 20,
-            },
+            position: { vertical: 'bottom', horizontal: 'center' },
+            direction: 'horizontal',
           },
         }}
-        sx={{
+        sx={(theme) => ({
+          [`& .${pieArcClasses.root}`]: {
+            stroke: 'none',
+          },
           [`& .${pieArcLabelClasses.root}`]: {
             fill: 'white',
             fontSize: 14,
           },
-        }}
+
+          '& .MuiChartsLegend-root': {
+            gap: theme.spacing(1.25),
+            paddingTop: theme.spacing(2.5),
+          },
+          '.dark & .MuiChartsLegend-label': {
+            color: '#FFFFFF',
+          },
+        })}
       />
     </div>
   )

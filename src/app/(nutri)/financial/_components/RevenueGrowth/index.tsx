@@ -9,10 +9,10 @@ const RevenueGrowth = () => {
   ]
 
   return (
-    <div className="mt-6 bg-white shadow-md rounded-xl p-4 w-full h-[370px]">
+    <div className="mt-6 bg-white shadow-md rounded-xl p-4 w-full h-[420px] dark:bg-gray-700">
       <div className="flex items-center gap-2 pb-2">
-        <MovingIcon />
-        <div className="text-gray-800 text-lg font-semibold">
+        <MovingIcon className="dark:text-white" />
+        <div className="text-gray-800 text-lg font-semibold dark:text-white">
           Crescimento da Receita
         </div>
       </div>
@@ -26,16 +26,31 @@ const RevenueGrowth = () => {
         ]}
         yAxis={[
           {
-            valueFormatter: (value) => `R$ ${value / 100}`,
+            valueFormatter: (value: any) => `R$ ${value / 100}`,
           },
         ]}
         height={300}
         slotProps={{
           legend: {
-            position: { vertical: 'bottom', horizontal: 'middle' },
-            direction: 'row',
-            itemGap: 10,
-            padding: { top: 20 },
+            position: { vertical: 'bottom', horizontal: 'center' },
+            direction: 'horizontal',
+          },
+        }}
+        sx={{
+          '.dark & .MuiChartsLegend-label': {
+            color: '#FFFFFF',
+          },
+          '.dark & .MuiChartsAxis-tickLabel tspan': {
+            fill: '#FFFFFF !important',
+          },
+          '.dark & .MuiChartsAxis-label tspan': {
+            fill: '#FFFFFF !important',
+          },
+          '.dark & .MuiChartsAxis-line': {
+            stroke: '#FFFFFF !important',
+          },
+          '.dark & .MuiChartsAxis-tick': {
+            stroke: '#FFFFFF !important',
           },
         }}
       />
