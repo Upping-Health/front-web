@@ -26,7 +26,8 @@ const MonthlyTrend = () => {
         ]}
         yAxis={[
           {
-            valueFormatter: (value: any) => `R$ ${value / 100}`,
+            width: 50,
+            valueFormatter: (value: number) => `R$ ${value / 100}`,
           },
         ]}
         height={300}

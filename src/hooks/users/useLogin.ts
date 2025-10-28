@@ -27,7 +27,7 @@ export function useLogin() {
         Cookies.set('token', data.access_token, { expires: 365 })
         localStorage.setItem('user', JSON.stringify(data.user))
         setuser(data.user)
-        router.push('/dashboard')
+        router.push('/financial')
       } else {
         setError('Credenciais inválidas, tente novamente.')
       }

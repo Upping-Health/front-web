@@ -863,6 +863,11 @@
   dependencies:
     lottie-web "^5.10.2"
 
+"@microsoft/clarity@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@microsoft/clarity/-/clarity-1.0.0.tgz#e5f6c87d4aac9bac0cedeaa94158a3fd32fbcd5e"
+  integrity sha512-2QY6SmXnqRj6dWhNY8NYCN3e53j4zCFebH4wGnNhdGV1mqAsQwql2fT0w8TISxCvwwfVp8idsWLIdrRHOms1PQ==
+
 "@mui/base@5.0.0-beta.38":
   version "5.0.0-beta.38"
   resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-beta.38.tgz#0d79c1158d18d9decfc8fa3ab87b4830a49cf952"

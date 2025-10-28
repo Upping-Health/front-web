@@ -26,6 +26,7 @@ const RevenueGrowth = () => {
         ]}
         yAxis={[
           {
+            width: 50,
             valueFormatter: (value: any) => `R$ ${value / 100}`,
           },
         ]}
