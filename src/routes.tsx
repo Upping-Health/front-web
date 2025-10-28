@@ -16,7 +16,7 @@ import { Person, Settings } from '@mui/icons-material'
 import InventoryIcon from '@mui/icons-material/Inventory'
 export const TABS_DASH = {
   FINANCIAL: 'financial',
-  DASH: 'dash',
+  //DASH: 'dash',
   USERS: 'users',
   AGENDA: 'agenda',
   PACIENTES: 'pacientes',
@@ -51,12 +51,12 @@ export const dashboardTabs: Record<TabValue, Tab> = {
     value: TABS_DASH.FINANCIAL,
     path: '/financial',
   },
-  dash: {
-    name: 'Dashboard',
-    icon: <DashboardIcon />,
-    value: TABS_DASH.DASH,
-    path: '/dashboard',
-  },
+  // dash: {
+  //   name: 'Dashboard',
+  //   icon: <DashboardIcon />,
+  //   value: TABS_DASH.DASH,
+  //   path: '/dashboard',
+  // },
   users: {
     name: 'Usuários',
     icon: <Person />,

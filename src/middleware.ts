@@ -4,7 +4,7 @@ export default async function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value
 
   const signInURL = new URL('/login', request.url)
-  const dashboardURL = new URL('/dashboard', request.url)
+  const dashboardURL = new URL('/financial', request.url)
 
   const publicPaths = ['/login', '/register', '/accountRecovery']
   const currentPath = request.nextUrl.pathname

@@ -26,6 +26,7 @@
     "@fullcalendar/react": "^6.1.17",
     "@fullcalendar/timegrid": "^6.1.17",
     "@lottiefiles/react-lottie-player": "^3.5.3",
+    "@microsoft/clarity": "^1.0.0",
     "@mui/icons-material": "^5.15.11",
     "@mui/material": "^5.15.11",
     "@mui/system": "^6.4.8",
