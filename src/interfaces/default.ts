@@ -1,5 +1,5 @@
 export default interface DefaultEntityType {
-  uuid: number
+  uuid: string
   created_at: Date
   updated_at?: Date
 }

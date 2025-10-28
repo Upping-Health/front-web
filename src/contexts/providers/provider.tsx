@@ -9,10 +9,6 @@ import { useEffect } from 'react'
 const queryClient = new QueryClient()
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    Clarity.init('txfz8tibf7')
-  }, [])
-
   return (
     <QueryClientProvider client={queryClient}>
       <DefaultProvider>
