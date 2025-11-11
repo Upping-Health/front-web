@@ -78,7 +78,7 @@ function ColorlibStepIcon(
       ownerState={{ completed, active }}
       className={className}
     >
-      {icons[stepIndex]}
+      <>{icons[stepIndex]}</>
     </ColorlibStepIconRoot>
   )
 }
