@@ -78,7 +78,7 @@ function ColorlibStepIcon(
       ownerState={{ completed, active }}
       className={className}
     >
-      {icons[stepIndex]}
+      <>{icons[stepIndex]}</>
     </ColorlibStepIconRoot>
   )
 }
@@ -93,18 +93,11 @@ export default function CustomizedSteppers({
   const icons = steps.map((s) => s.icon)
 
   return (
-    <Stack sx={{ width: '100%' }}>
+    <Stack>
       <Stepper
         alternativeLabel
         activeStep={activeTab}
         connector={<ColorlibConnector />}
-        sx={{
-          width: '100%',
-          justifyContent: 'space-between',
-          '& .MuiStep-root': {
-            flex: 1,
-          },
-        }}
       >
         {steps.map((step, index) => (
           <Step key={index}>

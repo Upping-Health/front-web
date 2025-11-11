@@ -19,15 +19,17 @@ import Formula from '../_components/Formula'
 import { ProgramarVentaSection } from '../_components/ProgramarVenta'
 import { EnergyCalculation } from '@/interfaces/energyCalculation.interface'
 import AnalysisSidebar from '../_components/AnalysisSidebar'
+import { useParams } from 'next/navigation'
 
 interface PageProps {
-  params: {
-    patientId: string
-    energyCalculationId: string
-  }
+  patientId: string
+  energyCalculationId: string
 }
 
-const EnergyCalculationCreatePage = ({ params }: PageProps) => {
+const EnergyCalculationCreatePage = () => {
+  const paramsRaw = useParams()
+  const params = paramsRaw as unknown as PageProps
+
   const { onShowFeedBack } = useContext(DefaultContext)
   const [apiLoading, setApiLoading] = useState(false)
 

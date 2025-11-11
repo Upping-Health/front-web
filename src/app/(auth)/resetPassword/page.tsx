@@ -9,7 +9,7 @@ import PreFeedBack from '@/lib/feedbackStatus'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined'
 import LockOutlined from '@mui/icons-material/LockOutlined'
 import { useFormik } from 'formik'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useContext, useState } from 'react'
 import { colors } from '@/lib/colors/colors'
 
@@ -17,7 +17,6 @@ export default function AccountRecovery() {
   const router = useRouter()
   const [loading, setloading] = useState(false)
   const { onShowFeedBack } = useContext(DefaultContext)
-  const searchParams = useSearchParams()
   const formik = useFormik({
     initialValues: {
       password: '',
@@ -28,18 +27,18 @@ export default function AccountRecovery() {
       const { password, repeatPassword } = values
       if (password !== repeatPassword)
         return onShowFeedBack(PreFeedBack.error('As senhas não conferem!'))
-      const token = searchParams.get('token')
-      console.log(token)
+      // const token = searchParams.get('token')
+      // console.log(token)
 
-      api
-        .post(`users/changePassword/${password}`, {
-          token,
-        })
-        .then(() =>
-          onShowFeedBack(PreFeedBack.success('E-mail enviado com sucesso!')),
-        )
-        .catch((e) => onShowFeedBack(PreFeedBack.error('')))
-        .finally(() => setloading(false))
+      // api
+      //   .post(`users/changePassword/${password}`, {
+      //     token,
+      //   })
+      //   .then(() =>
+      //     onShowFeedBack(PreFeedBack.success('E-mail enviado com sucesso!')),
+      //   )
+      //   .catch((e) => onShowFeedBack(PreFeedBack.error('')))
+      //   .finally(() => setloading(false))
     },
   })
   return (

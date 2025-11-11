@@ -1,9 +1,11 @@
+import ButtonExport from '@/components/buttons/buttonExport'
+import InputStyled from '@/components/inputs/inputStyled'
+import NotFoundData from '@/components/layout/notFoundData'
 import { colors } from '@/lib/colors/colors'
+import { exportTable } from '@/lib/export/export-xlsx'
 import SearchIcon from '@mui/icons-material/Search'
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import SortIcon from '@mui/icons-material/Sort'
 import {
-  Card,
   Table as MuiTable,
   Paper,
   TableBody,
@@ -13,14 +15,8 @@ import {
   TableRow,
 } from '@mui/material'
 import React, { useMemo, useState } from 'react'
-import PaginationDash from '../paginationDash'
-import ButtonExport from '@/components/buttons/buttonExport'
 import FilterTable from '../filterTable'
-import InputStyled from '@/components/inputs/inputStyled'
-import NotFoundData from '@/components/layout/notFoundData'
-import SwapVertIcon from '@mui/icons-material/SwapVert'
-import SortIcon from '@mui/icons-material/Sort'
-import { exportTable } from '@/lib/export/export-xlsx'
+import PaginationDash from '../paginationDash'
 
 interface TableProps {
   columns: Array<{
@@ -163,7 +159,7 @@ const TableDash: React.FC<TableProps> = ({
                     const isSorted = sortConfig?.field === col.field
                     return (
                       <TableCell
-                        key={index}
+                        key={col.field}
                         onClick={() => handleSort(col.field)}
                         onMouseEnter={() => setHoveredColumn(col.field)}
                         onMouseLeave={() => setHoveredColumn(null)}

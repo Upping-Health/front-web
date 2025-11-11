@@ -63,7 +63,7 @@ export default function Register() {
             Cookies.set('token', data.token, { expires: 365 })
             localStorage.setItem('user', JSON.stringify(data.client))
             setuser(data.user as any)
-            router.push('/dashboard')
+            router.push('/financial')
           }
         })
         .catch((error) =>

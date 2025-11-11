@@ -54,13 +54,6 @@ const StepBasicInfo = ({ formik }: any) => (
       required
     />
     <InputStyled
-      id="normalized_name"
-      label="Nome normalizado"
-      type="text"
-      value={formik.values.normalized_name}
-      onChange={(e) => formik.setFieldValue('normalized_name', e.target.value)}
-    />
-    <InputStyled
       id="description"
       label="Descrição"
       type="text"
@@ -126,7 +119,6 @@ const ModalFood = ({
     enableReinitialize: true,
     initialValues: {
       name: '',
-      normalized_name: '',
       description: '',
       category: '',
       source: '',
@@ -179,7 +171,6 @@ const ModalFood = ({
     if (open && dataSelected) {
       formik.setValues({
         name: dataSelected.name || '',
-        normalized_name: dataSelected.normalized_name || '',
         description: dataSelected.description || '',
         category: dataSelected.category || '',
         source: dataSelected.source || '',
@@ -232,7 +223,7 @@ const ModalFood = ({
   }, [activeStep, formik])
 
   return (
-    <ModalBase open={open} onClose={loading ? undefined : setIsClose}>
+    <ModalBase open={open} onClose={loading ? undefined : setIsClose} size="lg">
       <ModalHeader
         title={dataSelected ? 'Editar alimento' : 'Cadastrar alimento'}
         onClose={loading ? undefined : setIsClose}

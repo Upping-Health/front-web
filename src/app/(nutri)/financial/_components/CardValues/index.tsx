@@ -1,14 +1,10 @@
 'use client'
 import { colors } from '@/lib/colors/colors'
 import Money from '@/lib/masks/money'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import MovingIcon from '@mui/icons-material/Moving'
-import TrendingDownIcon from '@mui/icons-material/TrendingDown'
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 interface CardValuesProps {
   icon: React.ReactElement
   title: string
@@ -76,12 +72,14 @@ const CardValues = ({
         <div
           className={`p-2 rounded-xl flex items-center justify-center ${className}`}
         >
-          {React.cloneElement(icon, {
-            style: {
-              fontSize: 42,
-              color: colors.white,
-            },
-          })}
+          {React.isValidElement(icon)
+            ? React.cloneElement(icon as React.ReactElement<any>, {
+                style: {
+                  fontSize: 42,
+                  color: colors.white,
+                },
+              })
+            : icon}
         </div>
 
         <div className="ml-2 text-black dark:text-white">

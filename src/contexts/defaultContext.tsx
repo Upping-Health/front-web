@@ -11,6 +11,7 @@ import api from '@/services/api'
 import { useRouter } from 'next/navigation'
 import useDarkMode from '@/hooks/theme/useDarkMode'
 import useLoadOperationData from '@/hooks/operation/useLoadOperationData'
+import Clarity from '@microsoft/clarity'
 
 type ShowModalType = {
   open: boolean
@@ -47,6 +48,8 @@ export default function DefaultProvider({
       }
       try {
         const parsedUser = JSON.parse(userStr)
+        Clarity.init('txfz8tibf7')
+        Clarity.setTag('userId', user?.uuid ?? '')
         setUser(parsedUser)
       } catch (error) {
         console.error(error)

@@ -22,14 +22,15 @@ import PreFeedBack from '@/lib/feedbackStatus'
 import { DefaultContext } from '@/contexts/defaultContext'
 import ModalConfirmation from '@/components/modals/ModalConfirmation'
 import Loading from '@/components/layout/loading'
+import { useParams } from 'next/navigation'
 interface PageProps {
-  params: {
-    patientId: string
-  }
+  patientId: string
 }
 
-const DocumentsPage = ({ params }: PageProps) => {
+const DocumentsPage = () => {
   const { onShowFeedBack } = useContext(DefaultContext)
+  const paramsRaw = useParams()
+  const params = paramsRaw as unknown as PageProps
   const [isNavigating, setIsNavigating] = useState(false)
   const [openAddDocument, setOpenAddDocument] = useState(false)
 

@@ -6,6 +6,7 @@ interface ModalBaseProps {
   open: boolean
   onClose?: () => void
   children: ReactNode
+  size?: 'sm' | 'md' | 'lg' | 'xl'
 }
 
 interface ModalHeaderProps {
@@ -41,18 +42,32 @@ export const ModalFooter = ({ children }: { children: ReactNode }) => {
   return <div className="pt-5 flex gap-5 justify-end px-2">{children}</div>
 }
 
-const ModalBase = ({ open, onClose, children }: ModalBaseProps) => {
+const sizeClasses = {
+  sm: 'max-w-[400px]',
+  md: 'max-w-[500px]',
+  lg: 'max-w-[600px]',
+  xl: 'max-w-[800px]',
+}
+
+const ModalBase = ({
+  open,
+  onClose,
+  children,
+  size = 'md',
+}: ModalBaseProps) => {
   return (
     <Modal
       open={open}
       onClose={(event, reason) => {
         if (reason !== 'backdropClick' && reason !== 'escapeKeyDown') {
-          if (onClose) onClose()
+          onClose?.()
         }
       }}
       className="flex justify-center items-center"
     >
-      <div className="bg-white dark:bg-gray-800 rounded-20 px-2 py-4 w-[85%] max-w-[500px] max-h-[90vh] flex flex-col gap-2">
+      <div
+        className={`bg-white dark:bg-gray-800 rounded-20 px-2 py-4 w-[85%] max-h-[90vh] flex flex-col gap-2 ${sizeClasses[size]}`}
+      >
         {children}
       </div>
     </Modal>

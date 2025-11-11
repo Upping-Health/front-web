@@ -34,22 +34,22 @@ const FinancialContent = () => {
 
       <CardsGroup />
 
-      <div className="flex gap-8">
-        <div className="w-1/2">
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="w-full md:w-1/2">
           <RevenueDistribuition />
         </div>
 
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2">
           <MonthlyTrend />
         </div>
       </div>
 
-      <div className="flex gap-8">
-        <div className="w-1/2">
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="w-full md:w-1/2">
           <RevenueGrowth />
         </div>
 
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2">
           <TransactionsType />
         </div>
       </div>
