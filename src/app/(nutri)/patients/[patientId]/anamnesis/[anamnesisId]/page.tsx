@@ -21,15 +21,16 @@ import useLoadSubmissionByUUID from '@/hooks/forms/useLoadSubmissionByUUID'
 import { createValidationSchemaFromAnswers } from '@/lib/formik/validators/validator-dinamic-form'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import api from '@/services/api'
+import { useParams } from 'next/navigation'
 
 interface PageProps {
-  params: {
-    patientId: string
-    anamnesisId: string
-  }
+  patientId: string
+  anamnesisId: string
 }
 
-const AnamneseCreatePage = ({ params }: PageProps) => {
+const AnamneseCreatePage = () => {
+  const paramsRaw = useParams()
+  const params = paramsRaw as unknown as PageProps
   const { onShowFeedBack } = useContext(DefaultContext)
   const [apiLoading, setApiLoading] = useState(false)
   const saveData = async (values: any, isAutomatic: boolean = false) => {

@@ -16,10 +16,8 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-light dark:bg-gray-900`}>
-        <DashboardLayoutClient>{children}</DashboardLayoutClient>
-      </body>
-    </html>
+    <div className={`${inter.className} bg-light dark:bg-gray-900`}>
+      <DashboardLayoutClient>{children}</DashboardLayoutClient>
+    </div>
   )
 }

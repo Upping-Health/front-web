@@ -15,20 +15,20 @@ import api from '@/services/api'
 import { Delete, Person } from '@mui/icons-material'
 import CreateIcon from '@mui/icons-material/Create'
 import dateFormat from 'dateformat'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useCallback, useContext, useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
 import ButtonActive from '@/components/buttons/buttonActive'
 import ModalConfirmation from '@/components/modals/ModalConfirmation'
 import { LinkButton } from '@/components/buttons/linkButton'
 interface PageProps {
-  params: {
-    patientId: string
-  }
+  patientId: string
 }
 
-const AnamnesisPage = ({ params }: PageProps) => {
+const AnamnesisPage = () => {
   const router = useRouter()
+  const paramsRaw = useParams()
+  const params = paramsRaw as unknown as PageProps
   const { onShowFeedBack } = useContext(DefaultContext)
   const [isNavigating, setIsNavigating] = useState(false)
   const [openConfirm, setOpenConfirm] = useState(false)

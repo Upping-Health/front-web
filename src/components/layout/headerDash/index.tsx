@@ -34,8 +34,11 @@ const HeaderDash = () => {
   const [openMenu, setOpenMenu] = useState(false)
   const [openNotifications, setOpenNotifications] = useState(false)
   const [currentTime, setCurrentTime] = useState<string | null>(null)
+  const [mounted, setMounted] = useState(false) // 👈
 
   useEffect(() => {
+    setMounted(true)
+
     const updateTime = () => {
       setCurrentTime(
         new Date().toLocaleString('pt-BR', {
@@ -53,6 +56,8 @@ const HeaderDash = () => {
     const interval = setInterval(updateTime, 60000)
     return () => clearInterval(interval)
   }, [])
+
+  if (!mounted) return null
 
   return (
     <>

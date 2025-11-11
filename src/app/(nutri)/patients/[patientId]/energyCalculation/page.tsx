@@ -15,7 +15,7 @@ import { Person } from '@mui/icons-material'
 import CreateIcon from '@mui/icons-material/Create'
 import { CircularProgress } from '@mui/material'
 import dateFormat from 'dateformat'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useCallback, useContext, useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
 import { EnergyCalculation } from '@/interfaces/energyCalculation.interface'
@@ -25,14 +25,14 @@ import Loading from '@/components/layout/loading'
 import { LinkButton } from '@/components/buttons/linkButton'
 
 interface PageProps {
-  params: {
-    patientId: string
-  }
+  patientId: string
 }
 
-const EnergyCalculationPage = ({ params }: PageProps) => {
+const EnergyCalculationPage = () => {
   const { onShowFeedBack } = useContext(DefaultContext)
   const [isNavigating, setIsNavigating] = useState(false)
+  const paramsRaw = useParams()
+  const params = paramsRaw as unknown as PageProps
 
   const [openConfirm, setOpenConfirm] = useState(false)
   const [documentToDelete, setDocumentToDelete] =

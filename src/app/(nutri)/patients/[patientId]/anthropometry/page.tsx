@@ -15,8 +15,8 @@ import { Person } from '@mui/icons-material'
 import CreateIcon from '@mui/icons-material/Create'
 import { CircularProgress } from '@mui/material'
 import dateFormat from 'dateformat'
-import { useRouter } from 'next/navigation'
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { useRouter, useParams } from 'next/navigation'
+import React, { useCallback, useContext, useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ModalConfirmation from '@/components/modals/ModalConfirmation'
@@ -24,13 +24,15 @@ import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.i
 import Loading from '@/components/layout/loading'
 import { LinkButton } from '@/components/buttons/linkButton'
 
-interface PageProps {
-  params: {
-    patientId: string
-  }
+interface Params {
+  patientId: string
 }
 
-const AnthropometryPage = ({ params }: PageProps) => {
+const AnthropometryPage = () => {
+  const paramsRaw = useParams()
+  const params = paramsRaw as unknown as Params
+  const { patientId } = params
+
   const { onShowFeedBack } = useContext(DefaultContext)
   const [isNavigating, setIsNavigating] = useState(false)
   const [openConfirm, setOpenConfirm] = useState(false)
@@ -38,14 +40,14 @@ const AnthropometryPage = ({ params }: PageProps) => {
     useState<AnthropometryFormValues | null>(null)
 
   const { data, loadData, loading } = useLoadAnthropometryByPatient(
-    params.patientId,
+    patientId,
     false,
   )
   const {
     data: patientData,
     loadData: patientLoadData,
     loading: patientLoading,
-  } = useLoadPatientByUUID(params.patientId)
+  } = useLoadPatientByUUID(patientId)
 
   const router = useRouter()
 
@@ -63,7 +65,7 @@ const AnthropometryPage = ({ params }: PageProps) => {
         onShowFeedBack(PreFeedBack.error(message))
       }
     },
-    [patientData, loadData, onShowFeedBack],
+    [loadData, onShowFeedBack],
   )
 
   const handleDeleteClick = (doc: AnthropometryFormValues) => {
@@ -91,7 +93,6 @@ const AnthropometryPage = ({ params }: PageProps) => {
         field: 'updated_at',
         render: (value: any) => {
           if (!value) return ''
-
           const date = new Date(value)
           return dateFormat(date, 'dd/MM/yyyy')
         },
@@ -103,39 +104,35 @@ const AnthropometryPage = ({ params }: PageProps) => {
       {
         header: '#',
         field: '{row}',
-        render: (_: any, row: any) => {
-          return (
-            <div className="flex gap-2">
-              <LinkButton
-                href={`/patients/${params.patientId}/anthropometry/${row.uuid}`}
-              >
-                <CreateIcon className="text-gray-600 text-lg dark:text-white" />
-              </LinkButton>
-
-              <HeaderButton onClick={() => handleDeleteClick(row)}>
-                <DeleteIcon className="text-red text-xl" />
-              </HeaderButton>
-            </div>
-          )
-        },
+        render: (_: any, row: any) => (
+          <div className="flex gap-2">
+            <LinkButton
+              href={`/patients/${patientId}/anthropometry/${row.uuid}`}
+            >
+              <CreateIcon className="text-gray-600 text-lg dark:text-white" />
+            </LinkButton>
+            <HeaderButton onClick={() => handleDeleteClick(row)}>
+              <DeleteIcon className="text-red text-xl" />
+            </HeaderButton>
+          </div>
+        ),
       },
     ],
-    [patientData, handleDeleteClick],
+    [patientData, patientId],
   )
 
   const handleNewAnthropometry = async () => {
     setIsNavigating(true)
 
     const today = new Date()
-    const year = String(today.getFullYear())
+    const year = today.getFullYear()
     const month = String(today.getMonth() + 1).padStart(2, '0')
     const day = String(today.getDate()).padStart(2, '0')
-
     const formattedDate = `${year}-${month}-${day}`
 
     try {
       const response = await api.post('/anthropometrics/store', {
-        patient_id: params.patientId,
+        patient_id: patientId,
         evaluation_date: formattedDate,
         weight: 60,
         height: 169,
@@ -178,18 +175,15 @@ const AnthropometryPage = ({ params }: PageProps) => {
       })
 
       const uuid = response?.data?.message?.uuid
-
       if (uuid) {
-        router.push(`/patients/${params.patientId}/anthropometry/${uuid}`)
+        router.push(`/patients/${patientId}/anthropometry/${uuid}`)
       } else {
-        return onShowFeedBack(
-          PreFeedBack.error('Erro ao criar antroprometria.'),
-        )
+        onShowFeedBack(PreFeedBack.error('Erro ao criar antroprometria.'))
       }
     } catch (error: any) {
       const message =
         error?.response?.message || 'Erro ao criar antroprometria.'
-      return onShowFeedBack(PreFeedBack.error(message))
+      onShowFeedBack(PreFeedBack.error(message))
     } finally {
       setIsNavigating(false)
     }
@@ -207,11 +201,7 @@ const AnthropometryPage = ({ params }: PageProps) => {
 
   return (
     <>
-      <div
-        className={
-          'w-full h-full flex flex-col transition-opacity duration-300'
-        }
-      >
+      <div className="w-full h-full flex flex-col transition-opacity duration-300">
         <TopDash
           title={patientData?.name ?? 'Paciente'}
           description={`${Math.abs(Number(patientData?.age) || 0).toFixed(0)} anos, ${SEX_PT_BR[patientData?.gender ?? 'male']}`}
@@ -236,7 +226,7 @@ const AnthropometryPage = ({ params }: PageProps) => {
           )}
 
           <div className="h-full flex justify-end">
-            <MenuConsult patientId={params.patientId} />
+            <MenuConsult patientId={patientId} />
           </div>
         </div>
 

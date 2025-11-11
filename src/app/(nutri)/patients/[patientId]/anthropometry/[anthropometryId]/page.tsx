@@ -22,15 +22,16 @@ import { PhysicalInfoSection } from '../_components/PhysicalInfoSection'
 import { SkinFoldSection } from '../_components/SkinFoldSection'
 import { formatDateToBR } from '@/lib/format/date'
 import Loading from '@/components/layout/loading'
+import { useParams } from 'next/navigation'
 
 interface PageProps {
-  params: {
-    patientId: string
-    anthropometryId: string
-  }
+  patientId: string
+  anthropometryId: string
 }
 
-const AnthropometryCreatePage = ({ params }: PageProps) => {
+const AnthropometryCreatePage = () => {
+  const paramsRaw = useParams()
+  const params = paramsRaw as unknown as PageProps
   const { onShowFeedBack } = useContext(DefaultContext)
   const [apiLoading, setApiLoading] = useState(false)
   const { countdown, resetTimer } = useTimer({
