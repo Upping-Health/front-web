@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
 import './globals.css'
+import TopLoader from '@/components/layout/topLoader'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,7 +23,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-light flex flex-col h-full relative`}
       >
-        <NextTopLoader color={colors.primary} height={4} showSpinner={false} />
+        <TopLoader />
         <Providers>{children}</Providers>
       </body>
     </html>

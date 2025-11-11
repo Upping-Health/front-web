@@ -16,21 +16,9 @@ import InfoIcon from '@mui/icons-material/Info'
 import RestaurantIcon from '@mui/icons-material/Restaurant'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import AssignmentIcon from '@mui/icons-material/Assignment'
-
-// Interfaces auxiliares
-interface Ingredient {
-  food_id: string
-  unit_id?: string
-  household_unit_id?: string
-  quantity: number
-}
-
-interface Instruction {
-  step_number: number
-  description: string
-  time_minutes?: number
-  image_url?: string
-}
+import InputImageStyled from '@/components/inputs/inputImageStyled'
+import StepBasicInfo from './Steps/StepBasicInfo'
+import StepNutrients from './Steps/StepNutrients'
 
 interface ModalParams {
   open: boolean
@@ -38,72 +26,6 @@ interface ModalParams {
   dataSelected?: any | null
   loadNewData: () => Promise<void>
 }
-
-const StepBasicInfo = ({ formik }: any) => (
-  <div className="flex flex-col gap-3">
-    <InputStyled
-      id="name"
-      label="Nome"
-      type="text"
-      placeholder="Nome"
-      value={formik.values.name}
-      onChange={formik.handleChange}
-      error={formik.errors.name}
-      onBlur={formik.handleBlur}
-      isTouched={formik.touched.name}
-      required
-    />
-    <InputStyled
-      id="description"
-      label="Descrição"
-      type="text"
-      value={formik.values.description}
-      onChange={(e) => formik.setFieldValue('description', e.target.value)}
-    />
-    <InputStyled
-      id="category"
-      label="Categoria (slug)"
-      type="text"
-      value={formik.values.category}
-      onChange={(e) => formik.setFieldValue('category', e.target.value)}
-    />
-    <InputStyled
-      id="source"
-      label="Origem (slug)"
-      type="text"
-      value={formik.values.source}
-      onChange={(e) => formik.setFieldValue('source', e.target.value)}
-    />
-    <InputStyled
-      id="sku"
-      label="SKU"
-      type="text"
-      value={formik.values.sku}
-      onChange={(e) => formik.setFieldValue('sku', e.target.value)}
-    />
-  </div>
-)
-
-const StepNutrients = ({ formik }: any) => (
-  <div className="grid grid-cols-2 gap-3 mt-2">
-    {Object.keys(formik.values.nutrient || {}).map((key) => (
-      <InputStyled
-        key={key}
-        id={key}
-        label={key.replaceAll('_', ' ')}
-        type="number"
-        value={(formik.values.nutrient as any)[key]}
-        onChange={(e) =>
-          formik.setFieldValue(`nutrient.${key}`, e.target.value)
-        }
-      />
-    ))}
-  </div>
-)
-
-const StepIngredients = () => <div className="flex flex-col gap-3"></div>
-
-const StepInstructions = () => <div className="flex flex-col gap-3"></div>
 
 const ModalFood = ({
   open,
@@ -115,26 +37,48 @@ const ModalFood = ({
   const [loading, setLoading] = useState(false)
   const [activeStep, setActiveStep] = useState(0)
 
-  const formik = useFormik({
+  const formik = useFormik<FoodFormValues>({
     enableReinitialize: true,
     initialValues: {
       name: '',
       description: '',
-      category: '',
-      source: '',
       sku: '',
-      is_public: true,
-      highlighted: false,
-      displayed: true,
       nutrient: {
         energy_kcal: '',
         energy_kj: '',
         protein: '',
         total_lipids: '',
+        cholesterol: '',
         carbohydrate: '',
+        fiber: '',
+        ash: '',
+        calcium: '',
+        magnesium: '',
+        manganese: '',
+        phosphorus: '',
+        iron: '',
+        sodium: '',
+        potassium: '',
+        copper: '',
+        zinc: '',
+        retinol: '',
+        vitamin_a_re: '',
+        vitamin_a_rae: '',
+        thiamin: '',
+        riboflavin: '',
+        pyridoxine: '',
+        niacin: '',
+        vitamin_c: '',
+        vitamin_d: '',
+        vitamin_e: '',
+        vitamin_b9: '',
+        vitamin_b12: '',
+        saturated: '',
+        monounsaturated: '',
+        polyunsaturated: '',
+        trans_fats: '',
+        selenium: '',
       },
-      ingredients: [] as Ingredient[],
-      instructions: [] as Instruction[],
     },
     onSubmit: async (values) => {
       setLoading(true)
@@ -172,15 +116,9 @@ const ModalFood = ({
       formik.setValues({
         name: dataSelected.name || '',
         description: dataSelected.description || '',
-        category: dataSelected.category || '',
-        source: dataSelected.source || '',
         sku: dataSelected.sku || '',
-        is_public: dataSelected.is_public ?? true,
-        highlighted: dataSelected.highlighted ?? false,
-        displayed: dataSelected.displayed ?? true,
+
         nutrient: dataSelected.nutrient || {},
-        ingredients: dataSelected.ingredients || [],
-        instructions: dataSelected.instructions || [],
       })
     }
   }, [dataSelected, open])
@@ -189,8 +127,6 @@ const ModalFood = ({
     () => [
       { label: 'Informações básicas', icon: <InfoIcon /> },
       { label: 'Nutrientes', icon: <RestaurantIcon /> },
-      { label: 'Ingredientes', icon: <ListAltIcon /> },
-      { label: 'Instruções', icon: <AssignmentIcon /> },
     ],
     [],
   )
@@ -213,17 +149,13 @@ const ModalFood = ({
         return <StepBasicInfo formik={formik} />
       case 1:
         return <StepNutrients formik={formik} />
-      case 2:
-        return <StepIngredients />
-      case 3:
-        return <StepInstructions />
       default:
         return null
     }
   }, [activeStep, formik])
 
   return (
-    <ModalBase open={open} onClose={loading ? undefined : setIsClose} size="lg">
+    <ModalBase open={open} onClose={loading ? undefined : setIsClose} size="xl">
       <ModalHeader
         title={dataSelected ? 'Editar alimento' : 'Cadastrar alimento'}
         onClose={loading ? undefined : setIsClose}

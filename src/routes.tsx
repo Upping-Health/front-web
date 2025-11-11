@@ -79,12 +79,12 @@ export const dashboardTabs: Record<TabValue, Tab> = {
     name: 'Plano Alimentar',
     icon: <InventoryIcon />,
     value: TABS_DASH.PLANOALIMENTAR,
-    path: '/mealPlan',
+    path: '/meal-plan',
     children: {
       foods: {
         name: 'Alimentos',
         icon: <RestaurantIcon />,
-        path: '/mealPlan/food',
+        path: '/meal-plan/food',
       },
     },
   },
