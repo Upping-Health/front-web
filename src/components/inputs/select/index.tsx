@@ -42,7 +42,7 @@ const SelectStyled = ({
       {label && (
         <label
           htmlFor={id}
-          className={`mb-1 text-gray-400  text-sm flex items-center gap-1 ${stylesLabel ?? ''}`}
+          className={`mb-1 text-black dark:text-gray-300 text-sm flex items-center gap-1 ${stylesLabel ?? ''}`}
         >
           {label}
           {required && <span className="text-red">*</span>}
@@ -58,7 +58,7 @@ const SelectStyled = ({
             value={value}
             onChange={onChange}
             onBlur={onBlur}
-            className={`w-full font-semibold appearance-none outline-none bg-transparent dark:text-white ${icon ? 'pl-4' : 'pl-1'}`}
+            className={`w-full appearance-none outline-none bg-transparent dark:text-white ${icon ? 'pl-4' : 'pl-1'}`}
           >
             {optionsSelect?.map((item: any) => (
               <option

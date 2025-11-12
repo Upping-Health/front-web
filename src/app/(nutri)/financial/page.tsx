@@ -25,15 +25,13 @@ const TransactionsType = dynamic(
 
 const FinancialContent = () => {
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col">
       <TopDash
         title="Financeiro"
         description="Analise os principais indicadores financeiros."
         icon={AccountBalanceOutlinedIcon}
       />
-
       <CardsGroup />
-
       <div className="flex flex-col md:flex-row gap-8">
         <div className="w-full md:w-1/2">
           <RevenueDistribuition />
@@ -43,7 +41,6 @@ const FinancialContent = () => {
           <MonthlyTrend />
         </div>
       </div>
-
       <div className="flex flex-col md:flex-row gap-8">
         <div className="w-full md:w-1/2">
           <RevenueGrowth />
@@ -53,11 +50,10 @@ const FinancialContent = () => {
           <TransactionsType />
         </div>
       </div>
-
       <div className="">
         <RecentActivities />
       </div>
-
+      //
       <div className="h-14" />
     </div>
   )

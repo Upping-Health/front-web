@@ -107,7 +107,7 @@ const ModalLegends = ({
 
   return (
     <>
-      <ModalBase open={open} onClose={loading ? undefined : setIsClose}>
+      <ModalBase open={open}>
         <ModalHeader
           title={legendSelected ? 'Atualizar Legenda' : 'Cadastro de Legenda'}
           onClose={loading ? undefined : setIsClose}

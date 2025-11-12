@@ -185,7 +185,7 @@ const ModalAgenda = ({
 
   return (
     <>
-      <ModalBase open={open} onClose={loading ? undefined : setIsClose}>
+      <ModalBase open={open}>
         <ModalHeader
           onClose={loading ? undefined : setIsClose}
           title={scheduleSelected ? 'Atualizar Agenda' : 'Cadastro de Agenda'}

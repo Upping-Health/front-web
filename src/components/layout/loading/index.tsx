@@ -1,5 +1,4 @@
 import { CircularProgress } from '@mui/material'
-import React from 'react'
 import clsx from 'clsx'
 
 interface LoadingProps {
@@ -18,19 +17,10 @@ const Loading = ({ text, className, color }: LoadingProps) => {
         className,
       )}
     >
-      <CircularProgress
-        sx={fixedColor}
-        className={clsx(
-          'text-2xl',
-          color ? null : 'text-primary dark:text-white',
-        )}
-      />
+      <CircularProgress className={'text-2xl text-primary dark:text-white'} />
       <p
         style={fixedColor}
-        className={clsx(
-          'font-semibold',
-          color ? null : 'text-primary dark:text-white',
-        )}
+        className={clsx('font-semibold', 'text-primary dark:text-white')}
       >
         {text || 'Carregando...'}
       </p>

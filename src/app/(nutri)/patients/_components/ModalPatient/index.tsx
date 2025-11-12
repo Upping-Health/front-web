@@ -29,7 +29,6 @@ import ModalBase, {
   ModalFooter,
   ModalHeader,
 } from '@/components/modals/ModalBase'
-import { icon } from 'leaflet'
 
 interface ModalParams {
   open: boolean
@@ -298,7 +297,7 @@ const ModalPatient = ({
   ]
 
   return (
-    <ModalBase open={open} onClose={loading ? undefined : setIsClose}>
+    <ModalBase open={open}>
       <ModalHeader
         title={patientSelected ? 'Atualizar Paciente' : 'Cadastro de Paciente'}
         onClose={loading ? undefined : setIsClose}

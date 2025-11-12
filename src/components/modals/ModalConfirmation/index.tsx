@@ -36,7 +36,7 @@ const ModalConfirmation = ({ open, setIsClose, onConfirm }: ModalParams) => {
   }
 
   return (
-    <ModalBase open={open} onClose={setIsClose}>
+    <ModalBase open={open}>
       <ModalHeader title="Confirmação de exclusão" onClose={setIsClose} />
 
       <ModalContent>

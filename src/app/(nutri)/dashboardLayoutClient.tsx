@@ -1,11 +1,8 @@
 'use client'
-
 import AsideBar from '@/components/layout/asideBar'
 import FooterDash from '@/components/layout/footerDash'
 import HeaderDash from '@/components/layout/headerDash'
-import { Providers } from '@/contexts/providers/provider'
-import { colors } from '@/lib/colors/colors'
-import NextTopLoader from 'nextjs-toploader'
+import TopLoader from '@/components/layout/topLoader'
 
 export default function DashboardLayoutClient({
   children,
@@ -13,8 +10,8 @@ export default function DashboardLayoutClient({
   children: React.ReactNode
 }) {
   return (
-    <Providers>
-      <NextTopLoader color={colors.primary} height={4} showSpinner={false} />
+    <>
+      <TopLoader />
       <main className="flex h-screen w-screen">
         <AsideBar />
 
@@ -28,6 +25,6 @@ export default function DashboardLayoutClient({
           <FooterDash />
         </div>
       </main>
-    </Providers>
+    </>
   )
 }

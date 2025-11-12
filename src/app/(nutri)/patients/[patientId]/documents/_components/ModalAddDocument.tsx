@@ -101,7 +101,7 @@ const ModalAddDocument = ({
   }
 
   return (
-    <ModalBase open={open} onClose={setIsClose}>
+    <ModalBase open={open}>
       <ModalHeader title="Upload de Documento" onClose={setIsClose} />
 
       <ModalContent>

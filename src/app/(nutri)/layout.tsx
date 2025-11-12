@@ -1,9 +1,7 @@
+import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import DashboardLayoutClient from './dashboardLayoutClient'
-import './globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'UppingHealth',
@@ -16,7 +14,7 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className={`${inter.className} bg-light dark:bg-gray-900`}>
+    <div className={`bg-light dark:bg-gray-900`}>
       <DashboardLayoutClient>{children}</DashboardLayoutClient>
     </div>
   )

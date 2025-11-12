@@ -155,7 +155,7 @@ const ModalFood = ({
   }, [activeStep, formik])
 
   return (
-    <ModalBase open={open} onClose={loading ? undefined : setIsClose} size="xl">
+    <ModalBase open={open} size="xl">
       <ModalHeader
         title={dataSelected ? 'Editar alimento' : 'Cadastrar alimento'}
         onClose={loading ? undefined : setIsClose}

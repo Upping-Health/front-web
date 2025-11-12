@@ -4,7 +4,6 @@ import { ReactNode } from 'react'
 
 interface ModalBaseProps {
   open: boolean
-  onClose?: () => void
   children: ReactNode
   size?: 'sm' | 'md' | 'lg' | 'xl'
 }
@@ -49,22 +48,9 @@ const sizeClasses = {
   xl: 'max-w-[800px]',
 }
 
-const ModalBase = ({
-  open,
-  onClose,
-  children,
-  size = 'md',
-}: ModalBaseProps) => {
+const ModalBase = ({ open, children, size = 'md' }: ModalBaseProps) => {
   return (
-    <Modal
-      open={open}
-      onClose={(event, reason) => {
-        if (reason !== 'backdropClick' && reason !== 'escapeKeyDown') {
-          onClose?.()
-        }
-      }}
-      className="flex justify-center items-center"
-    >
+    <Modal open={open} className="flex justify-center items-center">
       <div
         className={`bg-white dark:bg-gray-800 rounded-20 px-2 py-4 w-[85%] max-h-[90vh] flex flex-col gap-2 ${sizeClasses[size]}`}
       >
