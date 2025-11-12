@@ -23,6 +23,7 @@ import masks from '@/lib/masks/masks'
 import SelectStyled from '@/components/inputs/select'
 import PaymentsIcon from '@mui/icons-material/Payments'
 import ReceiptIcon from '@mui/icons-material/Receipt'
+import { validateManualFinance } from '@/lib/formik/validators/validator-manual-finance'
 
 interface ModalParams {
   open: boolean
@@ -70,14 +71,7 @@ const ModalAddTransaction = ({
       payment_method: '',
       status: '',
     },
-    validationSchema: Yup.object({
-      amount: Yup.string()
-        .typeError('O valor deve ser numérico')
-        .required('O valor é obrigatório')
-        .min(1, 'O valor deve ser maior que zero'),
-      payment_method: Yup.string().required('Selecione a forma de pagamento'),
-      status: Yup.string().required('Selecione o status'),
-    }),
+    validationSchema: validateManualFinance,
     onSubmit: async (values) => {
       try {
         setLoading(true)
@@ -190,7 +184,7 @@ const ModalAddTransaction = ({
 
         <ButtonStyled
           type="submit"
-          onClick={() => formik.handleSubmit()}
+          onClick={formik.handleSubmit}
           styles="w-full bg-green-600"
           disabled={!formik.isValid || loading}
           title={loading ? 'Salvando...' : 'Adicionar'}
