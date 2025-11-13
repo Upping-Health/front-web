@@ -2,17 +2,14 @@
 import MenuConsult from '@/components/consult/menu'
 import { HeaderButton } from '@/components/layout/headerDash'
 import Loading from '@/components/layout/loading'
-import LoadingFullScreen from '@/components/layout/loadingGlobal'
 import TopDash from '@/components/layout/topDash'
 import ModalConfirmation from '@/components/modals/ModalConfirmation'
 import TableDash from '@/components/tables/tableDash'
 import { DefaultContext } from '@/contexts/defaultContext'
-import useLoadDocumentsByPatient from '@/hooks/nutritionists/useLoadDocumentsByPatient'
+import useLoadTransactionsByUUID from '@/hooks/nutritionists/transactions/useLoadTransactionsByUUID'
 import useLoadPatientByUUID from '@/hooks/nutritionists/useLoadPatientById'
-import Documents from '@/interfaces/documents.interface'
 import PreFeedBack from '@/lib/feedbackStatus'
 import { SEX_PT_BR } from '@/lib/types/sex'
-import api from '@/services/api'
 import { Person } from '@mui/icons-material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import VisibilityIcon from '@mui/icons-material/Visibility'
@@ -20,7 +17,6 @@ import dateFormat from 'dateformat'
 import { useParams } from 'next/navigation'
 import { useCallback, useContext, useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
-import ModalAddDocument from './_components/ModalAddTransaction'
 import ModalAddTransaction from './_components/ModalAddTransaction'
 interface PageProps {
   patientId: string
@@ -40,7 +36,7 @@ const FinancialPage = () => {
     loading: patientLoading,
   } = useLoadPatientByUUID(params.patientId)
 
-  const { data, loading, loadData } = useLoadDocumentsByPatient(
+  const { data, loading, loadData } = useLoadTransactionsByUUID(
     params.patientId,
     false,
   )
@@ -69,18 +65,13 @@ const FinancialPage = () => {
   const columns = useMemo(
     () => [
       {
-        header: 'Data do upload',
+        header: 'Data do pagamento',
         field: 'created_at',
         render: (value: any) => dateFormat(new Date(value), 'dd/mm/yyyy HH:mm'),
       },
-      { header: 'Arquivo', field: 'original_name' },
-      { header: 'Tipo', field: 'mime_type' },
-      {
-        header: 'Tamanho',
-        field: 'size',
-        render: (_: any, row: any) =>
-          `${(row.size / (1024 * 1024)).toFixed(2)} MB`,
-      },
+      { header: 'Forma de pagamento', field: 'payment_method' },
+      { header: 'Status', field: 'status' },
+      { header: 'Valor', field: 'amount_cents' },
       {
         header: '#',
         field: '{row}',

@@ -56,6 +56,23 @@ export default {
   moneyMask: (value: any) => {
     return `R$ ${String(value.toFixed(2)).replace('.', ',')}`
   },
+  money(value: string) {
+    const money = this.unmask(value)
+    let maskedMoney = ''
+
+    maskedMoney = Number(money) + ''
+    maskedMoney = maskedMoney.replace(/[\D]+/g, '')
+    maskedMoney = maskedMoney + ''
+    maskedMoney = maskedMoney.replace(/([0-9]{2})$/g, ',$1')
+
+    if (maskedMoney.length === 1) {
+      maskedMoney = '0,0' + maskedMoney
+    } else if (maskedMoney.length > 6) {
+      maskedMoney = maskedMoney.replace(/([0-9]{3}),([0-9]{2}$)/g, '.$1,$2')
+    }
+
+    return maskedMoney
+  },
 
   maskMoney(value: any) {
     // Remove todos os caracteres que não sejam dígitos

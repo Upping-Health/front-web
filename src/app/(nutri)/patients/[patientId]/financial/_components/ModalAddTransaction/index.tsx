@@ -24,6 +24,7 @@ import SelectStyled from '@/components/inputs/select'
 import PaymentsIcon from '@mui/icons-material/Payments'
 import ReceiptIcon from '@mui/icons-material/Receipt'
 import { validateManualFinance } from '@/lib/formik/validators/validator-manual-finance'
+import Money from '@/lib/masks/money'
 
 interface ModalParams {
   open: boolean
@@ -73,15 +74,17 @@ const ModalAddTransaction = ({
     },
     validationSchema: validateManualFinance,
     onSubmit: async (values) => {
+      console.log(values, 'valores aq')
       try {
         setLoading(true)
 
+        const value = masks.unmask(values.amount)
         await api.post(`/finance/transactions/create`, {
           client_id: '',
           professional_id: '',
           patient_id: patient?.uuid,
           appointment_id: '',
-          amount: Number(values.amount),
+          amount: Number(value),
           payment_method: values.payment_method,
           status: values.status,
         })
@@ -103,14 +106,14 @@ const ModalAddTransaction = ({
       />
 
       <ModalContent>
-        <form className="flex flex-col gap-2" onSubmit={formik.handleSubmit}>
+        <form className="flex flex-col gap-2">
           <InputStyled
             id="amount"
             label="Valor"
             placeholder="Digite o valor da transação"
             type="text"
             icon={<AttachMoneyIcon className="text-black dark:text-white" />}
-            value={masks.maskMoney(formik.values.amount)}
+            value={masks.money(formik.values.amount)}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.errors.amount}
@@ -184,7 +187,7 @@ const ModalAddTransaction = ({
 
         <ButtonStyled
           type="submit"
-          onClick={formik.handleSubmit}
+          onClick={() => formik.handleSubmit()}
           styles="w-full bg-green-600"
           disabled={!formik.isValid || loading}
           title={loading ? 'Salvando...' : 'Adicionar'}
