@@ -48,13 +48,13 @@ const ModalLegends = ({
   const onError = (e: any) => {
     const errorMessage = e?.response?.message || 'Falhou ao cadastrar legenda.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
-    console.log('[ERROR API /calendars/label]', errorMessage)
+    console.log('[ERROR API /appointments/label]', errorMessage)
   }
 
   const onErrorUpdate = (e: any) => {
     const errorMessage = e?.response?.message || 'Falhou ao atualizar legenda.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
-    console.log('[ERROR API /calendars/label]', errorMessage)
+    console.log('[ERROR API /appointments/label]', errorMessage)
   }
 
   useEffect(() => {
@@ -89,13 +89,13 @@ const ModalLegends = ({
 
       if (legendSelected) {
         await api
-          .put(`calendars/labels/update/${legendSelected.uuid}`, data)
+          .put(`appointments/labels/update/${legendSelected.uuid}`, data)
           .then(onSuccessUpdate)
           .catch(onErrorUpdate)
           .finally(() => setloading(false))
       } else {
         await api
-          .post('calendars/labels/store', data)
+          .post('appointments/labels/store', data)
           .then(onSuccess)
           .catch(onError)
           .finally(() => setloading(false))

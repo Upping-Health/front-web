@@ -44,7 +44,7 @@ const nutrientsFields: { key: keyof Nutrient; label: string }[] = [
 
 const StepNutrients = ({ formik }: StepNutrientsProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-1">
       {nutrientsFields.map(({ key, label }) => (
         <InputStyled
           key={key}

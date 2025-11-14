@@ -9,6 +9,7 @@ const useLoadTransactionsByUUID = (uuid: string, hidden: boolean) => {
   const [loading, setloading] = useState<boolean>(true)
 
   const loadData = useCallback(async () => {
+    console.log('chamou a função')
     try {
       setloading(true)
       const res = await api.get(`finance/transactions/list/${uuid}`)

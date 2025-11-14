@@ -17,7 +17,7 @@ export const HeaderButton = ({ onClick, children }: HeaderButtonProps) => {
     <button
       onClick={onClick}
       className="
-        relative flex gap-2 p-2 border rounded-6
+        relative flex gap-2 p-2 border rounded-6 h-[32px] w-[32px]
         dark:bg-gray-700 dark:border-slate-600
         items-center justify-center
         hover:bg-gray-200 dark:hover:bg-gray-600
@@ -61,7 +61,7 @@ const HeaderDash = () => {
 
   return (
     <>
-      <div className="flex h-[52px] border-b border-b-gray items-center px-4 py-2 relative bg-white dark:bg-gray-800 dark:border-gray-700 shadow-lg gap-4">
+      <div className="flex h-[48px] border-b border-b-gray items-center px-4 py-2 relative bg-white dark:bg-gray-800 dark:border-gray-700 shadow-lg gap-3">
         <div className="flex-grow">
           {currentTime && (
             <p className="text-sm text-slate-600 dark:text-white">
@@ -80,7 +80,7 @@ const HeaderDash = () => {
 
         <HeaderButton onClick={() => setOpenNotifications(true)}>
           <NotificationsIcon className="text-gray-600 text-lg dark:text-white" />
-          <span className="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full px-1.5 py-0.5">
+          <span className="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full w-4 h-4">
             {5}
           </span>
         </HeaderButton>

@@ -5,18 +5,18 @@ import RestoreIcon from '@mui/icons-material/Restore'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import CardValues from '../CardValues'
 
-const CardsGroup = () => {
+const CardsGroup = (data: any) => {
+  console.log(data)
   return (
-    <div className="grid grid-cols-1 gap-4 mt-6">
+    <div className="grid grid-cols-1 gap-4">
       <div className="flex flex-wrap gap-4 w-full">
         <div className="flex-1 min-w-[300px]">
           <CardValues
             className="bg-blue-500"
             icon={<AttachMoneyIcon />}
             title="Receita total"
-            value={371 * 100}
+            value={data?.data?.overview?.total_income}
             isMoney
-            percent={10}
           />
         </div>
 
@@ -25,9 +25,8 @@ const CardsGroup = () => {
             className="bg-red-400"
             icon={<RestoreIcon />}
             title="Despesas/reembolsos"
-            value={371 * 100}
+            value={data?.data?.overview?.total_expenses}
             isMoney
-            percent={-50}
           />
         </div>
 
@@ -36,9 +35,8 @@ const CardsGroup = () => {
             className="bg-green-400"
             icon={<AttachMoneyIcon />}
             title="Valor Líquido"
-            value={371 * 100}
+            value={data?.data?.overview?.net_amount}
             isMoney
-            percent={50}
           />
         </div>
 
@@ -47,9 +45,8 @@ const CardsGroup = () => {
             className="bg-orange-400"
             icon={<TimelineIcon />}
             title="Total de Transações"
-            value={8}
+            value={data?.data?.overview?.transaction_count}
             isMoney={false}
-            percent={-2}
           />
         </div>
       </div>

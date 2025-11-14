@@ -4,6 +4,7 @@ import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlin
 import CardsGroup from './_components/CardsGroup'
 
 import dynamic from 'next/dynamic'
+import useLoadReportsDash from '@/hooks/financial/useLoadReportsDash'
 const MonthlyTrend = dynamic(() => import('./_components/MonthlyTrend'), {
   ssr: false,
 })
@@ -24,6 +25,7 @@ const TransactionsType = dynamic(
 )
 
 const FinancialContent = () => {
+  const { data, loadData, loading } = useLoadReportsDash(false)
   return (
     <div className="w-full flex flex-col">
       <TopDash
@@ -31,7 +33,7 @@ const FinancialContent = () => {
         description="Analise os principais indicadores financeiros."
         icon={AccountBalanceOutlinedIcon}
       />
-      <CardsGroup />
+      <CardsGroup data={data} />
       <div className="flex flex-col md:flex-row gap-8">
         <div className="w-full md:w-1/2">
           <RevenueDistribuition />

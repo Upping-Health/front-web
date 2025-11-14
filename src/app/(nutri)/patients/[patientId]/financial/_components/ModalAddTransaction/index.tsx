@@ -25,7 +25,7 @@ import PaymentsIcon from '@mui/icons-material/Payments'
 import ReceiptIcon from '@mui/icons-material/Receipt'
 import { validateManualFinance } from '@/lib/formik/validators/validator-manual-finance'
 import Money from '@/lib/masks/money'
-
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange'
 interface ModalParams {
   open: boolean
   setIsClose: () => void
@@ -62,6 +62,7 @@ const ModalAddTransaction = ({
           amount: '',
           payment_method: 'cash',
           status: 'pending',
+          type: 'in',
         },
       })
   }, [open])
@@ -71,6 +72,7 @@ const ModalAddTransaction = ({
       amount: '',
       payment_method: '',
       status: '',
+      type: '',
     },
     validationSchema: validateManualFinance,
     onSubmit: async (values) => {
@@ -80,13 +82,12 @@ const ModalAddTransaction = ({
 
         const value = masks.unmask(values.amount)
         await api.post(`/finance/transactions/create`, {
-          client_id: '',
-          professional_id: '',
+          client_id: 1,
           patient_id: patient?.uuid,
-          appointment_id: '',
           amount: Number(value),
           payment_method: values.payment_method,
           status: values.status,
+          type: values.type,
         })
 
         onSuccess()
@@ -170,6 +171,27 @@ const ModalAddTransaction = ({
               {
                 text: 'Reembolsada',
                 value: 'refunded',
+              },
+            ]}
+          />
+
+          <SelectStyled
+            id="type"
+            label="Tipo"
+            placeholder=""
+            value={formik.values.type}
+            onChange={formik.handleChange}
+            icon={
+              <CurrencyExchangeIcon className="text-black dark:text-white" />
+            }
+            options={[
+              {
+                text: 'Entrada',
+                value: 'in',
+              },
+              {
+                text: 'Saída',
+                value: 'out',
               },
             ]}
           />

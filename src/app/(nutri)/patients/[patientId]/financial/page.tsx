@@ -18,6 +18,11 @@ import { useParams } from 'next/navigation'
 import { useCallback, useContext, useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
 import ModalAddTransaction from './_components/ModalAddTransaction'
+import Money from '@/lib/masks/money'
+import {
+  TRANSACTION_PAY_TYPE_PT_BR,
+  TRANSACTION_STATUS_PT_BR,
+} from '@/lib/types/transactions-type'
 interface PageProps {
   patientId: string
 }
@@ -69,18 +74,31 @@ const FinancialPage = () => {
         field: 'created_at',
         render: (value: any) => dateFormat(new Date(value), 'dd/mm/yyyy HH:mm'),
       },
-      { header: 'Forma de pagamento', field: 'payment_method' },
-      { header: 'Status', field: 'status' },
-      { header: 'Valor', field: 'amount_cents' },
+      {
+        header: 'Forma de pagamento',
+        field: 'payment_method',
+        render: (_: any, row: any) =>
+          (TRANSACTION_PAY_TYPE_PT_BR as any)[row.payment_method],
+      },
+      {
+        header: 'Status',
+        field: 'status',
+        render: (_: any, row: any) =>
+          (TRANSACTION_STATUS_PT_BR as any)[row.status],
+      },
+      {
+        header: 'Valor',
+        field: 'amount_cents',
+        render: (_: any, row: any) => {
+          console.log(row)
+          return Money.centsToMaskMoney(row.amount_cents)
+        },
+      },
       {
         header: '#',
         field: '{row}',
         render: (_: any, row: any) => (
           <div className="flex gap-2">
-            <HeaderButton onClick={() => {}}>
-              <VisibilityIcon className="text-primary dark:text-white text-xl" />
-            </HeaderButton>
-
             <HeaderButton onClick={() => handleDeleteClick(row)}>
               <DeleteIcon className="text-red text-xl" />
             </HeaderButton>
@@ -111,7 +129,7 @@ const FinancialPage = () => {
         <div className="h-full w-full flex gap-4">
           {loading ? (
             <Loading
-              text="Carregando histórico de antropometria..."
+              text="Carregando histórico de transações..."
               className="!h-full w-full"
             />
           ) : (

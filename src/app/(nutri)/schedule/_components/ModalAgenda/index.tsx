@@ -140,13 +140,13 @@ const ModalAgenda = ({
       console.log(data)
       if (scheduleSelected) {
         await api
-          .put(`/calendars/update/${scheduleSelected.uuid}`, data)
+          .put(`/appointments/update/${scheduleSelected.uuid}`, data)
           .then(onSuccessUpdate)
           .catch(onErrorUpdate)
           .finally(() => setloading(false))
       } else {
         await api
-          .post('/calendars/store', data)
+          .post('/appointments/store', data)
           .then(onSuccess)
           .catch(onError)
           .finally(() => setloading(false))

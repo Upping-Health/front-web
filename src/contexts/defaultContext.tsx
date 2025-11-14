@@ -39,9 +39,17 @@ export default function DefaultProvider({
     status: '',
   })
 
+  const redirectToLogin = () => {
+    setUser(null)
+    Cookies.remove('token')
+    localStorage.removeItem('user')
+    // router.push('/login')
+  }
+
   useEffect(() => {
     const loadUserFromStorage = () => {
       const userStr = localStorage.getItem('user')
+      console.log(userStr)
       if (!userStr) {
         redirectToLogin()
         return
@@ -55,13 +63,6 @@ export default function DefaultProvider({
         console.error(error)
         redirectToLogin()
       }
-    }
-
-    const redirectToLogin = () => {
-      setUser(null)
-      Cookies.remove('token')
-      localStorage.removeItem('user')
-      // router.push('/login')
     }
 
     loadUserFromStorage()

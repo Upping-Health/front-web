@@ -18,7 +18,7 @@ const useLoadScheduleLabels = (hidden: boolean) => {
   const loadData = useCallback(async () => {
     try {
       setLoading(true)
-      const res = await api.get('calendars/labels')
+      const res = await api.get('appointments/labels')
       setData(res?.data?.data)
     } catch (error: any) {
       console.error('[ERROR] Failed to load data:', error)

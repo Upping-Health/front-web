@@ -11,10 +11,10 @@ const useLoadSchedule = (hidden: boolean) => {
   const loadData = useCallback(async () => {
     try {
       setLoading(true)
-      const res = await api.get(`/calendars`)
+      const res = await api.get(`/appointments`)
       setData(res?.data?.data || [])
     } catch (error: any) {
-      console.error('[ERROR] /calendars', error)
+      console.error('[ERROR] /appointments', error)
     } finally {
       setLoading(false)
     }
