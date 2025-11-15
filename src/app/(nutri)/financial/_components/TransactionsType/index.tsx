@@ -13,7 +13,7 @@ const TransactionsType = () => {
   ]
 
   return (
-    <div className="mt-6 bg-white shadow-md rounded-xl p-4 w-full h-[420px] dark:bg-gray-700">
+    <div className="bg-white shadow-md rounded-xl p-4 w-full h-[420px] dark:bg-gray-700">
       <div className="flex items-center gap-2 pb-2">
         <PaidIcon className="dark:text-white" />
         <div className="text-gray-800 text-lg font-semibold dark:text-white">

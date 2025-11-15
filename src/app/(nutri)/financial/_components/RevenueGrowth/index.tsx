@@ -1,33 +1,54 @@
 'use client'
 import MovingIcon from '@mui/icons-material/Moving'
 import { BarChart } from '@mui/x-charts/BarChart'
+import { ReportsDash } from '@/interfaces/api-response/reports-dash.interface'
+import Money from '@/lib/masks/money'
 
-const RevenueGrowth = () => {
-  const data = [
-    { period: 'Período Anterior', receita: 12000 },
-    { period: 'Período Atual', receita: 18000 },
+interface RevenueGrowthProps {
+  data: ReportsDash | null
+}
+
+const RevenueGrowth = ({ data }: RevenueGrowthProps) => {
+  if (!data?.revenue_growth) return null
+
+  const { previous_period, current_period } = data.revenue_growth
+
+  const diff = current_period - previous_period
+  const percentage = previous_period > 0 ? (diff / previous_period) * 100 : 0
+
+  const chartData = [
+    { label: 'Período Anterior', value: previous_period },
+    { label: 'Período Atual', value: current_period },
   ]
 
   return (
-    <div className="mt-6 bg-white shadow-md rounded-xl p-4 w-full h-[420px] dark:bg-gray-700">
+    <div className="bg-white shadow-md rounded-xl p-4 w-full h-[420px] dark:bg-gray-700">
       <div className="flex items-center gap-2 pb-2">
         <MovingIcon className="dark:text-white" />
         <div className="text-gray-800 text-lg font-semibold dark:text-white">
           Crescimento da Receita
         </div>
       </div>
+
       <BarChart
+        xAxis={[
+          {
+            data: chartData.map((item) => item.label),
+            scaleType: 'band',
+          },
+        ]}
         series={[
           {
-            data: data.map((item) => item.receita),
+            data: chartData.map((item) => item.value),
             label: 'Receita',
             color: '#4ade80',
+            valueFormatter: (item) => Money.centsToMaskMoney(item ?? 0),
           },
         ]}
         yAxis={[
           {
-            width: 50,
-            valueFormatter: (value: any) => `R$ ${value / 100}`,
+            width: 60,
+            valueFormatter: (value: number) => `R$ ${value / 100}`,
           },
         ]}
         height={300}
@@ -38,9 +59,7 @@ const RevenueGrowth = () => {
           },
         }}
         sx={{
-          '.dark & .MuiChartsLegend-label': {
-            color: '#FFFFFF',
-          },
+          '.dark & .MuiChartsLegend-label': { color: '#FFFFFF' },
           '.dark & .MuiChartsAxis-tickLabel tspan': {
             fill: '#FFFFFF !important',
           },

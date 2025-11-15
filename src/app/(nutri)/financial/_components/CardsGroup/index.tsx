@@ -4,9 +4,13 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import RestoreIcon from '@mui/icons-material/Restore'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import CardValues from '../CardValues'
+import { ReportsDash } from '@/interfaces/api-response/reports-dash.interface'
 
-const CardsGroup = (data: any) => {
-  console.log(data)
+interface CardsGroupProps {
+  data: ReportsDash | null
+}
+
+const CardsGroup = ({ data }: CardsGroupProps) => {
   return (
     <div className="grid grid-cols-1 gap-4">
       <div className="flex flex-wrap gap-4 w-full">
@@ -15,7 +19,7 @@ const CardsGroup = (data: any) => {
             className="bg-blue-500"
             icon={<AttachMoneyIcon />}
             title="Receita total"
-            value={data?.data?.overview?.total_income}
+            value={data?.overview?.total_income ?? 0}
             isMoney
           />
         </div>
@@ -25,7 +29,7 @@ const CardsGroup = (data: any) => {
             className="bg-red-400"
             icon={<RestoreIcon />}
             title="Despesas/reembolsos"
-            value={data?.data?.overview?.total_expenses}
+            value={data?.overview?.total_expenses ?? 0}
             isMoney
           />
         </div>
@@ -35,7 +39,7 @@ const CardsGroup = (data: any) => {
             className="bg-green-400"
             icon={<AttachMoneyIcon />}
             title="Valor Líquido"
-            value={data?.data?.overview?.net_amount}
+            value={data?.overview?.net_amount ?? 0}
             isMoney
           />
         </div>
@@ -45,7 +49,7 @@ const CardsGroup = (data: any) => {
             className="bg-orange-400"
             icon={<TimelineIcon />}
             title="Total de Transações"
-            value={data?.data?.overview?.transaction_count}
+            value={data?.overview?.transaction_count ?? 0}
             isMoney={false}
           />
         </div>

@@ -5,6 +5,7 @@ import CardsGroup from './_components/CardsGroup'
 
 import dynamic from 'next/dynamic'
 import useLoadReportsDash from '@/hooks/financial/useLoadReportsDash'
+import Loading from '@/components/layout/loading'
 const MonthlyTrend = dynamic(() => import('./_components/MonthlyTrend'), {
   ssr: false,
 })
@@ -33,30 +34,35 @@ const FinancialContent = () => {
         description="Analise os principais indicadores financeiros."
         icon={AccountBalanceOutlinedIcon}
       />
-      <CardsGroup data={data} />
-      <div className="flex flex-col md:flex-row gap-8">
-        <div className="w-full md:w-1/2">
-          <RevenueDistribuition />
-        </div>
 
-        <div className="w-full md:w-1/2">
-          <MonthlyTrend />
-        </div>
-      </div>
-      <div className="flex flex-col md:flex-row gap-8">
-        <div className="w-full md:w-1/2">
-          <RevenueGrowth />
-        </div>
+      {loading && <Loading />}
 
-        <div className="w-full md:w-1/2">
-          <TransactionsType />
-        </div>
-      </div>
-      <div className="">
-        <RecentActivities />
-      </div>
-      //
-      <div className="h-14" />
+      {!loading && (
+        <>
+          <CardsGroup data={data} />
+          <div className="flex flex-col md:flex-row gap-8 mt-6">
+            <div className="w-full md:w-1/2">
+              <RevenueDistribuition data={data} />
+            </div>
+
+            <div className="w-full md:w-1/2">
+              <MonthlyTrend data={data} />
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row gap-8 mt-6">
+            <div className="w-full md:w-1/2">
+              <RevenueGrowth data={data} />
+            </div>
+
+            <div className="w-full md:w-1/2">
+              <TransactionsType />
+            </div>
+          </div>
+          <div className="mt-6">
+            <RecentActivities data={data} />
+          </div>
+        </>
+      )}
     </div>
   )
 }
