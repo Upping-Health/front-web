@@ -11,7 +11,6 @@ import useLoadFoods from '@/hooks/foods/useLoadFoods'
 import Loading from '@/components/layout/loading'
 
 const RecipesPage = ({ params }: { params: { id: string } }) => {
-  const { data, loadData, loading } = useLoadFoods(false)
   const [openModal, setopenModal] = useState<boolean>(false)
 
   const handleOpenModal = useCallback(() => {
@@ -23,6 +22,10 @@ const RecipesPage = ({ params }: { params: { id: string } }) => {
       {
         header: 'Nome',
         field: 'name',
+      },
+      {
+        header: 'FONTE',
+        field: 'sku',
       },
       {
         header: 'SKU',
@@ -43,7 +46,7 @@ const RecipesPage = ({ params }: { params: { id: string } }) => {
           onClick={handleOpenModal}
         />
 
-        {loading ? (
+        {/* {loading ? (
           <>
             <Loading text="Carregando receitas..." className="!h-3/4" />
           </>
@@ -51,14 +54,14 @@ const RecipesPage = ({ params }: { params: { id: string } }) => {
           <>
             <TableDash columns={columns} data={data} rowKey="id" />
           </>
-        )}
+        )} */}
       </div>
-      <ModalRecipes
+      {/* <ModalRecipes
         open={openModal}
-        loadNewData={loadData}
+        loadNewData={()  => {}}
         setIsClose={() => setopenModal(false)}
         dataSelected={null}
-      />
+      /> */}
     </>
   )
 }

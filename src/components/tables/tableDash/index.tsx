@@ -53,7 +53,7 @@ const TableDash: React.FC<TableProps> = ({
   rowKey,
   sx,
   pagination = true,
-  itemsPerPage = 6,
+  itemsPerPage = 8,
   search = true,
   defaultSort,
   exportName = 'upping-health-exportacao',
@@ -106,45 +106,45 @@ const TableDash: React.FC<TableProps> = ({
   }, [currentPage, sortedData])
 
   return (
-    <div className="relative flex flex-col justify-between w-full">
-      <div className="h-full">
-        {search && (
-          <div className="flex mb-4 w-full justify-between flex-wrap gap-2">
-            <InputStyled
-              id="search"
-              type="search"
-              styles="border-gray bg-white py-2 h-[42px] dark:bg-gray-700 dark:!border-gray-600"
-              stylesContainer="flex-1"
-              stylesInput="font-light w-full text-sm dark:!bg-gray-700"
-              icon={
-                <SearchIcon className="text-xl dark:text-white text-black" />
-              }
-              onChange={(e) => {
-                setSearchTerm(e.target.value)
-                setCurrentPage(1)
-              }}
-              placeholder="Busca..."
-            />
+    <div className="relative flex flex-col justify-between w-full flex-1 pb-4">
+      {/* --- TOPO COM SEARCH E FILTROS --- */}
+      {search && (
+        <div className="flex mb-4 w-full justify-between flex-wrap gap-2">
+          <InputStyled
+            id="search"
+            type="search"
+            styles="border-gray bg-white py-2 h-[42px] dark:bg-gray-700 dark:!border-gray-600"
+            stylesContainer="flex-1"
+            stylesInput="font-light w-full text-sm dark:!bg-gray-700"
+            icon={<SearchIcon className="text-xl dark:text-white text-black" />}
+            onChange={(e) => {
+              setSearchTerm(e.target.value)
+              setCurrentPage(1)
+            }}
+            placeholder="Busca..."
+          />
 
-            <div className="flex gap-2">
-              {filters && (
-                <FilterTable
-                  label={filters.label}
-                  options={filters.options}
-                  selected={filters.selected}
-                  onSelect={(value) => {
-                    filters.onSelect(value)
-                    setCurrentPage(1)
-                  }}
-                />
-              )}
-              <ButtonExport
-                onClick={() => exportTable(columns, sortedData, exportName)}
+          <div className="flex gap-2">
+            {filters && (
+              <FilterTable
+                label={filters.label}
+                options={filters.options}
+                selected={filters.selected}
+                onSelect={(value) => {
+                  filters.onSelect(value)
+                  setCurrentPage(1)
+                }}
               />
-            </div>
+            )}
+            <ButtonExport
+              onClick={() => exportTable(columns, sortedData, exportName)}
+            />
           </div>
-        )}
+        </div>
+      )}
 
+      {/* --- ÁREA DA TABELA COM SCROLL --- */}
+      <div className="h-full overflow-auto">
         {dataToDisplay?.length === 0 ? (
           <NotFoundData
             title="Nenhum resultado encontrado"
@@ -157,7 +157,6 @@ const TableDash: React.FC<TableProps> = ({
             sx={{
               borderRadius: '12px',
               boxShadow: '0 2px 12px rgba(0,0,0,0.05)',
-
               ...sx,
             }}
           >
@@ -170,7 +169,7 @@ const TableDash: React.FC<TableProps> = ({
                 className="dark:bg-gray-800"
               >
                 <TableRow>
-                  {columns.map((col, index) => {
+                  {columns.map((col) => {
                     const isSorted = sortConfig?.field === col.field
                     return (
                       <TableCell
@@ -200,7 +199,7 @@ const TableDash: React.FC<TableProps> = ({
                           {col.header}
                           {(hoveredColumn === col.field ||
                             sortConfig?.field === col.field) &&
-                            (sortConfig?.field === col.field ? (
+                            (isSorted ? (
                               <SortIcon fontSize="small" />
                             ) : (
                               <SortIcon
@@ -214,6 +213,7 @@ const TableDash: React.FC<TableProps> = ({
                   })}
                 </TableRow>
               </TableHead>
+
               <TableBody>
                 {dataToDisplay.map((row) => (
                   <TableRow
@@ -258,6 +258,7 @@ const TableDash: React.FC<TableProps> = ({
         )}
       </div>
 
+      {/* --- PAGINAÇÃO FORA DO SCROLL --- */}
       {pagination && dataToDisplay.length > 0 && (
         <div className="flex justify-end mt-2">
           <PaginationDash

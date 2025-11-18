@@ -25,8 +25,47 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
         field: 'name',
       },
       {
+        header: 'Fonte',
+        field: '',
+        render(_: any, row: any) {
+          return 'TBCA'
+        },
+      },
+      {
         header: 'SKU',
         field: 'sku',
+      },
+      {
+        header: 'Status',
+        field: 'is_public',
+        render(_: any, row: any) {
+          return (
+            <div
+              className={`
+              text-black
+              h-[35px]
+              px-3
+              w-14
+              rounded-6
+              shadow-md
+              font-semibold
+              flex
+              justify-center
+              items-center
+              transition
+              duration-300
+              text-xs
+              ${row.is_public === 1 ? 'bg-paid text-white' : 'bg-yellow-100 text-black'}
+            `}
+            >
+              <p
+                className={`${row.is_public === 1 ? 'text-paidFont' : 'text-yellow-400'} font-semibold`}
+              >
+                {row.is_public === 1 ? 'Público' : 'Privado'}
+              </p>
+            </div>
+          )
+        },
       },
     ],
     [],
@@ -37,7 +76,7 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
       <div className="w-full relative h-full">
         <TopDash
           title="Alimentos"
-          description="Gerencie e acompanhe seus alimentos de forma simples e organizada."
+          description="Gerencie seus alimentos de forma simples e organizada."
           icon={RestaurantOutlinedIcon}
           textBtn={'Novo Alimento'}
           onClick={handleOpenModal}
