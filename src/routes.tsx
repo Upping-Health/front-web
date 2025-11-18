@@ -14,6 +14,7 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import { JSX } from 'react'
 import { Person, Settings } from '@mui/icons-material'
 import InventoryIcon from '@mui/icons-material/Inventory'
+
 export const TABS_DASH = {
   FINANCIAL: 'financial',
   //DASH: 'dash',
@@ -85,6 +86,11 @@ export const dashboardTabs: Record<TabValue, Tab> = {
         name: 'Alimentos',
         icon: <RestaurantIcon />,
         path: '/meal-plan/food',
+      },
+      recipes: {
+        name: 'Receitas',
+        icon: <MenuBookIcon />,
+        path: '/meal-plan/recipes',
       },
     },
   },

@@ -9,12 +9,8 @@ interface RevenueGrowthProps {
 }
 
 const RevenueGrowth = ({ data }: RevenueGrowthProps) => {
-  if (!data?.revenue_growth) return null
-
-  const { previous_period, current_period } = data.revenue_growth
-
-  const diff = current_period - previous_period
-  const percentage = previous_period > 0 ? (diff / previous_period) * 100 : 0
+  const previous_period = data?.revenue_growth?.previous_period ?? 0
+  const current_period = data?.revenue_growth?.current_period ?? 0
 
   const chartData = [
     { label: 'Período Anterior', value: previous_period },
@@ -52,27 +48,6 @@ const RevenueGrowth = ({ data }: RevenueGrowthProps) => {
           },
         ]}
         height={300}
-        slotProps={{
-          legend: {
-            position: { vertical: 'bottom', horizontal: 'center' },
-            direction: 'horizontal',
-          },
-        }}
-        sx={{
-          '.dark & .MuiChartsLegend-label': { color: '#FFFFFF' },
-          '.dark & .MuiChartsAxis-tickLabel tspan': {
-            fill: '#FFFFFF !important',
-          },
-          '.dark & .MuiChartsAxis-label tspan': {
-            fill: '#FFFFFF !important',
-          },
-          '.dark & .MuiChartsAxis-line': {
-            stroke: '#FFFFFF !important',
-          },
-          '.dark & .MuiChartsAxis-tick': {
-            stroke: '#FFFFFF !important',
-          },
-        }}
       />
     </div>
   )

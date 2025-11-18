@@ -28,7 +28,7 @@ const TransactionsType = dynamic(
 const FinancialContent = () => {
   const { data, loadData, loading } = useLoadReportsDash(false)
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-full flex flex-col pb-10">
       <TopDash
         title="Financeiro"
         description="Analise os principais indicadores financeiros."
@@ -49,6 +49,7 @@ const FinancialContent = () => {
               <MonthlyTrend data={data} />
             </div>
           </div>
+
           <div className="flex flex-col md:flex-row gap-8 mt-6">
             <div className="w-full md:w-1/2">
               <RevenueGrowth data={data} />
@@ -58,7 +59,8 @@ const FinancialContent = () => {
               <TransactionsType />
             </div>
           </div>
-          <div className="mt-6">
+
+          <div className="flex-1 pb-4 mt-6">
             <RecentActivities data={data} />
           </div>
         </>

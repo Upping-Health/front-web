@@ -9,13 +9,12 @@ interface MonthlyTrendProps {
 }
 
 const MonthlyTrend = ({ data }: MonthlyTrendProps) => {
-  if (!data?.monthly_trends) {
-    return null
-  }
+  const months = data?.monthly_trends?.months ?? {}
 
-  const monthsArray = Object.values(data.monthly_trends.months).sort(
+  const monthsArray = Object.values(months).sort(
     (a, b) => new Date(a.period).getTime() - new Date(b.period).getTime(),
   )
+
   const labels = monthsArray.map((m) => m.period)
   const receita = monthsArray.map((m) => m.summary.total_income)
   const despesas = monthsArray.map((m) => m.summary.total_expenses)

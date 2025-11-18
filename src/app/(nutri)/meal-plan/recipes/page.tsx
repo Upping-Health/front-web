@@ -6,11 +6,11 @@ import { colors } from '@/lib/colors/colors'
 import RestaurantOutlinedIcon from '@mui/icons-material/RestaurantOutlined'
 import { CircularProgress } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
-import ModalFood from './_components/ModalFood'
+import ModalRecipes from './_components/ModalRecipes'
 import useLoadFoods from '@/hooks/foods/useLoadFoods'
 import Loading from '@/components/layout/loading'
 
-const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
+const RecipesPage = ({ params }: { params: { id: string } }) => {
   const { data, loadData, loading } = useLoadFoods(false)
   const [openModal, setopenModal] = useState<boolean>(false)
 
@@ -36,16 +36,16 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
     <>
       <div className="w-full relative h-full">
         <TopDash
-          title="Alimentos"
-          description="Gerencie e acompanhe seus alimentos de forma simples e organizada."
+          title="Receitas"
+          description="Gerencie suas receitas de forma simples e organizada."
           icon={RestaurantOutlinedIcon}
-          textBtn={'Novo Alimento'}
+          textBtn={'Nova Receita'}
           onClick={handleOpenModal}
         />
 
         {loading ? (
           <>
-            <Loading text="Carregando alimentos..." className="!h-3/4" />
+            <Loading text="Carregando receitas..." className="!h-3/4" />
           </>
         ) : (
           <>
@@ -53,7 +53,7 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
           </>
         )}
       </div>
-      <ModalFood
+      <ModalRecipes
         open={openModal}
         loadNewData={loadData}
         setIsClose={() => setopenModal(false)}
@@ -63,4 +63,4 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
   )
 }
 
-export default FoodPlanMenu
+export default RecipesPage

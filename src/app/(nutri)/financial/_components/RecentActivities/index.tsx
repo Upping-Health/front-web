@@ -9,8 +9,6 @@ interface RecentActivitiesProps {
 }
 
 const RecentActivities = ({ data }: RecentActivitiesProps) => {
-  if (!data?.recent_activity?.last_transactions) return null
-
   const Card = ({
     title,
     observation,
@@ -55,15 +53,24 @@ const RecentActivities = ({ data }: RecentActivitiesProps) => {
       </div>
 
       <div className="flex flex-col gap-4 overflow-y-auto h-[300px] pr-2">
-        {data?.recent_activity?.last_transactions?.map((item) => (
-          <Card
-            key={item.uuid}
-            title={'Teste'}
-            observation={'teste 2'}
-            date={item.created_at}
-            value={item.type === 'in' ? item.amount_cents : -item.amount_cents}
-          />
-        ))}
+        {data?.recent_activity?.last_transactions?.length ? (
+          data.recent_activity.last_transactions.map((item) => (
+            <Card
+              key={item.uuid}
+              title={'Teste'}
+              observation={'teste 2'}
+              date={item.created_at}
+              value={
+                item.type === 'in' ? item.amount_cents : -item.amount_cents
+              }
+            />
+          ))
+        ) : (
+          <div className="flex flex-col items-center justify-center h-full text-gray-500 dark:text-gray-300">
+            <History fontSize="large" />
+            <p className="text-sm mt-2">Sem atividades recentes</p>
+          </div>
+        )}
       </div>
     </div>
   )

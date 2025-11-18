@@ -12,7 +12,7 @@ const SettingsContent = () => {
         icon={Settings}
       />
       <div className="h-full w-full flex gap-4">
-        <div className="flex flex-col gap-4 s:h-[70%] w-full h-full rounded-xl px-4 bg-white shadow-sm dark:bg-gray-800 "></div>
+        <div className="flex flex-col gap-4 w-full h-full rounded-xl px-4 bg-white shadow-sm dark:bg-gray-800 "></div>
         <div className="h-full flex justify-end">
           <MenuSettings />
         </div>
