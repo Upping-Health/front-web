@@ -1,5 +1,4 @@
 import ButtonStyled from '@/components/buttons/button'
-import InputStyled from '@/components/inputs/inputStyled'
 import ModalBase, {
   ModalContent,
   ModalFooter,
@@ -14,11 +13,13 @@ import api from '@/services/api'
 import CustomizedSteppers from '@/components/layout/stepBar'
 import InfoIcon from '@mui/icons-material/Info'
 import RestaurantIcon from '@mui/icons-material/Restaurant'
-import ListAltIcon from '@mui/icons-material/ListAlt'
-import AssignmentIcon from '@mui/icons-material/Assignment'
-import InputImageStyled from '@/components/inputs/inputImageStyled'
 import StepBasicInfo from './Steps/StepBasicInfo'
 import StepNutrients from './Steps/StepNutrients'
+
+import {
+  foodSchema,
+  nutrientsStep1Fields,
+} from '@/lib/formik/validators/validate-food'
 
 interface ModalParams {
   open: boolean
@@ -44,59 +45,75 @@ const ModalFood = ({
       description: '',
       sku: '',
       nutrient: {
-        energy_kcal: '',
-        energy_kj: '',
-        protein: '',
-        total_lipids: '',
-        cholesterol: '',
-        carbohydrate: '',
-        fiber: '',
-        ash: '',
-        calcium: '',
-        magnesium: '',
-        manganese: '',
-        phosphorus: '',
-        iron: '',
-        sodium: '',
-        potassium: '',
-        copper: '',
-        zinc: '',
-        retinol: '',
-        vitamin_a_re: '',
-        vitamin_a_rae: '',
-        thiamin: '',
-        riboflavin: '',
-        pyridoxine: '',
-        niacin: '',
-        vitamin_c: '',
-        vitamin_d: '',
-        vitamin_e: '',
-        vitamin_b9: '',
-        vitamin_b12: '',
-        saturated: '',
-        monounsaturated: '',
-        polyunsaturated: '',
-        trans_fats: '',
-        selenium: '',
+        energy_kcal: '0',
+        energy_kj: '0',
+        protein: '0',
+        total_lipids: '0',
+        cholesterol: '0',
+        carbohydrate: '0',
+        fiber: '0',
+        ash: '0',
+        calcium: '0',
+        magnesium: '0',
+        manganese: '0',
+        phosphorus: '0',
+        iron: '0',
+        sodium: '0',
+        potassium: '0',
+        copper: '0',
+        zinc: '0',
+        retinol: '0',
+        vitamin_a_re: '0',
+        vitamin_a_rae: '0',
+        thiamin: '0',
+        riboflavin: '0',
+        pyridoxine: '0',
+        niacin: '0',
+        vitamin_c: '0',
+        vitamin_d: '0',
+        vitamin_e: '0',
+        vitamin_b9: '0',
+        vitamin_b12: '0',
+        saturated: '0',
+        monounsaturated: '0',
+        polyunsaturated: '0',
+        trans_fats: '0',
+        selenium: '0',
+        //alcool: '0',
       },
     },
+    validationSchema: foodSchema,
+    validateOnBlur: true,
+    validateOnChange: false,
+
     onSubmit: async (values) => {
       setLoading(true)
+
+      const data = {
+        ...values,
+        category: '',
+        source: '',
+        nutrient: Object.fromEntries(
+          Object.entries(values.nutrient).map(([k, v]) => [k, Number(v) || 0]),
+        ),
+      }
+
       try {
         if (dataSelected) {
-          await api.put(`/foods/${dataSelected.id}`, values)
+          await api.put(`/foods/update/${dataSelected.id}`, data)
           onShowFeedBack(
             PreFeedBack.success('Alimento atualizado com sucesso!'),
           )
         } else {
-          await api.post('/foods', values)
+          await api.post('/foods/store', data)
           onShowFeedBack(
             PreFeedBack.success('Alimento cadastrado com sucesso!'),
           )
         }
+
         await loadNewData()
         setIsClose()
-      } catch (err) {
+      } catch {
         onShowFeedBack(PreFeedBack.error('Erro ao salvar alimento.'))
       } finally {
         setLoading(false)
@@ -117,7 +134,6 @@ const ModalFood = ({
         name: dataSelected.name || '',
         description: dataSelected.description || '',
         sku: dataSelected.sku || '',
-
         nutrient: dataSelected.nutrient || {},
       })
     }
@@ -126,14 +142,36 @@ const ModalFood = ({
   const steps = useMemo(
     () => [
       { label: 'Informações básicas', icon: <InfoIcon /> },
-      { label: 'Nutrientes', icon: <RestaurantIcon /> },
+      { label: 'Micronutrientes (Opcional)', icon: <RestaurantIcon /> },
     ],
     [],
   )
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    if (activeStep === 0) {
+      const errors = await formik.validateForm()
+
+      const hasErrors = Object.keys(errors.nutrient || {}).some((key) =>
+        nutrientsStep1Fields.some((f) => f.key === key),
+      )
+
+      if (errors.name || hasErrors) {
+        formik.setTouched(
+          {
+            name: true,
+            nutrient: nutrientsStep1Fields.reduce((acc, item) => {
+              acc[item.key] = true
+              return acc
+            }, {} as any),
+          },
+          true,
+        )
+        return
+      }
+    }
+
     if (activeStep < steps.length - 1) {
-      setActiveStep((prev) => prev + 1)
+      setActiveStep((p) => p + 1)
     } else {
       formik.handleSubmit()
     }
@@ -198,11 +236,7 @@ const ModalFood = ({
               title="Salvando..."
               icon={
                 <CircularProgress
-                  style={{
-                    width: 20,
-                    height: 20,
-                    color: '#FFFFFF',
-                  }}
+                  style={{ width: 20, height: 20, color: '#FFF' }}
                 />
               }
             />
@@ -211,6 +245,7 @@ const ModalFood = ({
               type="button"
               onClick={handleNext}
               styles="w-full bg-green-600"
+              disabled={!formik.isValid}
               title={
                 activeStep === steps.length - 1
                   ? dataSelected

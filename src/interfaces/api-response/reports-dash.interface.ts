@@ -79,7 +79,3 @@ export interface TransactionClient {
   status: boolean
   logo: string | null
 }
-
-interface ReportsDashApiResponse {
-  data: ReportsDash
-}

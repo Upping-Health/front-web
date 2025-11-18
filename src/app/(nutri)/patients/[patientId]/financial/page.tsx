@@ -95,16 +95,48 @@ const FinancialPage = () => {
         },
       },
       {
-        header: '#',
-        field: '{row}',
-        render: (_: any, row: any) => (
-          <div className="flex gap-2">
-            <HeaderButton onClick={() => handleDeleteClick(row)}>
-              <DeleteIcon className="text-red text-xl" />
-            </HeaderButton>
-          </div>
-        ),
+        header: 'Tipo',
+        field: 'type',
+        render(_: any, row: any) {
+          return (
+            <div
+              className={`
+              text-black
+              h-[35px]
+              px-3
+              w-14
+              rounded-6
+              shadow-md
+              font-semibold
+              flex
+              justify-center
+              items-center
+              transition
+              duration-300
+              text-xs
+              ${row.type === 'in' ? 'bg-paid text-white' : 'bg-yellow-100 text-black'}
+            `}
+            >
+              <p
+                className={`${row.type === 'in' ? 'text-paidFont' : 'text-yellow-400'} font-semibold`}
+              >
+                {row.type === 'in' ? 'Entrada' : 'Saída'}
+              </p>
+            </div>
+          )
+        },
       },
+      // {
+      //   header: '#',
+      //   field: '{row}',
+      //   render: (_: any, row: any) => (
+      //     <div className="flex gap-2">
+      //       <HeaderButton onClick={() => handleDeleteClick(row)}>
+      //         <DeleteIcon className="text-red text-xl" />
+      //       </HeaderButton>
+      //     </div>
+      //   ),
+      // },
     ],
     [handleDeleteClick],
   )

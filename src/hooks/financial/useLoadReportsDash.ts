@@ -8,8 +8,6 @@ interface ReportsDashApiResponse {
 }
 
 const useLoadReportsDash = (hidden: boolean) => {
-  const { user } = useContext(DefaultContext)
-
   const [data, setData] = useState<ReportsDash | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
 

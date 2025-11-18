@@ -8,9 +8,10 @@ import { CircularProgress } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 import ModalFood from './_components/ModalFood'
 import useLoadFoods from '@/hooks/foods/useLoadFoods'
+import Loading from '@/components/layout/loading'
 
 const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
-  const { data, loadData, loading } = useLoadFoods(true)
+  const { data, loadData, loading } = useLoadFoods(false)
   const [openModal, setopenModal] = useState<boolean>(false)
 
   const handleOpenModal = useCallback(() => {
@@ -24,20 +25,8 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
         field: 'name',
       },
       {
-        header: 'Energia',
-        field: 'energy',
-      },
-      {
-        header: 'Gordura',
-        field: 'energy',
-      },
-      {
-        header: 'Carboídratos',
-        field: 'energy',
-      },
-      {
-        header: 'Proteína',
-        field: 'energy',
+        header: 'SKU',
+        field: 'sku',
       },
     ],
     [],
@@ -56,15 +45,11 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
 
         {loading ? (
           <>
-            <div className="flex h-3/4 justify-center w-full items-center">
-              <CircularProgress
-                style={{ width: 80, height: 80, color: colors.primary }}
-              />
-            </div>
+            <Loading text="Carregando alimentos..." className="!h-3/4" />
           </>
         ) : (
           <>
-            <TableDash columns={columns} data={[]} rowKey="id" />
+            <TableDash columns={columns} data={data} rowKey="id" />
           </>
         )}
       </div>
