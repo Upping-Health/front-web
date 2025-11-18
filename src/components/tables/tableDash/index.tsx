@@ -18,6 +18,11 @@ import React, { useMemo, useState } from 'react'
 import FilterTable from '../filterTable'
 import PaginationDash from '../paginationDash'
 
+interface TableFilterOption {
+  label: string
+  value: string
+}
+
 interface TableProps {
   columns: Array<{
     header: string
@@ -31,7 +36,14 @@ interface TableProps {
   pagination?: boolean
   itemsPerPage?: number
   search?: boolean
+  exportName?: string
   defaultSort?: { field: string; direction: 'asc' | 'desc' }
+  filters?: {
+    label: string
+    options: TableFilterOption[]
+    onSelect: (value: string) => void
+    selected?: string
+  }
 }
 
 const TableDash: React.FC<TableProps> = ({
@@ -44,6 +56,8 @@ const TableDash: React.FC<TableProps> = ({
   itemsPerPage = 6,
   search = true,
   defaultSort,
+  exportName = 'upping-health-exportacao',
+  filters,
 }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [hoveredColumn, setHoveredColumn] = useState<string | null>(null)
@@ -99,7 +113,7 @@ const TableDash: React.FC<TableProps> = ({
             <InputStyled
               id="search"
               type="search"
-              styles="border-gray bg-white py-3 dark:bg-gray-700 dark:!border-gray-600"
+              styles="border-gray bg-white py-2 h-[42px] dark:bg-gray-700 dark:!border-gray-600"
               stylesContainer="flex-1"
               stylesInput="font-light w-full text-sm dark:!bg-gray-700"
               icon={
@@ -113,18 +127,19 @@ const TableDash: React.FC<TableProps> = ({
             />
 
             <div className="flex gap-2">
-              <FilterTable
-                options={[
-                  { label: 'Ativo', value: 'active' },
-                  { label: 'Inativo', value: 'inactive' },
-                ]}
-                onSelect={() => {}}
-                selected="inactive"
-                label="Filtro"
-              />
-
+              {filters && (
+                <FilterTable
+                  label={filters.label}
+                  options={filters.options}
+                  selected={filters.selected}
+                  onSelect={(value) => {
+                    filters.onSelect(value)
+                    setCurrentPage(1)
+                  }}
+                />
+              )}
               <ButtonExport
-                onClick={() => exportTable(columns, sortedData, 'dados')}
+                onClick={() => exportTable(columns, sortedData, exportName)}
               />
             </div>
           </div>
