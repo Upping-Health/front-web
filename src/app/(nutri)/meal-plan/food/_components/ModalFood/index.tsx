@@ -15,11 +15,13 @@ import InfoIcon from '@mui/icons-material/Info'
 import RestaurantIcon from '@mui/icons-material/Restaurant'
 import StepBasicInfo from './Steps/StepBasicInfo'
 import StepNutrients from './Steps/StepNutrients'
+import StraightenIcon from '@mui/icons-material/Straighten'
 
 import {
   foodSchema,
   nutrientsStep1Fields,
 } from '@/lib/formik/validators/validate-food'
+import StepMeasures from './Steps/StepMeasures'
 
 interface ModalParams {
   open: boolean
@@ -81,6 +83,7 @@ const ModalFood = ({
         selenium: '0',
         //alcool: '0',
       },
+      measurements: [{ measure: '', quantity: '' }],
     },
     validationSchema: foodSchema,
     validateOnBlur: true,
@@ -135,6 +138,9 @@ const ModalFood = ({
         description: dataSelected.description || '',
         sku: dataSelected.sku || '',
         nutrient: dataSelected.nutrient || {},
+        measurements: dataSelected?.measurements ?? [
+          { measure: '', quantity: '' },
+        ],
       })
     }
   }, [dataSelected, open])
@@ -143,6 +149,7 @@ const ModalFood = ({
     () => [
       { label: 'Informações básicas', icon: <InfoIcon /> },
       { label: 'Micronutrientes (Opcional)', icon: <RestaurantIcon /> },
+      { label: 'Medidas Caseiras (Opcional)', icon: <StraightenIcon /> },
     ],
     [],
   )
@@ -187,6 +194,9 @@ const ModalFood = ({
         return <StepBasicInfo formik={formik} />
       case 1:
         return <StepNutrients formik={formik} />
+
+      case 2:
+        return <StepMeasures formik={formik} />
       default:
         return null
     }

@@ -48,6 +48,23 @@ const RevenueGrowth = ({ data }: RevenueGrowthProps) => {
           },
         ]}
         height={300}
+        sx={{
+          '.MuiLineElement-root': { strokeWidth: 3 },
+          '.MuiChartsLegend-root': { mt: 2 },
+          '.dark & .MuiChartsLegend-label': { color: '#FFFFFF' },
+          '.dark & .MuiChartsAxis-tickLabel tspan': {
+            fill: '#FFFFFF !important',
+          },
+          '.dark & .MuiChartsAxis-label tspan': {
+            fill: '#FFFFFF !important',
+          },
+          '.dark & .MuiChartsAxis-line': {
+            stroke: '#FFFFFF !important',
+          },
+          '.dark & .MuiChartsAxis-tick': {
+            stroke: '#FFFFFF !important',
+          },
+        }}
       />
     </div>
   )

@@ -107,7 +107,6 @@ const TableDash: React.FC<TableProps> = ({
 
   return (
     <div className="relative flex flex-col justify-between w-full flex-1 pb-4">
-      {/* --- TOPO COM SEARCH E FILTROS --- */}
       {search && (
         <div className="flex mb-4 w-full justify-between flex-wrap gap-2">
           <InputStyled
@@ -143,7 +142,6 @@ const TableDash: React.FC<TableProps> = ({
         </div>
       )}
 
-      {/* --- ÁREA DA TABELA COM SCROLL --- */}
       <div className="h-full overflow-auto">
         {dataToDisplay?.length === 0 ? (
           <NotFoundData
@@ -258,7 +256,6 @@ const TableDash: React.FC<TableProps> = ({
         )}
       </div>
 
-      {/* --- PAGINAÇÃO FORA DO SCROLL --- */}
       {pagination && dataToDisplay.length > 0 && (
         <div className="flex justify-end mt-2">
           <PaginationDash

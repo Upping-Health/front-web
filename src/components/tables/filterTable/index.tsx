@@ -55,7 +55,7 @@ const FilterTable: React.FC<FilterTableProps> = ({
         }}
         PaperProps={{
           className:
-            'bg-white dark:bg-gray-700 shadow-lg rounded-xl p-2 dark:text-white',
+            'bg-white dark:bg-gray-700 shadow-lg rounded-xl dark:text-white',
         }}
       >
         {options.map((option) => (

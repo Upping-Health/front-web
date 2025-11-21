@@ -1,7 +1,7 @@
 import * as Yup from 'yup'
 
 export const nutrientsStep1Fields = [
-  { key: 'ash', label: 'Cinzas (g)' },
+  { key: 'ash', label: 'Peso (g)' },
   { key: 'protein', label: 'Proteína (g)' },
   { key: 'carbohydrate', label: 'Carboidrato (g)' },
   { key: 'total_lipids', label: 'Lipídios (g)' },

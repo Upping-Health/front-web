@@ -50,7 +50,7 @@ const sizeClasses = {
 
 const ModalBase = ({ open, children, size = 'md' }: ModalBaseProps) => {
   return (
-    <Modal open={open} className="flex justify-center items-center mb-40">
+    <Modal open={open} className="flex justify-center items-center">
       <div
         className={`bg-white dark:bg-gray-800 rounded-20 px-2 py-4 w-[85%] max-h-[90vh] flex flex-col gap-2 ${sizeClasses[size]}`}
       >

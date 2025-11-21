@@ -13,7 +13,7 @@ const useLoadFoods = (hidden: boolean) => {
       const res = await api.get(`/foods/index`)
       setdata(res?.data?.data)
     } catch (error: any) {
-      console.error('[ERROR API] /foods/', error?.response?.data)
+      console.error('[ERROR API] /foods/', error?.response)
     } finally {
       setloading(false)
     }

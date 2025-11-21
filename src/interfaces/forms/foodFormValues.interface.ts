@@ -40,4 +40,5 @@ interface FoodFormValues {
   description: string
   sku: string
   nutrient: Nutrient
+  measurements: [{ measure: string; quantity: string }]
 }

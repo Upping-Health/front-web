@@ -1,5 +1,6 @@
 import InputImageStyled from '@/components/inputs/inputImageStyled'
 import InputStyled from '@/components/inputs/inputStyled'
+import SelectStyled from '@/components/inputs/select'
 import { nutrientsStep1Fields } from '@/lib/formik/validators/validate-food'
 import { FormikProps } from 'formik'
 
@@ -10,13 +11,6 @@ interface StepBasicInfoProps {
 const StepBasicInfo = ({ formik }: StepBasicInfoProps) => {
   return (
     <div className="flex flex-col gap-3">
-      {/* <div className="flex w-full items-center justify-center">
-        <InputImageStyled
-          value={formik.values.image_url}
-          onChange={(file) => formik.setFieldValue('image_file', file)}
-        />
-      </div> */}
-
       <div className="grid grid-cols-2 gap-4">
         <InputStyled
           id="name"
@@ -31,6 +25,27 @@ const StepBasicInfo = ({ formik }: StepBasicInfoProps) => {
           required
         />
 
+        <SelectStyled
+          id="description"
+          label="Textura"
+          options={[
+            { text: 'Sólido (g)', value: 'solid' },
+            { text: 'Líquido (ml)', value: 'liquid' },
+          ]}
+          value={formik.values.description}
+          onChange={(e) => formik.setFieldValue('sku', e.target.value)}
+        />
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <InputStyled
+          id="description"
+          label="Descrição do alimento"
+          type="text"
+          value={formik.values.description}
+          onChange={(e) => formik.setFieldValue('description', e.target.value)}
+        />
+
         <InputStyled
           id="sku"
           label="SKU"
@@ -39,14 +54,6 @@ const StepBasicInfo = ({ formik }: StepBasicInfoProps) => {
           onChange={(e) => formik.setFieldValue('sku', e.target.value)}
         />
       </div>
-
-      <InputStyled
-        id="description"
-        label="Descrição do alimento"
-        type="text"
-        value={formik.values.description}
-        onChange={(e) => formik.setFieldValue('sku', e.target.value)}
-      />
 
       <h1 className="font-semibold text-base uppercase dark:text-white">
         Nutrientes

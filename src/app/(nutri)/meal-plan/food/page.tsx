@@ -10,6 +10,29 @@ import ModalFood from './_components/ModalFood'
 import useLoadFoods from '@/hooks/foods/useLoadFoods'
 import Loading from '@/components/layout/loading'
 
+const filterOptions = [
+  {
+    label: 'Meus Alimentos',
+    value: 'tbca',
+  },
+  {
+    label: 'IBGE',
+    value: 'ibge',
+  },
+  {
+    label: 'USDA',
+    value: 'usda',
+  },
+  {
+    label: 'TBCA',
+    value: 'tbca',
+  },
+  {
+    label: 'Tucunduva',
+    value: 'tucunduva',
+  },
+]
+
 const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
   const { data, loadData, loading } = useLoadFoods(false)
   const [openModal, setopenModal] = useState<boolean>(false)
@@ -25,10 +48,17 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
         field: 'name',
       },
       {
-        header: 'Fonte',
+        header: 'Categoria',
         field: '',
         render(_: any, row: any) {
-          return 'TBCA'
+          return row?.category?.title
+        },
+      },
+      {
+        header: 'Referência',
+        field: '',
+        render(_: any, row: any) {
+          return row?.source?.name
         },
       },
       {
@@ -88,7 +118,16 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
           </>
         ) : (
           <>
-            <TableDash columns={columns} data={data} rowKey="id" />
+            <TableDash
+              columns={columns}
+              data={data}
+              rowKey="id"
+              filters={{
+                label: 'Filtros',
+                options: filterOptions,
+                onSelect: (value: string) => console.log('teste'),
+              }}
+            />
           </>
         )}
       </div>
