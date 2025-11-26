@@ -15,27 +15,44 @@ interface RevenueDistribuitionProps {
 
 const RevenueDistribuition = ({ data }: RevenueDistribuitionProps) => {
   const labels = useMemo(() => {
+    const totalIncome =
+      (data?.overview?.total_income ?? 0) <= 0
+        ? 0.01
+        : (data?.overview?.total_income ?? 0)
+
+    const totalExpenses =
+      (data?.overview?.total_expenses ?? 0) <= 0
+        ? 0.01
+        : (data?.overview?.total_expenses ?? 0)
+
+    const netAmount =
+      (data?.overview?.net_amount ?? 0) <= 0
+        ? 0.01
+        : (data?.overview?.net_amount ?? 0)
+
     return [
       {
         id: 0,
-        value: data?.overview?.total_income ?? 0.01,
+        value: totalIncome,
         label: 'Receita Total',
         color: '#3b82f6',
       },
       {
         id: 1,
-        value: data?.overview?.total_expenses ?? 0.01,
+        value: totalExpenses,
         label: 'Despesas',
         color: '#f87171',
       },
       {
         id: 2,
-        value: data?.overview?.net_amount ?? 0.01,
+        value: netAmount,
         label: 'Valor Líquido',
         color: '#4ade80',
       },
     ]
   }, [data])
+
+  console.log(labels)
 
   return (
     <div className="bg-white shadow-md rounded-xl p-4 w-full h-[420px] dark:bg-gray-700">

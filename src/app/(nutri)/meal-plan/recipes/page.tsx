@@ -56,12 +56,12 @@ const RecipesPage = ({ params }: { params: { id: string } }) => {
           </>
         )} */}
       </div>
-      {/* <ModalRecipes
+      <ModalRecipes
         open={openModal}
-        loadNewData={()  => {}}
+        loadNewData={async () => {}}
         setIsClose={() => setopenModal(false)}
         dataSelected={null}
-      /> */}
+      />
     </>
   )
 }

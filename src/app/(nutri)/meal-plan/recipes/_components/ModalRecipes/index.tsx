@@ -14,11 +14,14 @@ import { CircularProgress } from '@mui/material'
 import { useFormik } from 'formik'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import StepBasicInfo from './Steps/StepBasicInfo'
-
+import AssignmentIcon from '@mui/icons-material/Assignment'
 import {
   foodSchema,
   nutrientsStep1Fields,
 } from '@/lib/formik/validators/validate-food'
+import StepMeasures from '../../../food/_components/ModalFood/Steps/StepMeasures'
+import StepIngredients from './Steps/StepIngredients'
+import StepInstructions from './Steps/StepInstructions'
 
 interface ModalParams {
   open: boolean
@@ -37,51 +40,20 @@ const ModalRecipes = ({
   const [loading, setLoading] = useState(false)
   const [activeStep, setActiveStep] = useState(0)
 
-  const formik = useFormik<FoodFormValues>({
+  const formik = useFormik<RecipeFormValues>({
     enableReinitialize: true,
     initialValues: {
       name: '',
       description: '',
       sku: '',
-      nutrient: {
-        energy_kcal: '0',
-        energy_kj: '0',
-        protein: '0',
-        total_lipids: '0',
-        cholesterol: '0',
-        carbohydrate: '0',
-        fiber: '0',
-        ash: '0',
-        calcium: '0',
-        magnesium: '0',
-        manganese: '0',
-        phosphorus: '0',
-        iron: '0',
-        sodium: '0',
-        potassium: '0',
-        copper: '0',
-        zinc: '0',
-        retinol: '0',
-        vitamin_a_re: '0',
-        vitamin_a_rae: '0',
-        thiamin: '0',
-        riboflavin: '0',
-        pyridoxine: '0',
-        niacin: '0',
-        vitamin_c: '0',
-        vitamin_d: '0',
-        vitamin_e: '0',
-        vitamin_b9: '0',
-        vitamin_b12: '0',
-        saturated: '0',
-        monounsaturated: '0',
-        polyunsaturated: '0',
-        trans_fats: '0',
-        selenium: '0',
-        //alcool: '0',
-      },
+      ingredients: [
+        { food_id: '', household_unit_id: '', quantity: '', unit_id: '' },
+      ],
+      instructions: [
+        { step_number: '', description: '', time_minutes: '', image_url: '' },
+      ],
     },
-    validationSchema: foodSchema,
+
     validateOnBlur: true,
     validateOnChange: false,
 
@@ -92,9 +64,6 @@ const ModalRecipes = ({
         ...values,
         category: '',
         source: '',
-        nutrient: Object.fromEntries(
-          Object.entries(values.nutrient).map(([k, v]) => [k, Number(v) || 0]),
-        ),
       }
 
       try {
@@ -133,7 +102,12 @@ const ModalRecipes = ({
         name: dataSelected.name || '',
         description: dataSelected.description || '',
         sku: dataSelected.sku || '',
-        nutrient: dataSelected.nutrient || {},
+        ingredients: dataSelected?.ingredients ?? [
+          { food_id: '', household_unit_id: '', quantity: '', unit_id: '' },
+        ],
+        instructions: dataSelected?.instructions ?? [
+          { step_number: '', description: '', time_minutes: '', image_url: '' },
+        ],
       })
     }
   }, [dataSelected, open])
@@ -141,34 +115,13 @@ const ModalRecipes = ({
   const steps = useMemo(
     () => [
       { label: 'Informações básicas', icon: <InfoIcon /> },
-      { label: 'Micronutrientes (Opcional)', icon: <RestaurantIcon /> },
+      { label: 'Ingredientes', icon: <RestaurantIcon /> },
+      { label: 'Instruções', icon: <AssignmentIcon /> },
     ],
     [],
   )
 
   const handleNext = async () => {
-    if (activeStep === 0) {
-      const errors = await formik.validateForm()
-
-      const hasErrors = Object.keys(errors.nutrient || {}).some((key) =>
-        nutrientsStep1Fields.some((f) => f.key === key),
-      )
-
-      if (errors.name || hasErrors) {
-        formik.setTouched(
-          {
-            name: true,
-            nutrient: nutrientsStep1Fields.reduce((acc, item) => {
-              acc[item.key] = true
-              return acc
-            }, {} as any),
-          },
-          true,
-        )
-        return
-      }
-    }
-
     if (activeStep < steps.length - 1) {
       setActiveStep((p) => p + 1)
     } else {
@@ -184,6 +137,10 @@ const ModalRecipes = ({
     switch (activeStep) {
       case 0:
         return <StepBasicInfo formik={formik} />
+      case 1:
+        return <StepIngredients formik={formik} />
+      case 2:
+        return <StepInstructions formik={formik} />
       default:
         return null
     }

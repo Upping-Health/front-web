@@ -4,7 +4,7 @@ import { nutrientsStep1Fields } from '@/lib/formik/validators/validate-food'
 import { FormikProps } from 'formik'
 
 interface StepBasicInfoProps {
-  formik: FormikProps<FoodFormValues>
+  formik: FormikProps<RecipeFormValues>
 }
 
 const StepBasicInfo = ({ formik }: StepBasicInfoProps) => {
@@ -42,34 +42,11 @@ const StepBasicInfo = ({ formik }: StepBasicInfoProps) => {
 
       <InputStyled
         id="description"
-        label="Descrição do alimento"
+        label="Descrição da receita"
         type="text"
         value={formik.values.description}
         onChange={(e) => formik.setFieldValue('sku', e.target.value)}
       />
-
-      <h1 className="font-semibold text-base uppercase dark:text-white">
-        Nutrientes
-      </h1>
-
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-2">
-        {nutrientsStep1Fields.map(({ key, label }) => (
-          <InputStyled
-            key={key}
-            id={key}
-            label={label}
-            type="number"
-            value={formik.values.nutrient?.[key] ?? ''}
-            onChange={(e) =>
-              formik.setFieldValue(`nutrient.${key}`, e.target.value)
-            }
-            onBlur={formik.handleBlur}
-            error={formik.errors.nutrient?.[key]}
-            isTouched={formik.touched.nutrient?.[key]}
-            required
-          />
-        ))}
-      </div>
     </div>
   )
 }
