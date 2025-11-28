@@ -51,7 +51,7 @@ const StepIngredients = ({
       {formik.values.ingredients?.map((item, index) => (
         <div
           key={index}
-          className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr_auto] gap-2 items-end"
+          className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_120px_auto] gap-2 items-end"
         >
           <AutocompleteStyled
             label="Alimentos"

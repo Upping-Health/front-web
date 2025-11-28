@@ -74,6 +74,7 @@ const AutocompleteStyled = ({
             getOptionLabel={getOptionLabel}
             fullWidth
             disableClearable
+            noOptionsText="Sem resultados"
             className={`dark:bg-gray-800 outline-none text-black dark:text-white w-full pl-1 ${stylesInput ?? ''}`}
             sx={{
               '& fieldset': {
@@ -84,6 +85,12 @@ const AutocompleteStyled = ({
               },
               '& .MuiAutocomplete-clearIndicator': {
                 color: themeDark ? colors.white : colors.black,
+              },
+              '& .MuiAutocomplete-endAdornment': {
+                right: '-5px !important',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                position: 'absolute',
               },
 
               '& .MuiSvgIcon-root': {
