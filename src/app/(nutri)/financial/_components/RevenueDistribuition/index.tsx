@@ -1,5 +1,5 @@
 'use client'
-import { ReportsDash } from '@/interfaces/api-response/reports-dash.interface'
+import { ReportsDash } from '@/interfaces/reports-dash.interface'
 import Money from '@/lib/masks/money'
 import MovingIcon from '@mui/icons-material/Moving'
 import {

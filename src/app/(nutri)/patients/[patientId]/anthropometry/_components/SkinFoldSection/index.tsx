@@ -5,7 +5,7 @@ import { DynamicInputGrid } from '../../../../_components/DynamicInputGrid'
 import {
   AnthropometryFormValues,
   SkinFold,
-} from '@/interfaces/anthroprometryFormValues.interface'
+} from '@/interfaces/forms/anthroprometryFormValues.interface'
 
 const SKINFOLD_LABELS = [
   { label: 'Tricipital (mm)', key: 'triceps' },

@@ -50,6 +50,7 @@ export interface Instruction {
 }
 
 export interface Food {
+  uuid: string
   name: string
   description?: string
   normalized_name?: string

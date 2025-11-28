@@ -1,6 +1,6 @@
 import { CollapsibleSection } from '@/app/(nutri)/patients/_components/CollapsibleSection'
 import InputStyled from '@/components/inputs/inputStyled'
-import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
+import { AnthropometryFormValues } from '@/interfaces/forms/anthroprometryFormValues.interface'
 import { formatDateToBR } from '@/lib/format/date'
 import masks from '@/lib/masks/masks'
 import { FormikErrors, FormikTouched } from 'formik'

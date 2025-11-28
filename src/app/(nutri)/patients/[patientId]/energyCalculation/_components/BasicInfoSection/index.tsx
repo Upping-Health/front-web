@@ -1,7 +1,7 @@
 import InputStyled from '@/components/inputs/inputStyled'
 import { CollapsibleSection } from '@/app/(nutri)/patients/_components/CollapsibleSection'
 import { FormikErrors, FormikTouched } from 'formik'
-import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
+import { AnthropometryFormValues } from '@/interfaces/forms/anthroprometryFormValues.interface'
 import { EnergyCalculation } from '@/interfaces/energyCalculation.interface'
 
 interface Props {

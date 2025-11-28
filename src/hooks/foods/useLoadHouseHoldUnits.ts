@@ -1,21 +1,21 @@
-import { ApiResponse } from '@/interfaces/api-response.interface'
-import { Food } from '@/interfaces/food.interface'
+import {
+  HouseHoldUnits,
+  HouseHoldUnitsResponse,
+} from '@/interfaces/units.interface copy'
 import api from '@/services/api'
 import { useCallback, useEffect, useState } from 'react'
 
-type FoodApiResponse = ApiResponse<Food[]>
-
-const useLoadFoods = (hidden: boolean) => {
-  const [data, setdata] = useState<Food[]>([])
+const useLoadHouseHoldsUnits = (hidden: boolean) => {
+  const [data, setdata] = useState<HouseHoldUnits[]>([])
   const [loading, setloading] = useState<boolean>(false)
 
   const loadData = useCallback(async () => {
     try {
       setloading(true)
-      const res = await api.get<FoodApiResponse>(`/foods/index`)
+      const res = await api.get<HouseHoldUnitsResponse>(`/household-units`)
       setdata(res?.data?.data)
     } catch (error: any) {
-      console.error('[ERROR API] /foods/', error?.response)
+      console.error('[ERROR API] /units/', error?.response)
     } finally {
       setloading(false)
     }
@@ -28,4 +28,4 @@ const useLoadFoods = (hidden: boolean) => {
   return { loading, data, loadData }
 }
 
-export default useLoadFoods
+export default useLoadHouseHoldsUnits

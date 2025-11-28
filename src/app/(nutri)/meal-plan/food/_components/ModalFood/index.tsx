@@ -22,6 +22,7 @@ import {
   nutrientsStep1Fields,
 } from '@/lib/formik/validators/validate-food'
 import StepMeasures from './Steps/StepMeasures'
+import useLoadHouseHoldsUnits from '@/hooks/foods/useLoadHouseHoldUnits'
 
 interface ModalParams {
   open: boolean
@@ -39,6 +40,11 @@ const ModalFood = ({
   const { onShowFeedBack } = useContext(DefaultContext)
   const [loading, setLoading] = useState(false)
   const [activeStep, setActiveStep] = useState(0)
+  const {
+    data,
+    loadData,
+    loading: loadingUnits,
+  } = useLoadHouseHoldsUnits(false)
 
   const formik = useFormik<FoodFormValues>({
     enableReinitialize: true,
@@ -194,9 +200,8 @@ const ModalFood = ({
         return <StepBasicInfo formik={formik} />
       case 1:
         return <StepNutrients formik={formik} />
-
       case 2:
-        return <StepMeasures formik={formik} />
+        return <StepMeasures formik={formik} houseHoldUnits={data} />
       default:
         return null
     }

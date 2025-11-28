@@ -20,7 +20,7 @@ import React, { useCallback, useContext, useMemo, useState } from 'react'
 import PatientNotFound from '../../_components/PatientNotFound'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ModalConfirmation from '@/components/modals/ModalConfirmation'
-import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
+import { AnthropometryFormValues } from '@/interfaces/forms/anthroprometryFormValues.interface'
 import Loading from '@/components/layout/loading'
 import { LinkButton } from '@/components/buttons/linkButton'
 

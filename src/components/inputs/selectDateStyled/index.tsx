@@ -34,7 +34,10 @@ const DatePickerStyled = ({
   return (
     <div className="flex flex-col w-full">
       {label && (
-        <label className="mb-1 text-gray-400  dark:text-white text-sm">
+        <label
+          htmlFor={id}
+          className={`mb-1 text-black dark:text-gray-300 text-sm flex items-center gap-1`}
+        >
           {label}
         </label>
       )}

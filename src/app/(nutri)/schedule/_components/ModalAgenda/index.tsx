@@ -209,6 +209,7 @@ const ModalAgenda = ({
                       <AutocompleteStyled
                         id="patient"
                         label="Paciente"
+                        stylesGlobal="w-full"
                         icon={<Person className="dark:text-white text-black" />}
                         placeholder="Selecione o paciente"
                         value={patientSearch}
@@ -222,7 +223,6 @@ const ModalAgenda = ({
                           console.log(newValue)
                           formik.setFieldValue('patient', newValue?.id || '')
                         }}
-                        stylesLabel="dark:text-white"
                       />
 
                       <Tooltip
@@ -272,9 +272,6 @@ const ModalAgenda = ({
                     <SelectStyled
                       id="label"
                       label="Legenda"
-                      icon={
-                        <BookmarksIcon className="dark:text-white text-black" />
-                      }
                       placeholder="Selecione a legenda"
                       value={labelSearch}
                       options={dataLabels.map((d: any) => ({
@@ -288,7 +285,6 @@ const ModalAgenda = ({
                           event?.target?.value || '',
                         )
                       }}
-                      stylesLabel="dark:text-white"
                     />
 
                     <DatePickerStyled

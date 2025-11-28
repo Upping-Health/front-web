@@ -36,7 +36,7 @@ const TextAreaStyled = ({
       {label && (
         <label
           htmlFor={id}
-          className={`mb-1 text-gray-400  text-sm flex items-center gap-1`}
+          className={`mb-1 text-black dark:text-gray-300 text-sm flex items-center gap-1`}
         >
           {label}
           {required && <span className="text-red">*</span>}

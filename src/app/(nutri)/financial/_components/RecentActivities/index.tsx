@@ -2,7 +2,7 @@
 
 import Money from '@/lib/masks/money'
 import { History } from '@mui/icons-material'
-import { ReportsDash } from '@/interfaces/api-response/reports-dash.interface'
+import { ReportsDash } from '@/interfaces/reports-dash.interface'
 
 interface RecentActivitiesProps {
   data: ReportsDash | null

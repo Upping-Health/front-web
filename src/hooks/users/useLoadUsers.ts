@@ -1,5 +1,5 @@
 import { DefaultContext } from '@/contexts/defaultContext'
-import User from '@/interfaces/user.interface'
+import { User, UsersApiResponse } from '@/interfaces/user.interface'
 import api from '@/services/api'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
@@ -11,18 +11,17 @@ const useLoadUsers = (hidden: boolean) => {
   const loadData = useCallback(async () => {
     try {
       setloading(true)
-      const res = await api.get(`/users`)
-      console.log(res?.data?.data)
-      const users: User[] = res?.data?.data?.map((item: any) => {
+      const res = await api.get<UsersApiResponse>(`/users`)
+      const users = res?.data?.data?.map((item) => {
         const u = item.user
-
         return {
-          uuid: u.status,
+          uuid: u.uuid,
           email: u.email,
           name: u.name,
           status: u.status,
           role: u.role?.name,
-        }
+          profile: u.profile || null,
+        } as User
       })
       setdata(users)
     } catch (error: any) {

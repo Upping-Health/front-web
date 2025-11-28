@@ -400,7 +400,6 @@ const ModalPatient = ({
                     onChange={formik.handleChange}
                     id="gender"
                     styles="dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
                 </div>
               )}
@@ -505,7 +504,6 @@ const ModalPatient = ({
                     }
                     options={states}
                     styles="dark:text-white"
-                    stylesLabel="dark:text-white"
                   />
                 </div>
               )}

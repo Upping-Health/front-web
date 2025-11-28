@@ -1,7 +1,7 @@
 'use client'
 
 import useLoadAnthropometryResults from '@/hooks/nutritionists/anthropometry/useLoadAnthropometryResults'
-import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
+import { AnthropometryFormValues } from '@/interfaces/forms/anthroprometryFormValues.interface'
 import Patient from '@/interfaces/patient.interface'
 import AnalysesResults from '../../../../_components/AnalysisResults'
 import { memo } from 'react'

@@ -22,6 +22,9 @@ import {
 import StepMeasures from '../../../food/_components/ModalFood/Steps/StepMeasures'
 import StepIngredients from './Steps/StepIngredients'
 import StepInstructions from './Steps/StepInstructions'
+import useLoadFoods from '@/hooks/foods/useLoadFoods'
+import useLoadUnits from '@/hooks/foods/useLoadUnits'
+import useLoadHouseHoldsUnits from '@/hooks/foods/useLoadHouseHoldUnits'
 
 interface ModalParams {
   open: boolean
@@ -39,6 +42,17 @@ const ModalRecipes = ({
   const { onShowFeedBack } = useContext(DefaultContext)
   const [loading, setLoading] = useState(false)
   const [activeStep, setActiveStep] = useState(0)
+  const { data, loadData, loading: loadingFoods } = useLoadFoods(open)
+  const {
+    data: dataUnits,
+    loadData: loadUnits,
+    loading: loadingUnits,
+  } = useLoadUnits(open)
+  const {
+    data: dataHouseHoldsUnits,
+    loadData: loadHouseHoldsUnits,
+    loading: loadingHouseHoldsUnits,
+  } = useLoadHouseHoldsUnits(open)
 
   const formik = useFormik<RecipeFormValues>({
     enableReinitialize: true,
@@ -138,7 +152,14 @@ const ModalRecipes = ({
       case 0:
         return <StepBasicInfo formik={formik} />
       case 1:
-        return <StepIngredients formik={formik} />
+        return (
+          <StepIngredients
+            formik={formik}
+            foods={data}
+            units={dataUnits}
+            houseHoldUnits={dataHouseHoldsUnits}
+          />
+        )
       case 2:
         return <StepInstructions formik={formik} />
       default:

@@ -1,5 +1,5 @@
 import { DefaultContext } from '@/contexts/defaultContext'
-import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
+import { AnthropometryFormValues } from '@/interfaces/forms/anthroprometryFormValues.interface'
 import Patient from '@/interfaces/patient.interface'
 import api from '@/services/api'
 import { useCallback, useContext, useEffect, useState } from 'react'

@@ -1,20 +1,18 @@
 import { DefaultContext } from '@/contexts/defaultContext'
-import { ReportsDash } from '@/interfaces/api-response/reports-dash.interface'
+import { ApiResponse } from '@/interfaces/api-response.interface'
+import { ReportsDash } from '@/interfaces/reports-dash.interface'
 import api from '@/services/api'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
-interface ReportsDashApiResponse {
-  data: ReportsDash
-}
+type ReportsDashApiResponse = ApiResponse<ReportsDash>
 
 const useLoadReportsDash = (hidden: boolean) => {
-  const [data, setData] = useState<ReportsDash | null>(null)
+  const [data, setData] = useState<ReportsDash>()
   const [loading, setLoading] = useState<boolean>(false)
 
   const loadData = useCallback(async () => {
     try {
       setLoading(true)
-
       const res = await api.get<ReportsDashApiResponse>(
         `/finance/reports/dashboard`,
       )

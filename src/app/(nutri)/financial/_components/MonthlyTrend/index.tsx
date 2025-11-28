@@ -1,7 +1,7 @@
 'use client'
 import { LineChart } from '@mui/x-charts/LineChart'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
-import { ReportsDash } from '@/interfaces/api-response/reports-dash.interface'
+import { ReportsDash } from '@/interfaces/reports-dash.interface'
 import Money from '@/lib/masks/money'
 
 interface MonthlyTrendProps {

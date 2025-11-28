@@ -1,4 +1,4 @@
-import { SkinFold } from '@/interfaces/anthroprometryFormValues.interface'
+import { SkinFold } from '@/interfaces/forms/anthroprometryFormValues.interface'
 
 export type Gender = 'male' | 'female'
 

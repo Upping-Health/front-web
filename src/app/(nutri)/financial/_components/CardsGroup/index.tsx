@@ -4,7 +4,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import RestoreIcon from '@mui/icons-material/Restore'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import CardValues from '../CardValues'
-import { ReportsDash } from '@/interfaces/api-response/reports-dash.interface'
+import { ReportsDash } from '@/interfaces/reports-dash.interface'
 
 interface CardsGroupProps {
   data: ReportsDash | null

@@ -1,5 +1,5 @@
 import InputStyled from '@/components/inputs/inputStyled'
-import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
+import { AnthropometryFormValues } from '@/interfaces/forms/anthroprometryFormValues.interface'
 import { FormikErrors, FormikTouched } from 'formik'
 
 interface Props<T> {

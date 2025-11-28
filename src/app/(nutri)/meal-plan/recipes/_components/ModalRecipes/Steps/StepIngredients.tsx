@@ -3,37 +3,99 @@ import { FormikProps } from 'formik'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import ButtonStyled from '@/components/buttons/button'
 import AddIcon from '@mui/icons-material/Add'
+import { Food } from '@/interfaces/food.interface'
+import SelectStyled from '@/components/inputs/select'
+import AutocompleteStyled from '@/components/inputs/autoCompleteStyled'
+import { Units } from '@/interfaces/units.interface'
+import { HouseHoldUnits } from '@/interfaces/units.interface copy'
 
 interface StepProps {
   formik: FormikProps<RecipeFormValues>
+  foods: Food[]
+  units: Units[]
+  houseHoldUnits: HouseHoldUnits[]
 }
 
-const StepIngredients = ({ formik }: StepProps) => {
+const StepIngredients = ({
+  formik,
+  foods,
+  units,
+  houseHoldUnits,
+}: StepProps) => {
   const handleRemove = (index: number) => {
     const newList = [...formik.values.ingredients]
     newList.splice(index, 1)
     formik.setFieldValue('ingredients', newList)
   }
 
+  const foodOptions = foods.map((f) => ({
+    id: f.uuid,
+    name: f.name,
+    label: f.name,
+  }))
+
+  const unitsptions = units.map((f) => ({
+    id: f.slug,
+    name: f.name,
+    label: f.name,
+  }))
+
+  const houseHoldUnitsptions = houseHoldUnits.map((f) => ({
+    id: f.abbreviation,
+    name: f.name,
+    label: f.name,
+  }))
+
   return (
     <div className="space-y-2">
       {formik.values.ingredients?.map((item, index) => (
         <div
           key={index}
-          className="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-2 items-end"
+          className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr_auto] gap-2 items-end"
         >
-          <InputStyled
-            id={`ingredients.${index}.measure`}
-            label="Medida"
-            type="text"
+          <AutocompleteStyled
+            label="Alimentos"
+            placeholder="Selecionar"
             value={item.food_id}
-            onChange={(e) =>
+            options={foodOptions}
+            getOptionLabel={(option) => option.name}
+            id={`ingredients.${index}.food_id`}
+            onChange={(event: any, newValue: any) => {
               formik.setFieldValue(
-                `ingredients.${index}.measure`,
-                e.target.value,
+                `ingredients.${index}.food_id`,
+                newValue?.id || '',
               )
-            }
-            onBlur={formik.handleBlur}
+            }}
+          />
+
+          <AutocompleteStyled
+            label="Unidade"
+            placeholder="Selecionar"
+            value={item.unit_id}
+            options={unitsptions}
+            getOptionLabel={(option) => option.name}
+            id={`ingredients.${index}.unit_id`}
+            onChange={(event: any, newValue: any) => {
+              formik.setFieldValue(
+                `ingredients.${index}.unit_id`,
+                newValue?.id || '',
+              )
+            }}
+          />
+
+          <AutocompleteStyled
+            label="Unidade Caseira"
+            placeholder="Selecionar"
+            value={item.household_unit_id}
+            options={houseHoldUnitsptions}
+            getOptionLabel={(option) => option.name}
+            id={`ingredients.${index}.household_unit_id`}
+            onChange={(event: any, newValue: any) => {
+              formik.setFieldValue(
+                `ingredients.${index}.household_unit_id`,
+                newValue?.id || '',
+              )
+            }}
           />
 
           <InputStyled
@@ -60,7 +122,7 @@ const StepIngredients = ({ formik }: StepProps) => {
         </div>
       ))}
 
-      <div className="flex justify-center">
+      <div className="flex justify-center pt-2">
         <ButtonStyled
           type="button"
           icon={<AddIcon className="text-lg" />}

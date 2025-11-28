@@ -6,7 +6,7 @@ import { colors } from '@/lib/colors/colors'
 interface IAutocompleteStyled {
   id: string
   label?: string
-  icon: React.ReactElement
+  icon?: React.ReactElement
   placeholder?: string
   value?: any
   options: any[]
@@ -37,48 +37,57 @@ const AutocompleteStyled = ({
   styles,
   stylesGlobal,
   stylesLabel,
+  stylesInput,
 }: IAutocompleteStyled) => {
   const { themeDark } = useGetDarkTheme()
 
+  const selectedOption = React.useMemo(() => {
+    if (!value) return null
+    return options.find((opt) => opt?.id === value) || null
+  }, [value, options])
   return (
-    <div
-      className={` w-[90%] ${stylesGlobal ?? ''} flex flex-col dark:text-white`}
-    >
+    <div className={`${stylesGlobal ?? ''} flex flex-col`}>
       {label && (
-        <label className={`${stylesLabel} 'mb-1 text-gray-400  text-sm'`}>
+        <label
+          htmlFor={id}
+          className={`mb-1 text-black dark:text-gray-300 text-sm flex items-center gap-1 ${stylesLabel ?? ''}`}
+        >
           {label}
         </label>
       )}
+
       <div
-        className={`${styles ?? ''} border border-gray rounded-xl p-2 flex items-center justify-between ${disabled ? 'bg-customGray' : ''}`}
+        className={`bg-none relative border border-solid outline-none rounded-xl p-2 flex items-center justify-between
+          border-gray-300 dark:border-slate-700
+          ${disabled ? 'bg-customGray' : ''}
+          ${styles ?? ''}`}
       >
-        <div className="flex items-center gap-4 w-full">
+        <div className="flex items-center gap-2 w-full relative">
           {icon}
+
           <Autocomplete
             id={id}
             disabled={disabled}
             options={options}
-            value={value}
+            value={selectedOption}
             onChange={onChange}
             getOptionLabel={getOptionLabel}
             fullWidth
-            className="dark:bg-slate-800 dark:text-white"
+            disableClearable
+            className={`dark:bg-gray-800 outline-none text-black dark:text-white w-full pl-1 ${stylesInput ?? ''}`}
             sx={{
-              backgroundColor: disabled ? '#e5e5e5' : 'white',
-              flex: 1,
-              '& .MuiInputBase-root': {
-                padding: 0,
-                paddingLeft: 0,
-                fontWeight: 400,
-                border: 'none',
-                backgroundColor: 'transparent',
-              },
-              '& input': {
-                padding: '6px 0',
-                color: themeDark ? colors.white : colors.black,
-              },
               '& fieldset': {
                 border: 'none',
+              },
+              '& .MuiAutocomplete-popupIndicator': {
+                color: themeDark ? colors.white : colors.black,
+              },
+              '& .MuiAutocomplete-clearIndicator': {
+                color: themeDark ? colors.white : colors.black,
+              },
+
+              '& .MuiSvgIcon-root': {
+                color: themeDark ? colors.white : colors.black,
               },
             }}
             renderInput={(params) => (
@@ -86,12 +95,31 @@ const AutocompleteStyled = ({
                 {...params}
                 placeholder={placeholder}
                 variant="outlined"
-                InputProps={{ ...params.InputProps, disableUnderline: true }}
+                className="text-black dark:text-white"
+                sx={{
+                  '& .MuiInputBase-root': {
+                    padding: '0 !important',
+                    display: 'flex',
+                    alignItems: 'center',
+                  },
+                  '& .MuiInputBase-input': {
+                    padding: '0 !important',
+                  },
+                  '& .MuiOutlinedInput-input': {
+                    padding: '0 !important',
+                    color: themeDark ? colors.white : colors.black,
+                    '::placeholder': {
+                      color: themeDark ? '#9CA3AF' : '#6B7280',
+                      opacity: 1,
+                    },
+                  },
+                }}
               />
             )}
           />
         </div>
       </div>
+
       {error && isTouched && (
         <p className="font-light text-red text-sm pt-1 text-center">{error}</p>
       )}

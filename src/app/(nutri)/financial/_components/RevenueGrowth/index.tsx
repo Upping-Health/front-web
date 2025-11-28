@@ -1,7 +1,7 @@
 'use client'
 import MovingIcon from '@mui/icons-material/Moving'
 import { BarChart } from '@mui/x-charts/BarChart'
-import { ReportsDash } from '@/interfaces/api-response/reports-dash.interface'
+import { ReportsDash } from '@/interfaces/reports-dash.interface'
 import Money from '@/lib/masks/money'
 
 interface RevenueGrowthProps {

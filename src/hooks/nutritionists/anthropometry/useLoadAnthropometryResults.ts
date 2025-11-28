@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
-import { AnthropometryFormValues } from '@/interfaces/anthroprometryFormValues.interface'
+import { AnthropometryFormValues } from '@/interfaces/forms/anthroprometryFormValues.interface'
 import { METHOD_PT_BR } from '@/lib/types/body-method'
 import CalculateBodyFatPercentag from '@/lib/calculates/calculate-body'
 import Patient from '@/interfaces/patient.interface'

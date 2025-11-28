@@ -3,7 +3,7 @@ import { CollapsibleSection } from '@/app/(nutri)/patients/_components/Collapsib
 import {
   AnthropometryFormValues,
   BodyCircumference,
-} from '@/interfaces/anthroprometryFormValues.interface'
+} from '@/interfaces/forms/anthroprometryFormValues.interface'
 import { DynamicInputGrid } from '@/app/(nutri)/patients/_components/DynamicInputGrid'
 
 interface Props {
