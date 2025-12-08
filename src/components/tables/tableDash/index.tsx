@@ -257,7 +257,7 @@ const TableDash: React.FC<TableProps> = ({
       </div>
 
       {pagination && dataToDisplay.length > 0 && (
-        <div className="flex justify-end mt-2">
+        <div className="flex justify-end mt-6">
           <PaginationDash
             count={numberPages}
             currentPage={currentPage}

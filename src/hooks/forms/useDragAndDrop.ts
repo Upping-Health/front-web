@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { IQuestions } from './useCustomForm'
 
-export const useDragAndDrop = (
-  questions: IQuestions[],
-  setQuestions: (q: IQuestions[]) => void,
+export const useDragAndDrop = <T>(
+  list: T[],
+  setList: (newList: T[]) => void,
 ) => {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
 
@@ -14,10 +14,12 @@ export const useDragAndDrop = (
 
   const handleDrop = (index: number) => {
     if (draggedIndex === null || draggedIndex === index) return
-    const updated = [...questions]
+
+    const updated = [...list]
     const [removed] = updated.splice(draggedIndex, 1)
     updated.splice(index, 0, removed)
-    setQuestions(updated)
+
+    setList(updated)
     setDraggedIndex(null)
   }
 

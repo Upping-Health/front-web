@@ -18,7 +18,7 @@ import SupervisorAccountOutlinedIcon from '@mui/icons-material/SupervisorAccount
 import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { ROLE_PTBR } from '@/lib/types/roles'
-import User from '@/interfaces/user.interface'
+import { User } from '@/interfaces/user.interface'
 import Loading from '@/components/layout/loading'
 
 const UsersContent = () => {

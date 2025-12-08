@@ -1,20 +1,22 @@
 'use client'
 
 import TopDash from '@/components/layout/topDash'
-import { ArrowBack, Straighten } from '@mui/icons-material'
-import { useFormik } from 'formik'
+import { ArrowBack } from '@mui/icons-material'
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu'
+import { useFormik } from 'formik'
 
 import Loading from '@/components/layout/loading'
 import { DefaultContext } from '@/contexts/defaultContext'
 import useLoadPatientByUUID from '@/hooks/nutritionists/useLoadPatientById'
 import useTimer from '@/hooks/others/useTimer'
+import { MealPlanFormValues } from '@/interfaces/forms/mealPlanFormValues.interface'
 import PreFeedBack from '@/lib/feedbackStatus'
-import { validateCreateAnthropometry } from '@/lib/formik/validators/validator-anthroprometry'
 import { useParams } from 'next/navigation'
 import { useContext, useState } from 'react'
 import PatientHeader from '../../../_components/PatientHeader'
 import PatientNotFound from '../../../_components/PatientNotFound'
+import { FirstSection } from '../_components/FirstSection'
+import { MealSection } from '../_components/MealSection'
 
 interface PageProps {
   patientId: string
@@ -36,9 +38,20 @@ const MealPlanCreatePage = () => {
     loading: patientLoading,
   } = useLoadPatientByUUID(params.patientId)
 
-  const formik = useFormik({
-    initialValues: {},
-    validationSchema: validateCreateAnthropometry,
+  const formik = useFormik<MealPlanFormValues>({
+    initialValues: {
+      patient_id: '',
+      start_date: '',
+      end_date: '',
+      notes: '',
+      meals: [
+        {
+          category: '',
+          time: '',
+          items: [{ food_id: '', quantity: '', unit: '', notes: '' }],
+        },
+      ],
+    },
     onSubmit: async (values) => {
       try {
         setApiLoading(true)
@@ -83,6 +96,24 @@ const MealPlanCreatePage = () => {
             loading={apiLoading}
             patient={patientData}
             countdown={countdown}
+          />
+
+          <FirstSection
+            values={formik.values}
+            handleChange={formik.handleChange}
+            handleBlur={formik.handleBlur}
+            errors={formik.errors}
+            touched={formik.touched}
+            setFieldValue={formik.setFieldValue}
+          />
+
+          <MealSection
+            values={formik.values}
+            handleChange={formik.handleChange}
+            handleBlur={formik.handleBlur}
+            errors={formik.errors}
+            touched={formik.touched}
+            setFieldValue={formik.setFieldValue}
           />
         </form>
       </main>
