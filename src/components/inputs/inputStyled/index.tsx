@@ -82,7 +82,7 @@ const InputStyled = ({
             placeholder={placeholder}
             onBlur={onBlur}
             required={required}
-            className={`dark:bg-gray-800 outline-none text-black dark:text-white w-full pl-1 ${stylesInput ?? ''}`}
+            className={`dark:bg-gray-800 font-light outline-none text-black dark:text-white w-full pl-1 ${stylesInput ?? ''}`}
           />
         </div>
       </div>

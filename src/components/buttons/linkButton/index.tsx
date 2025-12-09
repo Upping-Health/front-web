@@ -11,7 +11,7 @@ export const LinkButton = ({ href, children }: HeaderLinkProps) => {
     <Link
       href={href}
       className="
-        relative flex gap-2 p-2 border rounded-6
+        relative flex gap-2 p-2 border rounded-6 h-[32px] w-[32px]
         dark:bg-gray-700 dark:border-slate-600
         items-center justify-center
         hover:bg-gray-200 dark:hover:bg-gray-600

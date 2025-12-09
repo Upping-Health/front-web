@@ -5,7 +5,9 @@ import { ReactNode } from 'react'
 interface ModalBaseProps {
   open: boolean
   children: ReactNode
-  size?: 'sm' | 'md' | 'lg' | 'xl'
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
+  onClose?: () => void
+  closeOnBackdropClick?: boolean
 }
 
 interface ModalHeaderProps {
@@ -46,11 +48,22 @@ const sizeClasses = {
   md: 'max-w-[500px]',
   lg: 'max-w-[600px]',
   xl: 'max-w-[800px]',
+  full: 'w-[calc(100vw-40px)]',
 }
 
-const ModalBase = ({ open, children, size = 'md' }: ModalBaseProps) => {
+const ModalBase = ({
+  open,
+  children,
+  size = 'md',
+  onClose,
+  closeOnBackdropClick = false,
+}: ModalBaseProps) => {
   return (
-    <Modal open={open} className="flex justify-center items-center">
+    <Modal
+      open={open}
+      onClose={closeOnBackdropClick ? onClose : undefined}
+      className="flex justify-center items-center"
+    >
       <div
         className={`bg-white dark:bg-gray-800 rounded-20 px-2 py-4 w-[85%] max-h-[90vh] flex flex-col gap-2 ${sizeClasses[size]}`}
       >
