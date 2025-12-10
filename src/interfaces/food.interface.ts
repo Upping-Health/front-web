@@ -55,7 +55,9 @@ export interface Food {
   description?: string
   normalized_name?: string
   category: string
-  source: string
+  source: {
+    name: string
+  }
   created_by?: string
   is_public?: boolean
   alcohol?: number

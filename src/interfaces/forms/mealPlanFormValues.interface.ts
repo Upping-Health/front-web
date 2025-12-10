@@ -2,6 +2,7 @@ export interface MealItem {
   food_id: string
   quantity: string
   unit: string
+  name: string
   notes: string
 }
 

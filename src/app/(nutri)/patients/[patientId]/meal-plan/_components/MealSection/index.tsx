@@ -55,6 +55,7 @@ export const MealSection = ({
 
     clone[mealIndexSelected].items?.push({
       food_id: food.id,
+      name: food.name,
       quantity: '',
       unit: food.unit || '',
       notes: '',
@@ -65,7 +66,7 @@ export const MealSection = ({
 
   return (
     <>
-      <div className="flex flex-col gap-3 bg-white dark:bg-gray-800 p-4 rounded-xl">
+      <div className="flex flex-col gap-3  ">
         {meals.map((meal, index) => (
           <motion.div
             key={index}
@@ -75,9 +76,9 @@ export const MealSection = ({
             draggable
             className={`rounded-xl border cursor-grab active:cursor-grabbing select-none ${
               draggingIndex === index
-                ? 'z-50 scale-105 shadow-2xl border-red-500 bg-white'
+                ? 'z-50 scale-105 shadow-2xl border-red-500 bg-white dark:bg-gray-800'
                 : dragOverIndex === index
-                  ? 'border-2 border-green-500 bg-green-50 shadow-lg'
+                  ? 'border-2 border-green-500 bg-green-50 dark:bg-green-900 shadow-lg'
                   : 'border bg-white shadow-sm hover:shadow-md dark:bg-gray-800 dark:border-gray-700'
             }`}
             onDragStart={() => {
@@ -176,7 +177,7 @@ export const MealSection = ({
             {openMeals[index] && (
               <div className="p-4 border-t border-gray-200 dark:border-gray-700">
                 {(!meal.items || meal.items.length === 0) && (
-                  <div className="py-4 text-center text-gray-500 text-sm">
+                  <div className="py-4 text-center text-gray-500 text-sm dark:bg-gray-800">
                     Nenhum alimento adicionado a esta refeição.
                   </div>
                 )}
@@ -189,10 +190,11 @@ export const MealSection = ({
                       <InputStyled
                         type="text"
                         id={`meals[${index}].items[${i}].food_id`}
-                        value={item.food_id}
+                        value={item.name}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         placeholder="Alimento"
+                        disabled
                         styles="dark:bg-gray-800 flex-1"
                       />
                       <InputStyled
@@ -237,7 +239,7 @@ export const MealSection = ({
               {
                 category: '',
                 time: '',
-                items: [{ food_id: '', quantity: '', unit: '', notes: '' }],
+                items: [],
               },
             ])
           }}
@@ -247,7 +249,7 @@ export const MealSection = ({
       <ModalSearchProduct
         open={openSearch}
         setIsClose={() => setOpenSearch(false)}
-        //onSelect={handleSelectFood}
+        onSelect={handleSelectFood}
       />
     </>
   )
