@@ -28,12 +28,7 @@ const ModalSearchProduct = ({ open, setIsClose, onSelect }: ModalParams) => {
   }, [query, data])
 
   return (
-    <ModalBase
-      open={open}
-      size="full"
-      closeOnBackdropClick
-      onClose={setIsClose}
-    >
+    <ModalBase open={open} size="md" closeOnBackdropClick onClose={setIsClose}>
       <ModalContent>
         <div className="flex flex-col gap-4 w-full">
           <InputStyled

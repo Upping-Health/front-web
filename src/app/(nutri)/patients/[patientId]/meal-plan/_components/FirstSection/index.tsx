@@ -5,6 +5,7 @@ import { MealPlanFormValues } from '@/interfaces/forms/mealPlanFormValues.interf
 import { formatDateToBR } from '@/lib/format/date'
 import masks from '@/lib/masks/masks'
 import { FormikErrors, FormikTouched } from 'formik'
+import { MealSection } from '../MealSection'
 
 interface Props {
   values: Partial<MealPlanFormValues>
@@ -23,9 +24,11 @@ export const FirstSection = ({
   touched,
   setFieldValue,
 }: Props) => {
-  console.log(values)
   return (
-    <CollapsibleSection title="Informações Básicas">
+    <div className="shadow-sm rounded-xl p-4 bg-white dark:bg-gray-800">
+      <h2 className="font-semibold text-primary dark:text-white mb-4">
+        Informações básicas
+      </h2>
       <div className="flex flex-col gap-4">
         <div className="grid grid-cols-2 gap-4 w-full">
           <InputStyled
@@ -74,6 +77,19 @@ export const FirstSection = ({
           />
         </div>
       </div>
-    </CollapsibleSection>
+
+      <h2 className="font-semibold text-primary dark:text-white mb-4 mt-4">
+        Refeições
+      </h2>
+      <MealSection
+        errors={errors}
+        handleBlur={handleBlur}
+        handleChange={handleChange}
+        setFieldValue={setFieldValue}
+        touched={touched}
+        values={values}
+        key={'meal-section'}
+      />
+    </div>
   )
 }

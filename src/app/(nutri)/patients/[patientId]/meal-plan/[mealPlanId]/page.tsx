@@ -49,14 +49,13 @@ const MealPlanCreatePage = () => {
         {
           category: '',
           time: '',
-          items: [{ food_id: '', quantity: '', unit: '', notes: '' }],
+          items: [],
         },
       ],
     },
     onSubmit: async (values) => {
       try {
         setApiLoading(true)
-        // Coloque sua lógica de envio aqui
       } catch (error: any) {
         const message =
           error?.response?.message || 'Erro ao criar antropometria.'
@@ -77,11 +76,6 @@ const MealPlanCreatePage = () => {
   if (!patientLoading && !patientData) {
     return <PatientNotFound />
   }
-
-  const tabs = [
-    { label: 'Informações', value: 'first' },
-    { label: 'Refeições', value: 'meal' },
-  ]
 
   return (
     <>
@@ -110,14 +104,6 @@ const MealPlanCreatePage = () => {
             {/* <Tabs tabs={tabs} activeTab={activeTab} onChange={(value) => setActiveTab(value as Tab)} /> */}
 
             <FirstSection
-              values={formik.values}
-              handleChange={formik.handleChange}
-              handleBlur={formik.handleBlur}
-              errors={formik.errors}
-              touched={formik.touched}
-              setFieldValue={formik.setFieldValue}
-            />
-            <MealSection
               values={formik.values}
               handleChange={formik.handleChange}
               handleBlur={formik.handleBlur}

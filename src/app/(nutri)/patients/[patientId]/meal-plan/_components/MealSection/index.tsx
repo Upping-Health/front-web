@@ -13,6 +13,7 @@ import { useState } from 'react'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { IconButton } from '@mui/material'
 import ModalSearchProduct from '../SearchProduct'
+import AutocompleteStyled from '@/components/inputs/autoCompleteStyled'
 
 interface Props {
   values: Partial<MealPlanFormValues>
@@ -56,7 +57,7 @@ export const MealSection = ({
     clone[mealIndexSelected].items?.push({
       food_id: food.id,
       name: food.name,
-      quantity: '',
+      quantity: '1',
       unit: food.unit || '',
       notes: '',
     })
@@ -100,7 +101,7 @@ export const MealSection = ({
               setDragOverIndex(null)
             }}
           >
-            <div className="flex items-center justify-between p-4 rounded-xl dark:bg-gray-900">
+            <div className="flex items-center justify-between p-3 rounded-xl">
               <div className="flex gap-4">
                 <InputStyled
                   type="text"
@@ -141,7 +142,7 @@ export const MealSection = ({
                 <TooltipStyled title="Excluir refeição">
                   <button
                     type="button"
-                    className="flex items-center justify-center text-black dark:text-white w-10 h-10 rounded-lg"
+                    className="flex items-center justify-center text-red-600 w-10 h-10 rounded-lg"
                     onClick={() => {
                       const clone = [...meals]
                       clone.splice(index, 1)
@@ -175,52 +176,127 @@ export const MealSection = ({
             </div>
 
             {openMeals[index] && (
-              <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="p-4 border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
                 {(!meal.items || meal.items.length === 0) && (
-                  <div className="py-4 text-center text-gray-500 text-sm dark:bg-gray-800">
+                  <div className="py-4 text-center text-gray-500 text-sm">
                     Nenhum alimento adicionado a esta refeição.
                   </div>
                 )}
-                {meal.items?.map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex gap-2 mb-2 items-center justify-between"
-                  >
-                    <div className="flex gap-2">
+
+                <div className="space-y-2">
+                  {meal.items?.length > 0 && (
+                    <div className="grid grid-cols-12 gap-2 text-xs font-semibold text-gray-500 uppercase">
+                      <div className="col-span-3">Alimento</div>
+                      <div className="col-span-1">Qtd</div>
+                      <div className="col-span-2">Medida</div>
+                      <div className="col-span-1">Prot</div>
+                      <div className="col-span-1">Carb</div>
+                      <div className="col-span-1">Lip</div>
+                      <div className="col-span-1">Kcal</div>
+                      <div className="col-span-2"></div>
+                    </div>
+                  )}
+
+                  {meal.items?.map((item, i) => (
+                    <div
+                      key={i}
+                      className="grid grid-cols-12 gap-2 items-center rounded-lg"
+                    >
                       <InputStyled
+                        id={`meals[${index}].items[${i}].name`}
                         type="text"
-                        id={`meals[${index}].items[${i}].food_id`}
                         value={item.name}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        placeholder="Alimento"
-                        disabled
-                        styles="dark:bg-gray-800 flex-1"
+                        stylesContainer="col-span-3"
+                        styles="dark:bg-gray-800"
                       />
+
                       <InputStyled
-                        type="text"
                         id={`meals[${index}].items[${i}].quantity`}
+                        type="text"
                         value={item.quantity}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        placeholder="Qtd"
-                        styles="dark:bg-gray-800 w-[80px]"
+                        stylesContainer="col-span-1"
+                        styles="dark:bg-gray-800"
                       />
-                    </div>
 
-                    <button
-                      type="button"
-                      className="flex items-center justify-center text-black dark:text-white w-10 h-10 rounded-lg"
-                      onClick={() => {
-                        const clone = [...meals]
-                        clone[index].items!.splice(i, 1)
-                        setFieldValue('meals', clone)
-                      }}
-                    >
-                      <DeleteOutline fontSize="small" />
-                    </button>
-                  </div>
-                ))}
+                      <AutocompleteStyled
+                        id={`meals[${index}].items[${i}].unit`}
+                        options={[
+                          { id: 'g', name: 'Gramas' },
+                          { id: 'ml', name: 'Mililitros' },
+                          { id: 'un', name: 'Unidade' },
+                        ]}
+                        getOptionLabel={(option) => option.name}
+                        styles="dark:bg-gray-800"
+                        stylesGlobal="col-span-2"
+                        value={item.unit}
+                        onChange={(e, value) =>
+                          setFieldValue(
+                            `meals[${index}].items[${i}].unit`,
+                            value?.id || '',
+                          )
+                        }
+                      />
+
+                      <InputStyled
+                        id={`meals[${index}].items[${i}].protein`}
+                        value={''}
+                        type="text"
+                        onChange={handleChange}
+                        stylesContainer="col-span-1"
+                        styles="text-center dark:bg-gray-800"
+                        placeholder="g"
+                      />
+
+                      <InputStyled
+                        id={`meals[${index}].items[${i}].carbs`}
+                        type="text"
+                        value={''}
+                        onChange={handleChange}
+                        stylesContainer="col-span-1"
+                        styles="text-center dark:bg-gray-800"
+                        placeholder="g"
+                      />
+
+                      <InputStyled
+                        id={`meals[${index}].items[${i}].fat`}
+                        value={''}
+                        type="text"
+                        onChange={handleChange}
+                        stylesContainer="col-span-1"
+                        styles="text-center dark:bg-gray-800"
+                        placeholder="g"
+                      />
+
+                      <InputStyled
+                        id={`meals[${index}].items[${i}].kcal`}
+                        value={''}
+                        type="text"
+                        onChange={handleChange}
+                        stylesContainer="col-span-1"
+                        styles="dark:bg-gray-800"
+                        placeholder="kcal"
+                      />
+
+                      <div className="col-span-2 flex items-center justify-end">
+                        <button
+                          type="button"
+                          className="flex items-center justify-center text-red-600 w-8 h-8 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 transition"
+                          onClick={() => {
+                            const clone = [...meals]
+                            clone[index].items!.splice(i, 1)
+                            setFieldValue('meals', clone)
+                          }}
+                        >
+                          <DeleteOutline fontSize="small" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </motion.div>
