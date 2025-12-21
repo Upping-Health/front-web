@@ -16,10 +16,17 @@ interface ModalParams {
 }
 
 const ModalSearchProduct = ({ open, setIsClose, onSelect }: ModalParams) => {
-  const { onShowFeedBack } = useContext(DefaultContext)
   const { data, loadData, loading } = useLoadFoods(open)
   const [query, setQuery] = useState('')
+  const formatNutrient = (value?: unknown) => {
+    const num = Number(value)
+    return Number.isFinite(num) ? num.toFixed(1) : '-'
+  }
 
+  const formatGram = (value?: unknown) => {
+    const num = Number(value)
+    return Number.isFinite(num) ? `${num.toFixed(1)}g` : '-'
+  }
   const filteredFoods = useMemo(() => {
     if (!query) return []
     return data.filter((food: any) =>
@@ -28,7 +35,7 @@ const ModalSearchProduct = ({ open, setIsClose, onSelect }: ModalParams) => {
   }, [query, data])
 
   return (
-    <ModalBase open={open} size="md" closeOnBackdropClick onClose={setIsClose}>
+    <ModalBase open={open} size="lg" closeOnBackdropClick onClose={setIsClose}>
       <ModalContent>
         <div className="flex flex-col gap-4 w-full">
           <InputStyled
@@ -56,6 +63,16 @@ const ModalSearchProduct = ({ open, setIsClose, onSelect }: ModalParams) => {
           )}
 
           <div className="flex flex-col gap-2">
+            {filteredFoods.length > 0 && (
+              <div className="grid grid-cols-8 px-3 text-xs font-medium text-gray-500 dark:text-gray-400">
+                <span className="col-span-4">Alimento</span>
+                <span className="text-center">Prot.</span>
+                <span className="text-center">Carb.</span>
+                <span className="text-center">Lip.</span>
+                <span className="text-center">Kcal</span>
+              </div>
+            )}
+
             {filteredFoods.map((food) => {
               const name = food.name
               const q = query.toLowerCase()
@@ -78,9 +95,9 @@ const ModalSearchProduct = ({ open, setIsClose, onSelect }: ModalParams) => {
                     onSelect(food)
                     setIsClose()
                   }}
-                  className="p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition flex justify-between items-center"
+                  className="grid grid-cols-8 items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition text-left"
                 >
-                  <div className="flex flex-col items-start">
+                  <div className="flex flex-col col-span-4">
                     <span className="text-sm text-gray-800 dark:text-gray-200">
                       {before}
                       <span className="font-semibold text-green-500">
@@ -88,11 +105,23 @@ const ModalSearchProduct = ({ open, setIsClose, onSelect }: ModalParams) => {
                       </span>
                       {after}
                     </span>
-
-                    <span className="text-xs font-light text-gray-600 dark:text-gray-300">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
                       {food?.source?.name}
                     </span>
                   </div>
+
+                  <span className="text-center text-sm">
+                    {formatGram(food.nutrient?.protein)}
+                  </span>
+                  <span className="text-center text-sm">
+                    {formatGram(food.nutrient?.carbohydrate)}
+                  </span>
+                  <span className="text-center text-sm">
+                    {formatGram(food.nutrient?.total_lipids)}
+                  </span>
+                  <span className="text-center text-sm">
+                    {formatNutrient(food.nutrient?.energy_kcal)}
+                  </span>
                 </button>
               )
             })}

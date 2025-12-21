@@ -17,7 +17,10 @@ const Loading = ({ text, className, color }: LoadingProps) => {
         className,
       )}
     >
-      <CircularProgress className={'text-2xl text-primary dark:text-white'} />
+      <CircularProgress
+        className={'text-2xl text-primary dark:text-white'}
+        style={fixedColor}
+      />
       <p
         style={fixedColor}
         className={clsx('font-semibold', 'text-primary dark:text-white')}

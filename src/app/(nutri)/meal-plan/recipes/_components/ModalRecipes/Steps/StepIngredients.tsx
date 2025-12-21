@@ -8,6 +8,7 @@ import SelectStyled from '@/components/inputs/select'
 import AutocompleteStyled from '@/components/inputs/autoCompleteStyled'
 import { Units } from '@/interfaces/units.interface'
 import { HouseHoldUnits } from '@/interfaces/units.interface copy'
+import { useMemo } from 'react'
 
 interface StepProps {
   formik: FormikProps<RecipeFormValues>
@@ -28,23 +29,35 @@ const StepIngredients = ({
     formik.setFieldValue('ingredients', newList)
   }
 
-  const foodOptions = foods.map((f) => ({
-    id: f.uuid,
-    name: f.name,
-    label: f.name,
-  }))
+  const foodOptions = useMemo(
+    () =>
+      foods.map((f) => ({
+        id: f.uuid,
+        name: f.name,
+        label: f.name,
+      })),
+    [foods],
+  )
 
-  const unitsptions = units.map((f) => ({
-    id: f.slug,
-    name: f.name,
-    label: f.name,
-  }))
+  const unitOptions = useMemo(
+    () =>
+      units.map((f) => ({
+        id: f.slug,
+        name: f.name,
+        label: f.name,
+      })),
+    [units],
+  )
 
-  const houseHoldUnitsptions = houseHoldUnits.map((f) => ({
-    id: f.abbreviation,
-    name: f.name,
-    label: f.name,
-  }))
+  const houseHoldUnitOptions = useMemo(
+    () =>
+      houseHoldUnits.map((f) => ({
+        id: f.abbreviation,
+        name: f.name,
+        label: f.name,
+      })),
+    [houseHoldUnits],
+  )
 
   return (
     <div className="space-y-2">
@@ -72,7 +85,7 @@ const StepIngredients = ({
             label="Unidade"
             placeholder="Selecionar"
             value={item.unit_id}
-            options={unitsptions}
+            options={unitOptions}
             getOptionLabel={(option) => option.name}
             id={`ingredients.${index}.unit_id`}
             onChange={(event: any, newValue: any) => {
@@ -87,7 +100,7 @@ const StepIngredients = ({
             label="Unidade Caseira"
             placeholder="Selecionar"
             value={item.household_unit_id}
-            options={houseHoldUnitsptions}
+            options={houseHoldUnitOptions}
             getOptionLabel={(option) => option.name}
             id={`ingredients.${index}.household_unit_id`}
             onChange={(event: any, newValue: any) => {

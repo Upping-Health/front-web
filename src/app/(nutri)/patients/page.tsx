@@ -112,7 +112,7 @@ const PacientesContent = () => {
         field: 'status',
         render: (value: any, row: any) => (
           <ButtonActive
-            active={row.status === 1}
+            active={row.status}
             onClick={() => changeStatusPatient(row)}
           />
         ),

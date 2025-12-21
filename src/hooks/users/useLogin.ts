@@ -20,7 +20,7 @@ export function useLogin() {
     setError('')
 
     try {
-      const response = await api.post('/login', { email, password })
+      const response = await api.post('/auth/login', { email, password })
       const { data } = response?.data
 
       if (data) {

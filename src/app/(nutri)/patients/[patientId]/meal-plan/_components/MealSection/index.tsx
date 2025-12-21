@@ -6,14 +6,16 @@ import SelectStyled from '@/components/inputs/select'
 import TooltipStyled from '@/components/inputs/tooltipStyled'
 import { useDragAndDrop } from '@/hooks/forms/useDragAndDrop'
 import { MealPlanFormValues } from '@/interfaces/forms/mealPlanFormValues.interface'
-import { Add, DeleteOutline } from '@mui/icons-material'
+import { Add, Calculate, DeleteOutline } from '@mui/icons-material'
 import { FormikErrors, FormikTouched } from 'formik'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { IconButton } from '@mui/material'
 import ModalSearchProduct from '../SearchProduct'
 import AutocompleteStyled from '@/components/inputs/autoCompleteStyled'
+import useLoadCategories from '@/hooks/others/useLoadCategories'
+import { Categories } from '@/interfaces/categories.interface'
 
 interface Props {
   values: Partial<MealPlanFormValues>
@@ -47,6 +49,25 @@ export const MealSection = ({
   const [openSearch, setOpenSearch] = useState(false)
   const [mealIndexSelected, setMealIndexSelected] = useState<number | null>(
     null,
+  )
+
+  const paramsCat = useMemo(
+    () => ({
+      type: 'meal',
+    }),
+    [],
+  )
+
+  const { data: dataCategories, loading: categoriesLoading } =
+    useLoadCategories(false, paramsCat)
+
+  const categoriesOptions = useMemo(
+    () =>
+      dataCategories.map((f) => ({
+        value: f.slug,
+        text: f.title,
+      })),
+    [dataCategories],
   )
 
   const handleSelectFood = (food: any) => {
@@ -121,6 +142,7 @@ export const MealSection = ({
                     onChange={handleChange}
                     onBlur={handleBlur}
                     styles="dark:bg-gray-800 w-[200px]"
+                    options={categoriesOptions}
                   />
                 </div>
               </div>
@@ -136,6 +158,16 @@ export const MealSection = ({
                     }}
                   >
                     <Add fontSize="small" />
+                  </button>
+                </TooltipStyled>
+
+                <TooltipStyled title="Ver nutrientes">
+                  <button
+                    type="button"
+                    className="flex items-center justify-center text-black dark:text-white w-10 h-10 rounded-lg"
+                    onClick={() => {}}
+                  >
+                    <Calculate fontSize="small" />
                   </button>
                 </TooltipStyled>
 
@@ -282,17 +314,29 @@ export const MealSection = ({
                       />
 
                       <div className="col-span-2 flex items-center justify-end">
-                        <button
-                          type="button"
-                          className="flex items-center justify-center text-red-600 w-8 h-8 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 transition"
-                          onClick={() => {
-                            const clone = [...meals]
-                            clone[index].items!.splice(i, 1)
-                            setFieldValue('meals', clone)
-                          }}
-                        >
-                          <DeleteOutline fontSize="small" />
-                        </button>
+                        <TooltipStyled title="Ver nutrientes do alimento">
+                          <button
+                            type="button"
+                            className="flex items-center justify-center text-black dark:text-white w-10 h-10 rounded-lg"
+                            onClick={() => {}}
+                          >
+                            <Calculate fontSize="small" />
+                          </button>
+                        </TooltipStyled>
+
+                        <TooltipStyled title="Excluir alimento">
+                          <button
+                            type="button"
+                            className="flex items-center justify-center text-red-600 w-8 h-8 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 transition"
+                            onClick={() => {
+                              const clone = [...meals]
+                              clone[index].items!.splice(i, 1)
+                              setFieldValue('meals', clone)
+                            }}
+                          >
+                            <DeleteOutline fontSize="small" />
+                          </button>
+                        </TooltipStyled>
                       </div>
                     </div>
                   ))}

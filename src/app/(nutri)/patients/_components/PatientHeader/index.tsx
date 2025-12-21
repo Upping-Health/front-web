@@ -9,7 +9,7 @@ interface PatientHeaderProps {
   patient: Patient | null
   loading: boolean
   formik: any
-  countdown: number
+  countdown?: number
 }
 
 const PatientHeader = ({
@@ -57,11 +57,12 @@ const PatientHeader = ({
             disabled={!formik.isValid}
           />
         )}
-
-        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-          Salvando automaticamente em{' '}
-          <span className="font-semibold">{countdown}s</span>...
-        </p>
+        {countdown && (
+          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            Salvando automaticamente em{' '}
+            <span className="font-semibold">{countdown}s</span>...
+          </p>
+        )}
       </div>
     </div>
   )

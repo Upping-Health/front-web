@@ -27,7 +27,6 @@ const ButtonActive = ({
         px-3
         w-16
         rounded-6
-        shadow-md
         font-semibold
         flex
         justify-center

@@ -1,23 +1,23 @@
 'use client'
 
-import TopDash from '@/components/layout/topDash'
-import { ArrowBack } from '@mui/icons-material'
-import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu'
-import { useFormik } from 'formik'
+import InputStyled from '@/components/inputs/inputStyled'
 import Loading from '@/components/layout/loading'
+import TopDash from '@/components/layout/topDash'
 import { DefaultContext } from '@/contexts/defaultContext'
 import useLoadPatientByUUID from '@/hooks/nutritionists/useLoadPatientById'
+import useLoadCategories from '@/hooks/others/useLoadCategories'
 import useTimer from '@/hooks/others/useTimer'
 import { MealPlanFormValues } from '@/interfaces/forms/mealPlanFormValues.interface'
 import PreFeedBack from '@/lib/feedbackStatus'
+import masks from '@/lib/masks/masks'
+import { ArrowBack } from '@mui/icons-material'
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu'
+import { useFormik } from 'formik'
 import { useParams } from 'next/navigation'
-import { useContext, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import PatientHeader from '../../../_components/PatientHeader'
 import PatientNotFound from '../../../_components/PatientNotFound'
-import { FirstSection } from '../_components/FirstSection'
 import { MealSection } from '../_components/MealSection'
-import { RestaurantMenu } from '@mui/icons-material'
-import ModalSearchProduct from '../_components/SearchProduct'
 
 type Tab = 'first' | 'meal'
 
@@ -30,10 +30,6 @@ const MealPlanCreatePage = () => {
   const { onShowFeedBack } = useContext(DefaultContext)
   const [apiLoading, setApiLoading] = useState(false)
   const [activeTab, setActiveTab] = useState<Tab>('first')
-  const { countdown, resetTimer } = useTimer({
-    duration: 60,
-    onExpire: () => ({}),
-  })
 
   const { data: patientData, loading: patientLoading } = useLoadPatientByUUID(
     params.patientId,
@@ -62,7 +58,7 @@ const MealPlanCreatePage = () => {
         return onShowFeedBack(PreFeedBack.error(message))
       } finally {
         setApiLoading(false)
-        resetTimer()
+        //resetTimer()
       }
     },
   })
@@ -98,25 +94,80 @@ const MealPlanCreatePage = () => {
               formik={formik}
               loading={apiLoading}
               patient={patientData}
-              countdown={countdown}
             />
 
-            {/* <Tabs tabs={tabs} activeTab={activeTab} onChange={(value) => setActiveTab(value as Tab)} /> */}
+            <div className="shadow-sm rounded-xl p-4 bg-white dark:bg-gray-800">
+              <h2 className="font-semibold text-primary dark:text-white mb-4">
+                Informações básicas
+              </h2>
+              <div className="flex flex-col gap-4">
+                <div className="grid grid-cols-2 gap-4 w-full">
+                  <InputStyled
+                    id="start_date"
+                    label="Data de início"
+                    type="text"
+                    placeholder="dd/mm/yyyy"
+                    value={formik.values?.start_date ?? ''}
+                    onChange={(e) => {
+                      formik.setFieldValue(
+                        'start_date',
+                        masks.dateMask(e.target.value),
+                      )
+                    }}
+                    onBlur={formik.handleBlur}
+                    error={formik.errors.start_date}
+                    isTouched={formik.touched.start_date}
+                    maxLength={10}
+                    styles="w-full"
+                  />
 
-            <FirstSection
-              values={formik.values}
-              handleChange={formik.handleChange}
-              handleBlur={formik.handleBlur}
-              errors={formik.errors}
-              touched={formik.touched}
-              setFieldValue={formik.setFieldValue}
-            />
+                  <InputStyled
+                    id="end_date"
+                    label="Data da Fim"
+                    type="text"
+                    placeholder="dd/mm/yyyy"
+                    value={formik.values?.end_date ?? ''}
+                    onChange={(e) => {
+                      formik.setFieldValue(
+                        'end_date',
+                        masks.dateMask(e.target.value),
+                      )
+                    }}
+                    onBlur={formik.handleBlur}
+                    error={formik.errors.end_date}
+                    isTouched={formik.touched.end_date}
+                    maxLength={10}
+                  />
+                </div>
 
-            {/* {activeTab === 'meal' && (
-              <>
+                <div className="flex flex-col w-full">
+                  <InputStyled
+                    id="notes"
+                    label="Observações"
+                    type="text"
+                    placeholder="Observações"
+                    value={formik.values.notes}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.errors.notes}
+                    isTouched={formik.touched.notes}
+                  />
+                </div>
+              </div>
 
-              </>
-            )} */}
+              <h2 className="font-semibold text-primary dark:text-white mb-4 mt-4">
+                Refeições
+              </h2>
+              <MealSection
+                errors={formik.errors}
+                handleBlur={formik.handleBlur}
+                handleChange={formik.handleChange}
+                setFieldValue={formik.setFieldValue}
+                touched={formik.touched}
+                values={formik.values}
+                key={'meal-section'}
+              />
+            </div>
           </form>
         </main>
       </div>

@@ -1,6 +1,6 @@
 'use client'
 import { IRole } from '@/interfaces/role.interface'
-import User from '@/interfaces/user.interface'
+import { User } from '@/interfaces/user.interface'
 import api from '@/services/api'
 import { useEffect, useState } from 'react'
 
