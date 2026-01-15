@@ -24,7 +24,7 @@ export const ModalHeader = ({ title, onClose }: ModalHeaderProps) => {
       <button
         onClick={onClose}
         aria-label="Fechar modal"
-        className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+        className="rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition"
         type="button"
       >
         <CloseIcon className="text-gray-700 dark:text-white" />
@@ -65,7 +65,7 @@ const ModalBase = ({
       className="flex justify-center items-center"
     >
       <div
-        className={`bg-white dark:bg-gray-800 rounded-20 px-2 py-4 w-[85%] max-h-[90vh] flex flex-col gap-2 ${sizeClasses[size]}`}
+        className={`bg-white dark:bg-gray-800 rounded-xl px-2 py-4 w-[85%] max-h-[90vh] flex flex-col gap-2 ${sizeClasses[size]}`}
       >
         {children}
       </div>

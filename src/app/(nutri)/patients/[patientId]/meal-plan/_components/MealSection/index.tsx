@@ -16,6 +16,7 @@ import ModalSearchProduct from '../SearchProduct'
 import AutocompleteStyled from '@/components/inputs/autoCompleteStyled'
 import useLoadCategories from '@/hooks/others/useLoadCategories'
 import { Categories } from '@/interfaces/categories.interface'
+import ModalViewNutrients from '../ViewNutrients'
 
 interface Props {
   values: Partial<MealPlanFormValues>
@@ -50,6 +51,8 @@ export const MealSection = ({
   const [mealIndexSelected, setMealIndexSelected] = useState<number | null>(
     null,
   )
+
+  const [viewNutrients, setViewNutrients] = useState(false)
 
   const paramsCat = useMemo(
     () => ({
@@ -165,7 +168,7 @@ export const MealSection = ({
                   <button
                     type="button"
                     className="flex items-center justify-center text-black dark:text-white w-10 h-10 rounded-lg"
-                    onClick={() => {}}
+                    onClick={() => setViewNutrients(true)}
                   >
                     <Calculate fontSize="small" />
                   </button>
@@ -318,7 +321,7 @@ export const MealSection = ({
                           <button
                             type="button"
                             className="flex items-center justify-center text-black dark:text-white w-10 h-10 rounded-lg"
-                            onClick={() => {}}
+                            onClick={() => setViewNutrients(true)}
                           >
                             <Calculate fontSize="small" />
                           </button>
@@ -370,6 +373,11 @@ export const MealSection = ({
         open={openSearch}
         setIsClose={() => setOpenSearch(false)}
         onSelect={handleSelectFood}
+      />
+
+      <ModalViewNutrients
+        open={viewNutrients}
+        setIsClose={() => setViewNutrients(false)}
       />
     </>
   )

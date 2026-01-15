@@ -38,6 +38,12 @@ interface TableProps {
   search?: boolean
   exportName?: string
   defaultSort?: { field: string; direction: 'asc' | 'desc' }
+
+  externalPagination?: boolean
+  currentPageExternal?: number
+  setCurrentPageExternal?: (page: number) => void
+  totalItems?: number
+
   filters?: {
     label: string
     options: TableFilterOption[]
@@ -58,8 +64,21 @@ const TableDash: React.FC<TableProps> = ({
   defaultSort,
   exportName = 'upping-health-exportacao',
   filters,
+
+  externalPagination = false,
+  currentPageExternal,
+  setCurrentPageExternal,
+  totalItems,
 }) => {
-  const [currentPage, setCurrentPage] = useState(1)
+  const [internalPage, setInternalPage] = useState(1)
+
+  const currentPage = externalPagination
+    ? currentPageExternal || 1
+    : internalPage
+  const setCurrentPage = externalPagination
+    ? setCurrentPageExternal!
+    : setInternalPage
+
   const [hoveredColumn, setHoveredColumn] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [sortConfig, setSortConfig] = useState<{
@@ -90,20 +109,24 @@ const TableDash: React.FC<TableProps> = ({
     return [...filteredData].sort((a, b) => {
       const aValue = a[sortConfig.field]
       const bValue = b[sortConfig.field]
-
       if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1
       if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1
       return 0
     })
   }, [filteredData, sortConfig])
 
-  const numberPages = Math.ceil(sortedData.length / itemsPerPage)
+  const numberPages = externalPagination
+    ? Math.ceil((totalItems || 0) / itemsPerPage)
+    : Math.ceil(sortedData.length / itemsPerPage)
 
   const dataToDisplay = useMemo(() => {
+    if (externalPagination) {
+      return data
+    }
     const startIndex = (currentPage - 1) * itemsPerPage
     const endIndex = startIndex + itemsPerPage
     return sortedData.slice(startIndex, endIndex)
-  }, [currentPage, sortedData])
+  }, [currentPage, sortedData, data, externalPagination])
 
   return (
     <div className="relative flex flex-col justify-between w-full flex-1 pb-4">
@@ -195,6 +218,7 @@ const TableDash: React.FC<TableProps> = ({
                           }}
                         >
                           {col.header}
+
                           {(hoveredColumn === col.field ||
                             sortConfig?.field === col.field) &&
                             (isSorted ? (

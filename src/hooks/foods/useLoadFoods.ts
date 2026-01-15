@@ -1,31 +1,63 @@
 import { ApiResponse } from '@/interfaces/api-response.interface'
 import { Food } from '@/interfaces/food.interface'
 import api from '@/services/api'
-import { useCallback, useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 
-type FoodApiResponse = ApiResponse<Food[]>
+type ApiResponsePagination = {
+  current_page: number
+  data: Food[]
+  from: number
+  last_page: number
+  per_page: number
+  to: number
+  total: number
+}
+
+type FoodApiResponse = ApiResponse<ApiResponsePagination>
 
 const useLoadFoods = (hidden: boolean) => {
-  const [data, setdata] = useState<Food[]>([])
-  const [loading, setloading] = useState<boolean>(false)
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [perPage, setPerPage] = useState<number>(8)
+  const [search, setSearch] = useState<string>('')
 
-  const loadData = useCallback(async () => {
-    try {
-      setloading(true)
-      const res = await api.get<FoodApiResponse>(`/foods/index`)
-      setdata(res?.data?.data)
-    } catch (error: any) {
-      console.error('[ERROR API] /foods/', error?.response)
-    } finally {
-      setloading(false)
-    }
-  }, [])
+  const fetchFoods = async (
+    page: number,
+    perPage: number,
+    search: string,
+  ): Promise<ApiResponsePagination> => {
+    const params = new URLSearchParams({
+      page: String(page),
+      per_page: String(perPage),
+      search: search || '',
+    })
 
-  useEffect(() => {
-    if (!hidden) loadData()
-  }, [loadData, hidden])
+    const res = await api.get<FoodApiResponse>(
+      `/foods/list?${params.toString()}`,
+    )
+    return res.data.data
+  }
 
-  return { loading, data, loadData }
+  const { data, isLoading, refetch, isFetching } = useQuery({
+    queryKey: ['foods', currentPage, perPage],
+    queryFn: () => fetchFoods(currentPage, perPage, search),
+    enabled: !hidden,
+    staleTime: 1000 * 60 * 2,
+  })
+
+  return {
+    loading: isLoading || isFetching,
+    data: data?.data ?? [],
+    currentPage: currentPage,
+    lastPage: data?.last_page ?? 1,
+    total: data?.total ?? 0,
+    perPage,
+    loadData: refetch,
+    setPerPage,
+    setCurrentPage,
+    search,
+    setSearch,
+  }
 }
 
 export default useLoadFoods

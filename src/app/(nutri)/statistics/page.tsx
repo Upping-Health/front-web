@@ -1,7 +1,6 @@
 'use client'
 import CardDash from '@/components/tables/cardDash'
 import TopDash from '@/components/layout/topDash'
-import useLoadDashboardPatients from '@/hooks/dashboard/useLoadDashboardPatients'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import GroupOffIcon from '@mui/icons-material/GroupRemove'
 import Groups from '@mui/icons-material/Groups'
@@ -9,17 +8,17 @@ import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined'
 import { Skeleton } from '@mui/material'
 
 const DashboardContent = () => {
-  const { data, loadData, loading } = useLoadDashboardPatients(false)
+  function onPressButon() {}
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <TopDash
         title="Estatísticas"
         description="Veja as principais métricas e informações."
         icon={InsertChartOutlinedIcon}
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
         {loading ? (
           <>
             <Skeleton
@@ -65,12 +64,10 @@ const DashboardContent = () => {
                 value={data.totalPatientsInactive}
               />
             </div>
-            {/* <div className="flex-1 min-w-[250px]">
-                <CardDash icon={<Group />} title="Novos Pacientes" value={1} />
-              </div> */}
+          
           </div>
         )}
-      </div>
+      </div> */}
 
       {/* <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-10">
         <div className="bg-white p-4 rounded-xl shadow-md">

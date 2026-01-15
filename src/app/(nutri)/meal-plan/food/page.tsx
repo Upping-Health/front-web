@@ -1,14 +1,11 @@
 'use client'
-import TableDash from '@/components/tables/tableDash'
+import Loading from '@/components/layout/loading'
 import TopDash from '@/components/layout/topDash'
-import useLoadPatients from '@/hooks/nutritionists/useLoadPatients'
-import { colors } from '@/lib/colors/colors'
+import TableDash from '@/components/tables/tableDash'
+import useLoadFoods from '@/hooks/foods/useLoadFoods'
 import RestaurantOutlinedIcon from '@mui/icons-material/RestaurantOutlined'
-import { CircularProgress } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 import ModalFood from './_components/ModalFood'
-import useLoadFoods from '@/hooks/foods/useLoadFoods'
-import Loading from '@/components/layout/loading'
 
 const filterOptions = [
   {
@@ -34,9 +31,11 @@ const filterOptions = [
 ]
 
 const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
-  const { data, loadData, loading } = useLoadFoods(false)
+  const { data, loadData, loading, currentPage, setCurrentPage, total } =
+    useLoadFoods(false)
   const [openModal, setopenModal] = useState<boolean>(false)
 
+  console.log(data)
   const handleOpenModal = useCallback(() => {
     setopenModal(true)
   }, [])
@@ -127,6 +126,10 @@ const FoodPlanMenu = ({ params }: { params: { id: string } }) => {
                 options: filterOptions,
                 onSelect: (value: string) => console.log('teste'),
               }}
+              externalPagination
+              itemsPerPage={total}
+              setCurrentPageExternal={setCurrentPage}
+              currentPageExternal={currentPage}
             />
           </>
         )}

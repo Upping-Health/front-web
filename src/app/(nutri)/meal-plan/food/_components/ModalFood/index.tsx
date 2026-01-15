@@ -28,7 +28,7 @@ interface ModalParams {
   open: boolean
   setIsClose: () => void
   dataSelected?: any | null
-  loadNewData: () => Promise<void>
+  loadNewData: () => Promise<any>
 }
 
 const ModalFood = ({
