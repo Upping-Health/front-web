@@ -101,7 +101,7 @@ const AnthropometryCreatePage = () => {
 
         const evaluation_date = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
         await api.put(`/anthropometrics/update/${params.anthropometryId}`, {
-          patient_id: Number(3),
+          patient_id: params.patientId,
           evaluation_date,
           weight: Number(values?.weight) || 0,
           height: Number(values?.height) || 0,
@@ -238,7 +238,7 @@ const AnthropometryCreatePage = () => {
 
       const evaluation_date = isoDate.split('T')[0]
       await api.put(`/anthropometrics/update/${params.anthropometryId}`, {
-        patient_id: Number(3),
+        patient_id: params.patientId,
         evaluation_date,
         weight: Number(values?.weight) || 0,
         height: Number(values?.height) || 0,
