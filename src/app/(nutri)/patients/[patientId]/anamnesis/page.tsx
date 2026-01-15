@@ -153,7 +153,7 @@ const AnamnesisPage = () => {
     try {
       const get_form_response = await api.get('forms/type/anamnesis')
       const form = get_form_response?.data?.data
-
+      console.log(form)
       const forms = form.fields.map((field: any) => ({
         field_id: field.uuid,
         value: null,
@@ -162,7 +162,7 @@ const AnamnesisPage = () => {
       const create_form_response = await api.post(
         `forms/submissions/store/${form.uuid}`,
         {
-          client_id: '0f3cc8fa-6dd9-4c4e-9e5a-733db13704f2',
+          client_id: '0ffa25d5-d557-4ea0-b1eb-a55817e76853',
           patient_id: params.patientId,
           answers: forms,
           submit: false,

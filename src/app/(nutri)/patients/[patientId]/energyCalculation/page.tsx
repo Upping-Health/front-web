@@ -42,6 +42,7 @@ const EnergyCalculationPage = () => {
     params.patientId,
     false,
   )
+
   const {
     data: patientData,
     loadData: patientLoadData,
@@ -123,6 +124,7 @@ const EnergyCalculationPage = () => {
         header: 'Data da avaliação',
         field: 'evaluation_date',
         render: (value: any) => {
+          if (!value) return '-'
           const date = new Date(value)
           return dateFormat(date, 'dd/mm/yyyy')
         },
@@ -131,6 +133,7 @@ const EnergyCalculationPage = () => {
         header: 'Data da atualização',
         field: 'updated_at',
         render: (value: any) => {
+          if (!value) return '-'
           const date = new Date(value)
           return dateFormat(date, 'dd/mm/yyyy')
         },
