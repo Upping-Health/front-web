@@ -116,13 +116,11 @@ export default function MealSection({
         />
       </div>
 
-      {openSearch && (
-        <ModalSearchProduct
-          open={openSearch}
-          setIsClose={() => setOpenSearch(false)}
-          onSelect={handleSelectFood}
-        />
-      )}
+      <ModalSearchProduct
+        open={openSearch}
+        setIsClose={() => setOpenSearch(false)}
+        onSelect={handleSelectFood}
+      />
 
       {viewNutrients && (
         <ModalViewNutrients
