@@ -130,7 +130,7 @@ export default function MealItemRow({
         styles="text-center dark:bg-gray-800"
       />
 
-      <div className="col-span-1 flex items-center justify-center">
+      <div className="col-span-1 flex items-center justify-end">
         <TooltipStyled title="Excluir alimento">
           <button
             type="button"
