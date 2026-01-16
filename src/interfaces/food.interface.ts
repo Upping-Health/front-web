@@ -70,4 +70,12 @@ export interface Food {
 
   ingredients?: Ingredient[]
   instructions?: Instruction[]
+  food_household_units: HouseHoldUnits[]
+}
+
+export interface HouseHoldUnits {
+  conversion_factor: string
+  household_unit: {
+    name: string
+  }
 }

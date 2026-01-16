@@ -1,13 +1,8 @@
-import ButtonStyled from '@/components/buttons/button'
 import InputStyled from '@/components/inputs/inputStyled'
-import ModalBase, {
-  ModalContent,
-  ModalHeader,
-} from '@/components/modals/ModalBase'
-import { DefaultContext } from '@/contexts/defaultContext'
+import ModalBase, { ModalContent } from '@/components/modals/ModalBase'
 import useLoadFoods from '@/hooks/foods/useLoadFoods'
 import { Search } from '@mui/icons-material'
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 interface ModalParams {
   open: boolean

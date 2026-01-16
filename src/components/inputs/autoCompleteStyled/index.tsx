@@ -75,6 +75,13 @@ const AutocompleteStyled = ({
             fullWidth
             disableClearable
             noOptionsText="Sem resultados"
+            slotProps={{
+              paper: {
+                sx: {
+                  minWidth: '240px',
+                },
+              },
+            }}
             className={`dark:bg-gray-800 outline-none text-black dark:text-white w-full pl-1 ${stylesInput ?? ''}`}
             sx={{
               '& fieldset': {

@@ -17,7 +17,7 @@ import { useParams } from 'next/navigation'
 import { useContext, useMemo, useState } from 'react'
 import PatientHeader from '../../../_components/PatientHeader'
 import PatientNotFound from '../../../_components/PatientNotFound'
-import { MealSection } from '../_components/MealSection'
+import MealSection from '../_components/MealSection'
 
 type Tab = 'first' | 'meal'
 

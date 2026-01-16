@@ -1,9 +1,8 @@
-export interface MealItem {
-  food_id: string
-  quantity: string
-  unit: string
-  name: string
-  notes: string
+import { Food } from '../food.interface'
+
+export interface MealItem extends Food {
+  quantity: number
+  selected_unit: string
 }
 
 export interface Meal {
