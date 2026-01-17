@@ -6,7 +6,8 @@ import InputStyled from '@/components/inputs/inputStyled'
 import AutocompleteStyled from '@/components/inputs/autoCompleteStyled'
 import TooltipStyled from '@/components/inputs/tooltipStyled'
 
-import { DeleteOutline, Calculate } from '@mui/icons-material'
+import { Calculate, DeleteOutline } from '@mui/icons-material'
+import { useMemo } from 'react'
 
 interface MealItemRowProps {
   item: MealItem
@@ -17,29 +18,47 @@ interface MealItemRowProps {
   handleBlur: (e: React.FocusEvent<any>) => void
   setFieldValue: (field: string, value: any) => void
   setViewNutrients: (open: boolean) => void
+  setFoodIndexSelected: (index: number) => void
+  setMealIndexSelected: (index: number) => void
 }
 
 const formatNutrient = (value: number | undefined): string => {
   const num = Number(value)
-  if (isNaN(num)) return '0.00 g'
-  return `${num.toFixed(2)} g`
+  if (isNaN(num)) return '0.00g'
+  return `${num.toFixed(2)}g`
 }
 
-export const calculateProtein = (food: MealItem): string => {
-  return formatNutrient(food.nutrient?.protein)
+const calculateNutrient = (
+  food: MealItem,
+  nutrientKey: keyof NonNullable<MealItem['nutrient']>,
+): string => {
+  if (!food?.nutrient) return '0.00g'
+
+  const selectedUnit = Number(food.selected_unit ?? 0)
+  const quantity = Number(food.quantity ?? 0)
+
+  const baseQuantity = Number(food.nutrient.base_quantity ?? 0)
+  const nutrientValue = Number(food.nutrient[nutrientKey] ?? 0)
+
+  if (baseQuantity === 0) return '0.00g'
+
+  const realQuantity = selectedUnit * quantity
+  const total = (realQuantity / baseQuantity) * nutrientValue
+
+  return formatNutrient(total)
 }
 
-export const calculateCarbohydrate = (food: MealItem): string => {
-  return formatNutrient(food.nutrient?.carbohydrate)
-}
+export const calculateProtein = (food: MealItem) =>
+  calculateNutrient(food, 'protein')
 
-export const calculateLip = (food: MealItem): string => {
-  return formatNutrient(food.nutrient?.total_lipids)
-}
+export const calculateCarbohydrate = (food: MealItem) =>
+  calculateNutrient(food, 'carbohydrate')
 
-export const calculateKcal = (food: MealItem): string => {
-  return formatNutrient(food.nutrient?.energy_kcal)
-}
+export const calculateLip = (food: MealItem) =>
+  calculateNutrient(food, 'total_lipids')
+
+export const calculateKcal = (food: MealItem) =>
+  calculateNutrient(food, 'energy_kcal')
 
 export default function MealItemRow({
   item,
@@ -50,12 +69,17 @@ export default function MealItemRow({
   handleBlur,
   setFieldValue,
   setViewNutrients,
+  setFoodIndexSelected,
+  setMealIndexSelected,
 }: MealItemRowProps) {
-  const units =
-    meals[index].items[i].food_household_units?.map((hous) => ({
-      id: hous.conversion_factor,
-      name: hous.household_unit.name,
-    })) || []
+  const units = useMemo(() => {
+    return (
+      meals[index].items[i].food_household_units?.map((hous) => ({
+        id: hous.conversion_factor,
+        name: hous.household_unit.name,
+      })) || []
+    )
+  }, [meals[index].items[i].food_household_units])
 
   return (
     <div className="grid grid-cols-12 gap-2 items-center rounded-lg">
@@ -87,7 +111,7 @@ export default function MealItemRow({
         onChange={(e, value) =>
           setFieldValue(
             `meals[${index}].items[${i}].selected_unit`,
-            value?.id || null,
+            value?.id ?? null,
           )
         }
         styles="dark:bg-gray-800"
@@ -131,6 +155,19 @@ export default function MealItemRow({
       />
 
       <div className="col-span-1 flex items-center justify-end">
+        <TooltipStyled title="Ver nutrientes">
+          <button
+            type="button"
+            className="flex items-center justify-center text-black dark:text-white w-10 h-10 rounded-lg"
+            onClick={() => {
+              setMealIndexSelected(index)
+              setFoodIndexSelected(i)
+              setViewNutrients(true)
+            }}
+          >
+            <Calculate fontSize="small" />
+          </button>
+        </TooltipStyled>
         <TooltipStyled title="Excluir alimento">
           <button
             type="button"

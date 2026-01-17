@@ -29,9 +29,11 @@ const useLoadFoods = (hidden: boolean) => {
     const params = new URLSearchParams({
       page: String(page),
       per_page: String(perPage),
-      search: search || '',
+      name: search || '',
+      type: 'full',
     })
 
+    console.log('CHAMOU API')
     const res = await api.get<FoodApiResponse>(
       `/foods/list?${params.toString()}`,
     )
@@ -39,9 +41,10 @@ const useLoadFoods = (hidden: boolean) => {
   }
 
   const { data, isLoading, refetch, isFetching } = useQuery({
-    queryKey: ['foods', currentPage, perPage],
-    queryFn: () => fetchFoods(currentPage, perPage, search),
-    enabled: !hidden,
+    queryKey: ['foods', currentPage, perPage, search],
+    queryFn: () =>
+      fetchFoods(currentPage, perPage, search.length >= 2 ? search : ''),
+    enabled: hidden,
     staleTime: 1000 * 60 * 2,
   })
 

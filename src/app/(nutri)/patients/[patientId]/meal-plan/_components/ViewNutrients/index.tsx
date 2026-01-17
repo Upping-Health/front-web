@@ -4,60 +4,37 @@ import ModalBase, {
   ModalContent,
   ModalHeader,
 } from '@/components/modals/ModalBase'
-import { DefaultContext } from '@/contexts/defaultContext'
-import useLoadFoods from '@/hooks/foods/useLoadFoods'
 import { Search } from '@mui/icons-material'
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+
+import { MealItem } from '@/interfaces/forms/mealPlanFormValues.interface'
+import { useCalculateNutrients } from '@/hooks/foods/useCalculateNutrients'
 
 interface ModalParams {
   open: boolean
   setIsClose: () => void
+
+  items?: MealItem[]
+  item?: MealItem
 }
 
-const nutrients = [
-  { label: 'Energia', value: '70,9 kcal' },
-  { label: 'Proteínas', value: '0,8 g' },
-  { label: 'Lipídios', value: '0,1 g' },
-  { label: 'Carboidratos', value: '17,4 g' },
-  { label: 'Fibras', value: '1,5 g' },
-  { label: 'Ácidos graxos saturados', value: '0 g' },
-  { label: 'Ácidos graxos monoinsaturados', value: '0 g' },
-  { label: 'Ácidos graxos poliinsaturados', value: '0 g' },
-  { label: 'Ácidos graxos trans', value: '0 g' },
-  { label: 'Colesterol', value: '0 mg' },
-  { label: 'Cálcio', value: '2,8 mg' },
-  { label: 'Ferro', value: '0,2 mg' },
-  { label: 'Magnésio', value: '20,2 mg' },
-  { label: 'Fósforo', value: '15 mg' },
-  { label: 'Potássio', value: '224,9 mg' },
-  { label: 'Sódio', value: '0 mg' },
-  { label: 'Zinco', value: '0 mg' },
-  { label: 'Cobre', value: '0 mg' },
-  { label: 'Manganês', value: '0 mg' },
-  { label: 'Selênio', value: '0 mg' },
-  { label: 'Vitamina A (RAE)', value: '0 mg' },
-  { label: 'Tiamina (Vit. B1)', value: '0 mg' },
-  { label: 'Riboflavina (Vit. B2)', value: '0 mg' },
-  { label: 'Niacina (Vit. B3)', value: '0 mg' },
-  { label: 'Piridoxina (Vit. B6)', value: '0 mg' },
-  { label: 'Alfa-tocoferol (Vit. E)', value: '0 mg' },
-  { label: 'Vitamina D (D2 + D3)', value: '0 mg' },
-  { label: 'Álcool', value: '0 mg' },
-]
-
-const ModalViewNutrients = ({ open, setIsClose }: ModalParams) => {
-  const { data, loadData, loading } = useLoadFoods(open)
+const ModalViewNutrients = ({ open, setIsClose, items, item }: ModalParams) => {
   const [query, setQuery] = useState('')
 
+  const listToCalculate = item ? [item] : (items ?? [])
+  const nutrientList = useCalculateNutrients(listToCalculate)
+
   const filteredNutrients = useMemo(() => {
-    return nutrients.filter((n) =>
+    return nutrientList.filter((n) =>
       n.label.toLowerCase().includes(query.toLowerCase()),
     )
-  }, [nutrients, query])
+  }, [nutrientList, query])
+
+  const title = item ? item.name : 'Nutrientes da refeição'
 
   return (
     <ModalBase open={open} size="lg" closeOnBackdropClick onClose={setIsClose}>
-      <ModalHeader onClose={setIsClose} title="Nutrientes do alimento" />
+      <ModalHeader onClose={setIsClose} title={title} />
       <ModalContent>
         <div className="flex flex-col gap-4 w-full">
           <InputStyled

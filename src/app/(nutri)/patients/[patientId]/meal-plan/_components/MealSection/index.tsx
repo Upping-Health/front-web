@@ -50,6 +50,9 @@ export default function MealSection({
   const [mealIndexSelected, setMealIndexSelected] = useState<number | null>(
     null,
   )
+  const [foodIndexSelected, setFoodIndexSelected] = useState<number | null>(
+    null,
+  )
 
   const [openMeals, setOpenMeals] = useState<Record<number, boolean>>({})
   const [viewNutrients, setViewNutrients] = useState(false)
@@ -72,6 +75,17 @@ export default function MealSection({
     setFieldValue('meals', clone)
   }
 
+  const selectedItems = useMemo(() => {
+    if (mealIndexSelected === null) return []
+    return meals[mealIndexSelected]?.items ?? []
+  }, [mealIndexSelected, meals])
+
+  const foodSelected = useMemo<MealItem | undefined>(() => {
+    if (foodIndexSelected === null || mealIndexSelected === null)
+      return undefined
+    return meals[mealIndexSelected]?.items[foodIndexSelected]
+  }, [foodIndexSelected, mealIndexSelected, meals])
+
   return (
     <>
       <div className="flex flex-col gap-3">
@@ -87,6 +101,7 @@ export default function MealSection({
             setOpenMeals={setOpenMeals}
             setOpenSearch={setOpenSearch}
             setMealIndexSelected={setMealIndexSelected}
+            setFoodIndexSelected={setFoodIndexSelected}
             setViewNutrients={setViewNutrients}
             handleChange={handleChange}
             handleBlur={handleBlur}
@@ -126,6 +141,8 @@ export default function MealSection({
         <ModalViewNutrients
           open={viewNutrients}
           setIsClose={() => setViewNutrients(false)}
+          items={selectedItems}
+          item={foodSelected}
         />
       )}
     </>

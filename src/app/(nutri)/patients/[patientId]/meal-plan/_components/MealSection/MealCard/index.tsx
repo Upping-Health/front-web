@@ -34,6 +34,7 @@ interface MealCardProps {
   setOpenMeals: React.Dispatch<React.SetStateAction<Record<number, boolean>>>
   setOpenSearch: (open: boolean) => void
   setMealIndexSelected: (index: number) => void
+  setFoodIndexSelected: (index: number) => void
   setViewNutrients: (open: boolean) => void
   setFieldValue: (field: string, value: any) => void
   setDraggingIndex: (n: number | null) => void
@@ -58,6 +59,7 @@ export default function MealCard({
   setOpenMeals,
   setOpenSearch,
   setMealIndexSelected,
+  setFoodIndexSelected,
   setViewNutrients,
   setFieldValue,
   setDraggingIndex,
@@ -99,7 +101,6 @@ export default function MealCard({
         setDragOverIndex(null)
       }}
     >
-      {/* Header */}
       <div className="flex items-center justify-between p-3 rounded-xl">
         <div className="flex gap-4">
           <InputStyled
@@ -124,7 +125,6 @@ export default function MealCard({
         </div>
 
         <div className="flex gap-2 items-center">
-          {/* Adicionar alimento */}
           <TooltipStyled title="Adicionar alimento">
             <button
               type="button"
@@ -138,18 +138,19 @@ export default function MealCard({
             </button>
           </TooltipStyled>
 
-          {/* Ver nutrientes */}
           <TooltipStyled title="Ver nutrientes">
             <button
               type="button"
               className="flex items-center justify-center text-black dark:text-white w-10 h-10 rounded-lg"
-              onClick={() => setViewNutrients(true)}
+              onClick={() => {
+                setMealIndexSelected(index)
+                setViewNutrients(true)
+              }}
             >
               <Calculate fontSize="small" />
             </button>
           </TooltipStyled>
 
-          {/* Excluir refeição */}
           <TooltipStyled title="Excluir refeição">
             <button
               type="button"
@@ -164,7 +165,6 @@ export default function MealCard({
             </button>
           </TooltipStyled>
 
-          {/* Expandir */}
           <IconButton
             size="small"
             onClick={() =>
@@ -180,7 +180,6 @@ export default function MealCard({
         </div>
       </div>
 
-      {/* Items */}
       {openMeals[index] && (
         <div className="p-4 border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
           {(!meal.items || meal.items.length === 0) && (
@@ -214,6 +213,8 @@ export default function MealCard({
                 handleBlur={handleBlur}
                 setFieldValue={setFieldValue}
                 setViewNutrients={setViewNutrients}
+                setFoodIndexSelected={setFoodIndexSelected}
+                setMealIndexSelected={setMealIndexSelected}
               />
             ))}
           </div>

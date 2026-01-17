@@ -2,7 +2,7 @@ import InputStyled from '@/components/inputs/inputStyled'
 import ModalBase, { ModalContent } from '@/components/modals/ModalBase'
 import useLoadFoods from '@/hooks/foods/useLoadFoods'
 import { Search } from '@mui/icons-material'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 interface ModalParams {
   open: boolean
@@ -11,8 +11,12 @@ interface ModalParams {
 }
 
 const ModalSearchProduct = ({ open, setIsClose, onSelect }: ModalParams) => {
-  const { data, loadData, loading } = useLoadFoods(open)
-  const [query, setQuery] = useState('')
+  const { data, loadData, loading, search, setSearch } = useLoadFoods(open)
+
+  useEffect(() => {
+    if (!open) setSearch('')
+  }, [open])
+
   const formatNutrient = (value?: unknown) => {
     const num = Number(value)
     return Number.isFinite(num) ? num.toFixed(1) : '-'
@@ -23,11 +27,11 @@ const ModalSearchProduct = ({ open, setIsClose, onSelect }: ModalParams) => {
     return Number.isFinite(num) ? `${num.toFixed(1)}g` : '-'
   }
   const filteredFoods = useMemo(() => {
-    if (!query) return []
+    if (!search) return []
     return data.filter((food: any) =>
-      food.name.toLowerCase().includes(query.toLowerCase()),
+      food.name.toLowerCase().includes(search.toLowerCase()),
     )
-  }, [query, data])
+  }, [search, data])
 
   return (
     <ModalBase open={open} size="lg" closeOnBackdropClick onClose={setIsClose}>
@@ -38,11 +42,11 @@ const ModalSearchProduct = ({ open, setIsClose, onSelect }: ModalParams) => {
             id="search"
             placeholder="Digite o nome do alimento"
             type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
 
-          {!query && (
+          {!search && (
             <div className="flex flex-col items-center justify-center text-center pb-6 pt-4 text-gray-500 gap-3">
               <Search className="w-10 h-10 opacity-40" />
               <p className="max-w-xs text-sm">
@@ -51,7 +55,7 @@ const ModalSearchProduct = ({ open, setIsClose, onSelect }: ModalParams) => {
             </div>
           )}
 
-          {query && !loading && filteredFoods.length === 0 && (
+          {search && !loading && filteredFoods.length === 0 && (
             <div className="py-6 text-center text-gray-500 text-sm">
               Nenhum alimento encontrado.
             </div>
@@ -70,7 +74,7 @@ const ModalSearchProduct = ({ open, setIsClose, onSelect }: ModalParams) => {
 
             {filteredFoods.map((food) => {
               const name = food.name
-              const q = query.toLowerCase()
+              const q = search.toLowerCase()
               const index = name.toLowerCase().indexOf(q)
 
               let before = name
@@ -79,8 +83,8 @@ const ModalSearchProduct = ({ open, setIsClose, onSelect }: ModalParams) => {
 
               if (index !== -1) {
                 before = name.substring(0, index)
-                match = name.substring(index, index + query.length)
-                after = name.substring(index + query.length)
+                match = name.substring(index, index + search.length)
+                after = name.substring(index + search.length)
               }
 
               return (

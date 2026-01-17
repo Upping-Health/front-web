@@ -33,6 +33,7 @@ export interface Nutrient {
   polyunsaturated?: number
   trans_fats?: number
   selenium?: number
+  base_quantity?: string
 }
 
 export interface Ingredient {
